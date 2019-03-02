@@ -3,6 +3,7 @@
     <title>Title</title>
 </head>
 <body>
-test
+${msg}
+"Hello"
 </body>
 </html>
