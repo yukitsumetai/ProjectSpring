@@ -8,11 +8,11 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <title>Users</title>
+    <title>Existing Users</title>
 </head>
 <body>
 <ul>
-<li>${users}</li>
+<li>${clients}</li>
 </ul>
 </body>
 </html>

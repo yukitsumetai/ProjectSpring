@@ -2,6 +2,7 @@ package com.telekom.entity;
 
 public class User {
     private String name;
+
     private String email;
     static private int id;
 

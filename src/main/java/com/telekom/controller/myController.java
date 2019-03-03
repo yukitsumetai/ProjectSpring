@@ -1,5 +1,6 @@
 package com.telekom.controller;
 
+import com.telekom.entity.Client;
 import com.telekom.entity.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,28 +13,36 @@ import java.util.List;
 
 @Controller
 public class myController {
-    private ArrayList<User> users= new ArrayList<User>();
+    private ArrayList<Client> clients= new ArrayList<Client>();
     @GetMapping("/view")
     public String view(@RequestParam(value = "name", required = false, defaultValue="stranger ") String name, Model model) {
         model.addAttribute("msg","Hello "+name);
         return "index";
     }
 
-    @GetMapping("/raw")
-    @ResponseBody
-    public String raw() {
-        return "Raw data";
+
+    @RequestMapping(value="/view",params="Customer",method=RequestMethod.POST)
+    public String action1()
+    {
+        return "index";
+    }
+    @RequestMapping(value="/view",params="Shop",method=RequestMethod.POST)
+    public String action2()
+    {
+        return "redirect:/shopagent";
+    }
+
+    @GetMapping("/shopagent")
+    public String view()
+     {
+         return "shopagent";
     }
 
     @GetMapping("/users")
     public String getUsers(Model model){
-        User u1=new User("John", "sd@t.com");
-        User u2=new User("Tom", "fe@tr.com");
-
-     users.add(u1);
-     users.add(u2);
-
-    model.addAttribute("users", users);
+        Client c1=new Client("dgfgd", "grgr", "regre", "33.44.33", "rgrege");
+        clients.add(c1);
+    model.addAttribute("clients", clients);
      return "users";
         }
 
@@ -43,8 +52,8 @@ public class myController {
     }
 
     @PostMapping("/users/new")
-    public String signUp(@ModelAttribute User user){
-       users.add(user);
+    public String signUp(@ModelAttribute Client client){
+      clients.add(client);
        return "redirect:/users";
     }
 }

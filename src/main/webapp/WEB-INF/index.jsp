@@ -2,14 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
-    <title>GlobalNet</title>
+    <title>Welcome to GlobalNet</title>
    <img src="/resource/images/favicon1.png" alt="logo">
 <body>
-Welcome to GlobalNet!<br>
+Welcome to GlobalNet!
 ${msg}
 
 <form action="/view" method="post">
-    <input name="Customer" placeholder="Customer" type="submit" value="Existing customer">
+    <input name="Customer" placeholder="Customer" type="submit" value="Customer">
     <input name="Shop" type="submit" placeholder="Shop agent"  value="Shop agent">
 </form>
 </body>
