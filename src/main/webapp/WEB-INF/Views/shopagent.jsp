@@ -21,9 +21,11 @@
         <li id="df">Choose tariff</li>
         <li id="sign"><a href="/users/new">New client</a></li>
         <li id="frmJS">See clients</li>
-        <li id="frmEl">See tarifs</li>
+        <li id="frmEl"><a href="/tariffs/new">New tariff</a></li>
         <li id="frmM">See options</li>
     </ul>
+
+
 </form>
 </body>
 </html>

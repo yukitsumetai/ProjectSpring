@@ -2,18 +2,17 @@ package com.telekom.entity;
 
 public class User {
     private String name;
-
     private String email;
-    static private int id;
+
 
     public User() {
-        id++;
+
     }
 
     public User(String name, String email) {
         this.name = name;
         this.email = email;
-       id++;
+
     }
 
     public String getName() {

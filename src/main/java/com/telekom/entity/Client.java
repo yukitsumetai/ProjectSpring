@@ -1,15 +1,37 @@
 package com.telekom.entity;
 
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
+@Entity
+@Table(name = "client")
+
 public class Client {
+
+    @NotBlank(message = "Name is required")
     private String name;
+
+    @NotBlank(message = "Name is required")
+    @Size(min = 1, max = 10, message = "Surname should be from 1 to 10 symbols")
     private String surname;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Email
     private String email;
     private String birthday;
     private String password;
-    static private int id;
+
 
     public Client() {
-        id++;
+
     }
 
     public Client(String name, String surname, String email, String birthday, String password) {
@@ -18,8 +40,8 @@ public class Client {
         this.email = email;
         this.birthday = birthday;
         this.password = password;
-        id++;
-    }
+
+}
 
     public String getSurname() {
         return surname;

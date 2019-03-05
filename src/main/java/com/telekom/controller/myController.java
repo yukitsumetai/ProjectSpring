@@ -1,18 +1,29 @@
 package com.telekom.controller;
 
+import com.telekom.dao.ClientDAO;
+import com.telekom.dao.JPAClientDao;
+import com.telekom.dao.TestDAO;
 import com.telekom.entity.Client;
-import com.telekom.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+
+
 
 @Controller
 public class myController {
+
+    @Autowired
+    private JPAClientDao ClientDao;
+
+
     private ArrayList<Client> clients= new ArrayList<Client>();
     @GetMapping("/view")
     public String view(@RequestParam(value = "name", required = false, defaultValue="stranger ") String name, Model model) {
@@ -33,16 +44,15 @@ public class myController {
     }
 
     @GetMapping("/shopagent")
-    public String view()
+    public String agent()
      {
          return "shopagent";
     }
 
     @GetMapping("/users")
-    public String getUsers(Model model){
-        Client c1=new Client("dgfgd", "grgr", "regre", "33.44.33", "rgrege");
-        clients.add(c1);
-    model.addAttribute("clients", clients);
+    public String getUsers(Model model) throws SQLException {
+
+    model.addAttribute("clients", ClientDao.getAll());
      return "users";
         }
 
@@ -50,6 +60,8 @@ public class myController {
     public String getSignUp(){
         return "/sign";
     }
+
+
 
     @PostMapping("/users/new")
     public String signUp(@ModelAttribute Client client){

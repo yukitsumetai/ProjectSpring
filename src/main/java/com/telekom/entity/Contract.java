@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 public class Contract {
     private int number;
-    private Tarif tarif;
+    private Tariff tariff;
     ArrayList<Option> options;
     private Client client;
 
-    public Contract(int number, Tarif tarif, ArrayList<Option> options, Client client) {
+    public Contract(int number, Tariff tariff, ArrayList<Option> options, Client client) {
         this.number = number;
-        this.tarif = tarif;
+        this.tariff = tariff;
         this.options = options;
         this.client = client;
     }
@@ -23,12 +23,12 @@ public class Contract {
         this.number = number;
     }
 
-    public Tarif getTarif() {
-        return tarif;
+    public Tariff getTariff() {
+        return tariff;
     }
 
-    public void setTarif(Tarif tarif) {
-        this.tarif = tarif;
+    public void setTariff(Tariff tariff) {
+        this.tariff = tariff;
     }
 
     public ArrayList<Option> getOptions() {
