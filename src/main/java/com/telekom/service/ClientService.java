@@ -1,10 +1,10 @@
-package com.telekom.dao;
+package com.telekom.service;
 
 import com.telekom.entity.Client;
 
 import java.util.List;
 
-public interface ClientDAO {
+public interface ClientService {
 
     List<Client> getAll();
 

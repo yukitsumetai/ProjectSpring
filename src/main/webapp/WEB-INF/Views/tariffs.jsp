@@ -11,6 +11,10 @@
     <title>Title</title>
 </head>
 <body>
-<li>${tariffs}</li>
+<c:forEach items="${tariffs}" var="tariff">
+    <li>
+        <td>${tariff.name}</td>
+    </li>
+</c:forEach>
 </body>
 </html>

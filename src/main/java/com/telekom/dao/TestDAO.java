@@ -12,11 +12,11 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 
-@Component
-public class TestDAO implements ClientDAO {
+
+public class TestDAO  {
 
 
-    @Autowired
+    //@Autowired
     private SessionFactory sessionFactory;
 
     private Session currentSession() {

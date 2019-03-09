@@ -9,33 +9,102 @@
 <html>
 <head>
     <title>New customer</title>
-    <style>
-        body { font-family: Trebuchet MS; font-size: 80%; padding: 0px 10px; }
-        label { display: inline-block; width: 70px; }
-        .green { font-family: Comic Sans MS; color: green; }
-        .button { border: 0; border-radius: 4px; width: 60px; color: white; opacity: 0.7; padding: 3px 5px;
-            text-align: center; background-color: #282; transition-duration: 0.4s; box-shadow: 0 2px 6px 0
-        rgba(0,0,0,0.24),0 7px 10px 0 rgba(0,0,0,0.19); text-decoration: none; display: inline-block;
-            font-size: 0.9em; cursor: pointer; }
-        .button:hover { opacity: 1; transform: scale(1.04); }
-        .button[disabled] { background-color: #ddd; }
-    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bsvalidate/style.css">
 
 </head>
 <body>
-Enter customer data<br>
-<form id="f" action="/users/new" method="post">
+       <div class="container">
+        <div id="new client">
+            <div>
+                <center>Add client's personal data</center>
+            </div>
+            <div id="personal data">
+                <form id="simpleForm" method="post" action="${url}" modelAttribute="client">
+                    <div class="row">
+                        <div class="col-sm-6 form-group">
+                            <label path="name">Name</label>
+                            <input type="text" placeholder="Enter first name.."
+                                   id="name" class="form-control" name="name">
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <label>Surname</label>
+                            <input type="text" placeholder="Enter surname.."
+                                   id="surname" class="form-control" name="surname">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">EMail</label>
+                        <input id="email" type="text" name="email" class="form-control required"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Birthday</label>
+                        <input id="birthday" type="text" name="birthday" class="form-control" required/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Password</label>
+                        <input id="password" type="text" name="password" class="form-control" required/>
+                    </div>
+                    <!--  <div class="form-group">
+                          <label class="control-label">Options</label>
+                          <select id="country" class="form-control">
+                              <option value="None">-- Select --</option>
+                              <option value="China">China</option>
+                              <option value="United State">United State</option>
+                              <option value="Malaysia">Malaysia</option>
+                          </select>
+                      </div>-->
+                    <div>
+                        <center> Address</center>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 form-group">
+                            <label>Street</label>
+                            <input type="text" placeholder="Enter Billing Address.."
+                                   class="form-control" id="street" name="street">
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <label>House№</label>
+                            <input type="number" placeholder="Enter  house number.."
+                                   class="form-control" id="houseNumber" name="houseNumber">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 form-group">
+                            <label>City</label>
+                            <input type="text" placeholder="Enter city.."
+                                   class="form-control" id="city" name="city">
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <label>Zipcode</label>
+                            <input type="number" placeholder="Enter Zipcode.."
+                                   class="form-control" id="zip" name="zip">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label path="billingAddress.country">Country</label>
+                        <input type="text" placeholder="Enter country.."
+                               class="form-control" id="country" name="country">
+                    </div>
 
 
-        <label for="name"> Name: </label><input type="text" name="name" id="name"><br>
-        <label for="surname"> Surame: </label><input type="text" name="surname" id="surname"><br>
-        <label for="email">Email: </label><input type="email" name="email" id="email"><br>
-        <label for="birthday">Birthday: </label><input type="date" name="birthday" id="birthday"><br>
-        <label for="password">Password: </label><input type="text" name="password" id="password"><br>
-        <input type="submit" value="Submit" class="button">
-        <span id="msg" class="green"></span>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success"
+                                onclick="return Validate()">Add
+                        </button>
+                    </div>
 
+                </form>
 
-</form>
+            </div>
+        </div>
+
+    </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/bsvalidate/jquery.bsvalidate.js"></script>
+<script type="text/javascript" src="js/bsvalidate/main.js"></script>
+
 </body>
 </html>

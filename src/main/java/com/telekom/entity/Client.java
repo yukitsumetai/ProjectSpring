@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "client")
+@Table(name = "clients")
 
 public class Client {
 
@@ -22,7 +22,7 @@ public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int clientID;
 
     @Email
     private String email;
@@ -30,18 +30,17 @@ public class Client {
     private String password;
 
 
-    public Client() {
+    @OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
+    private Address address;
 
+
+    public Address getAddress() {
+        return address;
     }
 
-    public Client(String name, String surname, String email, String birthday, String password) {
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.birthday = birthday;
-        this.password = password;
-
-}
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 
     public String getSurname() {
         return surname;

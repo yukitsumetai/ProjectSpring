@@ -24,17 +24,17 @@ public class JPAClientDao implements ClientDAO {
     }
 
 
-    @Transactional
-    public void add(Client client) {
-        entityManager.persist(client);
-    }
-
-
     public Client getOne(String email) {
         TypedQuery<Client> q = entityManager.createQuery("select c from Client c where c.email= :email", Client.class
         );
         q.setParameter("email", email);
         return q.getResultList().stream().findAny().orElse(null);
     }
+
+    @Transactional
+    public void add(Client client) {
+        entityManager.persist(client);
+    }
+
 
 }
