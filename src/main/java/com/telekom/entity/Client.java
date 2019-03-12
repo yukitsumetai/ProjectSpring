@@ -10,7 +10,6 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "clients")
-
 public class Client {
 
     @NotBlank(message = "Name is required")
@@ -30,9 +29,25 @@ public class Client {
     private String password;
 
 
-    @OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinColumn(name = "addressId")
     private Address address;
 
+
+
+    public Client() {
+
+    }
+
+
+
+    public int getClientID() {
+        return clientID;
+    }
+
+    public void setClientID(int clientID) {
+        this.clientID = clientID;
+    }
 
     public Address getAddress() {
         return address;

@@ -9,7 +9,7 @@ public class Address implements Serializable {
 
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
-        @Column(name="id")
+        @Column(name="addressID")
         private int id;
         private String street;
         private String houseNo;
@@ -17,12 +17,21 @@ public class Address implements Serializable {
         private String country;
         private int zip;
 
-        @OneToOne
-        @MapsId
+
+        @OneToOne(mappedBy = "address")
         private Client client;
 
         public Address(){}
 
+
+
+        public Client getClient() {
+                return client;
+        }
+
+        public void setClient(Client client) {
+                this.client = client;
+        }
 
         public int getAddressID() {
                 return id;

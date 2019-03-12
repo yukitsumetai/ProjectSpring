@@ -1,71 +1,68 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html>
 <html>
 <head>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/bsvalidate/style.css">
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
-</head>
+    <!--CSS-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!--JS-->
+    <script  src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="   crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="<c:url value="../resource/js/multiselect.js"/>"></script>
+
 <body>
 
 <div class="container">
     <div id="basicExample">
         <h2>Add tariff details</h2>
         <div id="basicExampleDemo">
-            <form id="simpleForm" action="/tarifs/new" method="post" class="well">
+            <form id="simpleForm" action="/tariffs/new" method="post" class="well">
                 <div class="form-group">
                     <label class="control-label">Tariff Name</label>
                     <input id="name" type="text" name="name" class="form-control required"/>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Monthly Price</label>
-                    <input id="price" type="text" name="price" class="form-control" required/>
+                    <input id="price" type="number" name="price" class="form-control" required/>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label">Description</label>
                     <input id="Description" type="text" name="Description" class="form-control" required/>
                 </div>
-                <!--  <div class="form-group">
-                      <label class="control-label">Options</label>
-                      <select id="country" class="form-control">
-                          <option value="None">-- Select --</option>
-                          <option value="China">China</option>
-                          <option value="United State">United State</option>
-                          <option value="Malaysia">Malaysia</option>
-                      </select>
-                  </div>-->
-                <div>
-                    <center>Billing Address</center>
+                <div class="control-label">
+                    <center>Compatible Options</center>
                 </div>
                 <div class="row">
-                    <div class="col-sm-6 form-group">
-                        <label path="billingAddress.street">Street</label>
-                        <input type="text" placeholder="Enter Billing Address.."
-                               class="form-control" path="billingAddress.street">
+                    <div class="col-xs-5">
+                        <select name="from[]" id="undo_redo" class="form-control" size="13" multiple="multiple">
+                            <c:forEach items="${options}" var="option">
+                                <option value=${option.id}>${option.name}</option>
+                            </c:forEach>
+                        </select>
                     </div>
-                    <div class="col-sm-6 form-group">
-                        <label path="billingAddress.houseNo">House Number</label>
-                        <input type="text" placeholder="Enter your house number"
-                               class="form-control" path="billingAddress.state">
+
+                    <div class="col-xs-2">
+                        <button type="button" id="undo_redo_undo" class="btn btn-primary btn-block">undo</button>
+                        <button type="button" id="undo_redo_rightAll" class="btn btn-default btn-block"><i class="glyphicon glyphicon-forward"></i></button>
+                        <button type="button" id="undo_redo_rightSelected" class="btn btn-default btn-block"><i class="glyphicon glyphicon-chevron-right"></i></button>
+                        <button type="button" id="undo_redo_leftSelected" class="btn btn-default btn-block"><i class="glyphicon glyphicon-chevron-left"></i></button>
+                        <button type="button" id="undo_redo_leftAll" class="btn btn-default btn-block"><i class="glyphicon glyphicon-backward"></i></button>
+                        <button type="button" id="undo_redo_redo" class="btn btn-warning btn-block">redo</button>
                     </div>
-               </div>
-                <div class="row">
-                    <div class="col-sm-6 form-group">
-                        <label path="billingAddress.city">City</label>
-                        <input type="text" placeholder="Enter your City.."
-                               class="form-control" path="billingAddress.city">
+
+                    <div class="col-xs-5">
+                        <select name="opt" id="undo_redo_to" class="form-control" size="13" multiple="true"></select>
                     </div>
-                    <div class="col-sm-6 form-group">
-                        <label path="billingAddress.zipcode">Zipcode</label>
-                        <input type="text" placeholder="Enter Zipcode.."
-                               class="form-control" path="billingAddress.zipcode"></input>
-                        <errors path="billingAddress.zipcode"></errors>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label path="billingAddress.country">Country</label>
-                    <input type="text" placeholder="Enter your City.."
-                           class="form-control" path="billingAddress.country"></input>
+
                 </div>
 
 
@@ -85,6 +82,12 @@
 
 </div><!-- .container -->
 <!-- Validating Password -->
+
+<script>
+    $(function() {
+        $('#undo_redo').multiselect();
+    });
+</script>
 <script type="text/javascript">
     function Validate() {
         var name = document.getElementById("name").value;
@@ -96,10 +99,6 @@
     }
 </script>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="js/bsvalidate/jquery.bsvalidate.js"></script>
-<script type="text/javascript" src="js/bsvalidate/main.js"></script>
 
 </body>
 </html>
