@@ -104,6 +104,35 @@ public class myController {
     }
 
 
+    @GetMapping("/admin/tariffs/edit/{id}")
+    public ModelAndView getEditForm(@PathVariable(value = "id") Integer id) {
+        Tariff tariff = tariffService.getOne(id);
+        return new ModelAndView("editTariff", "editProductObj", tariff);
+    }
+
+    @PostMapping("/admin/tariffs/edit")
+    public String editProduct(@ModelAttribute(value = "editProductObj") Tariff tariff) {
+
+        tariffService.editTariff(tariff);
+        return "redirect:/tariffs";
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @GetMapping("/options")
     public String getOptions(Model model) throws SQLException {
         model.addAttribute("options", optionService.getAll());

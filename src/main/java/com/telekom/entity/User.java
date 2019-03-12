@@ -1,34 +1,45 @@
 package com.telekom.entity;
 
-public class User {
-    private String name;
-    private String email;
+import java.io.Serializable;
+
+import javax.persistence.*;
 
 
-    public User() {
+@Table(name = "users")
+public class User implements Serializable {
 
+    @Id
+    @Column(name="login")
+    private String login;
+    private String password;
+   private boolean enabled=true;
+
+
+
+    public String getLogin() {
+        return login;
     }
 
-    public User(String name, String email) {
-        this.name = name;
-        this.email = email;
-
+    public void setLogin(String login) {
+        this.login = login;
     }
 
-    public String getName() {
-        return name;
+
+
+    public String getPassword() {
+        return password;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getEmail() {
-        return email;
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
 

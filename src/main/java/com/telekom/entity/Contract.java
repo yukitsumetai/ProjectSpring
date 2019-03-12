@@ -3,24 +3,22 @@ package com.telekom.entity;
 import java.util.ArrayList;
 
 public class Contract {
-    private int number;
+    private int phoneNumber;
     private Tariff tariff;
-    ArrayList<Option> options;
+    //private double price;
+   // ArrayList<OptionDTO> options;
+
+
     private Client client;
 
-    public Contract(int number, Tariff tariff, ArrayList<Option> options, Client client) {
-        this.number = number;
-        this.tariff = tariff;
-        this.options = options;
-        this.client = client;
-    }
+
 
     public int getNumber() {
-        return number;
+        return phoneNumber;
     }
 
     public void setNumber(int number) {
-        this.number = number;
+        this.phoneNumber = number;
     }
 
     public Tariff getTariff() {
@@ -31,13 +29,6 @@ public class Contract {
         this.tariff = tariff;
     }
 
-    public ArrayList<Option> getOptions() {
-        return options;
-    }
-
-    public void setOptions(ArrayList<Option> options) {
-        this.options = options;
-    }
 
     public Client getClient() {
         return client;

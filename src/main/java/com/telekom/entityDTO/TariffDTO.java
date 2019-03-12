@@ -1,4 +1,4 @@
-package com.telekom.entity;
+package com.telekom.entityDTO;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -11,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "tariffs")
-public class Tariff {
+public class TariffDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -31,26 +31,26 @@ public class Tariff {
     @JoinTable(name = "tariffs_options",
             joinColumns = @JoinColumn(name = "tariff_id"),
             inverseJoinColumns = @JoinColumn(name = "option_id"))
-    private List<Option> options = new ArrayList<>();
+    private List<OptionDTO> options = new ArrayList<>();
 
-    public Tariff() {
+    public TariffDTO() {
     }
 
-    public void addOption(List<Option> options) {
-        for (Option o: options
+    public void addOption(List<OptionDTO> options) {
+        for (OptionDTO o: options
              ) {
             this.options.add(o);
         }
     }
 
-    public void addOption(Option o) {
+    public void addOption(OptionDTO o) {
             this.options.add(o);
     }
-    public List<Option> getOptions() {
+    public List<OptionDTO> getOptions() {
         return options;
     }
 
-    public void setOptions(List<Option> options) {
+    public void setOptions(List<OptionDTO> options) {
         this.options = options;
     }
 

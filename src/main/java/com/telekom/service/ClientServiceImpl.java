@@ -1,7 +1,7 @@
 package com.telekom.service;
 
+import com.telekom.dao.ClientDAO;
 import com.telekom.entity.Client;
-import com.telekom.repository.ClientRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,30 +15,30 @@ import java.util.List;
 
 @Service
 
-@Transactional(readOnly = true)
+
 
 public class ClientServiceImpl implements ClientService {
 
 
     @Autowired
 
-    private ClientRepository clientRepository;
+    private ClientDAO clientDao;
 
 
     @Override
     public List<Client> getAll() {
-        return clientRepository.findAll();
+        return clientDao.getAll();
     }
 
     @Override
     @Transactional
     public void add(Client client) {
-        clientRepository.save(client);
+        clientDao.add(client);
     }
 
     @Override
     public Client getOne(String email) {
-        return clientRepository.findByEmail(email);
+        return clientDao.getOne(email);
 
     }
 

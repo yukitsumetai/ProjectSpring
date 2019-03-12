@@ -44,8 +44,8 @@
 </head>
 <body>
 
-<h2>Tariffs</h2>
-<p>List of current tariffs:</p>
+<h2>Options</h2>
+<p>List of current options:</p>
 <input id="myInput" type="text" placeholder="Search..">
 <br><br>
 
@@ -53,32 +53,32 @@
     <thead>
     <tr>
         <th>Name</th>
-        <th>Price</th>
+        <th>One Time Price</th>
+        <th>Monthly</th>
         <th>Description</th>
-        <th>Compatible Options</th>
-        <th>Add/Edit/Delete</th>
+        <th>Compatible Tariffs</th>
+        <th>/Edit/Delete</th>
     </tr>
     </thead>
     <tbody id="myTable">
-    <c:forEach items="${tariffs}" var="tariff">
+    <c:forEach items="${options}" var="o">
         <tr>
-            <td>${tariff.name}</td>
-            <td>${tariff.price}</td>
-            >
-            <td>${tariff.description}</td>
+            <td>${o.name}</td>
+            <td>${o.priceOneTime}</td>
+            <td>${o.priceMonthly}</td>
+            <td>${o.description}</td>
             <td>
-                <c:forEach items="${tariff.options}" var="option">
-                    <li>${option.name}</li>
-                </c:forEach>
+                <c:forEach items="${o.compatibleTariffs}" var="t">
+                <li>${t.name}</li>
+            </c:forEach>
+            </td>>
+            <td ng-controller="myController"><a
+                    href="getProductById/${client.id}" class="btn btn-info"
+                    role="button"> <span class="glyphicon glyphicon-info-sign"></span></a>
+                <a href="tariffs/newTariff"
+                   class="btn btn-success" style="margin-left: 5px"> <span
+                        class="glyphicon glyphicon-edit"></span></a>
             </td>
-            <td ng-controller="myController"><a href="getTariff/${tariff.id}" class="btn btn-info" role="button">
-                Add to Cart</a>
-                <!--view only to the admin -->
-                <a href="admin/tariffs/edit/${tariff.id}" class="btn btn-success" style="margin-left: 5px">
-                    Edit</a>
-                <a href="admin/tariffs/delete/${tariff.id}" class="btn btn-danger"
-                   style="margin-left: 5px"> Delete</a>
-
         </tr>
     </c:forEach>
     </tbody>

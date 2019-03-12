@@ -55,18 +55,8 @@
             <td>${client.surname}</td>
             <td>${client.birthday}</td>
             <td>${client.email}</td>
-            <td>
-                <c:forEach items="${client.address}" var="address">
-                    <li>${address.city}</li>
-                </c:forEach>
-            </td>>
-            <td ng-controller="myController"><a
-                    href="getProductById/${client.id}" class="btn btn-info"
-                    role="button"> <span class="glyphicon glyphicon-info-sign"></span></a>
-                <a href="tariffs/newTariff"
-                   class="btn btn-success" style="margin-left: 5px"> <span
-                        class="glyphicon glyphicon-edit"></span></a>
-            </td>
+            <td>${client.address.street}</td>
+
         </tr>
     </c:forEach>
     </tbody>

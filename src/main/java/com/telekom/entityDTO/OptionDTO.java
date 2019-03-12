@@ -1,4 +1,4 @@
-package com.telekom.entity;
+package com.telekom.entityDTO;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -11,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "options")
-public class Option {
+public class OptionDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -26,9 +26,9 @@ public class Option {
 
     @ManyToMany(mappedBy = "options", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @Fetch(FetchMode.SELECT)
-    private List<Tariff> compatibleTariffs = new ArrayList<>();
+    private List<TariffDTO> compatibleTariffs = new ArrayList<>();
 
-    public void addTariff(Tariff tariff) {
+    public void addTariff(TariffDTO tariff) {
         this.compatibleTariffs.add(tariff);
     }
 
@@ -72,15 +72,15 @@ public class Option {
         this.priceOneTime = priceOneTime;
     }
 
-    public List<Tariff> getCompatibleTariffs() {
+    public List<TariffDTO> getCompatibleTariffs() {
         return compatibleTariffs;
     }
 
-    public void setCompatibleTariffs(List<Tariff> compatibleTariffs) {
+    public void setCompatibleTariffs(List<TariffDTO> compatibleTariffs) {
         this.compatibleTariffs = compatibleTariffs;
     }
 
-    public void setCompatibleTariffs(Tariff compatibleTariff) {
+    public void setCompatibleTariffs(TariffDTO compatibleTariff) {
         this.compatibleTariffs.add(compatibleTariff);
     }
 }

@@ -1,8 +1,9 @@
 package com.telekom.service;
 
 
+import com.telekom.dao.OptionDao;
+import com.telekom.dao.TariffDao;;
 import com.telekom.entity.Tariff;
-import com.telekom.repository.TariffRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,32 +13,45 @@ import java.util.List;
 
 @Service
 
-@Transactional(readOnly = true)
+
 
 public class TariffServiceImpl implements TariffService {
 
 
     @Autowired
-
-    private TariffRepository tariffRepository;
-
+    private TariffDao tariffDao;
+    @Autowired
+    private OptionDao optionDao;
 
     @Override
     public List<Tariff> getAll() {
-        return tariffRepository.findAll();
+
+
+
+        return tariffDao.getAll();
+    }
+
+
+    @Override
+    public Tariff getOne(int id) {
+        return tariffDao.getOne(id);
+
     }
 
     @Override
     @Transactional
-    public void add(Tariff tariff) {
-        tariffRepository.save(tariff);
+    public void add(Tariff tariff, List<Integer> opts) {
+
+        for (Integer i: opts) {
+            tariff.addOption(optionDao.getOne(i));
+        }
+        tariffDao.add(tariff);
     }
 
     @Override
-    public Tariff getOne(String name) {
-        return tariffRepository.findByName(name);
+    public void editTariff(Tariff tariff){
+        tariffDao.editTariff(tariff);
+    }
 
     }
 
-
-}
