@@ -1,13 +1,20 @@
 package com.telekom.entity;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "tariffs")
-
 public class Tariff {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     @NotBlank(message = "Name is required")
     @Size(min = 1, max = 30, message = "Tariff name should be from 1 to 30 symbols")
@@ -18,21 +25,34 @@ public class Tariff {
     private double price;
     private String description;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
 
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SELECT)
+    @JoinTable(name = "tariffs_options",
+            joinColumns = @JoinColumn(name = "tariff_id"),
+            inverseJoinColumns = @JoinColumn(name = "option_id"))
+    private List<Option> options = new ArrayList<>();
 
     public Tariff() {
     }
 
-    public Tariff(String name, double price, String description) {
-        this.name = name;
-        this.price = price;
-        this.description = description;
+    public void addOption(List<Option> options) {
+        for (Option o: options
+             ) {
+            this.options.add(o);
+        }
     }
 
+    public void addOption(Option o) {
+            this.options.add(o);
+    }
+    public List<Option> getOptions() {
+        return options;
+    }
 
+    public void setOptions(List<Option> options) {
+        this.options = options;
+    }
 
     public String getName() {
         return name;
@@ -41,6 +61,7 @@ public class Tariff {
     public void setName(String name) {
         this.name = name;
     }
+
     public double getPrice() {
         return price;
     }
@@ -49,6 +70,13 @@ public class Tariff {
         this.price = price;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getDescription() {
         return description;
@@ -57,7 +85,6 @@ public class Tariff {
     public void setDescription(String description) {
         this.description = description;
     }
-
 
 
 }
