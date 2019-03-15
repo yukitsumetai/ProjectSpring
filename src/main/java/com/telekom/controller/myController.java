@@ -13,9 +13,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 
 @Controller
@@ -87,6 +93,8 @@ public class myController {
     @GetMapping("/tariffs")
     public String getTariffs(Model model) throws SQLException {
         model.addAttribute("tariffs", tariffService.getAll());
+        String table="edit";
+        model.addAttribute("table", table);
         return "tariffs";
     }
 
@@ -97,37 +105,35 @@ public class myController {
         return "newTariff";
     }
 
+
+
+
+
     @PostMapping("/tariffs/new")
-    public String newTariffAdd(@ModelAttribute Tariff tariff, @RequestParam("opt") List<Integer> opts) {
-        tariffService.add(tariff, opts);
+    public String newTariffAdd(@ModelAttribute Tariff tariff, @RequestParam(name="opt", required=false) List<Integer> opts) {
+    if(opts==null) {tariffService.add(tariff);}
+    else tariffService.add(tariff, opts);
         return "redirect:/tariffs";
     }
 
 
-    @GetMapping("/admin/tariffs/edit/{id}")
+    @GetMapping("/tariffs/edit/{id}")
     public ModelAndView getEditForm(@PathVariable(value = "id") Integer id) {
         Tariff tariff = tariffService.getOne(id);
-        return new ModelAndView("editTariff", "editProductObj", tariff);
+        return new ModelAndView("editTariff", "tariff", tariff);
     }
 
-    @PostMapping("/admin/tariffs/edit")
-    public String editProduct(@ModelAttribute(value = "editProductObj") Tariff tariff) {
-
+    @PostMapping("/tariffs/edit")
+    public String editProduct(@ModelAttribute(value = "tariff") Tariff tariff) {
         tariffService.editTariff(tariff);
         return "redirect:/tariffs";
     }
 
-
-
-
-
-
-
-
-
-
-
-
+    @GetMapping("/tariffs/delete/{id}")
+    public String deleteProduct(@PathVariable(value = "id") Integer id) {
+       tariffService.deleteTariff(id);
+        return "redirect:/tariffs";
+    }
 
 
 
@@ -146,10 +152,20 @@ public class myController {
     }
 
     @PostMapping("/options/new")
-    public String newOptionAdd(@ModelAttribute Option option, @RequestParam("opt") List<Integer> opts) {
-        optionService.add(option, opts);
+    public String newOptionAdd(@ModelAttribute Option option, @RequestParam(name="opt", required=false) List<Integer> opts) {
+        if(opts==null) {optionService.add(option);}
+        else optionService.add(option, opts);
         return "redirect:/options";
     }
+
+    @GetMapping("/contract")
+    public String newContract(Model model) throws SQLException {
+        model.addAttribute("tariffs", tariffService.getAll());
+        String table="add";
+        model.addAttribute("table", table);
+        return "tariffs";
+    }
+
 
 }
 

@@ -7,10 +7,10 @@ import java.util.List;
 
 public interface OptionService {
 
-    List<Option> getAll();
+   List<Option> getAll();
 
-    void add(Option option, List<Integer> opts);
-
+   void add(Option option, List<Integer> opts);
+   void add(Option option);
    Option getOne(int id);
 
 }

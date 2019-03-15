@@ -5,11 +5,6 @@
 <html>
 <head>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/bsvalidate/style.css">
-    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-
     <!--CSS-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
@@ -27,7 +22,7 @@
             <form id="optionForm" action="/options/new" method="post">
                 <div class="form-group">
                     <label class="control-label">Option Name</label>
-                    <input id="name" type="text" name="name" class="form-control required"/>
+                    <input id="name" type="text" name="name" class="form-control" required/>
                 </div>
                 <div class="form-group">
                     <label class="control-label">One Time Price</label>

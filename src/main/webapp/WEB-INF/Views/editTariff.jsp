@@ -5,11 +5,6 @@
 <html>
 <head>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/bsvalidate/style.css">
-    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-
     <!--CSS-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
@@ -17,33 +12,34 @@
     <script  src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="   crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="<c:url value="../resource/js/multiselect.js"/>"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
 
 <body>
 
 <div class="container">
     <div id="basicExample">
-        <h2>Add tariff details</h2>
+        <h2>Edit tariff details</h2>
         <div id="editTariff">
-            <form:form method="post" action="admin/tariffs/edit"  modelAttribute="editProductObj">
+            <form:form method="post" action="admin/tariffs/edit"  modelAttribute="tariff">
                 <div class="form-group">
                     <label class="control-label">Tariff Name</label>
-                    <input id="name" type="text" name="name" class="form-control required"/>
+                    <input value="${tariff.name}" id="name" type="text" name="name" class="form-control required"/>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Monthly Price</label>
-                    <input id="price" type="number" name="price" class="form-control" required/>
+                    <input value="${tariff.price}" id="price" type="number" name="price" class="form-control" required/>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label">Description</label>
-                    <input id="Description" type="text" name="Description" class="form-control"/>
+                    <input value="${tariff.description}" id="Description" type="text" name="Description" class="form-control"/>
                 </div>
-                <div class="control-label">
-                    <center>Compatible Options</center>
-                </div>
+
                 <div class="row">
                     <div class="col-xs-5">
-                        <select name="from[]" id="undo_redo" class="form-control" size="13" multiple="multiple">
+                        <label class="control-label">All options</label>
+                        <select name="from[]" id="undo_redo" class="form-control" size="13" multiple="true">
                             <c:forEach items="${options}" var="option">
                                 <option value=${option.id}>${option.name}</option>
                             </c:forEach>
@@ -51,6 +47,8 @@
                     </div>
 
                     <div class="col-xs-2">
+                        <br>
+
                         <button type="button" id="undo_redo_undo" class="btn btn-primary btn-block">undo</button>
                         <button type="button" id="undo_redo_rightAll" class="btn btn-default btn-block"><i class="glyphicon glyphicon-forward"></i></button>
                         <button type="button" id="undo_redo_rightSelected" class="btn btn-default btn-block"><i class="glyphicon glyphicon-chevron-right"></i></button>
@@ -60,15 +58,21 @@
                     </div>
 
                     <div class="col-xs-5">
-                        <select name="opt" id="undo_redo_to" class="form-control" size="13" multiple="true"></select>
+                        <label class="control-label">Compatible options</label>
+                        <select name="opt" id="undo_redo_to" class="form-control" size="13" multiple="true"
+                        <c:forEach items="${tariff.options}" var="option">
+                            <option value=${option.id}>${option.name}</option>
+                        </c:forEach>
+
+                        ></select>
                     </div>
 
                 </div>
 
-
                 <div class="form-group">
+                    <br>
                     <button type="submit" class="btn btn-success"
-                            onclick="return Validate()">Add
+                            onclick="return Validate()">Save <i class="glyphicon glyphicon-floppy-disk"></i>
                     </button>
                 </div>
 

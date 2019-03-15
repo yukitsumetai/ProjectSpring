@@ -19,11 +19,8 @@ import java.util.List;
 
 public class ClientServiceImpl implements ClientService {
 
-
     @Autowired
-
     private ClientDAO clientDao;
-
 
     @Override
     public List<Client> getAll() {
@@ -39,7 +36,6 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Client getOne(String email) {
         return clientDao.getOne(email);
-
     }
 
 

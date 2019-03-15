@@ -33,15 +33,7 @@ public class TariffDTO {
             inverseJoinColumns = @JoinColumn(name = "option_id"))
     private List<OptionDTO> options = new ArrayList<>();
 
-    public TariffDTO() {
-    }
 
-    public void addOption(List<OptionDTO> options) {
-        for (OptionDTO o: options
-             ) {
-            this.options.add(o);
-        }
-    }
 
     public void addOption(OptionDTO o) {
             this.options.add(o);

@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>Welcome to GlobalNet</title>
-    <img ="/resource/images/favicon1.png" alt="logo"/>
+    <img resource="/resource/images/favicon1.png" alt="logo"/>
 <body>
 Welcome to GlobalNet!
 ${msg}

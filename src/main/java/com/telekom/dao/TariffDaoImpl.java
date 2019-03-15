@@ -64,4 +64,13 @@ public class TariffDaoImpl implements TariffDao {
         session.close();
     }
 
+    public void deleteProduct(Integer id) {
+        Session session = sessionFactory.openSession();
+        Transaction tx=session.beginTransaction();
+        Tariff tariff = (Tariff) session.get(Tariff.class, id);
+        session.delete(tariff);
+        tx.commit();
+        session.close();// close the session
+    }
+
 }

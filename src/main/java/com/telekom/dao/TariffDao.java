@@ -1,6 +1,4 @@
 package com.telekom.dao;
-
-import com.telekom.entity.Option;
 import com.telekom.entity.Tariff;
 
 import java.util.List;
@@ -15,5 +13,6 @@ public interface TariffDao {
 
     void editTariff(Tariff tariff);
 
+    void deleteProduct(Integer id);
 }
 

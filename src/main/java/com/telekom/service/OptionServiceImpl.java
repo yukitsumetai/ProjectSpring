@@ -40,6 +40,12 @@ public class OptionServiceImpl implements OptionService {
     }
 
     @Override
+    @Transactional
+    public void add(Option option) {
+        optionDao.add(option);
+    }
+
+    @Override
     public Option getOne(int id) {
         return optionDao.getOne(id);
 

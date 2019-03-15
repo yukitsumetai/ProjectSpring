@@ -12,8 +12,7 @@
        http://www.springframework.org/schema/security
 http://www.springframework.org/schema/security/spring-security.xsd">
 
-    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer
-">
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="location" value="classpath:persistence.properties"/>
     </bean>
 
@@ -59,30 +58,11 @@ http://www.springframework.org/schema/security/spring-security.xsd">
     <jpa:repositories base-package="com.telekom.repository"/>
 
     <!-- Spring - Security Purpose -->
-    <security:http auto-config="true" use-expressions="true">
-        <security:intercept-url pattern="/index/**"
-                                access="permitAll" />
-        <security:intercept-url pattern="/index1/**"
-                                access="permitAll" />
-        <security:intercept-url pattern="/cart/**"
-                                access="permitAll" />
-        <security:intercept-url pattern="/get*/**"
-                                access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" />
-        <security:intercept-url pattern="/admin*/**"
-                                access="hasRole('ROLE_ADMIN')" />
-        <security:form-login login-page="/login"
-                             authentication-failure-url="/login?error" default-target-url="/index1" />
-        <security:logout logout-success-url="/login?logout" />
-    </security:http>
+
 
     <security:authentication-manager>
         <security:authentication-provider>
-            <!-- <security:user-service> -->
-            <!-- <security:user name="ismail@gmail.com" password="12345" -->
-            <!-- authorities="ROLE_USER" /> -->
-            <!-- <security:user name="ajmal@gmail.com" password="54321" -->
-            <!-- authorities="ROLE_ADMIN" /> -->
-            <!-- </security:user-service> -->
+
 
             <security:jdbc-user-service
                     data-source-ref="dataSource"

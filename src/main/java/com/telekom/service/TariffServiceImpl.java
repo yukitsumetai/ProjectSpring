@@ -25,9 +25,6 @@ public class TariffServiceImpl implements TariffService {
 
     @Override
     public List<Tariff> getAll() {
-
-
-
         return tariffDao.getAll();
     }
 
@@ -35,13 +32,11 @@ public class TariffServiceImpl implements TariffService {
     @Override
     public Tariff getOne(int id) {
         return tariffDao.getOne(id);
-
     }
 
     @Override
     @Transactional
     public void add(Tariff tariff, List<Integer> opts) {
-
         for (Integer i: opts) {
             tariff.addOption(optionDao.getOne(i));
         }
@@ -49,8 +44,18 @@ public class TariffServiceImpl implements TariffService {
     }
 
     @Override
+    @Transactional
+    public void add(Tariff tariff) {
+        tariffDao.add(tariff);
+    }
+
+    @Override
     public void editTariff(Tariff tariff){
         tariffDao.editTariff(tariff);
+    }
+    @Override
+    public void deleteTariff(Integer id) {
+        tariffDao.deleteProduct(id);
     }
 
     }

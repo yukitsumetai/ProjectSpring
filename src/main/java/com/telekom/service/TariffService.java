@@ -11,10 +11,14 @@ public interface TariffService {
 
     void add(Tariff tariff, List<Integer> opts);
 
+    void add(Tariff tariff);
+
+
     Tariff getOne(int id);
 
     void editTariff(Tariff tariff);
 
+    void deleteTariff(Integer id);
    // void update(OptionDTO option, Integer id);
 
 }
