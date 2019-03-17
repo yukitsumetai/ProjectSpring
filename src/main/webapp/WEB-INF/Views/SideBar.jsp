@@ -8,13 +8,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-
     <!-- Bootstrap core CSS -->
     <link href="../resource/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -40,7 +33,7 @@
                 <li><a href="../users/">Customers</a></li>
             </ul>
             <ul class="nav nav-sidebar">
-                <li><a href="../contract/">New customer</a></li>
+                <li><a href="../newContract/tariffs">New customer</a></li>
                 <li><a href="">Existing customer</a></li>
             </ul>
             <ul class="nav nav-sidebar">

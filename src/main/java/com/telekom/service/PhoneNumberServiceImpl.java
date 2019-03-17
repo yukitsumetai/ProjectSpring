@@ -31,13 +31,6 @@ public class PhoneNumberServiceImpl implements PhoneNumberService {
 
     }
 
-    public List<String> getNumbers() {
-        List<String> tmp=new ArrayList<>();
-        for (PhoneNumber n: phoneNumberRepository.findAll()) {
-           String s="+"+n.getNumber();
-           tmp.add(s);
-        }
-        return tmp;
-    }
+
 
 }

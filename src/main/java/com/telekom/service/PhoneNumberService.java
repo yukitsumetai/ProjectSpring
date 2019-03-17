@@ -8,7 +8,7 @@ public interface PhoneNumberService {
 
     List<PhoneNumber> getAll();
     PhoneNumber getOne(BigInteger phoneNumber);
-    List<String> getNumbers();
+
 
 }
 

@@ -1,24 +1,43 @@
 package com.telekom.entity;
 
-import java.util.ArrayList;
 
-public class Contract {
-    private int phoneNumber;
-    private Tariff tariff;
-    //private double price;
-   // ArrayList<OptionDTO> options;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.math.BigInteger;
+import java.util.List;
 
 
-    private Client client;
+public class Contract implements Serializable {
+
+    BigInteger phoneNumber;
+    Double price;
+    Client client;
+    Tariff tariff;
+    List<Option> options;
 
 
-
-    public int getNumber() {
+    public BigInteger getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setNumber(int number) {
-        this.phoneNumber = number;
+    public void setPhoneNumber(BigInteger phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 
     public Tariff getTariff() {
@@ -29,13 +48,11 @@ public class Contract {
         this.tariff = tariff;
     }
 
-
-    public Client getClient() {
-        return client;
+    public List<Option> getOptions() {
+        return options;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setOptions(List<Option> options) {
+        this.options = options;
     }
-
 }

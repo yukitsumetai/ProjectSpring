@@ -3,11 +3,14 @@ package com.telekom.service;
 
 import com.telekom.dao.OptionDao;
 import com.telekom.dao.TariffDao;;
+import com.telekom.entity.Option;
 import com.telekom.entity.Tariff;
+import com.telekom.entityDTO.TariffDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
 import java.util.List;
 
 
@@ -55,7 +58,7 @@ public class TariffServiceImpl implements TariffService {
     }
     @Override
     public void deleteTariff(Integer id) {
-        tariffDao.deleteProduct(id);
+        tariffDao.deleteTariff(id);
     }
 
     }

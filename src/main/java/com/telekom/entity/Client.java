@@ -33,13 +33,19 @@ public class Client {
     @JoinColumn(name = "addressId")
     private Address address;
 
-
+    Contract contract;
 
     public Client() {
 
     }
 
+    public Contract getContract() {
+        return contract;
+    }
 
+    public void setContract(Contract contract) {
+        this.contract = contract;
+    }
 
     public int getClientID() {
         return clientID;

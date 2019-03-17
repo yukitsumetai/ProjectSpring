@@ -12,16 +12,13 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
 
 
 @Controller
@@ -62,17 +59,7 @@ public class myController {
     @Autowired
     private PhoneNumberService phoneNumberService;
 
-    @RequestMapping(value = "/users/new")
-    public ModelAndView getRegistrationForm(Model model) {
-        Client client = new Client();
-        Address ba = new Address();
-        client.setAddress(ba);
-        model.addAttribute("numbers", phoneNumberService.getNumbers());
-        //model.addAttribute("client", client);
-        //User user = new User();
-        //client.setUser(user);
-        return new ModelAndView("sign", "client", client);
-    }
+
 
     // to insert the data
     @PostMapping("/users/new")
@@ -104,10 +91,6 @@ public class myController {
 
         return "newTariff";
     }
-
-
-
-
 
     @PostMapping("/tariffs/new")
     public String newTariffAdd(@ModelAttribute Tariff tariff, @RequestParam(name="opt", required=false) List<Integer> opts) {
@@ -158,14 +141,8 @@ public class myController {
         return "redirect:/options";
     }
 
-    @GetMapping("/contract")
-    public String newContract(Model model) throws SQLException {
-        model.addAttribute("tariffs", tariffService.getAll());
-        String table="add";
-        model.addAttribute("table", table);
-        return "tariffs";
-    }
-
 
 }
+
+
 

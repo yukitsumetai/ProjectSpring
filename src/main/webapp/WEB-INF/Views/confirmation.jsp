@@ -9,9 +9,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<%@ include file="TopNavBar.jsp"%>
-<%@ include file="SideBar.jsp"%>
-<%@ include file="shoppingCart.jsp"%>
+<%@ include file="TopNavBar.jsp" %>
+<%@ include file="SideBar.jsp" %>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -30,8 +30,6 @@
     <script>window.jQuery || document.write('<script src="../resource/assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="../resource/dist/js/bootstrap.min.js"></script>
     <script src="../resource/js/pagination.js"></script>
-    <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
-
     <script type="text/javascript">
         $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();

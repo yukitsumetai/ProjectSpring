@@ -24,7 +24,7 @@ public class Option {
     @NotBlank(message = "Price is required")
     private double priceOneTime;
 
-    @ManyToMany(mappedBy = "options", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @ManyToMany(mappedBy = "options", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @Fetch(FetchMode.SELECT)
     private List<Tariff> compatibleTariffs = new ArrayList<>();
 

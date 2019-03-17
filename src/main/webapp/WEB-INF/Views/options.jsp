@@ -75,6 +75,9 @@
                     </div>
                 </div>
             </div>
+            <c:if test="${table=='add'}">
+                <form action="/newContract/client" method="post" command="contract">
+            </c:if>
             <table class="table table-striped table-hover table-bordered" id="Table">
                 <thead>
                 <tr>
@@ -99,21 +102,36 @@
                             </c:forEach>
                         </td>
                         <td>
-                            <a href="getTariff/${o.id}" class="view" title="Add to cart" data-toggle="tooltip"><i
-                                    class="material-icons">&#xe854;</i></a>
-                            <a href="edit/${o.id}" class="edit" title="Edit" data-toggle="tooltip"><i
-                                    class="material-icons">&#xE254;</i></a>
-                            <a href="delete/${o.id}" class="delete" title="Delete" data-toggle="tooltip"><i
-                                    class="material-icons">&#xE872;</i></a>
+                        <c:choose>
+                        <c:when test="${table=='edit'}">
+                        <a href="tariffs/edit/${o.id}" class="edit" title="Edit"
+                           data-toggle="modal" data-target="#deleteModal" data-toggle="tooltip"><i
+                                class="material-icons">&#xE254;</i></a>
+                        <a href="#deleteModal" class="delete" title="Delete" data-toggle="modal"
+                           data-toggle="tooltip" data-target="#deleteModal" data-id="${o.id}"><i
+                                class="material-icons">&#xE872;</i></a>
+                        </c:when>
+                        <c:otherwise>
+
+                        <input type="checkbox" class="chk" value="${o.id}" name="optionID"/>&nbsp;
+                        </c:otherwise>
+                        </c:choose>
                         </td>
 
-                </c:forEach>
+                    </c:forEach>
+
                 </tbody>
             </table>
             <div class="col-md-12 text-center">
                 <div class="hint-text">Showing <b>4</b> out of <b>${fn:length(options)}</b> entries</div>
                 <ul class="pagination pagination-lg pager" id="pagination"></ul>
             </div>
+            <c:if test="${table=='add'}">
+                <div>
+                    <button type="submit" class="btn btn-success">Next</button>
+                </div>
+            </form>
+            </c:if>
 
         </div>
     </div>

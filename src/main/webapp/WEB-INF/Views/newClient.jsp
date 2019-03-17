@@ -23,7 +23,7 @@
                 <center>Add client's personal data</center>
             </div>
             <div id="personal data">
-                <form:form method="post" action="${url}" modelAttribute="client">
+                <form:form method="post" action="/newContract/confirm" modelAttribute="client">
                     <div class="row">
                         <div class="col-sm-6 form-group">
                             <form:label path="name">Name</form:label>
@@ -87,7 +87,7 @@
                     <div class="form-group">
                         <select id="country" class="form-control">
                             <c:forEach items="${numbers}" var="n">
-                                <option value=${n}>${n}</option>
+                                <option value=${n}>+${n}</option>
                             </c:forEach>
                         </select>
                     </div>

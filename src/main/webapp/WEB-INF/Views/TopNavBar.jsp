@@ -32,7 +32,7 @@
 
 </head>
 
-<body>
+<header>
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
@@ -49,8 +49,8 @@
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#">Basket</a></li>
                 <li><a href="#">Profile</a></li>
-            </ul>
+            </ul><!--end navbar-right -->
         </div>
     </div>
 </nav>
-</body>
+</header>

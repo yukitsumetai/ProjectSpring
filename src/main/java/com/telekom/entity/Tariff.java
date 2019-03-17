@@ -26,7 +26,7 @@ public class Tariff {
     private String description;
 
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @Fetch(FetchMode.SELECT)
     @JoinTable(name = "tariffs_options",
             joinColumns = @JoinColumn(name = "tariff_id"),
@@ -36,12 +36,7 @@ public class Tariff {
     public Tariff() {
     }
 
-    public void addOption(List<Option> options) {
-        for (Option o: options
-             ) {
-            this.options.add(o);
-        }
-    }
+
 
     public void addOption(Option o) {
             this.options.add(o);
