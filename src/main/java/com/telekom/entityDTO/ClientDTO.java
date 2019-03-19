@@ -1,8 +1,11 @@
 package com.telekom.entityDTO;
 
 
+import com.telekom.entity.Contract;
+
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.List;
 
 public class ClientDTO implements Serializable {
 
@@ -15,15 +18,21 @@ public class ClientDTO implements Serializable {
     private String password;
     private java.math.BigInteger passport;
     private String phoneNumber;
-
+    private List<ContractDTO> contracts;
     private AddressDTO address;
-
 
 
     public ClientDTO() {
 
     }
 
+    public List<ContractDTO> getContracts() {
+        return contracts;
+    }
+
+    public void setContracts(List<ContractDTO> contracts) {
+        this.contracts = contracts;
+    }
 
     public String getPhoneNumber() {
         return phoneNumber;

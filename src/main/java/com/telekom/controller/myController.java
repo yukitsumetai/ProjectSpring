@@ -36,6 +36,18 @@ public class myController {
         return "index";
     }
 
+    @GetMapping("/existingContract/search")
+    public String searchContract() {
+
+        return "search";
+    }
+
+    @PostMapping("/existingContract/contract")
+    public String showContract(Model model, @RequestParam(name = "phoneNumber") String number) {
+        model.addAttribute( "contractDTO", contractService.getOne(number));
+        return "confirmation";
+    }
+
     @RequestMapping(value = "/view", params = "Customer", method = RequestMethod.POST)
     public String action1() {
         return "index";
@@ -61,9 +73,9 @@ public class myController {
     @PostMapping("/getUser")
     public String registerCustomer(Model model, @RequestParam(name = "phoneNumber") String number) {
       List<ClientDTO> clients=new ArrayList<>();
-        clients.add(clientService.getOne(number));
+       clients.add(clientService.getOne(number));
        model.addAttribute( "clients", clients);
-        return "clients";
+        return "confirmation";
     }
 
     @Autowired

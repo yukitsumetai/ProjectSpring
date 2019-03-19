@@ -2,15 +2,33 @@ package com.telekom.mapper;
 
 import com.telekom.entity.Address;
 import com.telekom.entity.Client;
+import com.telekom.entity.Contract;
 import com.telekom.entityDTO.AddressDTO;
 import com.telekom.entityDTO.ClientDTO;
+import com.telekom.entityDTO.ContractDTO;
 import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class ClientMapper {
+
     public ClientDTO EntityToDto(Client t){
+        ClientDTO tmp=EntityToDtoWithoutContract(t);
+        List<ContractDTO> contracts=new ArrayList<>();
+        for (Contract c:t.getContract()
+             ) {
+           ContractDTO c2=new ContractDTO();
+           c2.setPhoneNumber(c.getPhoneNumber().toString());
+           contracts.add(c2);
+        }
+        tmp.setContracts(contracts);
+        return tmp;
+    }
+
+    public ClientDTO EntityToDtoWithoutContract(Client t){
         ClientDTO tmp=new ClientDTO();
         tmp.setId(t.getId());
         tmp.setName(t.getName());

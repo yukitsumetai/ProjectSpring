@@ -12,6 +12,6 @@ public interface ClientService {
     void add(ClientDTO client);
 
     ClientDTO getOne(String number);
-
+    ClientDTO getOne(Integer number);
 }
 

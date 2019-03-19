@@ -32,15 +32,19 @@ public class ContractServiceImpl implements ContractService {
     public void add(ContractDTO contract) {
 
         Contract tmp = contractMapper.DtoToEntity(contract);
-        phoneNumberDao.deleteNumber(tmp.getPhoneNumber());
-        Client c = clientMapper.DtoToEntity(contract.getClient());
-        c.setContract(tmp);
-        clientDao.add(c);
+       // phoneNumberDao.deleteNumber(tmp.getPhoneNumber());
+        Client c =clientDao.getOne(contract.getClient().getId());
+        if( c==null) {
+           c = clientMapper.DtoToEntity(contract.getClient());
+           c.setContract(tmp);
+           clientDao.add(c);
+       }
         contractDao.add(tmp);
         tmp.setClient(c);
     }
 
     @Override
+    @Transactional
     public ContractDTO getOne(String number) {
         BigInteger number2 = new BigInteger(number);
         ContractDTO tmp = contractMapper.EntityToDto(contractDao.getOne(number2));

@@ -12,6 +12,6 @@ public interface ClientDAO {
     void add(Client client);
 
     Client getOne(BigInteger n);
-
+    Client getOne(Integer n);
 }
 

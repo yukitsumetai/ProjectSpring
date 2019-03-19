@@ -24,12 +24,11 @@ public class ContractDaoImpl implements ContractDao {
     @Override
     public Contract getOne(BigInteger phoneNumber) {
         TypedQuery<Contract> q = entityManager.createQuery(
-                "select t from Contract t inner join t.tariff ", Contract.class
+                "select t from Contract t join fetch t.options as o where t.phoneNumber=:phoneNumber", Contract.class
         );
-       // q.setParameter("phoneNumber", phoneNumber);
-        List<Contract> c= q.getResultList();
-        Contract c2 = new Contract();
-        return c2;
+        q.setParameter("phoneNumber", phoneNumber);
+        Contract c=q.getResultList().stream().findAny().orElse(null);
+        return c;
 
     }
 }

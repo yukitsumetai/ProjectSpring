@@ -47,14 +47,15 @@ public class ContractMapper {
 
          tmp.setPhoneNumber(c.getPhoneNumber().toString());
         tmp.setPrice(c.getPrice());
-        tmp.setTariff(tariffMapper.EntityToDto(c.getTariff()));
+        tmp.setTariff(tariffMapper.EntityToDtoWithoutOptions(c.getTariff()));
         tmp.setClient(clientMapper.EntityToDto(c.getClient()));
         tmp.setPhoneNumber(c.getPhoneNumber().toString());
+
         if (c.getOptions() != null) {
             List<OptionDTO> options = new ArrayList<>();
             for (Option o :
                     c.getOptions()) {
-                options.add(optionMapper.EntityToDto(o));
+                options.add(optionMapper.EntityToDtoWithoutTariff(o));
             }
             tmp.setOptions(options);
         }

@@ -36,19 +36,41 @@
         <th>Birthday</th>
         <th>Address</th>
         <th>eMail</th>
+        <th>Action</th>
     </tr>
     </thead>
     <tbody id="myTable">
     <c:forEach items="${clients}" var="client">
         <tr>
             <td>${client.name} ${client.surname}</td>
-            <td>${client.phoneNumber}</td>
+            <td>
+            <c:forEach items="${client.contracts}" var="c">
+                ${c.phoneNumber}<br>
+            </c:forEach>
+            </td>
             <td>${client.passport}</td>
             <td>${client.birthday}</td>
             <td>${client.address.street}, ${client.address.houseNo}<br>
                     ${client.address.zip} ${client.address.city}<br>
                     ${client.address.country}
             <td>${client.email}</td>
+            <td>
+
+                <c:choose>
+                    <c:when test="${table=='edit'}">
+                        <a href="/tariffs/edit/${tariff.id}" class="edit" title="Edit"><i
+                                class="material-icons">&#xE254;</i></a>
+                        <a href="#deleteModal" class="delete" title="Delete" data-toggle="modal"
+                           data-toggle="tooltip" data-target="#deleteModal" data-id="${tariff.id}"><i
+                                class="material-icons">&#xE872;</i></a>
+                    </c:when>
+                    <c:otherwise>
+                        <input type="checkbox" class="chk" value="${client.id}" name="clientID" id="tariffID"/>&nbsp;
+                    </c:otherwise>
+                </c:choose>
+
+
+            </td>
         </tr>
 
     </c:forEach>

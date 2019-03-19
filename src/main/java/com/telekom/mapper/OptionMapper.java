@@ -12,12 +12,9 @@ import java.util.List;
 @Component
 public class OptionMapper {
     public OptionDTO EntityToDto(Option t){
-        OptionDTO tmp=new OptionDTO();
-        tmp.setId(t.getId());
-        tmp.setDescription(t.getDescription());
-        tmp.setName(t.getName());
-        tmp.setPriceMonthly(t.getPriceMonthly());
-        tmp.setPriceOneTime(t.getPriceOneTime());
+
+        OptionDTO tmp=EntityToDtoWithoutTariff(t);
+        if(t.getCompatibleTariffs()!=null){
         List<Tariff> tariffs=t.getCompatibleTariffs();
         List<TariffDTO> tariffsDTO=new ArrayList();
         for (Tariff tn:tariffs
@@ -27,7 +24,16 @@ public class OptionMapper {
             tmp2.setId(tn.getId());
             tariffsDTO.add(tmp2);
         }
-         tmp.setCompatibleTariffs(tariffsDTO);
+         tmp.setCompatibleTariffs(tariffsDTO);}
+        return tmp;
+    }
+    public OptionDTO EntityToDtoWithoutTariff(Option t){
+        OptionDTO tmp=new OptionDTO();
+        tmp.setId(t.getId());
+        tmp.setDescription(t.getDescription());
+        tmp.setName(t.getName());
+        tmp.setPriceMonthly(t.getPriceMonthly());
+        tmp.setPriceOneTime(t.getPriceOneTime());
         return tmp;
     }
 

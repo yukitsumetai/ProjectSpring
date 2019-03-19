@@ -6,6 +6,7 @@ import com.telekom.entity.Client;
 import com.telekom.entity.Option;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -22,7 +23,7 @@ public class ClientDaoImpl implements ClientDAO {
 
     @Override
     public List<Client> getAll() {
-        return entityManager.createQuery("select t from Client t").getResultList();
+        return entityManager.createQuery("select t from Client t join fetch t.contract").getResultList();
     }
 
 
@@ -35,9 +36,17 @@ public class ClientDaoImpl implements ClientDAO {
 
     public Client getOne(BigInteger phoneNumber) {
         TypedQuery<Client> q = entityManager.createQuery(
-                "select t from Client t where t.phoneNumber=:phoneNumber", Client.class
-        );
+                "select t from Client t join fetch t.contract as c  where c.phoneNumber=:phoneNumber", Client.class);
         q.setParameter("phoneNumber", phoneNumber);
+        return q.getResultList().stream().findAny().orElse(null);
+
+    }
+
+    public Client getOne(Integer id) {
+        TypedQuery<Client> q = entityManager.createQuery(
+                "select t from Client t where t.id=:id", Client.class
+        );
+        q.setParameter("id", id);
         return q.getResultList().stream().findAny().orElse(null);
 
     }

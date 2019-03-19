@@ -16,7 +16,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <!DOCTYPE html>
-      <html lang="en">
+    <html lang="en">
     <head>
 
         <title>Options Overview</title>
@@ -85,12 +85,17 @@
                 </div>
             </div>
             <c:if test="${table=='add'}">
-                <form action="/newContract/client" method="post" command="contract">
-            </c:if>
+            <form action="/newContract/client" method="post" command="contract">
+                </c:if>
                 <%@ include file="tableOptions.jsp" %>
-            <c:if test="${table=='add'}">
-                <div>
-                    <button type="submit" class="btn btn-success">Next</button>
+                <c:if test="${table=='add'}">
+                <div class="row">
+                    <div class="col-sm-2 form-group">
+                        <button type="submit" class="btn btn-success" name="action" value="new">New Client</button>
+                    </div>
+                    <div class="col-sm-2 form-group price">
+                        <button type="submit" class="btn btn-success" name="action" value="existing">Existing client</button>
+                    </div>
                 </div>
             </form>
             </c:if>
@@ -134,24 +139,24 @@
         $form.attr('action', '/options/delete/' + id);
     });
 </script>
-                <!--Checkbox-->
+<!--Checkbox-->
 <script>
-    $('input.chk').on('change', function(){
-     var generated = document.getElementById('optionsCart').getElementsByClassName( 'generated' );
-        for (var i=0; i<generated.length; i++){
+    $('input.chk').on('change', function () {
+        var generated = document.getElementById('optionsCart').getElementsByClassName('generated');
+        for (var i = 0; i < generated.length; i++) {
             generated[i].remove();
         }
         var checkboxes = document.getElementsByName('optionID');
-        for (var i=0; i<checkboxes.length; i++) {
+        for (var i = 0; i < checkboxes.length; i++) {
 
             if (checkboxes[i].checked) {
 
                 var name = checkboxes[i].getAttribute('optionName');
-                var price = '$'+checkboxes[i].getAttribute('price');
+                var price = '$' + checkboxes[i].getAttribute('price');
 
-                var newInput = '<li class="generated">' + name+
-                    '<div class="cd-price">'+price+'</div></li>';
-                document.getElementById('optionsCart').insertAdjacentHTML('beforeend',newInput);
+                var newInput = '<li class="generated">' + name +
+                    '<div class="cd-price">' + price + '</div></li>';
+                document.getElementById('optionsCart').insertAdjacentHTML('beforeend', newInput);
             }
 
         }

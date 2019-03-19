@@ -33,8 +33,8 @@
                 <li><a href="../users/">Customers</a></li>
             </ul>
             <ul class="nav nav-sidebar">
-                <li><a href="../newContract/tariffs">New customer</a></li>
-                <li><a href="">Existing customer</a></li>
+                <li><a href="../newContract/tariffs">New Contract</a></li>
+                <li><a href="../existingContract/search">Existing Contract</a></li>
             </ul>
             <ul class="nav nav-sidebar">
                 <li><a href="">Contract Details</a></li>

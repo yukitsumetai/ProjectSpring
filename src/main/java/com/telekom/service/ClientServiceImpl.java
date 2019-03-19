@@ -27,9 +27,9 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public List<ClientDTO> getAll() {
-       List<ClientDTO> clients =new ArrayList<>();
-        for (Client c:clientDao.getAll()
-             ) {
+        List<ClientDTO> clients = new ArrayList<>();
+        for (Client c : clientDao.getAll()
+        ) {
             clients.add(clientMapper.EntityToDto(c));
         }
         return clients;
@@ -38,16 +38,22 @@ public class ClientServiceImpl implements ClientService {
     @Override
     @Transactional
     public void add(ClientDTO client) {
-        Client tmp=clientMapper.DtoToEntity(client);
+        Client tmp = clientMapper.DtoToEntity(client);
         clientDao.add(tmp);
     }
 
 
-   public ClientDTO getOne(String number) {
+    @Transactional
+    public ClientDTO getOne(String number) {
         BigInteger number2 = new BigInteger(number);
-        ClientDTO tmp=clientMapper.EntityToDto(clientDao.getOne(number2));
-        return tmp
-                ;}
+        ClientDTO tmp = clientMapper.EntityToDto(clientDao.getOne(number2));
+        return tmp;
+    }
+
+
+    public ClientDTO getOne(Integer id) {
+        return clientMapper.EntityToDtoWithoutContract(clientDao.getOne(id));
+    }
 
 
 }

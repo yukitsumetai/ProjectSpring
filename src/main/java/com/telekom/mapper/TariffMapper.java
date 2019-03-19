@@ -15,11 +15,8 @@ import java.util.List;
 public class TariffMapper {
 
   public TariffDTO EntityToDto(Tariff t){
-        TariffDTO tmp=new TariffDTO();
-      tmp.setId(t.getId());
-      tmp.setDescription(t.getDescription());
-      tmp.setName(t.getName());
-      tmp.setPrice(t.getPrice());
+        TariffDTO tmp= EntityToDtoWithoutOptions(t);
+      if(t.getOptions()!=null){
       List<Option> options=t.getOptions();
         List<OptionDTO> tmpOptions=new ArrayList();
         for (Option o:options) {
@@ -31,9 +28,18 @@ public class TariffMapper {
             tmp2.setDescription(o.getDescription());
             tmpOptions.add(tmp2);
         }
-        tmp.setOptions(tmpOptions);
+        tmp.setOptions(tmpOptions);}
         return tmp;
   }
+
+    public TariffDTO EntityToDtoWithoutOptions(Tariff t){
+        TariffDTO tmp=new TariffDTO();
+        tmp.setId(t.getId());
+        tmp.setDescription(t.getDescription());
+        tmp.setName(t.getName());
+        tmp.setPrice(t.getPrice());
+        return tmp;
+    }
 
         public Tariff DtoToEntity(TariffDTO t){
             Tariff tmp=new Tariff();

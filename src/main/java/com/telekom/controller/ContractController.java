@@ -1,10 +1,7 @@
 package com.telekom.controller;
 
 import com.telekom.entityDTO.*;
-import com.telekom.service.ContractService;
-import com.telekom.service.OptionService;
-import com.telekom.service.PhoneNumberService;
-import com.telekom.service.TariffService;
+import com.telekom.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +23,9 @@ public class ContractController {
 
     @Autowired
     private OptionService optionService;
+
+    @Autowired
+    private ClientService clientService;
 
     @Autowired
     private PhoneNumberService phoneNumberService;
@@ -53,9 +53,19 @@ public class ContractController {
         return "options";
     }
 
+    @RequestMapping(value = "/view", params = "Customer", method = RequestMethod.POST)
+    public String action1() {
+        return "index";
+    }
 
-    @PostMapping("/client")
-    public String newContractOptionAdd(Model model, ContractDTO contract, @RequestParam(name = "optionID", required = false) List<Integer> id) {
+    @RequestMapping(value = "/view", params = "Shop", method = RequestMethod.POST)
+    public String action2() {
+        return "redirect:/shopagent";
+    }
+
+
+    @PostMapping(value="/client")
+    public String newContractOptionAdd(Model model, ContractDTO contract,@RequestParam(name="action") String action, @RequestParam(name = "optionID", required = false) List<Integer> id) {
         if (id != null) {
             List<OptionDTO> options = new ArrayList<>();
             for (Integer i : id
@@ -71,10 +81,23 @@ public class ContractController {
         AddressDTO a = new AddressDTO();
         ContractDTO c =new ContractDTO();
         client.setAddress(a);
-        model.addAttribute("numbers", phoneNumberService.getAll());
         model.addAttribute("client", client);
+       if(action.equals("new")){
+           model.addAttribute("numbers", phoneNumberService.getAll());
+           return "newClient";}
+       else {
+           model.addAttribute("clients", clientService.getAll());
+           return "clients";
+       }
+    }
 
-        return "newClient";
+
+    @PostMapping("/confirmExisting")
+    public String newContractOptionAdd(ContractDTO contract,  @RequestParam(name = "clientID", required = false) Integer id) {
+
+        contract.setClient(clientService.getOne(id));
+        contract.setPhoneNumber("46576685434");
+        return "confirmation";
     }
 
     @PostMapping("/confirm")

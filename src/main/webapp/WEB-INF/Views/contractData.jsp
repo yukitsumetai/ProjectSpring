@@ -13,7 +13,7 @@
 <body>
 
 <div class="table-title">
-    <h2>Contract details</h2>
+    <h2>Details of +${contractDTO.phoneNumber} contract</h2>
 </div>
 <div class="row">
     <div class="col-sm-4 form-group">
