@@ -31,7 +31,7 @@
     <thead>
     <tr>
         <th>Name</th>
-        <th>Phone number</th>
+        <th>Contracts</th>
         <th>Passport number</th>
         <th>Birthday</th>
         <th>Address</th>

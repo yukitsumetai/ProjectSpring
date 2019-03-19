@@ -5,10 +5,7 @@ import com.telekom.entityDTO.AddressDTO;
 import com.telekom.entityDTO.ClientDTO;
 import com.telekom.entityDTO.OptionDTO;
 import com.telekom.entityDTO.TariffDTO;
-import com.telekom.service.ClientService;
-import com.telekom.service.OptionService;
-import com.telekom.service.PhoneNumberService;
-import com.telekom.service.TariffService;
+import com.telekom.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
@@ -29,9 +26,10 @@ import java.util.List;
 public class myController {
 
     @Autowired
-    //@Qualifier("JPAClientDao")
     private ClientService clientService;
 
+    @Autowired
+    private ContractService contractService;
     @GetMapping("/view")
     public String view(@RequestParam(value = "name", required = false, defaultValue = "stranger ") String name, Model model) {
         model.addAttribute("msg", "Hello " + name);
@@ -63,8 +61,9 @@ public class myController {
     @PostMapping("/getUser")
     public String registerCustomer(Model model, @RequestParam(name = "phoneNumber") String number) {
       List<ClientDTO> clients=new ArrayList<>();
-       model.addAttribute( "clients", clients.add(clientService.getOne(number)));
-        return "confirmation";
+        clients.add(clientService.getOne(number));
+       model.addAttribute( "clients", clients);
+        return "clients";
     }
 
     @Autowired

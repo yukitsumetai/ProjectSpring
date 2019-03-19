@@ -11,7 +11,7 @@ public class Contract implements Serializable {
 
 
    @Id
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "phoneNumberc", referencedColumnName = "phoneNumber")
     Client client;
 

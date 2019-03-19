@@ -27,7 +27,7 @@ public class Tariff {
 
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    @Fetch(FetchMode.SELECT)
+    //@Fetch(FetchMode.SELECT)
     @JoinTable(name = "tariffs_options",
             joinColumns = @JoinColumn(name = "tariff_id"),
             inverseJoinColumns = @JoinColumn(name = "option_id"))

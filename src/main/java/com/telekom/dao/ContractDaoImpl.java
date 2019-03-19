@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.math.BigInteger;
+import java.util.List;
 
 @Repository
 public class ContractDaoImpl implements ContractDao {
@@ -23,10 +24,12 @@ public class ContractDaoImpl implements ContractDao {
     @Override
     public Contract getOne(BigInteger phoneNumber) {
         TypedQuery<Contract> q = entityManager.createQuery(
-                "select t from Contract t where t.client.phoneNumber=:phoneNumber", Contract.class
+                "select t from Contract t inner join t.tariff ", Contract.class
         );
-        q.setParameter("phoneNumber", phoneNumber);
-        return q.getResultList().stream().findAny().orElse(null);
+       // q.setParameter("phoneNumber", phoneNumber);
+        List<Contract> c= q.getResultList();
+        Contract c2 = new Contract();
+        return c2;
 
     }
 }

@@ -7,11 +7,14 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "clients")
-public class Client {
+public class Client implements Serializable {
 
     @NotBlank(message = "Name is required")
     private String name;
@@ -31,6 +34,8 @@ public class Client {
     private String password;
     private BigInteger passport;
     private BigInteger phoneNumber;
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    private List<Contract> contract = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
@@ -39,6 +44,18 @@ public class Client {
 
     public Client() {
 
+    }
+
+    public List<Contract> getContract() {
+        return contract;
+    }
+
+    public void setContract(List<Contract> contract) {
+        this.contract = contract;
+    }
+
+    public void setContract(Contract contract) {
+        this.contract.add(contract);
     }
 
     public BigInteger getPhoneNumber() {

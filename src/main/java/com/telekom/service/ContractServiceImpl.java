@@ -2,6 +2,7 @@ package com.telekom.service;
 
 import com.telekom.dao.ContractDao;
 import com.telekom.dao.PhoneNumberDao;
+import com.telekom.entity.Client;
 import com.telekom.entity.Contract;
 import com.telekom.entityDTO.ContractDTO;
 import com.telekom.mapper.ContractMapper;
@@ -27,6 +28,8 @@ public class ContractServiceImpl implements ContractService {
     public void add(ContractDTO contract) {
         Contract tmp = contractMapper.DtoToEntity(contract);
         phoneNumberDao.deleteNumber(tmp.getClient().getPhoneNumber());
+       Client c= tmp.getClient();
+       c.setContract(tmp);
         contractDao.add(tmp);
     }
 
