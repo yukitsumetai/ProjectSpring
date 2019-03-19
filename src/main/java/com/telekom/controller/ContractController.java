@@ -69,6 +69,7 @@ public class ContractController {
         }
         ClientDTO client = new ClientDTO();
         AddressDTO a = new AddressDTO();
+        ContractDTO c =new ContractDTO();
         client.setAddress(a);
         model.addAttribute("numbers", phoneNumberService.getAll());
         model.addAttribute("client", client);
@@ -79,8 +80,7 @@ public class ContractController {
     @PostMapping("/confirm")
     public String newContractOptionAdd(ContractDTO contract, @ModelAttribute ClientDTO client) {
         contract.setClient(client);
-        // BigInteger phoneNumber=new BigInteger(); //do check!!
-        //contract.setPhoneNumber(number);
+        contract.setPhoneNumber(client.getPhoneNumber());
         return "confirmation";
     }
 

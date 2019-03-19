@@ -29,7 +29,7 @@
     <div class="col-sm-4 form-group">
         <label>Tariff: </label> ${contractDTO.tariff.name}<br>
         <div class="row description">
-            ${DTO.tariff.description}
+            ${contractDTO.tariff.description}
         </div>
     </div>
     <div class="col-sm-8 form-group price" color=" #a5aebc">

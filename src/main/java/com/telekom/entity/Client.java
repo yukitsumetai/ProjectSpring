@@ -33,9 +33,8 @@ public class Client implements Serializable {
     private String birthday;
     private String password;
     private BigInteger passport;
-    private BigInteger phoneNumber;
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
-    private List<Contract> contract = new ArrayList<>();
+    private List<Contract> contract=new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
@@ -58,13 +57,6 @@ public class Client implements Serializable {
         this.contract.add(contract);
     }
 
-    public BigInteger getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(BigInteger phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
 
     public BigInteger getPassport() {
         return passport;

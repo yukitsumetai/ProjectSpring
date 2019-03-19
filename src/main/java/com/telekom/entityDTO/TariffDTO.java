@@ -1,6 +1,7 @@
 package com.telekom.entityDTO;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,11 +13,21 @@ public class TariffDTO implements Serializable {
     private double price;
     private String description;
     private List<OptionDTO> options = new ArrayList<>();
+    private BigInteger phoneNumber;
 
+
+    public BigInteger getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(BigInteger phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
     public List<OptionDTO> getOptions() {
         return options;
     }
+
     public void setOptions(List<OptionDTO> options) {
         this.options = options;
     }

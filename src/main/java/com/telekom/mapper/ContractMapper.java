@@ -26,10 +26,9 @@ public class ContractMapper {
     public Contract DtoToEntity(ContractDTO c) {
         Contract tmp = new Contract();
         BigInteger number = new BigInteger(c.getPhoneNumber());
-       // tmp.setPhoneNumberc(number);
+       tmp.setPhoneNumber(number);
         tmp.setPrice(c.getPrice());
         tmp.setTariff(tariffMapper.DtoToEntity(c.getTariff()));
-        tmp.setClient(clientMapper.DtoToEntity(c.getClient()));
         tmp.setPriceTariff(c.getTariff().getPrice());
         if (c.getOptions() != null) {
             List<Option> options = new ArrayList<>();
@@ -46,10 +45,11 @@ public class ContractMapper {
     public ContractDTO EntityToDto(Contract c){
         ContractDTO tmp=new ContractDTO();
 
-         tmp.setPhoneNumber(c.getClient().getPhoneNumber().toString());
+         tmp.setPhoneNumber(c.getPhoneNumber().toString());
         tmp.setPrice(c.getPrice());
         tmp.setTariff(tariffMapper.EntityToDto(c.getTariff()));
         tmp.setClient(clientMapper.EntityToDto(c.getClient()));
+        tmp.setPhoneNumber(c.getPhoneNumber().toString());
         if (c.getOptions() != null) {
             List<OptionDTO> options = new ArrayList<>();
             for (Option o :

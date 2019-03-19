@@ -31,7 +31,7 @@ public class Tariff {
     @JoinTable(name = "tariffs_options",
             joinColumns = @JoinColumn(name = "tariff_id"),
             inverseJoinColumns = @JoinColumn(name = "option_id"))
-    private List<Option> options = new ArrayList<>();
+    private List<Option> options;
 
     public Tariff() {
     }

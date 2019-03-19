@@ -17,7 +17,6 @@ public class ClientMapper {
         tmp.setSurname(t.getSurname());
         tmp.setPassport(t.getPassport());
         tmp.setEmail(t.getEmail());
-        tmp.setPhoneNumber(t.getPhoneNumber().toString());
         tmp.setBirthday(t.getBirthday());
         tmp.setPassword(t.getPassword());
         tmp.setAddress(EntityToDtoAddress(t.getAddress()));
@@ -46,7 +45,6 @@ public class ClientMapper {
         tmp.setBirthday(t.getBirthday());
         tmp.setPassword(t.getPassword());
         BigInteger number=new BigInteger(t.getPhoneNumber());
-        tmp.setPhoneNumber(number);
         tmp.setEmail(t.getEmail());
         tmp.setAddress(DtoToEntityAddress(t.getAddress()));
         return tmp;

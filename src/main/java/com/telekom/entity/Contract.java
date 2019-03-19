@@ -3,6 +3,7 @@ package com.telekom.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.List;
 
 @Entity
@@ -10,21 +11,31 @@ import java.util.List;
 public class Contract implements Serializable {
 
 
-   @Id
+    @Id
+    private BigInteger phoneNumber;
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "phoneNumberc", referencedColumnName = "phoneNumber")
+    @JoinColumn(name = "clientId", referencedColumnName = "id")
     Client client;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "tariffId")
-   Tariff tariff;
+    Tariff tariff;
 
     @ManyToMany(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "id")
-   List<Option> options;
+    @JoinColumn(name = "phoneNumber")
+    List<Option> options;
 
     private Double price;
     private Double priceTariff;
+
+
+    public BigInteger getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(BigInteger phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
     public List<Option> getOptions() {
         return options;

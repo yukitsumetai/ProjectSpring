@@ -25,7 +25,7 @@ public class Option {
     private double priceOneTime;
 
     @ManyToMany(mappedBy = "options", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    private List<Tariff> compatibleTariffs = new ArrayList<>();
+    private List<Tariff> compatibleTariffs;
 
     public void addTariff(Tariff tariff) {
         this.compatibleTariffs.add(tariff);

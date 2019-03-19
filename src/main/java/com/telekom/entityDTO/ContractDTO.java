@@ -15,12 +15,12 @@ import java.util.List;
 @Entity
 public class ContractDTO implements Serializable {
 
-    String phoneNumber;
-    Double price=(double)0;
-    Double priceOneTime=(double)0;
-    ClientDTO client;
-    TariffDTO tariff;
-    List<OptionDTO> options;
+   private String phoneNumber;
+    private  Double price=(double)0;
+    private Double priceOneTime=(double)0;
+    private ClientDTO client;
+    private TariffDTO tariff;
+    private List<OptionDTO> options;
 
 
 

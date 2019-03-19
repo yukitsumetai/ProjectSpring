@@ -104,7 +104,7 @@
                 <div>
                     <div class="form-group col-sm-6">
                         <label path="password">Phone number</label>
-                        <form:select path="phoneNumber" id="phoneNumber" class="form-control">
+                        <form:select  path="phoneNumber" id="phoneNumber" class="form-control">
                             <c:forEach items="${numbers}" var="n">
                                 <option  value="${n}">+${n}</option>
                             </c:forEach>
@@ -116,8 +116,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-success">Next
-                    </button>
+                    <button type="submit" class="btn btn-success">Next</button>
                 </div>
 
             </form:form>
