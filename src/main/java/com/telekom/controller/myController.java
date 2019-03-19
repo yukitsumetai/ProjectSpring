@@ -1,6 +1,8 @@
 package com.telekom.controller;
 
 import com.telekom.entity.*;
+import com.telekom.entityDTO.OptionDTO;
+import com.telekom.entityDTO.TariffDTO;
 import com.telekom.service.ClientService;
 import com.telekom.service.OptionService;
 import com.telekom.service.PhoneNumberService;
@@ -61,15 +63,7 @@ public class myController {
 
 
 
-    // to insert the data
-    @PostMapping("/users/new")
-    public String registerCustomer(@Valid @ModelAttribute("client") Client client, BindingResult result) {
-        if (result.hasErrors())
-            return "index";
-        clientService.add(client);
-        // model.addAttribute("registrationSuccess", "Registered Successfully. Login using username and password");
-        return "redirect:/users";
-    }
+
 
     @Autowired
     private TariffService tariffService;
@@ -102,29 +96,27 @@ public class myController {
 
     @GetMapping("/tariffs/edit/{id}")
     public ModelAndView getEditForm(@PathVariable(value = "id") Integer id) {
-        Tariff tariff = tariffService.getOne(id);
+        TariffDTO tariff = tariffService.getOne(id);
         return new ModelAndView("editTariff", "tariff", tariff);
     }
 
     @PostMapping("/tariffs/edit")
-    public String editProduct(@ModelAttribute(value = "tariff") Tariff tariff) {
-        tariffService.editTariff(tariff);
+    public String editProduct(@ModelAttribute(value = "tariff") TariffDTO tariffDto) {
+        tariffService.editTariff(tariffDto);
         return "redirect:/tariffs";
     }
 
     @GetMapping("/tariffs/delete/{id}")
-    public String deleteProduct(@PathVariable(value = "id") Integer id) {
+    public String deleteTariff(@PathVariable(value = "id") Integer id) {
        tariffService.deleteTariff(id);
         return "redirect:/tariffs";
     }
 
-
-
-
-
     @GetMapping("/options")
     public String getOptions(Model model) throws SQLException {
         model.addAttribute("options", optionService.getAll());
+        String table="edit";
+        model.addAttribute("table", table);
         return "options";
     }
 
@@ -138,6 +130,24 @@ public class myController {
     public String newOptionAdd(@ModelAttribute Option option, @RequestParam(name="opt", required=false) List<Integer> opts) {
         if(opts==null) {optionService.add(option);}
         else optionService.add(option, opts);
+        return "redirect:/options";
+    }
+
+    @GetMapping("/options/edit/{id}")
+    public ModelAndView getEditOption(@PathVariable(value = "id") Integer id) {
+        OptionDTO option=optionService.getOne(id);
+        return new ModelAndView("editOption", "option", option);
+    }
+
+    @PostMapping("/options/edit")
+    public String editProduct(@ModelAttribute(value = "option") Option option) {
+        optionService.editOption(option);
+        return "redirect:/options";
+    }
+
+    @GetMapping("/options/delete/{id}")
+    public String deleteOption(@PathVariable(value = "id") Integer id) {
+       optionService.deleteOption(id);
         return "redirect:/options";
     }
 

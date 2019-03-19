@@ -3,6 +3,8 @@ package com.telekom.service;
 import com.telekom.dao.ClientDAO;
 import com.telekom.entity.Client;
 
+import com.telekom.entityDTO.ClientDTO;
+import com.telekom.mapper.ClientMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -21,21 +24,29 @@ public class ClientServiceImpl implements ClientService {
 
     @Autowired
     private ClientDAO clientDao;
+    @Autowired
+    private ClientMapper clientMapper;
 
     @Override
-    public List<Client> getAll() {
-        return clientDao.getAll();
+    public List<ClientDTO> getAll() {
+       List<ClientDTO> clients =new ArrayList<>();
+        for (Client c:clientDao.getAll()
+             ) {
+            clients.add(clientMapper.EntityToDto(c));
+        }
+        return clients;
     }
 
     @Override
     @Transactional
-    public void add(Client client) {
-        clientDao.add(client);
+    public void add(ClientDTO client) {
+
+        clientDao.add( clientMapper.DtoToEntity(client));
     }
 
     @Override
-    public Client getOne(String email) {
-        return clientDao.getOne(email);
+    public ClientDTO getOne(String email) {
+        return clientMapper.EntityToDto(clientDao.getOne(email));
     }
 
 

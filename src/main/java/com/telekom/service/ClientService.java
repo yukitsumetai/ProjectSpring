@@ -1,16 +1,17 @@
 package com.telekom.service;
 
 import com.telekom.entity.Client;
+import com.telekom.entityDTO.ClientDTO;
 
 import java.util.List;
 
 public interface ClientService {
 
-    List<Client> getAll();
+    List<ClientDTO> getAll();
 
-    void add(Client client);
+    void add(ClientDTO client);
 
-    Client getOne(String email);
+    ClientDTO getOne(String email);
 
 }
 

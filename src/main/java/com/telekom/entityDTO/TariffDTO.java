@@ -1,47 +1,22 @@
 package com.telekom.entityDTO;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "tariffs")
-public class TariffDTO {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+public class TariffDTO implements Serializable {
+
     private int id;
-
-    @NotBlank(message = "Name is required")
-    @Size(min = 1, max = 30, message = "TariffDTO name should be from 1 to 30 symbols")
     private String name;
-
-
-    @NotBlank(message = "Price is required")
     private double price;
     private String description;
-
-
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @Fetch(FetchMode.SELECT)
-    @JoinTable(name = "tariffs_options",
-            joinColumns = @JoinColumn(name = "tariff_id"),
-            inverseJoinColumns = @JoinColumn(name = "option_id"))
     private List<OptionDTO> options = new ArrayList<>();
 
 
-
-    public void addOption(OptionDTO o) {
-            this.options.add(o);
-    }
     public List<OptionDTO> getOptions() {
         return options;
     }
-
     public void setOptions(List<OptionDTO> options) {
         this.options = options;
     }

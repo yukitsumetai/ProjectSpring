@@ -6,31 +6,26 @@ import org.hibernate.annotations.FetchMode;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "options")
-public class OptionDTO {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+public class OptionDTO implements Serializable {
+
     private int id;
-    @NotBlank(message = "Name is required")
-    @Size(min = 1, max = 30, message = "OptionDTO name should be from 1 to 30 symbols")
+
     private String name;
     private String description;
-    @NotBlank(message = "Price is required")
+
     private double priceMonthly;
-    @NotBlank(message = "Price is required")
+
     private double priceOneTime;
 
-    @ManyToMany(mappedBy = "options", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @Fetch(FetchMode.SELECT)
+
     private List<TariffDTO> compatibleTariffs = new ArrayList<>();
 
-    public void addTariff(TariffDTO tariff) {
-        this.compatibleTariffs.add(tariff);
-    }
+
 
     public String getDescription() {
         return description;
@@ -80,7 +75,4 @@ public class OptionDTO {
         this.compatibleTariffs = compatibleTariffs;
     }
 
-    public void setCompatibleTariffs(TariffDTO compatibleTariff) {
-        this.compatibleTariffs.add(compatibleTariff);
-    }
 }

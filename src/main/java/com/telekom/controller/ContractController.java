@@ -2,6 +2,7 @@ package com.telekom.controller;
 
 
 import com.telekom.entity.*;
+import com.telekom.entityDTO.*;
 import com.telekom.service.OptionService;
 import com.telekom.service.PhoneNumberService;
 import com.telekom.service.TariffService;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -18,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@SessionAttributes(types = Contract.class)
+@SessionAttributes(types = ContractDTO.class, value = "table")
 @RequestMapping(value = "/newContract")
 
 public class ContractController {
@@ -34,52 +36,59 @@ public class ContractController {
 
     @GetMapping("/tariffs")
     public String start(Model model) {
-
-        Contract contract = new Contract();
-        contract.setPrice((double) 10);
+        ContractDTO contract = new ContractDTO();
         model.addAttribute(contract);
-        model.addAttribute("table", "add");
+       model.addAttribute("table", "add");
         model.addAttribute("tariffs", tariffService.getAll());
         return "tariffs";
     }
 
 
     @PostMapping("/options")
-    public String newContractTariffAdd(Model model, Contract contract, @RequestParam(name = "tariffID") Integer id) {
+    public String newContractTariffAdd(Model model, ContractDTO contract, @RequestParam(name = "tariffID") Integer id) {
 
-        Tariff tmp = tariffService.getOne(id);
+        TariffDTO tmp=tariffService.getOne(id); //нужно ли тянуть тариф опять из базы?
         contract.setTariff(tmp);
         contract.setPrice(tmp.getPrice());
-        model.addAttribute("table", "add");
         model.addAttribute("options", tmp.getOptions());
         return "options";
     }
 
 
     @PostMapping("/client")
-    public String newContractOptionAdd(Model model, Contract contract, @RequestParam(name = "optionID", required = false) List<Integer> id) {
-        List<Option> options = new ArrayList<>();
+    public String newContractOptionAdd(Model model, ContractDTO contract, @RequestParam(name = "optionID", required = false) List<Integer> id) {
+        List<OptionDTO> options = new ArrayList<>();
         for (Integer i : id
         ) {
-            options.add(optionService.getOne(i));
+            OptionDTO tmp=optionService.getOne(i);
+            options.add(tmp);
+            contract.setPrice(tmp.getPriceMonthly());
+            contract.setPriceOneTime(tmp.getPriceOneTime());
         }
-        // contract.setPrice(tmp.getPrice());
-        Client client = new Client();
-        Address ba = new Address();
-        client.setAddress(ba);
+        contract.setOptions(options);
+
+        ClientDTO client = new ClientDTO();
+        AddressDTO a = new AddressDTO();
+        client.setAddress(a);
         model.addAttribute("numbers", phoneNumberService.getAll());
         model.addAttribute("client", client);
-
-        contract.setOptions(options);
 
         return "newClient";
     }
 
     @PostMapping("/confirm")
-    public String newContractOptionAdd(Contract contract, @ModelAttribute Client client,
-                                       @RequestParam(name = "phoneNumber") BigInteger number) {
+    public String newContractOptionAdd(ContractDTO contract, @ModelAttribute ClientDTO client) {
         contract.setClient(client);
-        contract.setPhoneNumber(number);
-        return "Confirmation";
+       // contract.setPhoneNumber(number);
+//model.addAttribute("contract", contract);
+        return "confirmation";
     }
+
+    @PostMapping("/confirm/true")
+    public String confirmation(ContractDTO contract, SessionStatus status) {
+
+        status.setComplete();
+        return "redirect:users";
+    }
+
 }

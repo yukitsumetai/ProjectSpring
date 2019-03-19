@@ -1,34 +1,20 @@
 package com.telekom.entityDTO;
 
 
-import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import java.math.BigInteger;
 
-@Entity
-@Table(name = "clients")
 public class ClientDTO {
 
-    @NotBlank(message = "Name is required")
+
     private String name;
-
-    @NotBlank(message = "Name is required")
-    @Size(min = 1, max = 10, message = "Surname should be from 1 to 10 symbols")
     private String surname;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int clientID;
-
-    @Email
+    private int id;
     private String email;
     private String birthday;
     private String password;
+    private java.math.BigInteger passport;
 
 
-    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    @JoinColumn(name = "addressId")
     private AddressDTO address;
 
 
@@ -37,14 +23,20 @@ public class ClientDTO {
 
     }
 
-
-
-    public int getClientID() {
-        return clientID;
+    public BigInteger getPassport() {
+        return passport;
     }
 
-    public void setClientID(int clientID) {
-        this.clientID = clientID;
+    public void setPassport(BigInteger passport) {
+        this.passport = passport;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public AddressDTO getAddress() {

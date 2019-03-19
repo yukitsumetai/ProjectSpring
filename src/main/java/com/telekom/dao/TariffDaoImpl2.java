@@ -1,5 +1,5 @@
 package com.telekom.dao;
-/*
+
 
 import com.telekom.entity.Tariff;
 import org.springframework.stereotype.Component;
@@ -14,9 +14,9 @@ import java.util.List;
 @Repository
 public class TariffDaoImpl2 implements TariffDao {
 
-    @PersistenceContext(unitName="entityManagerFactory")
+    @PersistenceContext(unitName = "entityManagerFactory")
     private EntityManager entityManager;
-//private Session currentSession(){return sessionFactory.openSession();}
+
     @Override
     public List<Tariff> getAll() {
         return entityManager.createQuery("select t from Tariff t").getResultList();
@@ -26,51 +26,35 @@ public class TariffDaoImpl2 implements TariffDao {
     @Override
     public void add(Tariff tariff) {
         entityManager.persist(tariff);
-        /*
-        Session session = sessionFactory.openSession();
-        Transaction tx=session.beginTransaction();
-        session.saveOrUpdate(tariff);
-        tx.commit();
-        session.close();
-        */
-    //}
-/*
+
+    }
+
 
     @Override
     public Tariff getOne(Integer id) {
-    TypedQuery<Tariff> q=entityManager.createQuery(
-            "select t from Tariff t where t.id=:id", Tariff.class
-    );
-    q.setParameter("id", id);
-    return  q.getResultList().stream().findAny().orElse(null);
-        /*
-        Session session = sessionFactory.openSession();
-        Tariff tariff =  session.get(Tariff.class, id);
-        session.close();
-        return tariff;
-        */
-   // }
+        TypedQuery<Tariff> q = entityManager.createQuery(
+                "select t from Tariff t where t.id=:id", Tariff.class
+        );
+        q.setParameter("id", id);
+        return q.getResultList().stream().findAny().orElse(null);
 
-/*
+    }
+
+
     @Override
     public void editTariff(Tariff tariff) {
         entityManager.persist(tariff);
     }
+
     @Override
     public void deleteTariff(Integer id) {
 
-        TypedQuery<Tariff> q=entityManager.createQuery(
+        TypedQuery<Tariff> q = entityManager.createQuery(
                 "select t from Tariff t where t.id=:id", Tariff.class
         );
         q.setParameter("id", id);
-        //return  q.getResultList().stream().findAny().orElse(null);
-        /*
-        Session session = sessionFactory.openSession();
-        Transaction tx=session.beginTransaction();
-        Tariff tariff = session.get(Tariff.class, id);
-        session.delete(tariff);
-        tx.commit();
-        session.close();// close the session*/
-    //}
+        Tariff t=q.getResultList().stream().findAny().orElse(null);
+        entityManager.remove(t);
+    }
 
-//}
+}

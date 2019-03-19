@@ -54,6 +54,8 @@ http://www.springframework.org/schema/security/spring-security.xsd">
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
 
+
+
     <tx:annotation-driven/>
     <jpa:repositories base-package="com.telekom.repository"/>
 

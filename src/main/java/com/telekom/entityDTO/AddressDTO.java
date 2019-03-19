@@ -3,13 +3,9 @@ package com.telekom.entityDTO;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity
-@Table(name = "addresses")
+
 public class AddressDTO implements Serializable {
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
-        @Column(name="addressID")
         private int id;
         private String street;
         private String houseNo;
@@ -18,7 +14,6 @@ public class AddressDTO implements Serializable {
         private int zip;
 
 
-        @OneToOne(mappedBy = "address")
         private ClientDTO client;
 
         public AddressDTO(){}

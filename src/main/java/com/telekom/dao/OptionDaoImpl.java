@@ -2,47 +2,60 @@ package com.telekom.dao;
 
 
 import com.telekom.entity.Option;
-import com.telekom.entity.Option;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
-
+@Component
 @Repository
 public class OptionDaoImpl implements OptionDao {
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    @PersistenceContext(unitName = "entityManagerFactory")
+    private EntityManager entityManager;
 
     @Override
     public List<Option> getAll() {
-        Session session = sessionFactory.openSession();
-        List<Option> option=	 session.createCriteria(Option.class).list();
-        System.out.println(option);
-        session.close();
-        return option;
+        return entityManager.createQuery("select t from Option t").getResultList();
     }
 
 
     @Override
     public void add(Option option) {
-        Session session = sessionFactory.openSession();
-        Transaction tx=session.beginTransaction();
-        session.save(option);
-        tx.commit();
-        session.close();
+        entityManager.persist(option);
+
     }
+
 
     @Override
     public Option getOne(Integer id) {
-        Session session = sessionFactory.openSession();
-        Option option =  session.get(Option.class, id);
-        session.close();
-        return option;
+        TypedQuery<Option> q = entityManager.createQuery(
+                "select t from Option t where t.id=:id", Option.class
+        );
+        q.setParameter("id", id);
+        return q.getResultList().stream().findAny().orElse(null);
+
+    }
+
+
+    @Override
+    public void editOption(Option option) {
+        entityManager.persist(option);
+    }
+
+    @Override
+    public void deleteOption(Integer id) {
+
+        TypedQuery<Option> q = entityManager.createQuery(
+                "select t from Option t where t.id=:id", Option.class
+        );
+        q.setParameter("id", id);
+        Option t=q.getResultList().stream().findAny().orElse(null);
+        entityManager.remove(t);
     }
 
 }
+

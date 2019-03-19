@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.math.BigInteger;
 
 @Entity
 @Table(name = "clients")
@@ -20,23 +21,33 @@ public class Client {
     private String surname;
 
     @Id
+    @Column(name="clientID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int clientID;
+    private int id;
 
     @Email
     private String email;
     private String birthday;
     private String password;
+    private BigInteger passport;
 
 
     @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "addressId")
     private Address address;
 
-    Contract contract;
+   private Contract contract;
 
     public Client() {
 
+    }
+
+    public BigInteger getPassport() {
+        return passport;
+    }
+
+    public void setPassport(BigInteger passport) {
+        this.passport = passport;
     }
 
     public Contract getContract() {
@@ -47,12 +58,12 @@ public class Client {
         this.contract = contract;
     }
 
-    public int getClientID() {
-        return clientID;
+    public int getId() {
+        return id;
     }
 
-    public void setClientID(int clientID) {
-        this.clientID = clientID;
+    public void setId(int clientID) {
+        this.id = clientID;
     }
 
     public Address getAddress() {
