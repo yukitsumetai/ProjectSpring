@@ -2,6 +2,7 @@ package com.telekom.dao;
 
 import com.telekom.entity.Client;
 
+import java.math.BigInteger;
 import java.util.List;
 
 public interface ClientDAO {
@@ -10,7 +11,7 @@ public interface ClientDAO {
 
     void add(Client client);
 
-    Client getOne(String email);
+    Client getOne(BigInteger n);
 
 }
 

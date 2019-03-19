@@ -1,50 +1,52 @@
 package com.telekom.dao;
 
 
-
-import java.util.List;
-
+import com.telekom.entity.Address;
 import com.telekom.entity.Client;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.telekom.entity.Option;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import java.math.BigInteger;
+import java.util.List;
 
+@Component
 @Repository
 public class ClientDaoImpl implements ClientDAO {
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    @PersistenceContext(unitName = "entityManagerFactory")
+    private EntityManager entityManager;
 
+    @Override
     public List<Client> getAll() {
-        Session session = sessionFactory.openSession();
-        //List<Product> products = session.createQuery("from Product").list();
-        List<Client> users=	 session.createCriteria(Client.class).list();
-        session.close();
-        return users;
+        return entityManager.createQuery("select t from Client t").getResultList();
     }
 
-    public void deleteUser(String userId) {
-        Session session = sessionFactory.openSession();
-        Client client =  session.get(Client.class, userId);
-        session.saveOrUpdate(client);
-        session.flush();
-        session.close();// close the session
-    }
 
+    @Override
     public void add(Client client) {
-        Session session = sessionFactory.openSession();
-        session.save(client);
-        session.close();
+       entityManager.persist(client);
     }
 
-    public Client getOne(String clientID) {
-        // Reading the records from the table
-        Session session = sessionFactory.openSession();
-        Client client =  session.get(Client.class, clientID);
-        session.close();
-        return client;
+
+
+    public Client getOne(BigInteger phoneNumber) {
+        TypedQuery<Client> q = entityManager.createQuery(
+                "select t from Client t where t.phoneNumber=:phoneNumber", Client.class
+        );
+        q.setParameter("phoneNumber", phoneNumber);
+        return q.getResultList().stream().findAny().orElse(null);
+
     }
+
+
+    public void editClient(Client client) {
+        entityManager.persist(client);
+    }
+
 
 }
+

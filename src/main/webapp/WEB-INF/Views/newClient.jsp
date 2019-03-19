@@ -103,10 +103,10 @@
                 </div>
                 <div>
                     <div class="form-group col-sm-6">
-                        <select id="phoneNumber" class="form-control">
-                            <label path="password">Phone Number</label>
+                        <select name="phoneNumber" id="phoneNumber" class="form-control">
+                            <label >Phone Number</label>
                             <c:forEach items="${numbers}" var="n">
-                                <option value="567876876">+5765786</option>
+                                <option  value="${n}">+${n}</option>
                             </c:forEach>
                         </select>
                     </div>

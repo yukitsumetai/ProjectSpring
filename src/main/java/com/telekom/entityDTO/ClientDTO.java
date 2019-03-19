@@ -13,7 +13,7 @@ public class ClientDTO {
     private String birthday;
     private String password;
     private java.math.BigInteger passport;
-
+    private String phoneNumber;
 
     private AddressDTO address;
 
@@ -21,6 +21,15 @@ public class ClientDTO {
 
     public ClientDTO() {
 
+    }
+
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public BigInteger getPassport() {

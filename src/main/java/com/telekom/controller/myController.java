@@ -1,6 +1,8 @@
 package com.telekom.controller;
 
 import com.telekom.entity.*;
+import com.telekom.entityDTO.AddressDTO;
+import com.telekom.entityDTO.ClientDTO;
 import com.telekom.entityDTO.OptionDTO;
 import com.telekom.entityDTO.TariffDTO;
 import com.telekom.service.ClientService;
@@ -14,13 +16,13 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 import javax.validation.Valid;
 import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.List;
-
 
 
 @Controller
@@ -35,7 +37,6 @@ public class myController {
         model.addAttribute("msg", "Hello " + name);
         return "index";
     }
-
 
     @RequestMapping(value = "/view", params = "Customer", method = RequestMethod.POST)
     public String action1() {
@@ -55,15 +56,16 @@ public class myController {
     @GetMapping("/users")
     public String getUsers(Model model) throws SQLException {
         model.addAttribute("clients", clientService.getAll());
-        return "users";
+        return "clients";
     }
 
-    @Autowired
-    private PhoneNumberService phoneNumberService;
 
-
-
-
+    @PostMapping("/getUser")
+    public String registerCustomer(Model model, @RequestParam(name = "phoneNumber") String number) {
+      List<ClientDTO> clients=new ArrayList<>();
+       model.addAttribute( "clients", clients.add(clientService.getOne(number)));
+        return "confirmation";
+    }
 
     @Autowired
     private TariffService tariffService;
@@ -74,7 +76,7 @@ public class myController {
     @GetMapping("/tariffs")
     public String getTariffs(Model model) throws SQLException {
         model.addAttribute("tariffs", tariffService.getAll());
-        String table="edit";
+        String table = "edit";
         model.addAttribute("table", table);
         return "tariffs";
     }
@@ -87,9 +89,10 @@ public class myController {
     }
 
     @PostMapping("/tariffs/new")
-    public String newTariffAdd(@ModelAttribute Tariff tariff, @RequestParam(name="opt", required=false) List<Integer> opts) {
-    if(opts==null) {tariffService.add(tariff);}
-    else tariffService.add(tariff, opts);
+    public String newTariffAdd(@ModelAttribute Tariff tariff, @RequestParam(name = "opt", required = false) List<Integer> opts) {
+        if (opts == null) {
+            tariffService.add(tariff);
+        } else tariffService.add(tariff, opts);
         return "redirect:/tariffs";
     }
 
@@ -108,14 +111,14 @@ public class myController {
 
     @GetMapping("/tariffs/delete/{id}")
     public String deleteTariff(@PathVariable(value = "id") Integer id) {
-       tariffService.deleteTariff(id);
+        tariffService.deleteTariff(id);
         return "redirect:/tariffs";
     }
 
     @GetMapping("/options")
     public String getOptions(Model model) throws SQLException {
         model.addAttribute("options", optionService.getAll());
-        String table="edit";
+        String table = "edit";
         model.addAttribute("table", table);
         return "options";
     }
@@ -127,15 +130,16 @@ public class myController {
     }
 
     @PostMapping("/options/new")
-    public String newOptionAdd(@ModelAttribute Option option, @RequestParam(name="opt", required=false) List<Integer> opts) {
-        if(opts==null) {optionService.add(option);}
-        else optionService.add(option, opts);
+    public String newOptionAdd(@ModelAttribute Option option, @RequestParam(name = "opt", required = false) List<Integer> opts) {
+        if (opts == null) {
+            optionService.add(option);
+        } else optionService.add(option, opts);
         return "redirect:/options";
     }
 
     @GetMapping("/options/edit/{id}")
     public ModelAndView getEditOption(@PathVariable(value = "id") Integer id) {
-        OptionDTO option=optionService.getOne(id);
+        OptionDTO option = optionService.getOne(id);
         return new ModelAndView("editOption", "option", option);
     }
 
@@ -147,7 +151,7 @@ public class myController {
 
     @GetMapping("/options/delete/{id}")
     public String deleteOption(@PathVariable(value = "id") Integer id) {
-       optionService.deleteOption(id);
+        optionService.deleteOption(id);
         return "redirect:/options";
     }
 

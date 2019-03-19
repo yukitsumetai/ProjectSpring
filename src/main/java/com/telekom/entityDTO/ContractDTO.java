@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 public class ContractDTO implements Serializable {
 
-    BigInteger phoneNumber;
+    String phoneNumber;
     Double price=(double)0;
     Double priceOneTime=(double)0;
     ClientDTO client;
@@ -33,11 +33,11 @@ public class ContractDTO implements Serializable {
         this.priceOneTime += priceOneTime;
     }
 
-    public BigInteger getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(BigInteger phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 

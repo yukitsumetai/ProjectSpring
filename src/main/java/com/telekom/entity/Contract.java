@@ -3,41 +3,35 @@ package com.telekom.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.List;
 
-
+@Entity
+@Table(name = "contracts")
 public class Contract implements Serializable {
 
-    BigInteger phoneNumber;
-    Double price;
+
+   @Id
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "phoneNumberc", referencedColumnName = "phoneNumber")
     Client client;
-    Tariff tariff;
-    List<Option> options;
 
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "tariffId")
+   Tariff tariff;
 
-    public BigInteger getPhoneNumber() {
-        return phoneNumber;
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "id")
+   List<Option> options;
+
+    private Double price;
+    private Double priceTariff;
+
+    public List<Option> getOptions() {
+        return options;
     }
 
-    public void setPhoneNumber(BigInteger phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
+    public void setOptions(List<Option> options) {
+        this.options = options;
     }
 
     public Tariff getTariff() {
@@ -48,11 +42,27 @@ public class Contract implements Serializable {
         this.tariff = tariff;
     }
 
-    public List<Option> getOptions() {
-        return options;
+    public Double getPrice() {
+        return price;
     }
 
-    public void setOptions(List<Option> options) {
-        this.options = options;
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Double getPriceTariff() {
+        return priceTariff;
+    }
+
+    public void setPriceTariff(Double priceTariff) {
+        this.priceTariff = priceTariff;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 }

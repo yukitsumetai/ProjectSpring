@@ -6,6 +6,8 @@ import com.telekom.entityDTO.AddressDTO;
 import com.telekom.entityDTO.ClientDTO;
 import org.springframework.stereotype.Component;
 
+import java.math.BigInteger;
+
 @Component
 public class ClientMapper {
     public ClientDTO EntityToDto(Client t){
@@ -15,6 +17,7 @@ public class ClientMapper {
         tmp.setSurname(t.getSurname());
         tmp.setPassport(t.getPassport());
         tmp.setEmail(t.getEmail());
+        tmp.setPhoneNumber(t.getPhoneNumber().toString());
         tmp.setBirthday(t.getBirthday());
         tmp.setPassword(t.getPassword());
         tmp.setAddress(EntityToDtoAddress(t.getAddress()));
@@ -42,6 +45,8 @@ public class ClientMapper {
         tmp.setPassport(t.getPassport());
         tmp.setBirthday(t.getBirthday());
         tmp.setPassword(t.getPassword());
+        BigInteger number=new BigInteger(t.getPhoneNumber());
+        tmp.setPhoneNumber(number);
         tmp.setEmail(t.getEmail());
         tmp.setAddress(DtoToEntityAddress(t.getAddress()));
         return tmp;

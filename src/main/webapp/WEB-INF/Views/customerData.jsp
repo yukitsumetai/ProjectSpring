@@ -50,7 +50,6 @@
 
             <div class="row">
                 <div class="col-sm-4 form-group">
-                    <label>Phone Number: </label>+564457
                 </div>
                 <div class="col-sm-6 form-group">
                     <label>Password: </label> XXXXXXX

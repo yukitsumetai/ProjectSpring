@@ -12,14 +12,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
 
 @Service
-
-
-
 public class ClientServiceImpl implements ClientService {
 
     @Autowired
@@ -40,14 +38,16 @@ public class ClientServiceImpl implements ClientService {
     @Override
     @Transactional
     public void add(ClientDTO client) {
-
-        clientDao.add( clientMapper.DtoToEntity(client));
+        Client tmp=clientMapper.DtoToEntity(client);
+        clientDao.add(tmp);
     }
 
-    @Override
-    public ClientDTO getOne(String email) {
-        return clientMapper.EntityToDto(clientDao.getOne(email));
-    }
+
+   public ClientDTO getOne(String number) {
+        BigInteger number2 = new BigInteger(number);
+        ClientDTO tmp=clientMapper.EntityToDto(clientDao.getOne(number2));
+        return tmp
+                ;}
 
 
 }

@@ -1,11 +1,10 @@
 package com.telekom.service;
 
 
+import com.telekom.dao.PhoneNumberDao;
 import com.telekom.entity.PhoneNumber;
-import com.telekom.repository.PhoneNumberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -18,18 +17,19 @@ public class PhoneNumberServiceImpl implements PhoneNumberService {
 
 
     @Autowired
-    private PhoneNumberRepository phoneNumberRepository;
+    private PhoneNumberDao phoneNumberDao;
 
     @Override
-    public List<PhoneNumber> getAll() {
-        return phoneNumberRepository.findAll();
+    public List<String> getAll() {
+        List<String> numbers=new ArrayList<>();
+        for (PhoneNumber n:
+        phoneNumberDao.getAll()) {
+            numbers.add(n.getNumber().toString());
+        }
+        return numbers;
     }
 
-    @Override
-    public PhoneNumber getOne(BigInteger phoneNumber) {
-        return phoneNumberRepository.findByPhoneNumber(phoneNumber);
 
-    }
 
 
 

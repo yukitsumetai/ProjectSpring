@@ -21,17 +21,7 @@
     <script src="../resource/dist/js/bootstrap.min.js"></script>
     <script src="../resource/js/pagination.js"></script>
     <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
-<!--Search-->
- <script>
-        $(document).ready(function () {
-            $("#myInput").on("keyup", function () {
-                var value = $(this).val().toLowerCase();
-                $("#myTable tr").filter(function () {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-        });
-    </script>
+
 </head>
 
 <body>
@@ -40,50 +30,27 @@
 <table class="table table-striped table-hover table-bordered" id="Table">
     <thead>
     <tr>
-        <th onclick="sortTable(0)">Name<i class="fa fa-sort"></i></th>
-        <th onclick="sortTable(1)">Price<i class="fa fa-sort"></i></th>
-        <th>Description</th>
-        <th>Compatible Options</th>
-        <c:choose>
-            <c:when test="${table=='edit'}">
-                <th>Actions</th>
-            </c:when>
-            <c:otherwise>
-                <th>Choose Tariff</th>
-            </c:otherwise>
-        </c:choose>
+        <th>Name</th>
+        <th>Phone number</th>
+        <th>Passport number</th>
+        <th>Birthday</th>
+        <th>Address</th>
+        <th>eMail</th>
     </tr>
     </thead>
     <tbody id="myTable">
-    <c:forEach items="${tariffs}" var="tariff">
-        <tr class="tableRow">
-            <td>${tariff.name}</td>
-            <td>${tariff.price}</td>
-            <td>${tariff.description}</td>
-            <td>
-                <c:forEach items="${tariff.options}" var="option">
-                    <li>${option.name}</li>
-                </c:forEach>
-            </td>
-            <td>
-
-                <c:choose>
-                    <c:when test="${table=='edit'}">
-                        <a href="/tariffs/edit/${tariff.id}" class="edit" title="Edit"><i
-                                class="material-icons">&#xE254;</i></a>
-                        <a href="#deleteModal" class="delete" title="Delete" data-toggle="modal"
-                           data-toggle="tooltip" data-target="#deleteModal" data-id="${tariff.id}"><i
-                                class="material-icons">&#xE872;</i></a>
-                    </c:when>
-                    <c:otherwise>
-                        <input type="checkbox" class="chk" tariffName="${tariff.name}" price="${tariff.price}"
-                               value="${tariff.id}" name="tariffID" id="tariffID"/>&nbsp;
-                    </c:otherwise>
-                </c:choose>
-
-
-            </td>
+    <c:forEach items="${clients}" var="client">
+        <tr>
+            <td>${client.name} ${client.surname}</td>
+            <td>${client.phoneNumber}</td>
+            <td>${client.passport}</td>
+            <td>${client.birthday}</td>
+            <td>${client.address.street}, ${client.address.houseNo}<br>
+                    ${client.address.zip} ${client.address.city}<br>
+                    ${client.address.country}
+            <td>${client.email}</td>
         </tr>
+
     </c:forEach>
     </tbody>
 </table>

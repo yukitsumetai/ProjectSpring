@@ -18,16 +18,8 @@
     <!DOCTYPE html>
       <html lang="en">
     <head>
-        <meta charset="utf-8">
-
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="icon" href="../resource/images/favicon1.ico">
 
         <title>Options Overview</title>
-
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="../resource/assets/js/vendor/jquery.min.js"><\/script>')</script>
-        <script src="../resource/dist/js/bootstrap.min.js"></script>
 
         <!--Search-->
         <script>
@@ -144,7 +136,7 @@
 </script>
                 <!--Checkbox-->
 <script>
-    $('input.chk').on('change' function() {
+    $('input.chk').on('change', function(){
      var generated = document.getElementById('optionsCart').getElementsByClassName( 'generated' );
         for (var i=0; i<generated.length; i++){
             generated[i].remove();

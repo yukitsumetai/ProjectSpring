@@ -31,13 +31,13 @@ public class OptionMapper {
         return tmp;
     }
 
-    public OptionDTO DtoToEntity(OptionDTO t){
+    public Option DtoToEntity(OptionDTO t){
         Option tmp=new Option();
         tmp.setId(t.getId());
         tmp.setDescription(t.getDescription());
         tmp.setName(t.getName());
         tmp.setPriceMonthly(t.getPriceMonthly());
 
-        return t;
+        return tmp;
     }
 }

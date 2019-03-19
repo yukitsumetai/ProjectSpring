@@ -21,8 +21,8 @@ public class Client {
     private String surname;
 
     @Id
-    @Column(name="clientID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private int id;
 
     @Email
@@ -30,16 +30,23 @@ public class Client {
     private String birthday;
     private String password;
     private BigInteger passport;
+    private BigInteger phoneNumber;
 
-
-    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    @JoinColumn(name = "addressId")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 
-   private Contract contract;
 
     public Client() {
 
+    }
+
+    public BigInteger getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(BigInteger phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public BigInteger getPassport() {
@@ -50,13 +57,6 @@ public class Client {
         this.passport = passport;
     }
 
-    public Contract getContract() {
-        return contract;
-    }
-
-    public void setContract(Contract contract) {
-        this.contract = contract;
-    }
 
     public int getId() {
         return id;

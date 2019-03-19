@@ -11,7 +11,7 @@ public interface ClientService {
 
     void add(ClientDTO client);
 
-    ClientDTO getOne(String email);
+    ClientDTO getOne(String number);
 
 }
 

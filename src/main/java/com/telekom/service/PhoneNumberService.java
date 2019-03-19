@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface PhoneNumberService {
 
-    List<PhoneNumber> getAll();
-    PhoneNumber getOne(BigInteger phoneNumber);
+    List<String> getAll();
+  //  PhoneNumber getOne(BigInteger phoneNumber);
 
 
 }
