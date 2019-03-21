@@ -8,14 +8,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ include file="TopNavBar.jsp"%>
-<%@ include file="SideBar.jsp"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ include file="TopNavBar.jsp" %>
+<%@ include file="SideBar.jsp" %>
 
 
 <html lang="en">
 <head>
-     <meta charset="utf-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="icon" href="../resource/images/favicon1.ico">
@@ -79,11 +79,11 @@
                         </div>
                         <div class="newtariff">
 
-                                <c:if test="${table=='edit'}">
-                                    <form action="/tariffs/new">
-                                        <button type="submit" class="btn btn-success">Add Tariff</button>
-                                    </form>
-                                </c:if>
+                            <c:if test="${table=='edit'}">
+                                <form action="/tariffs/new">
+                                    <button type="submit" class="btn btn-success">Add Tariff</button>
+                                </form>
+                            </c:if>
 
                         </div>
                     </div>
@@ -91,21 +91,29 @@
                 </div>
             </div>
 
-            <c:if test="${table=='add'}">
 
-            <form action="/newContract/options" method="post">
-            </c:if>
+            <c:choose>
 
-
-                <%@ include file="tableTariffs.jsp"%>
-
-
-                <c:if test="${table=='add'}">
+            <c:when test="${NEB=='no'}">
+                <form action="/existingContract/tariffChange" method="post">
+                    <%@ include file="tableTariffs.jsp" %>
                     <div>
                         <button type="submit" class="btn btn-success">Next</button>
                     </div>
-            </form>
-                </c:if>
+                </form>
+                </c:when>
+                <c:when test="${table=='add'}">
+                    <form action="/newContract/options" method="post">
+                        <%@ include file="tableTariffs.jsp" %>
+                        <div>
+                            <button type="submit" class="btn btn-success">Next</button>
+                        </div>
+                    </form>
+                </c:when>
+                <c:otherwise>
+                    <%@ include file="tableTariffs.jsp" %>
+                </c:otherwise>
+                </c:choose>
 
 
         </div>
@@ -152,7 +160,7 @@
         var name = this.getAttribute('tariffName');
         var price = this.getAttribute('price');
         document.getElementById("tariffName").innerHTML = name;
-        document.getElementById("tariffPrice").innerHTML = "$"+price;
+        document.getElementById("tariffPrice").innerHTML = "$" + price;
     });
 </script>
 <%-- Modal Script --%>

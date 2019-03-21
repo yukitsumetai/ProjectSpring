@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Service
@@ -32,6 +34,17 @@ public class OptionServiceImpl implements OptionService {
 
         List<Option> Options= optionDao.getAll();
         List<OptionDTO> OptionsDTO=new ArrayList<>();
+        for (Option t:Options) {
+            OptionsDTO.add(optionMapper.EntityToDto(t));
+        }
+        return OptionsDTO;
+    }
+
+    @Override
+    public Set<OptionDTO> findByTariff(Integer id) {
+
+       List<Option> Options= optionDao.findByTariff(id);
+       Set<OptionDTO> OptionsDTO=new HashSet<>();
         for (Option t:Options) {
             OptionsDTO.add(optionMapper.EntityToDto(t));
         }

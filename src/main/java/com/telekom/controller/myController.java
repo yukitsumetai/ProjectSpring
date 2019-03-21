@@ -1,8 +1,8 @@
 package com.telekom.controller;
 
 import com.telekom.entity.*;
-import com.telekom.entityDTO.AddressDTO;
 import com.telekom.entityDTO.ClientDTO;
+import com.telekom.entityDTO.ContractDTO;
 import com.telekom.entityDTO.OptionDTO;
 import com.telekom.entityDTO.TariffDTO;
 import com.telekom.service.*;
@@ -10,12 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 
-import javax.validation.Valid;
 import java.sql.SQLException;
 
 import java.util.ArrayList;
@@ -42,11 +40,7 @@ public class myController {
         return "search";
     }
 
-    @PostMapping("/existingContract/contract")
-    public String showContract(Model model, @RequestParam(name = "phoneNumber") String number) {
-        model.addAttribute( "contractDTO", contractService.getOne(number));
-        return "confirmation";
-    }
+
 
     @RequestMapping(value = "/view", params = "Customer", method = RequestMethod.POST)
     public String action1() {
@@ -75,7 +69,7 @@ public class myController {
       List<ClientDTO> clients=new ArrayList<>();
        clients.add(clientService.getOne(number));
        model.addAttribute( "clients", clients);
-        return "confirmation";
+        return "clients";
     }
 
     @Autowired
@@ -113,6 +107,10 @@ public class myController {
         TariffDTO tariff = tariffService.getOne(id);
         return new ModelAndView("editTariff", "tariff", tariff);
     }
+
+
+
+
 
     @PostMapping("/tariffs/edit")
     public String editProduct(@ModelAttribute(value = "tariff") TariffDTO tariffDto) {

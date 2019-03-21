@@ -9,7 +9,9 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class ContractMapper {
@@ -31,7 +33,7 @@ public class ContractMapper {
         tmp.setTariff(tariffMapper.DtoToEntity(c.getTariff()));
         tmp.setPriceTariff(c.getTariff().getPrice());
         if (c.getOptions() != null) {
-            List<Option> options = new ArrayList<>();
+            Set<Option> options = new HashSet<>();
             for (OptionDTO o :
                     c.getOptions()) {
                 options.add(optionMapper.DtoToEntity(o));
@@ -52,7 +54,7 @@ public class ContractMapper {
         tmp.setPhoneNumber(c.getPhoneNumber().toString());
 
         if (c.getOptions() != null) {
-            List<OptionDTO> options = new ArrayList<>();
+            Set<OptionDTO> options = new HashSet<>();
             for (Option o :
                     c.getOptions()) {
                 options.add(optionMapper.EntityToDtoWithoutTariff(o));
@@ -60,7 +62,6 @@ public class ContractMapper {
             tmp.setOptions(options);
         }
         return tmp;
-
-
     }
+
 }

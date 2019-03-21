@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.math.BigInteger;
 import java.util.List;
@@ -23,7 +24,7 @@ public class ClientDaoImpl implements ClientDAO {
 
     @Override
     public List<Client> getAll() {
-        return entityManager.createQuery("select t from Client t join fetch t.contract").getResultList();
+        return entityManager.createQuery("select distinct t from Client t join fetch t.contract").getResultList();
     }
 
 
@@ -36,10 +37,10 @@ public class ClientDaoImpl implements ClientDAO {
 
     public Client getOne(BigInteger phoneNumber) {
         TypedQuery<Client> q = entityManager.createQuery(
-                "select t from Client t join fetch t.contract as c  where c.phoneNumber=:phoneNumber", Client.class);
+                "select t from Client t join fetch t.contract  where t in (select t from Client t join t.contract as c  where c.phoneNumber=:phoneNumber)", Client.class);
         q.setParameter("phoneNumber", phoneNumber);
         return q.getResultList().stream().findAny().orElse(null);
-
+        //"select t from Client t join fetch t.contract as c  where c.phoneNumber=:phoneNumber"
     }
 
     public Client getOne(Integer id) {

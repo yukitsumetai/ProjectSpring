@@ -22,6 +22,13 @@ public class OptionDaoImpl implements OptionDao {
         return entityManager.createQuery("select t from Option t").getResultList();
     }
 
+    @Override
+    public List<Option> findByTariff(Integer id) {
+        TypedQuery<Option> q= entityManager.createQuery("select o from Option o join fetch o.compatibleTariffs as t where t.id=:id", Option.class);
+        q.setParameter("id", id);
+        List<Option> options=q.getResultList();
+        return options;
+    }
 
     @Override
     public void add(Option option) {

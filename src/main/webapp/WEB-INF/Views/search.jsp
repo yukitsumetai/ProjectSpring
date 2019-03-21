@@ -31,36 +31,30 @@
             </div>
         </div>
         <div id="personal data">
-            <form:form method="post" action="/existingContract/contract">
+            <form id="search">
                 <div class="row">
-                    <form action="/getUser" method="post">
                         <div class="search-box" class="col-sm-4">
                             <i class="material-icons">&#xE8B6;</i>
-                            <input type="text" class="form-control" id="myInput" name="phoneNumber"
+                            <input type="text" class="form-control" id="searchBox" name="searchBox"
                                    placeholder="Search by phone number&hellip;">
                         </div>
                         <div class="newtariff col-sm-2">
 
-                            <button type="submit" class="btn btn-success">Find</button>
+                            <button onclick="path()" class="btn btn-success">Find</button>
                         </div>
-                    </form>
                 </div>
-
-            </form:form>
-
+            </form>
         </div>
     </div>
 
 </div>
 <!--Calendar-->
-<script type="text/javascript">
-    $(function () {
-        $('#datetimepicker1').datetimepicker({
-            format: 'LT'
-        });
-    });
+<script>
+    function path() {
+        var urlLink = "/existingContract/"+document.getElementById("searchBox").value;
+       search.action = urlLink;
+    }
 </script>
-
 
 </body>
 </html>

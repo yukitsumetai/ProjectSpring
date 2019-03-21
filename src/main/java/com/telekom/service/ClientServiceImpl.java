@@ -42,7 +42,6 @@ public class ClientServiceImpl implements ClientService {
         clientDao.add(tmp);
     }
 
-
     @Transactional
     public ClientDTO getOne(String number) {
         BigInteger number2 = new BigInteger(number);
@@ -52,8 +51,11 @@ public class ClientServiceImpl implements ClientService {
 
 
     public ClientDTO getOne(Integer id) {
-        return clientMapper.EntityToDtoWithoutContract(clientDao.getOne(id));
+        Client tmp=clientDao.getOne(id);
+        return clientMapper.EntityToDtoWithoutContract(tmp);
     }
+
+
 
 
 }

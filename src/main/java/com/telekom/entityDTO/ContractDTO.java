@@ -9,21 +9,22 @@ import org.springframework.stereotype.Component;
 import javax.persistence.Entity;
 import java.io.Serializable;
 import java.math.BigInteger;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @Entity
 public class ContractDTO implements Serializable {
 
    private String phoneNumber;
-    private  Double price=(double)0;
-    private Double priceOneTime=(double)0;
+    private  Double price;
+    private Double priceOneTime;
     private ClientDTO client;
     private TariffDTO tariff;
-    private List<OptionDTO> options;
+    private Set<OptionDTO> options=new HashSet<>();
 
 
-
+    public void addOption(OptionDTO option) {
+        this.options.add(option);
+    }
 
     public Double getPriceOneTime() {
         return priceOneTime;
@@ -65,11 +66,11 @@ public class ContractDTO implements Serializable {
         this.tariff=tariff;
     }
 
-    public List<OptionDTO> getOptions() {
+    public Set<OptionDTO> getOptions() {
         return options;
     }
 
-    public void setOptions(List<OptionDTO> options) {
+    public void setOptions(Set<OptionDTO> options) {
         this.options = options;
     }
 }

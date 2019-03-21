@@ -1,33 +1,40 @@
 package com.telekom.entity;
 
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "contracts")
+@DynamicUpdate
 public class Contract implements Serializable {
 
 
     @Id
     private BigInteger phoneNumber;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "clientId", referencedColumnName = "id")
     Client client;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name = "tariffId")
     Tariff tariff;
 
-    @ManyToMany(cascade = CascadeType.MERGE)
+    @ManyToMany
     @JoinColumn(name = "phoneNumber")
-    List<Option> options;
+    Set<Option> options;
 
     private Double price;
     private Double priceTariff;
 
+    public void addOption(Option option) {
+        this.options.add(option);
+    }
 
     public BigInteger getPhoneNumber() {
         return phoneNumber;
@@ -37,11 +44,11 @@ public class Contract implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public List<Option> getOptions() {
+    public Set<Option> getOptions() {
         return options;
     }
 
-    public void setOptions(List<Option> options) {
+    public void setOptions(Set<Option> options) {
         this.options = options;
     }
 

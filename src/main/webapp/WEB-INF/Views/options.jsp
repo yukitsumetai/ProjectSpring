@@ -84,21 +84,37 @@
 
                 </div>
             </div>
-            <c:if test="${table=='add'}">
-            <form action="/newContract/client" method="post" command="contract">
-                </c:if>
-                <%@ include file="tableOptions.jsp" %>
-                <c:if test="${table=='add'}">
-                <div class="row">
-                    <div class="col-sm-2 form-group">
-                        <button type="submit" class="btn btn-success" name="action" value="new">New Client</button>
-                    </div>
-                    <div class="col-sm-2 form-group price">
-                        <button type="submit" class="btn btn-success" name="action" value="existing">Existing client</button>
-                    </div>
-                </div>
-            </form>
-            </c:if>
+
+
+            <c:choose>
+                <c:when test="${NEB=='yes'}">
+                    <form action="/newContract/client" method="post" command="contract">
+                        <%@ include file="tableOptions.jsp" %>
+                        <div class="row">
+                            <div class="col-sm-2 form-group">
+                                <button type="submit" class="btn btn-success" name="action" value="new">New Client
+                                </button>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success" name="action" value="existing">Existing
+                                    client
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </c:when>
+                <c:when test="${table=='add'}">
+                    <form action="/existingContract/optionsAdd/" method="post" command="contract">
+                        <%@ include file="tableOptions.jsp" %>
+                        <div class="row">
+                            <button type="submit" class="btn btn-success" name="action" value="new">Next</button>
+                        </div>
+                    </form>
+                </c:when>
+                <c:otherwise>
+                    <%@ include file="tableOptions.jsp" %>
+                </c:otherwise>
+            </c:choose>
 
         </div>
     </div>

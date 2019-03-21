@@ -33,7 +33,7 @@
                     <label>Birthday: </label> ${contractDTO.client.birthday}
                 </div>
                 <div class="col-sm-4 form-group">
-                    <label>Passport: </label>${contractDTO.client.passport}
+                    <label>Passport: </label> ${contractDTO.client.passport}
                 </div>
             </div>
             <div class="row">
