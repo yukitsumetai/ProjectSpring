@@ -17,7 +17,7 @@ public interface ContractService {
 
     void setOptions(ContractDTO contract, List<Integer> id);
 
-    List<OptionDTO> setTariff(ContractDTO contract, Integer id);
+    Set<OptionDTO> setTariff(ContractDTO contract, Integer id);
 
     void setOptionsAndUpdate(ContractDTO contract, List<Integer> id);
 

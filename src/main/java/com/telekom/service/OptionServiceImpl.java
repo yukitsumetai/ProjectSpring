@@ -74,14 +74,17 @@ public class OptionServiceImpl implements OptionService {
 
     @Override
     @Transactional
-    public void editOption(Option option) {
-        optionDao.editOption(option);
+    public void editOption(OptionDTO o) {
+        Option option=optionDao.getOne(o.getId());
+        option.setValid(o.isIsValid());
+        option.setDescription(o.getDescription());
     }
 
     @Override
     @Transactional
     public void deleteOption(Integer id) {
-        optionDao.deleteOption(id);
+        Option option= optionDao.getOne(id);
+        option.setValid(false);
     }
 
 

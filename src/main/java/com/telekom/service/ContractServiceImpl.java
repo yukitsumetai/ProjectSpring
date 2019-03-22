@@ -99,13 +99,13 @@ public class ContractServiceImpl implements ContractService {
     }
 
     @Override
-    public List<OptionDTO> setTariff(ContractDTO contract, Integer id) {
+    public Set<OptionDTO> setTariff(ContractDTO contract, Integer id) {
         TariffDTO tmp = tariffService.getOne(id);
         contract.setTariff(tmp);
         contract.setPrice(0.0);
         contract.setPriceOneTime(0.0);
         contract.setPrice(tmp.getPrice());
-        return tmp.getOptions();
+        return optionService.findByTariff(tmp.getId());
     }
 
     @Override

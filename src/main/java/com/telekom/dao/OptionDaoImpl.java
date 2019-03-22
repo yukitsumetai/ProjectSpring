@@ -2,6 +2,7 @@ package com.telekom.dao;
 
 
 import com.telekom.entity.Option;
+import com.telekom.entity.Tariff;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
@@ -22,9 +23,12 @@ public class OptionDaoImpl implements OptionDao {
         return entityManager.createQuery("select t from Option t").getResultList();
     }
 
+
+
+
     @Override
     public List<Option> findByTariff(Integer id) {
-        TypedQuery<Option> q= entityManager.createQuery("select o from Option o join fetch o.compatibleTariffs as t where t.id=:id", Option.class);
+        TypedQuery<Option> q= entityManager.createQuery("select o from Option o join fetch o.compatibleTariffs as t where t.id=:id and o.isValid=true", Option.class);
         q.setParameter("id", id);
         List<Option> options=q.getResultList();
         return options;
@@ -49,21 +53,8 @@ public class OptionDaoImpl implements OptionDao {
     }
 
 
-    @Override
-    public void editOption(Option option) {
-        entityManager.persist(option);
-    }
 
-    @Override
-    public void deleteOption(Integer id) {
 
-        TypedQuery<Option> q = entityManager.createQuery(
-                "select t from Option t where t.id=:id", Option.class
-        );
-        q.setParameter("id", id);
-        Option t=q.getResultList().stream().findAny().orElse(null);
-        entityManager.remove(t);
-    }
 
 }
 

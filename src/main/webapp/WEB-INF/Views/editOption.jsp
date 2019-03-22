@@ -22,48 +22,33 @@
 <div class="container">
     <div id="basicExample">
         <h2>Add option details</h2>
-        <div id="editOption">
-            <form:form method="post" action="options/edit" modelAttribute="option">
-
+        <div id="basicExampleDemo">
+            <form id="optionForm" action="/options/edit" method="post">
                 <div class="form-group">
                     <label class="control-label">Option Name</label>
-                    <input id="name" value="${option.name}" type="text" name="name" class="form-control" required <c:if
-                            test="${form=='edit'}">
-                        disabled
-                    </c:if>/>
+                    <input id="name" value="${option.name}" type="text" name="name" class="form-control" disabled/>
                 </div>
                 <div class="form-group">
                     <label class="control-label">One Time Price</label>
                     <input id="priceOneTime" value="${option.priceOneTime}" type="number" name="priceOneTime"
-                           class="form-control" required<c:if test="${form=='edit'}">
-                        disabled
-                    </c:if>/>
+                           class="form-control" disabled/>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Monthly Price</label>
                     <input id="priceMonthly" value="${option.priceMonthly}" type="number" name="priceMonthly"
-                           class="form-control" required<c:if test="${form=='edit'}">
-                        disabled
-                    </c:if>/>
+                           class="form-control" disabled/>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Description</label>
-                    <textarea row="4" id="Description" value="${option.description}" type="text" name="Description"
-                              class="form-control"></textarea>
+                    <textarea row="4" id="Description"  type="text" name="Description"
+                              class="form-control">${option.description}</textarea>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Validity: </label>
                     <input type="checkbox" class="chk" name="isValid" id="isValid" value=true
-                            <c:choose>
-                                <c:when test="${table=='add'}">
+                                <c:if test="${option.isValid==true}">
                                     checked
-                                </c:when>
-                                <c:when test="${option.isValid==true}">
-                                    checked
-                                </c:when>
-                                <c:otherwise>
-                                </c:otherwise>
-                            </c:choose>
+                                </c:if>
                     />&nbsp;
                 </div>
 
@@ -109,12 +94,12 @@
 
 
                 <div class="form-group">
-                    <button type="submit" class="btn btn-success"
-                            onclick="return Validate()">Add
+                    <br>
+                    <button type="submit" class="btn btn-success">Save <i class="glyphicon glyphicon-floppy-disk"></i>
                     </button>
                 </div>
 
-            </form:form>
+            </form>
 
         </div>
     </div>
@@ -130,16 +115,7 @@
         $('#undo_redo').multiselect();
     });
 </script>
-<script type="text/javascript">
-    function Validate() {
-        var name = document.getElementById("name").value;
-        if (name.length > 30) {
-            alert("Too much symbols in Name");
-            return false;
-        }
-        return true;
-    }
-</script>
+
 <!--option validity-->
 <script type="text/javascript">
     $(document).ready(function () {

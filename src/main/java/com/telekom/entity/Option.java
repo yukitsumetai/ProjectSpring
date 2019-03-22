@@ -29,6 +29,32 @@ public class Option {
     @ManyToMany(mappedBy = "options")
     private List<Tariff> compatibleTariffs=new ArrayList<>();
 
+    @OneToMany
+    @JoinTable(name = "options_options",
+            joinColumns = @JoinColumn(name = "child_id"),
+            inverseJoinColumns = @JoinColumn(name = "parent_id"))
+    private List<Option> children=new ArrayList<>();
+
+    @ManyToOne(mappedBy = "children")
+    private Option parent;
+
+
+    public Option getParent() {
+        return parent;
+    }
+
+    public void setParent(Option parent) {
+        this.parent = parent;
+    }
+
+    public List<Option> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Option> children) {
+        this.children = children;
+    }
+
     public boolean isValid() {
         return isValid;
     }

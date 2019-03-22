@@ -106,7 +106,6 @@ public class TariffServiceImpl implements TariffService {
     public void editTariff(TariffDTO t) {
         Tariff tariff=tariffDao.getOne(t.getId());
         tariff.setIsValid(t.isIsValid());
-        tariff.setPrice(t.getPrice());
         tariff.setDescription(t.getDescription());
     }
 

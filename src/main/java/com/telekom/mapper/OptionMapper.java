@@ -29,7 +29,7 @@ public class OptionMapper {
     }
     public OptionDTO EntityToDtoWithoutTariff(Option t){
         OptionDTO tmp=new OptionDTO();
-        tmp.setValid(t.isValid());
+        tmp.setIsValid(t.isValid());
         tmp.setId(t.getId());
         tmp.setDescription(t.getDescription());
         tmp.setName(t.getName());
@@ -41,7 +41,7 @@ public class OptionMapper {
     public Option DtoToEntity(OptionDTO t){
         Option tmp=new Option();
         tmp.setId(t.getId());
-        tmp.setValid(t.isValid());
+        tmp.setValid(t.isIsValid());
         tmp.setDescription(t.getDescription());
         tmp.setName(t.getName());
         tmp.setPriceMonthly(t.getPriceMonthly());

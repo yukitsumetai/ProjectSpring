@@ -33,7 +33,8 @@ public class TariffController {
     }
 
     @PostMapping("/new")
-    public String newTariffAdd( TariffDTO tariff, @RequestParam(name = "opt", required = false) List<Integer> opts) {
+    public String newTariffAdd( TariffDTO tariff, @RequestParam(name = "opt", required = false) List<Integer> opts, @RequestParam(name = "isValid", required=false) boolean validity) {
+        if (!validity) tariff.setIsValid(false);
         tariffService.add(tariff, opts);
         return "redirect:/tariffs";
     }
@@ -54,7 +55,7 @@ public class TariffController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteTariff(Model model, @PathVariable(value = "id") Integer id) {
+    public String deleteTariff(@PathVariable(value = "id") Integer id) {
         tariffService.deleteTariff(id);
         return "redirect:/tariffs";
     }

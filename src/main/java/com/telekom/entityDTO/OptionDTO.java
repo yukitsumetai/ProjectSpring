@@ -23,11 +23,11 @@ public class OptionDTO implements Serializable {
     private List<TariffDTO> compatibleTariffs = new ArrayList<>();
 
 
-    public boolean isValid() {
+    public boolean isIsValid() {
         return isValid;
     }
 
-    public void setValid(boolean valid) {
+    public void setIsValid(boolean valid) {
         isValid = valid;
     }
 

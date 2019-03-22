@@ -13,7 +13,7 @@ public interface OptionService {
    Set<OptionDTO> findByTariff(Integer tariffId);
    void add(OptionDTO option, List<Integer> opts);
    OptionDTO getOne(int id);
-   void editOption(Option option);
+   void editOption(OptionDTO option);
    void deleteOption(Integer id);
 
 }

@@ -50,8 +50,6 @@ public class ContractController {
         return "options";
     }
 
-
-
     @PostMapping(value="/client")
     public String newContractOptionAdd(Model model, ContractDTO contract,@RequestParam(name="action") String action, @RequestParam(name = "optionID", required = false) List<Integer> id) {
         if (id != null) {

@@ -15,9 +15,6 @@ public interface OptionDao {
 
     Option getOne(Integer id);
 
-    void editOption(Option option);
-
-    void deleteOption(Integer id);
 
 }
 

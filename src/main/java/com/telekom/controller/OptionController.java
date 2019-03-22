@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @SessionAttributes(types = OptionDTO.class)
-@RequestMapping(value = "/tariffs")
+@RequestMapping(value = "/options")
 @Controller
 public class OptionController {
     @Autowired
@@ -23,33 +23,36 @@ public class OptionController {
     @Autowired
     private OptionService optionService;
 
-    @GetMapping("/options/new")
+    @GetMapping("/new")
     public String newOption(Model model) throws SQLException {
        OptionDTO option=new OptionDTO();
         model.addAttribute("option", option);
+        model.addAttribute("table", "add");
         model.addAttribute("tariffs", tariffService.getAll());
         return "newOption";
     }
 
-    @PostMapping("/options/new")
-    public String newOptionAdd(@ModelAttribute OptionDTO option, @RequestParam(name = "opt", required = false) List<Integer> tariffs) {
+    @PostMapping("/new")
+    public String newOptionAdd(OptionDTO option, @RequestParam(name = "opt", required = false) List<Integer> tariffs,@RequestParam(name = "isValid", required = false) boolean validity) {
+        if(!validity)option.setIsValid(false);
         optionService.add(option, tariffs);
         return "redirect:/options";
     }
 
-    @GetMapping("/options/edit/{id}")
+    @GetMapping("/edit/{id}")
     public ModelAndView getEditOption(@PathVariable(value = "id") Integer id) {
         OptionDTO option = optionService.getOne(id);
         return new ModelAndView("editOption", "option", option);
     }
 
-    @PostMapping("/options/edit")
-    public String editProduct(@ModelAttribute(value = "option") Option option) {
+    @PostMapping("/edit")
+    public String editProduct(@ModelAttribute(value = "option") OptionDTO option,@RequestParam(name = "isValid", required = false) boolean validity) {
+        if(!validity)option.setIsValid(false);
         optionService.editOption(option);
         return "redirect:/options";
     }
 
-    @GetMapping("/options/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteOption(@PathVariable(value = "id") Integer id) {
         optionService.deleteOption(id);
         return "redirect:/options";

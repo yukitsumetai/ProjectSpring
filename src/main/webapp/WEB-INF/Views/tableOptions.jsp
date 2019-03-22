@@ -11,20 +11,20 @@
 
 <!DOCTYPE html>
 
-    <head>
-        <meta charset="utf-8">
+<head>
+    <meta charset="utf-8">
 
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-
-
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="../resource/assets/js/vendor/jquery.min.js"><\/script>')</script>
-        <script src="../resource/dist/js/bootstrap.min.js"></script>
-        <script src="../resource/js/pagination.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
 
-    </head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../resource/assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../resource/dist/js/bootstrap.min.js"></script>
+    <script src="../resource/js/pagination.js"></script>
+
+
+</head>
 
 <body>
 <table class="table table-striped table-hover table-bordered" id="Table">
@@ -33,10 +33,11 @@
         <th onclick="sortTable(0)">Name<i class="fa fa-sort"></i></th>
         <th onclick="sortTable(1)">One Time Price<i class="fa fa-sort"></i></th>
         <th onclick="sortTable(2)">Monthly Price<i class="fa fa-sort"></i></th>
-        <th>Validity</th>
+
         <th>Description</th>
         <c:if test="${table=='edit'}">
             <th>Compatible Tariffs</th>
+            <th>Validity</th>
         </c:if>
 
         <c:choose>
@@ -62,20 +63,17 @@
                 <li>${t.name}</li>
             </c:forEach>
         </td>
+        <td>${o.isValid}</td>
         </c:if>
-        </td>
-        <td>${tariff.isValid}</td>
-
-
         <td>
             <c:choose>
                 <c:when test="${table=='edit'}">
                     <a href="/options/edit/${o.id}" class="edit" title="Edit"><i
                             class="material-icons">&#xE254;</i></a>
-                    <c:if test="${option.isValid==true}">
-                    <a href="#deleteModal" class="delete" title="Delete" data-toggle="modal"
-                       data-toggle="tooltip" data-target="#deleteModal" data-id="${o.id}"><i
-                            class="material-icons">&#xE872;</i></a>
+                    <c:if test="${o.isValid==true}">
+                        <a href="#deleteModal" class="delete" title="Delete" data-toggle="modal"
+                           data-toggle="tooltip" data-target="#deleteModal" data-id="${o.id}"><i
+                                class="material-icons">&#xE872;</i></a>
                     </c:if>
                 </c:when>
                 <c:otherwise>

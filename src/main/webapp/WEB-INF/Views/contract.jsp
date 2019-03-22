@@ -46,12 +46,12 @@
                 <div class="row">
                     <div class="col-sm-1 form-group">
                         <form class="form-group" action="/newContract/confirm/true" method="post">
-                            <button type="submit" class="btn btn-success">Confirm</button>
+                            <button type="submit" class="btn btn-success">Confirm<i class="glyphicon glyphicon-floppy-disk"></i></button>
                         </form>
                     </div>
                     <div class="col-sm-1 form-group price">
                         <form class="form-group" action="/tariffs" >
-                            <button type="submit" class="btn btn-danger">Cancel</button>
+                            <button type="submit" class="btn btn-danger">Cancel<i class="glyphicon glyphicon-ban-circle"></i></button>
                         </form>
                     </div>
                 </div>
