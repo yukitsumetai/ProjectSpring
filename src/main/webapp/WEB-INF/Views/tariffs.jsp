@@ -21,8 +21,7 @@
     <link rel="icon" href="../resource/images/favicon1.ico">
 
     <title>Tariffs Overview</title>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../resource/assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="../resource/dist/js/bootstrap.min.js"></script>
     <script src="../resource/js/pagination.js"></script>
@@ -133,7 +132,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                Are you sure that you want to delete the tariff?
+                Are you sure that you want to delete the tariff?<br>
+                Tariff status will be set to invalid and it won't be able to use tariffs in new contracts
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
@@ -144,6 +144,29 @@
         </div>
     </div>
 </div>
+<%-- Modal Script --%>
+<script>
+    $('#deleteModal').on('show.bs.modal', function (e) {
+
+        //get data-id attribute of the clicked element
+        var id = $(e.relatedTarget).data('id');
+
+        //populate the textbox
+        $(e.currentTarget).find('form[id="action"]').val(id);
+        var $form = $('#action');
+        $form.attr('action', '/tariffs/delete/' + id);
+    });
+</script>
+<%--Modal delete refused--%>
+<c:if test="${refusedDelete=='yes'}">
+    <script type="text/javascript">
+        $(window).on('load',function(){
+            $('#deleteRefusedModal').modal('show');
+        });
+    </script>
+</c:if>
+
+
 <%--Alert--%>
 <script type="text/javascript">
     function validate() {
@@ -163,23 +186,11 @@
         document.getElementById("tariffPrice").innerHTML = "$" + price;
     });
 </script>
-<%-- Modal Script --%>
-<script>
-    $('#deleteModal').on('show.bs.modal', function (e) {
 
-        //get data-id attribute of the clicked element
-        var id = $(e.relatedTarget).data('id');
-
-        //populate the textbox
-        $(e.currentTarget).find('form[id="action"]').val(id);
-        var $form = $('#action');
-        $form.attr('action', '/tariffs/delete/' + id);
-    });
-</script>
 <%-- Highlight clicked --%>
 <script>
     $(document).ready(function () {
-        $('td :checkbox').bind('change click', function () {
+        $('td :checkbox').bind('change checked', function () {
             $(this).closest('tr').toggleClass('highlight', this.checked);
         }).change();
     });

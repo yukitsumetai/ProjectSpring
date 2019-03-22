@@ -22,10 +22,7 @@ public class OptionDTO implements Serializable {
 
     private double priceOneTime;
 
-
     private List<TariffDTO> compatibleTariffs = new ArrayList<>();
-
-
 
     public String getDescription() {
         return description;

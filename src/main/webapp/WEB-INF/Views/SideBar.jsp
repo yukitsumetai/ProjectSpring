@@ -6,23 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <!-- Bootstrap core CSS -->
-    <link href="../resource/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom styles for this page -->
-    <link href="../resource/css/dashboard.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../resource/assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="../resource/dist/js/bootstrap.min.js"></script>
-
-</head>
 <body>
 <div class="container-fluid">
     <div class="row">
@@ -54,4 +38,4 @@
     });
 </script>
 </body>
-</html>
+

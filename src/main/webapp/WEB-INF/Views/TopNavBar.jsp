@@ -10,7 +10,9 @@
 
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<c:if test="${table=='add'}">
+    <%@ include file="shoppingCart.jsp"%>
+</c:if>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -28,8 +30,6 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
-
 </head>
 
 <header>
@@ -55,7 +55,5 @@
         </div>
     </div>
 </nav>
+
 </header>
-<c:if test="${table=='add'}">
-    <%@ include file="shoppingCart.jsp"%>
-</c:if>

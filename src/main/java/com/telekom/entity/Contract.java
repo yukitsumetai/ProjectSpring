@@ -31,9 +31,22 @@ public class Contract implements Serializable {
 
     private Double price;
     private Double priceTariff;
+    private Double priceOneTime;
 
+    public void deleteOption(Integer id) {
+        this.options.removeIf(st -> st.getId() == id);
+    }
     public void addOption(Option option) {
         this.options.add(option);
+    }
+
+
+    public Double getPriceOneTime() {
+        return priceOneTime;
+    }
+
+    public void setPriceOneTime(Double priceOneTime) {
+        this.priceOneTime = priceOneTime;
     }
 
     public BigInteger getPhoneNumber() {

@@ -28,6 +28,7 @@ public class myController {
 
     @Autowired
     private ContractService contractService;
+
     @GetMapping("/view")
     public String view(@RequestParam(value = "name", required = false, defaultValue = "stranger ") String name, Model model) {
         model.addAttribute("msg", "Hello " + name);
@@ -39,7 +40,6 @@ public class myController {
 
         return "search";
     }
-
 
 
     @RequestMapping(value = "/view", params = "Customer", method = RequestMethod.POST)
@@ -66,9 +66,14 @@ public class myController {
 
     @PostMapping("/getUser")
     public String registerCustomer(Model model, @RequestParam(name = "phoneNumber") String number) {
-      List<ClientDTO> clients=new ArrayList<>();
-       clients.add(clientService.getOne(number));
-       model.addAttribute( "clients", clients);
+        ClientDTO client = clientService.getOne(number);
+        if (client == null) {
+            return "clients";
+        }
+
+        List<ClientDTO> clients = new ArrayList<>();
+        clients.add(client);
+        model.addAttribute("clients", clients);
         return "clients";
     }
 
@@ -78,50 +83,12 @@ public class myController {
     @Autowired
     private OptionService optionService;
 
+
     @GetMapping("/tariffs")
     public String getTariffs(Model model) throws SQLException {
         model.addAttribute("tariffs", tariffService.getAll());
-        String table = "edit";
-        model.addAttribute("table", table);
+        model.addAttribute("table", "edit");
         return "tariffs";
-    }
-
-    @GetMapping("/tariffs/new")
-    public String newTariff(Model model) throws SQLException {
-        model.addAttribute("options", optionService.getAll());
-
-        return "newTariff";
-    }
-
-    @PostMapping("/tariffs/new")
-    public String newTariffAdd(@ModelAttribute Tariff tariff, @RequestParam(name = "opt", required = false) List<Integer> opts) {
-        if (opts == null) {
-            tariffService.add(tariff);
-        } else tariffService.add(tariff, opts);
-        return "redirect:/tariffs";
-    }
-
-
-    @GetMapping("/tariffs/edit/{id}")
-    public ModelAndView getEditForm(@PathVariable(value = "id") Integer id) {
-        TariffDTO tariff = tariffService.getOne(id);
-        return new ModelAndView("editTariff", "tariff", tariff);
-    }
-
-
-
-
-
-    @PostMapping("/tariffs/edit")
-    public String editProduct(@ModelAttribute(value = "tariff") TariffDTO tariffDto) {
-        tariffService.editTariff(tariffDto);
-        return "redirect:/tariffs";
-    }
-
-    @GetMapping("/tariffs/delete/{id}")
-    public String deleteTariff(@PathVariable(value = "id") Integer id) {
-        tariffService.deleteTariff(id);
-        return "redirect:/tariffs";
     }
 
     @GetMapping("/options")

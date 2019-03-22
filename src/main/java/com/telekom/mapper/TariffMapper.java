@@ -7,7 +7,6 @@ import com.telekom.entityDTO.OptionDTO;
 import com.telekom.entityDTO.TariffDTO;
 import org.springframework.stereotype.Component;
 
-import javax.swing.text.html.parser.Entity;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,11 +37,13 @@ public class TariffMapper {
         tmp.setDescription(t.getDescription());
         tmp.setName(t.getName());
         tmp.setPrice(t.getPrice());
+        tmp.setIsValid(t.isIsValid());
         return tmp;
     }
 
         public Tariff DtoToEntity(TariffDTO t){
             Tariff tmp=new Tariff();
+            tmp.setIsValid(t.isIsValid());
             tmp.setId(t.getId());
             tmp.setDescription(t.getDescription());
             tmp.setName(t.getName());

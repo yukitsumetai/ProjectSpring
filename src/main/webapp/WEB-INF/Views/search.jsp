@@ -42,6 +42,7 @@
 
                             <button onclick="path()" class="btn btn-success">Find</button>
                         </div>
+                    ${message}
                 </div>
             </form>
         </div>

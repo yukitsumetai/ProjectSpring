@@ -2,6 +2,7 @@ package com.telekom.dao;
 
 import com.telekom.entity.Contract;
 import com.telekom.entity.Option;
+import com.telekom.entity.Tariff;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -25,7 +26,6 @@ public class ContractDaoImpl implements ContractDao {
 
     @Override
     public void update(Contract contract) {
-
         entityManager.merge(contract);
     }
 
@@ -42,11 +42,11 @@ public class ContractDaoImpl implements ContractDao {
     }
 
     @Override
-    public void deleteOption(BigInteger phoneNumber, Integer id) {
-        Query q = entityManager.createNativeQuery(
-             "DELETE FROM contracts_options WHERE options_id=:id and Contract_phoneNumber=:phoneNumber");
-        q.setParameter("phoneNumber", phoneNumber);
+    public List<Contract> getByTariff(Integer id) {
+        TypedQuery<Contract> q = entityManager.createQuery(
+                "select t from Contract t where t.tariff.id=:id", Contract.class);
         q.setParameter("id", id);
-        q.executeUpdate();
+        return q.getResultList();
     }
+
 }

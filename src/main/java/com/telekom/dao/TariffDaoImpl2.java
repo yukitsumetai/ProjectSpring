@@ -22,6 +22,10 @@ public class TariffDaoImpl2 implements TariffDao {
         return entityManager.createQuery("select t from Tariff t").getResultList();
     }
 
+    @Override
+    public List<Tariff> getAllValid() {
+        return entityManager.createQuery("select t from Tariff t where t.isValid=true").getResultList();
+    }
 
     @Override
     public void add(Tariff tariff) {
@@ -46,15 +50,5 @@ public class TariffDaoImpl2 implements TariffDao {
         entityManager.persist(tariff);
     }
 
-    @Override
-    public void deleteTariff(Integer id) {
-
-        TypedQuery<Tariff> q = entityManager.createQuery(
-                "select t from Tariff t where t.id=:id", Tariff.class
-        );
-        q.setParameter("id", id);
-        Tariff t=q.getResultList().stream().findAny().orElse(null);
-        entityManager.remove(t);
-    }
 
 }

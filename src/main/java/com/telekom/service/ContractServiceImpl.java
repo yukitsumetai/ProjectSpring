@@ -1,11 +1,9 @@
 package com.telekom.service;
 
-import com.telekom.dao.ClientDAO;
-import com.telekom.dao.ContractDao;
-import com.telekom.dao.OptionDao;
-import com.telekom.dao.PhoneNumberDao;
+import com.telekom.dao.*;
 import com.telekom.entity.Client;
 import com.telekom.entity.Contract;
+import com.telekom.entity.Option;
 import com.telekom.entity.Tariff;
 import com.telekom.entityDTO.ContractDTO;
 import com.telekom.entityDTO.OptionDTO;
@@ -39,6 +37,10 @@ public class ContractServiceImpl implements ContractService {
     private OptionService optionService;
     @Autowired
     private TariffService tariffService;
+    @Autowired
+    private OptionDao optionDao;
+    @Autowired
+    private TariffDao tariffDao;
 
     @Override
     @Transactional
@@ -60,7 +62,7 @@ public class ContractServiceImpl implements ContractService {
     public Set<OptionDTO> getOptionsForAdd(ContractDTO contract) {
         Set<OptionDTO> options = optionService.findByTariff(contract.getTariff().getId());
         if (contract.getOptions() != null) {
-        Set<OptionDTO> optionsExisted = new HashSet<>(contract.getOptions());
+            Set<OptionDTO> optionsExisted = new HashSet<>(contract.getOptions());
             for (OptionDTO e : optionsExisted
             ) {
                 options.removeIf(st -> st.getId() == e.getId());
@@ -72,11 +74,10 @@ public class ContractServiceImpl implements ContractService {
     @Override
     public List<TariffDTO> getTariffsForAdd(ContractDTO contract) {
         Integer id = contract.getTariff().getId();
-        List<TariffDTO> tariffs = new ArrayList<>(tariffService.getAll());
+        List<TariffDTO> tariffs = new ArrayList<>(tariffService.getAllValid());
         tariffs.removeIf(st -> st.getId() == id);
         return tariffs;
     }
-
 
 
     public void update(ContractDTO contract) {
@@ -109,33 +110,49 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     @Transactional
-    public void setTariffAndUpdate(ContractDTO contract, Integer id) {
-      setTariff(contract, id);
-      update(contract);
+    public void setTariffAndUpdate(ContractDTO contractDto, Integer id) {
+       Contract contract= contractDao.getOne(contractDto.getPhoneNumberInt());
+        Tariff t = tariffDao.getOne(id);
+        contract.setTariff(t);
+        contract.setPrice(0.0);
+        contract.setPriceOneTime(0.0);
+        contract.setPrice(t.getPrice());
     }
 
     @Override
     @Transactional
     public void setOptionsAndUpdate(ContractDTO contract, List<Integer> id) {
-        setOptions(contract, id);
-        update(contract);
-
+        Contract tmp = contractDao.getOne(contract.getPhoneNumberInt());
+        for (Integer i : id
+        ) {
+            Option tmp2 = optionDao.getOne(i);
+            tmp.addOption(tmp2);
+            contract.setPrice(tmp2.getPriceMonthly());
+            contract.setPriceOneTime(tmp2.getPriceOneTime());
+        }
+        //setOptions(contract, id);
     }
 
     @Override
     @Transactional
     public ContractDTO getOne(String number) {
         BigInteger number2 = new BigInteger(number);
-        ContractDTO tmp = contractMapper.EntityToDto(contractDao.getOne(number2));
+
+        ContractDTO tmp;
+        try {
+            tmp = contractMapper.EntityToDto(contractDao.getOne(number2));
+        } catch (NullPointerException e) {
+            tmp = null;
+        }
         return tmp;
     }
 
     @Override
     @Transactional
-    public ContractDTO deleteOption(ContractDTO contract, Integer id) {
+    public void deleteOption(ContractDTO contract, Integer id) {
         BigInteger n = new BigInteger(contract.getPhoneNumber());
-        contractDao.deleteOption(n, id);
-        return contractMapper.EntityToDto(contractDao.getOne(n));
+        Contract tmp = contractDao.getOne(n);
+        tmp.deleteOption(id);
     }
 }
 

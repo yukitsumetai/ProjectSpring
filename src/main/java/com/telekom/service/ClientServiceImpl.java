@@ -45,7 +45,12 @@ public class ClientServiceImpl implements ClientService {
     @Transactional
     public ClientDTO getOne(String number) {
         BigInteger number2 = new BigInteger(number);
-        ClientDTO tmp = clientMapper.EntityToDto(clientDao.getOne(number2));
+        ClientDTO tmp;
+        try{
+         tmp = clientMapper.EntityToDto(clientDao.getOne(number2));}
+        catch (NullPointerException e){
+            tmp=null;
+        }
         return tmp;
     }
 

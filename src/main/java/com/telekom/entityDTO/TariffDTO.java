@@ -14,7 +14,15 @@ public class TariffDTO implements Serializable {
     private String description;
     private List<OptionDTO> options = new ArrayList<>();
     private BigInteger phoneNumber;
+   private boolean isValid;
 
+    public boolean isIsValid() {
+        return isValid;
+    }
+
+    public void setIsValid(boolean valid) {
+        isValid = valid;
+    }
 
     public BigInteger getPhoneNumber() {
         return phoneNumber;

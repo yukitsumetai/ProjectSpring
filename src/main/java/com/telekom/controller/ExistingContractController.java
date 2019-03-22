@@ -1,9 +1,8 @@
 package com.telekom.controller;
 
-import com.telekom.dao.ClientDAO;
+
 import com.telekom.entityDTO.ContractDTO;
-import com.telekom.entityDTO.OptionDTO;
-import com.telekom.entityDTO.TariffDTO;
+
 import com.telekom.service.ContractService;
 import com.telekom.service.OptionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -27,7 +25,14 @@ public class ExistingContractController {
     @Autowired
     OptionService optionService;
 
-
+    @GetMapping("/{id}")
+    public ModelAndView getEditForm(Model model, ContractDTO contract, @PathVariable(value = "id") String id) {
+        contract = contractService.getOne(id);
+        if (contract==null){
+            return new ModelAndView("search", "message", "Contract not found");
+        }
+        return new ModelAndView("contract", "contractDTO", contract);
+    }
 
 
     @GetMapping("/tariffChange")
@@ -48,32 +53,27 @@ public class ExistingContractController {
 
 
     @GetMapping("/optionsAdd")
-    public String addOptionsChoose(Model model, ContractDTO contract) {
+    public String addOptionsChfoose(Model model, ContractDTO contract) {
         model.addAttribute("options", contractService.getOptionsForAdd(contract));
         model.addAttribute("table", "add");
         return "options";
     }
 
     @PostMapping("/optionsAdd")
-    public String addOptions(Model model, ContractDTO contract, @RequestParam(name = "optionID", required = false) List<Integer> id, SessionStatus status) {
+    public String addOptions(Model model, ContractDTO contract, @RequestParam(name = "optionID", required = false) List<Integer> id) {
         if (id != null) {
             contractService.setOptionsAndUpdate(contract, id);
         }
-        status.setComplete();
         return "redirect:/existingContract/" + contract.getPhoneNumber();
     }
 
     @GetMapping("/optionsDelete/{id}")
-    public String showContract(ContractDTO contract, @PathVariable(value = "id") String id, SessionStatus status) {
+    public String showContract(ContractDTO contract, @PathVariable(value = "id") String id) {
         Integer n = Integer.valueOf(id);
-        contract = contractService.deleteOption(contract, n);
-        status.setComplete();
+        contractService.deleteOption(contract, n);
+
         return "redirect:/existingContract/" + contract.getPhoneNumber();
     }
 
-    @GetMapping("/{id}")
-    public ModelAndView getEditForm(ContractDTO contract, @PathVariable(value = "id") String id) {
-        contract = contractService.getOne(id);
-        return new ModelAndView("contract", "contractDTO", contract);
-    }
+
 }

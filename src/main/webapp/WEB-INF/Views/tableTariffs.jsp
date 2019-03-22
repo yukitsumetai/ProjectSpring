@@ -9,8 +9,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-<%@ include file="TopNavBar.jsp" %>
-<%@ include file="SideBar.jsp" %>
 
 
 <head>
@@ -21,8 +19,8 @@
     <script src="../resource/dist/js/bootstrap.min.js"></script>
     <script src="../resource/js/pagination.js"></script>
     <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
-<!--Search-->
- <script>
+    <!--Search-->
+    <script>
         $(document).ready(function () {
             $("#myInput").on("keyup", function () {
                 var value = $(this).val().toLowerCase();
@@ -44,13 +42,14 @@
         <th onclick="sortTable(1)">Price<i class="fa fa-sort"></i></th>
         <th>Description</th>
         <th>Compatible Options</th>
-        <c:choose>
+        <th>Validity</th>
+            <c:choose>
             <c:when test="${table=='edit'}">
-                <th>Actions</th>
-            </c:when>
-            <c:otherwise>
-                <th>Choose Tariff</th>
-            </c:otherwise>
+        <th>Actions</th>
+        </c:when>
+        <c:otherwise>
+            <th>Choose Tariff</th>
+        </c:otherwise>
         </c:choose>
     </tr>
     </thead>
@@ -65,15 +64,18 @@
                     <li>${option.name}</li>
                 </c:forEach>
             </td>
+            <td>${tariff.isValid}</td>
             <td>
 
                 <c:choose>
                     <c:when test="${table=='edit'}">
                         <a href="/tariffs/edit/${tariff.id}" class="edit" title="Edit"><i
                                 class="material-icons">&#xE254;</i></a>
-                        <a href="#deleteModal" class="delete" title="Delete" data-toggle="modal"
-                           data-toggle="tooltip" data-target="#deleteModal" data-id="${tariff.id}"><i
-                                class="material-icons">&#xE872;</i></a>
+                        <c:if test="${tariff.isValid==true}">
+                            <a href="#deleteModal" class="delete" title="Delete" data-toggle="modal"
+                               data-toggle="tooltip" data-target="#deleteModal" data-id="${tariff.id}"><i
+                                    class="material-icons">&#xE872;</i></a>
+                        </c:if>
                     </c:when>
                     <c:otherwise>
                         <input type="checkbox" class="chk" tariffName="${tariff.name}" price="${tariff.price}"

@@ -1,8 +1,5 @@
 package com.telekom.entity;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -24,23 +21,29 @@ public class Tariff {
     @NotBlank(message = "Price is required")
     private double price;
     private String description;
+    private boolean isValid;
 
-
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    //@Fetch(FetchMode.SELECT)
+    @ManyToMany
     @JoinTable(name = "tariffs_options",
             joinColumns = @JoinColumn(name = "tariff_id"),
             inverseJoinColumns = @JoinColumn(name = "option_id"))
-    private List<Option> options;
+    private List<Option> options=new ArrayList<>();
 
     public Tariff() {
     }
 
+    public boolean isIsValid() {
+        return isValid;
+    }
 
+    public void setIsValid(boolean valid) {
+        this.isValid = valid;
+    }
 
     public void addOption(Option o) {
-            this.options.add(o);
+        this.options.add(o);
     }
+
     public List<Option> getOptions() {
         return options;
     }

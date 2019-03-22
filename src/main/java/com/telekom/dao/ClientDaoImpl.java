@@ -27,7 +27,6 @@ public class ClientDaoImpl implements ClientDAO {
         return entityManager.createQuery("select distinct t from Client t join fetch t.contract").getResultList();
     }
 
-
     @Override
     public void add(Client client) {
        entityManager.persist(client);

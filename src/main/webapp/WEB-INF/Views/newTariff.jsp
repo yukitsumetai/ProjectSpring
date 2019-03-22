@@ -31,7 +31,11 @@
 
                 <div class="form-group">
                     <label class="control-label">Description</label>
-                    <input id="Description" type="text" name="Description" class="form-control" required/>
+                    <textarea row="'4" id="Description" type="text" name="Description" class="form-control" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Validity: </label>
+                    <input type="checkbox" class="chk"  name="isValid" id="isValid" value="${tariff.isValid}" checked/>&nbsp;
                 </div>
                 <div class="control-label">
                     <center>Compatible Options</center>
@@ -78,9 +82,14 @@
 </div><!-- .container -->
 <!-- Validating Password -->
 
-<script>
-    $(function() {
-        $('#undo_redo').multiselect();
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#isValid').change(function() {
+            if ($(this).is(":checked")) {
+                this.value = true;
+            }
+            else this.value = false;
+        });
     });
 </script>
 <script type="text/javascript">

@@ -9,13 +9,13 @@ import java.util.List;
 public interface TariffService {
 
     List<TariffDTO> getAll();
+    List<TariffDTO> getAllValid();
 
-    void add(Tariff tariff, List<Integer> opts);
-
-    void add(Tariff tariff);
+    void add(TariffDTO tariff, List<Integer> opts);
 
 
     TariffDTO getOne(int id);
+    Boolean checkContracts(Integer id);
 
     void editTariff(TariffDTO tariffDto);
     void editTariff(TariffDTO t, List<Integer> opts);

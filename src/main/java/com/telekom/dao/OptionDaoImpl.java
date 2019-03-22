@@ -43,7 +43,8 @@ public class OptionDaoImpl implements OptionDao {
                 "select t from Option t where t.id=:id", Option.class
         );
         q.setParameter("id", id);
-        return q.getResultList().stream().findAny().orElse(null);
+        Option c=q.getResultList().stream().findAny().orElse(null);
+        return c;
 
     }
 

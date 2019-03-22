@@ -37,14 +37,13 @@ public class ContractController {
         ContractDTO contract = new ContractDTO();
         model.addAttribute(contract);
         model.addAttribute("table", "add");
-        model.addAttribute("tariffs", tariffService.getAll());
+        model.addAttribute("tariffs", tariffService.getAllValid());
         return "tariffs";
     }
 
 
     @PostMapping("/options")
     public String newContractTariffAdd(Model model, ContractDTO contract, @RequestParam(name = "tariffID") Integer id) {
-
         model.addAttribute("options", contractService.setTariff(contract, id)); //нужно ли тянуть тариф опять из базы?
         model.addAttribute("table", "add");
         model.addAttribute("NEB","yes");

@@ -13,7 +13,7 @@ public interface ContractService {
 
     ContractDTO getOne(String number);
 
-    ContractDTO deleteOption(ContractDTO contract, Integer id);
+    void deleteOption(ContractDTO contract, Integer id);
 
     void setOptions(ContractDTO contract, List<Integer> id);
 
