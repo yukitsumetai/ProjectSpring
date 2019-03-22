@@ -99,37 +99,7 @@ public class myController {
         return "options";
     }
 
-    @GetMapping("/options/new")
-    public String newOption(Model model) throws SQLException {
-        model.addAttribute("tariffs", tariffService.getAll());
-        return "newOption";
-    }
 
-    @PostMapping("/options/new")
-    public String newOptionAdd(@ModelAttribute Option option, @RequestParam(name = "opt", required = false) List<Integer> opts) {
-        if (opts == null) {
-            optionService.add(option);
-        } else optionService.add(option, opts);
-        return "redirect:/options";
-    }
-
-    @GetMapping("/options/edit/{id}")
-    public ModelAndView getEditOption(@PathVariable(value = "id") Integer id) {
-        OptionDTO option = optionService.getOne(id);
-        return new ModelAndView("editOption", "option", option);
-    }
-
-    @PostMapping("/options/edit")
-    public String editProduct(@ModelAttribute(value = "option") Option option) {
-        optionService.editOption(option);
-        return "redirect:/options";
-    }
-
-    @GetMapping("/options/delete/{id}")
-    public String deleteOption(@PathVariable(value = "id") Integer id) {
-        optionService.deleteOption(id);
-        return "redirect:/options";
-    }
 
 
 }

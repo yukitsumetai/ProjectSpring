@@ -22,19 +22,29 @@
             <form id="optionForm" action="/options/new" method="post">
                 <div class="form-group">
                     <label class="control-label">Option Name</label>
-                    <input id="name" type="text" name="name" class="form-control" required/>
+                    <input id="name" value="${option.name}" type="text" name="name" class="form-control" required  <c:if test="${form=='edit'}">
+                        disabled
+                    </c:if>/>
                 </div>
                 <div class="form-group">
                     <label class="control-label">One Time Price</label>
-                    <input id="priceOneTime" type="number" name="priceOneTime" class="form-control" required/>
-                </div>
+                    <input id="priceOneTime" value="${option.priceOneTime}" type="number" name="priceOneTime" class="form-control" required<c:if test="${form=='edit'}">
+                        disabled
+                    </c:if>/>
+                </div>"
                 <div class="form-group">
                     <label class="control-label">Monthly Price</label>
-                    <input id="priceMonthly" type="number" name="priceMonthly" class="form-control" required/>
+                    <input id="priceMonthly" value="${option.priceMonthly}" type="number" name="priceMonthly" class="form-control" required<c:if test="${form=='edit'}">
+                        disabled
+                    </c:if>/>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Description</label>
-                    <input id="Description" type="text" name="Description" class="form-control" required/>
+                    <input id="Description" value="${option.description}" type="text" name="Description" class="form-control" required/>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Validity: </label>
+                    <input type="checkbox" class="chk"  name="isValid" id="isValid" value="${option.isValid}" checked/>&nbsp;
                 </div>
                 <div class="control-label">
                     <center>Compatible Tariffs</center>
@@ -96,7 +106,17 @@
         return true;
     }
 </script>
-
+<!--option validity-->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#isValid').change(function() {
+            if ($(this).is(":checked")) {
+                this.value = true;
+            }
+            else this.value = false;
+        });
+    });
+</script>
 
 </body>
 </html>

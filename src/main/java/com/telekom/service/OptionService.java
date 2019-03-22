@@ -11,11 +11,9 @@ public interface OptionService {
 
    List<OptionDTO> getAll();
    Set<OptionDTO> findByTariff(Integer tariffId);
-   void add(Option option, List<Integer> opts);
-   void add(Option option);
+   void add(OptionDTO option, List<Integer> opts);
    OptionDTO getOne(int id);
    void editOption(Option option);
-
    void deleteOption(Integer id);
 
 }

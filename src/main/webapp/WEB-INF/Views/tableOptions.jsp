@@ -32,13 +32,21 @@
     <tr>
         <th onclick="sortTable(0)">Name<i class="fa fa-sort"></i></th>
         <th onclick="sortTable(1)">One Time Price<i class="fa fa-sort"></i></th>
-        <th onclick="sortTable(1)">Monthly Price<i class="fa fa-sort"></i></th>
+        <th onclick="sortTable(2)">Monthly Price<i class="fa fa-sort"></i></th>
+        <th>Validity</th>
         <th>Description</th>
         <c:if test="${table=='edit'}">
             <th>Compatible Tariffs</th>
         </c:if>
 
-        <th>Actions</th>
+        <c:choose>
+            <c:when test="${table=='edit'}">
+                <th>Actions</th>
+            </c:when>
+            <c:otherwise>
+                <th>Choose Options</th>
+            </c:otherwise>
+        </c:choose>
     </tr>
     </thead>
     <tbody id="myTable">
@@ -51,10 +59,12 @@
         <c:if test="${table=='edit'}">
         <td>
             <c:forEach items="${o.compatibleTariffs}" var="t">
-                <li>${t}</li>
+                <li>${t.name}</li>
             </c:forEach>
         </td>
         </c:if>
+        </td>
+        <td>${tariff.isValid}</td>
 
 
         <td>
@@ -62,9 +72,11 @@
                 <c:when test="${table=='edit'}">
                     <a href="/options/edit/${o.id}" class="edit" title="Edit"><i
                             class="material-icons">&#xE254;</i></a>
+                    <c:if test="${option.isValid==true}">
                     <a href="#deleteModal" class="delete" title="Delete" data-toggle="modal"
                        data-toggle="tooltip" data-target="#deleteModal" data-id="${o.id}"><i
                             class="material-icons">&#xE872;</i></a>
+                    </c:if>
                 </c:when>
                 <c:otherwise>
                     <input type="checkbox" class="chk" value="${o.id}" price="${o.priceMonthly}" optionName="${o.name}"

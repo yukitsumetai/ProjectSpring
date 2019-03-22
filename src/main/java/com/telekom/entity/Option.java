@@ -24,8 +24,18 @@ public class Option {
     @NotBlank(message = "Price is required")
     private double priceOneTime;
 
+    private boolean isValid;
+
     @ManyToMany(mappedBy = "options")
     private List<Tariff> compatibleTariffs=new ArrayList<>();
+
+    public boolean isValid() {
+        return isValid;
+    }
+
+    public void setValid(boolean valid) {
+        isValid = valid;
+    }
 
     public void addTariff(Tariff tariff) {
         this.compatibleTariffs.add(tariff);

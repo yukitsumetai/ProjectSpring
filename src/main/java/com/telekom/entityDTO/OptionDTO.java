@@ -17,12 +17,19 @@ public class OptionDTO implements Serializable {
 
     private String name;
     private String description;
-
+    private boolean isValid;
     private double priceMonthly;
-
     private double priceOneTime;
-
     private List<TariffDTO> compatibleTariffs = new ArrayList<>();
+
+
+    public boolean isValid() {
+        return isValid;
+    }
+
+    public void setValid(boolean valid) {
+        isValid = valid;
+    }
 
     public String getDescription() {
         return description;

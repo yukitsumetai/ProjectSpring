@@ -81,7 +81,7 @@
 
 </div><!-- .container -->
 <!-- Validating Password -->
-
+<!--option validity-->
 <script type="text/javascript">
     $(document).ready(function() {
         $('#isValid').change(function() {
