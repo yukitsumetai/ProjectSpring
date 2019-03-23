@@ -36,6 +36,8 @@
 
         <th>Description</th>
         <c:if test="${table=='edit'}">
+            <th>Condition</th>
+            <th>Is condition to</th>
             <th>Compatible Tariffs</th>
             <th>Validity</th>
         </c:if>
@@ -58,6 +60,12 @@
         <td>${o.priceMonthly}</td>
         <td>${o.description}</td>
         <c:if test="${table=='edit'}">
+        <td>${o.parent.name}</td>
+        <td>
+            <c:forEach items="${o.children}" var="t">
+                <li>${t.name}</li>
+            </c:forEach>
+        </td>
         <td>
             <c:forEach items="${o.compatibleTariffs}" var="t">
                 <li>${t.name}</li>

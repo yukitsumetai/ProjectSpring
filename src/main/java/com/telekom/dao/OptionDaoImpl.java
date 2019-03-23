@@ -23,7 +23,15 @@ public class OptionDaoImpl implements OptionDao {
         return entityManager.createQuery("select t from Option t").getResultList();
     }
 
+    @Override
+    public List<Option> getAllValidNoParent() {
+        return entityManager.createQuery("select t from Option t  where t.isValid=true and t.id not in(select t from Option t join t.parent)").getResultList();
+    }
 
+    @Override
+    public List<Option> getAllValidNoChildrenAndParent() {
+        return entityManager.createQuery("select t from Option t  where t.isValid=true and t.id not in(select t from Option t join t.children) and t.id not in(select t from Option t join t.parent)").getResultList();
+    }
 
 
     @Override

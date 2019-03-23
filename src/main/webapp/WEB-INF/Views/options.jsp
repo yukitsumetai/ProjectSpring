@@ -132,7 +132,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                Are you sure that you want to delete an option?
+                Are you sure that you want to delete an option?<br>
+                Relations with other tariffs/options will be lost.
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>

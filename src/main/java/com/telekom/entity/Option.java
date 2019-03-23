@@ -7,7 +7,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "options")
@@ -27,17 +29,16 @@ public class Option {
     private boolean isValid;
 
     @ManyToMany(mappedBy = "options")
-    private List<Tariff> compatibleTariffs=new ArrayList<>();
+    private Set<Tariff> compatibleTariffs=new HashSet<>();
 
-    @OneToMany
+    @ManyToOne
     @JoinTable(name = "options_options",
             joinColumns = @JoinColumn(name = "child_id"),
             inverseJoinColumns = @JoinColumn(name = "parent_id"))
-    private List<Option> children=new ArrayList<>();
-
-    @ManyToOne(mappedBy = "children")
     private Option parent;
 
+    @OneToMany(mappedBy = "parent")
+    private Set<Option> children=new HashSet<>();
 
     public Option getParent() {
         return parent;
@@ -47,11 +48,11 @@ public class Option {
         this.parent = parent;
     }
 
-    public List<Option> getChildren() {
+    public Set<Option> getChildren() {
         return children;
     }
 
-    public void setChildren(List<Option> children) {
+    public void setChildren(Set<Option> children) {
         this.children = children;
     }
 
@@ -65,6 +66,9 @@ public class Option {
 
     public void addTariff(Tariff tariff) {
         this.compatibleTariffs.add(tariff);
+    }
+    public void addChild(Option option) {
+        this.children.add(option);
     }
 
     public String getDescription() {
@@ -107,11 +111,11 @@ public class Option {
         this.priceOneTime = priceOneTime;
     }
 
-    public List<Tariff> getCompatibleTariffs() {
+    public Set<Tariff> getCompatibleTariffs() {
         return compatibleTariffs;
     }
 
-    public void setCompatibleTariffs(List<Tariff> compatibleTariffs) {
+    public void setCompatibleTariffs(Set<Tariff> compatibleTariffs) {
         this.compatibleTariffs = compatibleTariffs;
     }
 

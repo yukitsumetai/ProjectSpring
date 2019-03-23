@@ -42,7 +42,7 @@
         <th onclick="sortTable(1)">Price<i class="fa fa-sort"></i></th>
         <th>Description</th>
         <c:if test="${table=='edit'}">
-        <th>Compatible Options</th>
+            <th>Compatible Options</th>
 
             <th>Validity</th>
         </c:if>
@@ -63,17 +63,16 @@
             <td>${tariff.price}</td>
             <td>${tariff.description}</td>
             <c:if test="${table=='edit'}">
+                <td>
+                    <a href="/tariffs/optionList/${tariff.id}" class="add" title="View options"><i
+                            class="material-icons">&#xE8f4;</i></a>
+                    <c:forEach items="${tariff.options}" var="option">
+                        <li>${option.name}</li>
+                    </c:forEach>
+                </td>
+                <td>${tariff.isValid}</td>
+            </c:if>
             <td>
-                <a href="/tariffs/optionList/${tariff.id}" class="add" title="View options"><i
-                        class="material-icons">&#xE8f4;</i></a>
-                <c:forEach items="${tariff.options}" var="option">
-                    <li>${option.name}</li>
-                </c:forEach>
-            </td>
-
-            <td>${tariff.isValid}</td>
-            <td>
-                </c:if>
                 <c:choose>
                     <c:when test="${table=='edit'}">
                         <a href="/tariffs/edit/${tariff.id}" class="edit" title="Edit"><i

@@ -63,8 +63,7 @@
 
 
 </div><!-- .container -->
-<!-- Validating Password -->
-
+<!-- Valid -->
 <script type="text/javascript">
     $(document).ready(function () {
         $('#isValid').change(function () {

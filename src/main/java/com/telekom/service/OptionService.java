@@ -10,8 +10,10 @@ import java.util.Set;
 public interface OptionService {
 
    List<OptionDTO> getAll();
+   List<OptionDTO> getAllNoParent();
+   List<OptionDTO> getAllNoChildrenAndParent();
    Set<OptionDTO> findByTariff(Integer tariffId);
-   void add(OptionDTO option, List<Integer> opts);
+   void add(OptionDTO option);
    OptionDTO getOne(int id);
    void editOption(OptionDTO option);
    void deleteOption(Integer id);

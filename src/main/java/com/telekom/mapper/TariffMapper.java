@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class TariffMapper {
@@ -16,7 +17,7 @@ public class TariffMapper {
   public TariffDTO EntityToDto(Tariff t){
         TariffDTO tmp= EntityToDtoWithoutOptions(t);
       if(t.getOptions()!=null){
-      List<Option> options=t.getOptions();
+      Set<Option> options=t.getOptions();
         List<OptionDTO> tmpOptions=new ArrayList();
         for (Option o:options) {
             OptionDTO tmp2=new OptionDTO();

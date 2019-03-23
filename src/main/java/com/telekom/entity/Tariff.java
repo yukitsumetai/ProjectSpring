@@ -4,7 +4,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "tariffs")
@@ -27,7 +29,7 @@ public class Tariff {
     @JoinTable(name = "tariffs_options",
             joinColumns = @JoinColumn(name = "tariff_id"),
             inverseJoinColumns = @JoinColumn(name = "option_id"))
-    private List<Option> options=new ArrayList<>();
+    private Set<Option> options=new HashSet<>();
 
     public Tariff() {
     }
@@ -43,12 +45,15 @@ public class Tariff {
     public void addOption(Option o) {
         this.options.add(o);
     }
+    public void removeOption(Option o) {
+        this.options.remove(o);
+    }
 
-    public List<Option> getOptions() {
+    public Set<Option> getOptions() {
         return options;
     }
 
-    public void setOptions(List<Option> options) {
+    public void setOptions(Set<Option> options) {
         this.options = options;
     }
 

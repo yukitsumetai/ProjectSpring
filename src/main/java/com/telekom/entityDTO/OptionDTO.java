@@ -8,7 +8,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 public class OptionDTO implements Serializable {
@@ -20,8 +22,49 @@ public class OptionDTO implements Serializable {
     private boolean isValid;
     private double priceMonthly;
     private double priceOneTime;
-    private List<TariffDTO> compatibleTariffs = new ArrayList<>();
+    private Set<TariffDTO> compatibleTariffs = new HashSet<>();
+    private OptionDTO parent;
+    private Set<OptionDTO> children = new HashSet<>();
+    private boolean isParentValid;
 
+
+    public boolean isParentValid() {
+        return isParentValid;
+    }
+
+    public void setParentValid(boolean parentValid) {
+        isParentValid = parentValid;
+    }
+
+    public void addOption(Integer id, String name) {
+        OptionDTO tmp = new OptionDTO();
+        tmp.setId(id);
+        tmp.setName(name);
+        this.children.add(tmp);
+    }
+
+    public void addTariff(Integer id, String name) {
+        TariffDTO tmp = new TariffDTO();
+        tmp.setId(id);
+        tmp.setName(name);
+        this.compatibleTariffs.add(tmp);
+    }
+
+    public OptionDTO getParent() {
+        return parent;
+    }
+
+    public void setParent(OptionDTO parent) {
+        this.parent = parent;
+    }
+
+    public Set<OptionDTO> getChildren() {
+        return children;
+    }
+
+    public void setChildren(Set<OptionDTO> children) {
+        this.children = children;
+    }
 
     public boolean isIsValid() {
         return isValid;
@@ -71,11 +114,11 @@ public class OptionDTO implements Serializable {
         this.priceOneTime = priceOneTime;
     }
 
-    public List<TariffDTO> getCompatibleTariffs() {
+    public Set<TariffDTO> getCompatibleTariffs() {
         return compatibleTariffs;
     }
 
-    public void setCompatibleTariffs(List<TariffDTO> compatibleTariffs) {
+    public void setCompatibleTariffs(Set<TariffDTO> compatibleTariffs) {
         this.compatibleTariffs = compatibleTariffs;
     }
 

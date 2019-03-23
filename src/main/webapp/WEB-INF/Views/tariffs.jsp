@@ -53,7 +53,7 @@
                 <h1 class="page-header">New contract</h1>
             </c:when>
             <c:otherwise>
-                <h2>New contract</h2>
+                <h1 class="page-header">Tariffs</h1>
             </c:otherwise>
         </c:choose>
 
@@ -103,6 +103,14 @@
                 </c:when>
                 <c:when test="${table=='add'}">
                     <form action="/newContract/options" method="post">
+                        <%@ include file="tableTariffs.jsp" %>
+                        <div>
+                            <button type="submit" class="btn btn-success">Next</button>
+                        </div>
+                    </form>
+                </c:when>
+                <c:when test="${table=='option'}">
+                    <form action="/options/new/tariffs" method="post">
                         <%@ include file="tableTariffs.jsp" %>
                         <div>
                             <button type="submit" class="btn btn-success">Next</button>
@@ -166,7 +174,6 @@
     </script>
 </c:if>
 
-
 <%--Alert--%>
 <script type="text/javascript">
     function validate() {
@@ -177,16 +184,24 @@
     }
 </script>
 <!--Cart checkboxes-->
-<script>
-    $('input.chk').on('change', function () {
-        $('input.chk').not(this).prop('checked', false);
-        var name = this.getAttribute('tariffName');
-        var price = this.getAttribute('price');
-        document.getElementById("tariffName").innerHTML = name;
-        document.getElementById("tariffPrice").innerHTML = "$" + price;
-    });
-</script>
+<c:choose>
+    <c:when test="${table=='option'}">
 
+
+
+    </c:when>
+<c:otherwise>
+    <script>
+    $('input.chk').on('change', function () {
+    $('input.chk').not(this).prop('checked', false);
+    var name = this.getAttribute('tariffName');
+    var price = this.getAttribute('price');
+    document.getElementById("tariffName").innerHTML = name;
+    document.getElementById("tariffPrice").innerHTML = "$" + price;
+    });
+    </script>
+</c:otherwise>
+</c:choose>
 <%-- Highlight clicked --%>
 <script>
     $(document).ready(function () {
