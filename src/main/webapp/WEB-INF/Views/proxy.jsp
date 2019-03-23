@@ -8,8 +8,10 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ include file="TopNavBar.jsp" %>
 <%@ include file="SideBar.jsp" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
 
@@ -17,10 +19,14 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <link rel="icon" href="../resource/images/favicon1.ico">
 
+    <!-- Bootstrap core CSS -->
+    <link href="<c:url value="${contextPath}/resource/dist/css/bootstrap.min.css" />" rel="stylesheet">
+    <link href="<c:url value="${contextPath}/resource/css/dashboard.css"/>" rel="stylesheet">
+
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../resource/assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="../resource/dist/js/bootstrap.min.js"></script>
-    <script src="../resource/js/pagination.js"></script>
+    <script src="${contextPath}/resource/dist/js/bootstrap.min.js"></script>
     <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
     <title>Client details</title>
 </head>
@@ -29,7 +35,7 @@
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         <h1 class="page-header">Option administration</h1>
         <div class="table-title">
-            <h2>Add option details</h2>
+            <h2>Edit option details</h2>
         </div>
         <div id="option data">
             <form id="optionForm" action="/options/edit" method="post">
@@ -68,19 +74,28 @@
                     </div>
                 </div>
 
+                    <div class="table-title">
+                        Current state:<br>
+                        Parent: ${option.parent.name}<br>
+                        Children:${fn:length(option.children)}
+                    </div>
+
+
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    <input type="hidden" name="relation" id="relation" value="alone"/>
+                    <input type="hidden" name="relation" id="relation" value="nothing"/>
                     <label class="btn btn-secondary active">
-                        <input type="radio" class="radio" name="options" value="alone" id="option1" autocomplete="off"
-                               checked> Stand alone
+                        <input type="radio" class="radio" name="options" value="nothing" id="option0" autocomplete="off"> Do nothing
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" class="radio" name="options" value="alone" id="option1" autocomplete="off"> Set stand alone
                     </label>
                     <label class="btn btn-secondary">
                         <input type="radio" class="radio" name="options" value="parent" id="option2" autocomplete="off">
-                        Has parent
+                        Change/set parent
                     </label>
                     <label class="btn btn-secondary">
                         <input type="radio" class="radio" name="options" value="children" id="option3"
-                               autocomplete="off"> Has children
+                               autocomplete="off"> Change/set children
                     </label>
                 </div>
                 <div class="form-group">
@@ -89,18 +104,18 @@
                     <input type="checkbox" class="chk" name="group" id="group" value="true"/>&nbsp;
                 </div>
                 <div class="form-group">
-                    <label class="control-label">Has compatible tariffs: </label>
+                    <label class="control-label">Change compatible tariffs: </label>
                     <input type="checkbox" class="chk2" name="tariffs" id="tariffs" value="false"/>&nbsp;
                 </div>
 
 
                 <div class="form-group">
                     <button type="submit" class="btn btn-success"
-                            onclick="return Validate()">Add
+                            onclick="return Validate()">Next
                     </button>
                 </div>
 
-            </form:form>
+            </form>
         </div>
     </div>
 

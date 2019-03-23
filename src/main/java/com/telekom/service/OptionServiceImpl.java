@@ -59,6 +59,39 @@ public class OptionServiceImpl implements OptionService {
     }
 
     @Override
+    public void SetCompatibleTariffs(OptionDTO option, List<Integer> id) {
+        Set<TariffDTO> tariffs = new HashSet<>();
+        if(id!=null){
+        for (Integer i : id) {
+            TariffDTO t = new TariffDTO();
+            t.setId(i);
+            tariffs.add(t);
+        }
+        }
+        option.setCompatibleTariffs(tariffs);
+    }
+
+    @Override
+    public void SetChildren(OptionDTO option, List<Integer> id) {
+        if(id!=null){
+        Set<OptionDTO> children = new HashSet<>();
+        for (Integer i : id) {
+            OptionDTO o = new OptionDTO();
+            o.setId(i);
+            children.add(o);
+        }
+        option.setChildren(children);}
+    }
+
+    @Override
+    public void SetParent(OptionDTO option, Integer id){
+        if(id!=null){
+            OptionDTO o = new OptionDTO();
+            o.setId(id);
+            option.setParent(o);}
+        else option.setParent(null);
+    }
+    @Override
     public Set<OptionDTO> findByTariff(Integer id) {
 
         List<Option> Options = optionDao.findByTariff(id);
@@ -69,30 +102,27 @@ public class OptionServiceImpl implements OptionService {
         return OptionsDTO;
     }
 
-    @Override
-    @Transactional
-    public void add(OptionDTO option) {
-        Option o = optionMapper.DtoToEntity(option);
-//Set parent if exist
-        OptionDTO p = option.getParent();
-        if (p != null) {
-            Option tmp = optionDao.getOne(p.getId());
-            if (tmp != null && tmp.isValid() && tmp.getParent() == null) {
-                o.setParent(tmp);
-            }
-        }
+    private void updateOptionRelations(OptionDTO option, Option o) {
 
-//add option to DB
-        optionDao.add(o);
-//Add children if exist
+
+        //Add children if exist
         if (option.getChildren().size() > 0) {
             Set<OptionDTO> children = option.getChildren();
             for (OptionDTO child : children
             ) {
                 Option tmp = optionDao.getOne(child.getId());
-                if (tmp != null && tmp.isValid() && tmp.getParent() == null && tmp.getChildren().size() == 0) {
+                if (o != tmp && tmp != null && tmp.isValid() && tmp.getParent() == null && tmp.getChildren().size() == 0) {
                     tmp.setParent(o);
                 }
+            }
+        }
+        //Remove current tariffs
+        if (o.getCompatibleTariffs().size() > 0) {
+            Set<Tariff> tariffs = o.getCompatibleTariffs();
+            for (Tariff t : tariffs
+            ) {
+                Tariff tmp = tariffDao.getOne(t.getId());
+                tmp.removeOption(o);
             }
         }
 //Add tariffs if exist
@@ -102,11 +132,35 @@ public class OptionServiceImpl implements OptionService {
             ) {
                 Tariff tmp = tariffDao.getOne(t.getId());
                 if (tmp != null && tmp.isIsValid()) {
-                    //o.addTariff(tmp);
                     tmp.addOption(o);
                 }
             }
         }
+
+
+    }
+
+    private void updateOptionParent(OptionDTO option, Option o) {
+        //Set parent if exist
+        OptionDTO p = option.getParent();
+        if (p != null) {
+            Option tmp = optionDao.getOne(p.getId());
+            if (o != tmp && tmp != null && tmp.isValid() && tmp.getParent() == null) {
+                o.setParent(tmp);
+            }
+        }
+        else o.setParent(null);
+    }
+
+    @Override
+    @Transactional
+    public void add(OptionDTO option) {
+        Option o = optionMapper.DtoToEntity(option);
+
+        updateOptionParent(option, o);
+//add option to DB
+        optionDao.add(o);
+        updateOptionRelations(option, o);
 
     }
 
@@ -117,12 +171,31 @@ public class OptionServiceImpl implements OptionService {
         return optionMapper.EntityToDto(t);
     }
 
+
+
     @Override
     @Transactional
-    public void editOption(OptionDTO o) {
-        Option option = optionDao.getOne(o.getId());
-        option.setValid(o.isIsValid());
+    public void editOption(OptionDTO option) {
+        Option o = optionDao.getOne(option.getId());
+        o.setValid(option.isIsValid());
+        //Remove children if exist
+        if (o.getChildren().size() > 0) {
+            Set<Option> children = o.getChildren();
+            for (Option child : children
+            ) {
+                Option tmp = optionDao.getOne(child.getId());
+                tmp.setParent(null);
+            }
+        }
+        updateOptionParent(option, o);
         option.setDescription(o.getDescription());
+        updateOptionRelations(option, o);
+    }
+
+    @Override
+    public void removeRelations(OptionDTO option) {
+        option.setParent(null);
+        option.setChildren(new HashSet<>());
     }
 
     @Override

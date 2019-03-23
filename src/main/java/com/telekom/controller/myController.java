@@ -84,6 +84,7 @@ public class myController {
     private OptionService optionService;
 
 
+
     @GetMapping("/tariffs")
     public String getTariffs(Model model) throws SQLException {
         model.addAttribute("tariffs", tariffService.getAll());

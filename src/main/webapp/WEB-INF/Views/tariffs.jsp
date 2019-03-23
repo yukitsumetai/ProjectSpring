@@ -11,6 +11,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ include file="TopNavBar.jsp" %>
 <%@ include file="SideBar.jsp" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 
 <html lang="en">
@@ -18,13 +19,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="icon" href="../resource/images/favicon1.ico">
-
+    <link rel="icon" href="${contextPath}/resource/images/favicon1.png">
+    <!-- Bootstrap core CSS -->
+    <link href="<c:url value="${contextPath}/resource/dist/css/bootstrap.min.css" />" rel="stylesheet">
+    <link href="<c:url value="${contextPath}/resource/css/dashboard.css"/>" rel="stylesheet">
     <title>Tariffs Overview</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../resource/assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="../resource/dist/js/bootstrap.min.js"></script>
-    <script src="../resource/js/pagination.js"></script>
+    <script src="${contextPath}/resource/dist/js/bootstrap.min.js"></script>
+    <script src="${contextPath}/resource/js/pagination.js"></script>
     <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
 
 
@@ -93,13 +96,13 @@
 
             <c:choose>
 
-            <c:when test="${NEB=='no'}">
-                <form action="/existingContract/tariffChange" method="post">
-                    <%@ include file="tableTariffs.jsp" %>
-                    <div>
-                        <button type="submit" class="btn btn-success">Next</button>
-                    </div>
-                </form>
+                <c:when test="${NEB=='no'}">
+                    <form action="/existingContract/tariffChange" method="post">
+                        <%@ include file="tableTariffs.jsp" %>
+                        <div>
+                            <button type="submit" class="btn btn-success">Next</button>
+                        </div>
+                    </form>
                 </c:when>
                 <c:when test="${table=='add'}">
                     <form action="/newContract/options" method="post">
@@ -117,10 +120,18 @@
                         </div>
                     </form>
                 </c:when>
+                <c:when test="${table=='optionEdit'}">
+                    <form action="/options/edit/tariffs" method="post">
+                        <%@ include file="tableTariffs.jsp" %>
+                        <div>
+                            <button type="submit" class="btn btn-success">Next</button>
+                        </div>
+                    </form>
+                </c:when>
                 <c:otherwise>
                     <%@ include file="tableTariffs.jsp" %>
                 </c:otherwise>
-                </c:choose>
+            </c:choose>
 
 
         </div>
@@ -168,7 +179,7 @@
 <%--Modal delete refused--%>
 <c:if test="${refusedDelete=='yes'}">
     <script type="text/javascript">
-        $(window).on('load',function(){
+        $(window).on('load', function () {
             $('#deleteRefusedModal').modal('show');
         });
     </script>
@@ -186,21 +197,20 @@
 <!--Cart checkboxes-->
 <c:choose>
     <c:when test="${table=='option'}">
-
-
-
     </c:when>
-<c:otherwise>
-    <script>
-    $('input.chk').on('change', function () {
-    $('input.chk').not(this).prop('checked', false);
-    var name = this.getAttribute('tariffName');
-    var price = this.getAttribute('price');
-    document.getElementById("tariffName").innerHTML = name;
-    document.getElementById("tariffPrice").innerHTML = "$" + price;
-    });
-    </script>
-</c:otherwise>
+    <c:when test="${table=='optionEdit'}">
+    </c:when>
+    <c:otherwise>
+        <script>
+            $('input.chk').on('change', function () {
+                $('input.chk').not(this).prop('checked', false);
+                var name = this.getAttribute('tariffName');
+                var price = this.getAttribute('price');
+                document.getElementById("tariffName").innerHTML = name;
+                document.getElementById("tariffPrice").innerHTML = "$" + price;
+            });
+        </script>
+    </c:otherwise>
 </c:choose>
 <%-- Highlight clicked --%>
 <script>

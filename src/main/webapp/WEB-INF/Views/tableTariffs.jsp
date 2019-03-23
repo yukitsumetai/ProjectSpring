@@ -9,6 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 
 <head>
@@ -16,8 +17,8 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../resource/assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="../resource/dist/js/bootstrap.min.js"></script>
-    <script src="../resource/js/pagination.js"></script>
+    <script src="${contextPath}/resource/dist/js/bootstrap.min.js"></script>
+    <script src="${contextPath}/resource/js/pagination.js"></script>
     <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
     <!--Search-->
     <script>
@@ -85,7 +86,11 @@
                     </c:when>
                     <c:otherwise>
                         <input type="checkbox" class="chk" tariffName="${tariff.name}" price="${tariff.price}"
-                               value="${tariff.id}" name="tariffID" id="tariffID"/>&nbsp;
+                               value="${tariff.id}" name="tariffID" id="${tariff.id}"
+                        <c:forEach items="${existingTariffs}" var="t">
+                            <c:if test="${tariff.id==t.id}"> checked </c:if>
+                        </c:forEach>
+                        />&nbsp;
                     </c:otherwise>
                 </c:choose>
 

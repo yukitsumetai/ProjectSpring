@@ -184,11 +184,12 @@
 <!--Highlight-->
 <script>
     $(document).ready(function () {
-        $('td :checkbox').bind('change click', function () {
+        $('td :checkbox').bind('change checked', function () {
             $(this).closest('tr').toggleClass('highlight', this.checked);
         }).change();
     });
 </script>
+
 
 </body>
 </html>

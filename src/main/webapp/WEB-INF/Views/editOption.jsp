@@ -1,29 +1,45 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%--
+  Created by IntelliJ IDEA.
+  User: ekochuro
+  Date: 03.03.2019
+  Time: 0:10
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-<!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ include file="TopNavBar.jsp" %>
+<%@ include file="SideBar.jsp" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
 
-    <!--CSS-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <link rel="icon" href="../resource/images/favicon1.ico">
 
-    <!--JS-->
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
-            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-            crossorigin="anonymous"></script>
-    <script src="<c:url value="../resource/js/multiselect.js"/>"></script>
+    <!-- Bootstrap core CSS -->
+    <link href="<c:url value="${contextPath}/resource/dist/css/bootstrap.min.css" />" rel="stylesheet">
+    <link href="<c:url value="${contextPath}/resource/css/dashboard.css"/>" rel="stylesheet">
 
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../resource/assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="${contextPath}/resource/dist/js/bootstrap.min.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+    <title>Client details</title>
+</head>
 <body>
-
-<div class="container">
-    <div id="basicExample">
-        <h2>Add option details</h2>
-        <div id="basicExampleDemo">
+<div class="container-fluid">
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <h1 class="page-header">Option administration</h1>
+        <div class="table-title">
+            <h2>Edit option details</h2>
+        </div>
+        <div id="option data">
             <form id="optionForm" action="/options/edit" method="post">
+
                 <div class="form-group">
                     <label class="control-label">Option Name</label>
                     <input id="name" value="${option.name}" type="text" name="name" class="form-control" disabled/>
@@ -46,77 +62,66 @@
                 <div class="form-group">
                     <label class="control-label">Validity: </label>
                     <input type="checkbox" class="chk" name="isValid" id="isValid" value=true
-                                <c:if test="${option.isValid==true}">
-                                    checked
-                                </c:if>
+                            <c:if test="${option.isValid==true}">
+                                checked
+                            </c:if>
                     />&nbsp;
                 </div>
 
-                Set with existing tariffs/options:
-                <div class="form-group">
-                    <label class="control-label">Belongs to option group: </label>
-                    <input type="checkbox" class="chk" name="" id="" value=true/>&nbsp;
+                <div id="table-wrapper">
+                    <div class="table-title">
+                        <h2>Set relation with existing tariffs/options</h2>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label class="control-label">Has compatible tariffs: </label>
-                    <input type="checkbox" class="chk" name="compatibleTariffs" id="compatibleTariffs" value=true/>&nbsp;
-                </div>
-                <div class="control-label">
-                    <center>Compatible Tariffs</center>
-                </div>
-                <div class="row">
-                    <div class="col-xs-5">
-                        <select name="from[]" id="undo_redo" class="form-control" size="13" multiple="multiple">
-                            <c:forEach items="${tariffs}" var="tariff">
-                                <option value=${tariff.id}>${tariff.name}</option>
-                            </c:forEach>
-                        </select>
+
+                    <div class="table-title">
+                        Current state:<br>
+                        Parent: ${option.parent.name}<br>
+                        Children:${fn:length(option.children)}
                     </div>
 
-                    <div class="col-xs-2">
-                        <button type="button" id="undo_redo_undo" class="btn btn-primary btn-block">undo</button>
-                        <button type="button" id="undo_redo_rightAll" class="btn btn-default btn-block"><i
-                                class="glyphicon glyphicon-forward"></i></button>
-                        <button type="button" id="undo_redo_rightSelected" class="btn btn-default btn-block"><i
-                                class="glyphicon glyphicon-chevron-right"></i></button>
-                        <button type="button" id="undo_redo_leftSelected" class="btn btn-default btn-block"><i
-                                class="glyphicon glyphicon-chevron-left"></i></button>
-                        <button type="button" id="undo_redo_leftAll" class="btn btn-default btn-block"><i
-                                class="glyphicon glyphicon-backward"></i></button>
-                        <button type="button" id="undo_redo_redo" class="btn btn-warning btn-block">redo</button>
-                    </div>
 
-                    <div class="col-xs-5">
-                        <select name="opt" id="undo_redo_to" class="form-control" size="13" multiple="true"></select>
-                    </div>
-
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <input type="hidden" name="relation" id="relation" value="nothing"/>
+                    <label class="btn btn-secondary active">
+                        <input type="radio" class="radio" name="options" value="nothing" id="option0" autocomplete="off"> Do nothing
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" class="radio" name="options" value="alone" id="option1" autocomplete="off"> Set stand alone
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" class="radio" name="options" value="parent" id="option2" autocomplete="off">
+                        Change/set parent
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" class="radio" name="options" value="children" id="option3"
+                               autocomplete="off"> Change/set children
+                    </label>
                 </div>
-
-
                 <div class="form-group">
                     <br>
-                    <button type="submit" class="btn btn-success">Save <i class="glyphicon glyphicon-floppy-disk"></i>
+                    <label class="control-label">Belongs to option group: </label>
+                    <input type="checkbox" class="chk" name="group" id="group" value="true"/>&nbsp;
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Change compatible tariffs: </label>
+                    <input type="checkbox" class="chk2" name="tariffs" id="tariffs" value="false"/>&nbsp;
+                </div>
+
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success"
+                            onclick="return Validate()">Next
                     </button>
                 </div>
 
             </form>
-
         </div>
     </div>
 
 </div>
 
-
-</div><!-- .container -->
-<!-- Validating Password -->
-
-<script>
-    $(function () {
-        $('#undo_redo').multiselect();
-    });
-</script>
-
-<!--option validity-->
+<!-- Valid -->
 <script type="text/javascript">
     $(document).ready(function () {
         $('#isValid').change(function () {
@@ -124,6 +129,38 @@
                 this.value = true;
             } else this.value = false;
         });
+    });
+</script>
+<!-- Checkbox tariffs -->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#tariffs').change(function () {
+            if ($(this).is(":checked")) {
+                this.value = true;
+            } else this.value = false;
+        });
+    });
+</script>
+<!-- Checkbox group -->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#chk').change(function () {
+            if ($(this).is(":checked")) {
+                this.value = true;
+            } else this.value = false;
+        });
+    });
+</script>
+<!-- Parents -->
+<script type="text/javascript">
+    $('input.radio').on('change', function () {
+        var radios = document.getElementsByName('options');
+        for (var i = 0, length = radios.length; i < length; i++) {
+            if (radios[i].checked) {
+                document.getElementById("relation").value = radios[i].value;
+                break;
+            }
+        }
     });
 </script>
 

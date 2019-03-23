@@ -17,6 +17,10 @@ public interface OptionService {
    OptionDTO getOne(int id);
    void editOption(OptionDTO option);
    void deleteOption(Integer id);
+   void SetCompatibleTariffs(OptionDTO option, List<Integer> id);
+   void removeRelations(OptionDTO option);
+   void SetChildren(OptionDTO option, List<Integer> id);
+   void SetParent(OptionDTO option, Integer id);
 
 }
 

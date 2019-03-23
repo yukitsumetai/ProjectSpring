@@ -46,7 +46,7 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <c:choose>
-                            <c:when test="${relation=='parent'}">
+                            <c:when test="${relation=='parent' ||relation=='parentEdit'}">
                                 <h2>Choose parent</h2>
                             </c:when>
                             <c:otherwise>
@@ -74,16 +74,45 @@
                         <div class="row">
                             <div class="col-sm-2 form-group">
                                 <div class="row">
-                                    <button type="submit" class="btn btn-success" <c:choose>
+                                    <button type="submit" class="btn btn-success"
+                                    <c:choose>
                                             <c:when test="${tariff==true}">value=true</c:when>
                                             <c:otherwise>value=false</c:otherwise>
                                     </c:choose> name="action">Next
+                                </div>
                             </div>
-                        </div>
+                    </form>
+                </c:when>
+                <c:when test="${relation=='childrenEdit'}">
+                    <form action="/options/edit/children" method="post">
+                        <%@ include file="tableOptions.jsp" %>
+                        <div class="row">
+                            <div class="col-sm-2 form-group">
+                                <div class="row">
+                                    <button type="submit" class="btn btn-success"
+                                    <c:choose>
+                                            <c:when test="${tariff==true}">value=true</c:when>
+                                            <c:otherwise>value=false</c:otherwise>
+                                    </c:choose> name="action">Next
+                                </div>
+                            </div>
                     </form>
                 </c:when>
                 <c:when test="${relation=='parent'}">
                     <form action="/options/new/parent" method="post">
+
+                        <%@ include file="tableOptions.jsp" %>
+                        <div class="row">
+                            <button type="submit" class="btn btn-success" <c:choose>
+                                <c:when test="${tariff==true}">value=true</c:when>
+                                <c:otherwise>value=false</c:otherwise>
+                            </c:choose> name="action">Next
+                            </button>
+                        </div>
+                    </form>
+                </c:when>
+                <c:when test="${relation=='parentEdit'}">
+                    <form action="/options/edit/parent" method="post">
 
                         <%@ include file="tableOptions.jsp" %>
                         <div class="row">

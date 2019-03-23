@@ -86,7 +86,9 @@
                 </c:when>
                 <c:otherwise>
                     <input type="checkbox" class="chk" value="${o.id}" price="${o.priceMonthly}" optionName="${o.name}"
-                           name="optionID"/>&nbsp;
+                           name="optionID"<c:forEach items="${existingOptions}" var="t">
+                        <c:if test="${o.id==t.id}"> checked </c:if>
+                    </c:forEach>/>&nbsp;
                 </c:otherwise>
             </c:choose>
         </td>

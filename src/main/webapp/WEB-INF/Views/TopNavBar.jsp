@@ -24,6 +24,7 @@
     <!-- Bootstrap core CSS -->
     <link href="../resource/dist/css/bootstrap.min.css" rel="stylesheet">
 
+
     <!-- Custom styles for this page -->
     <link href="../resource/css/dashboard.css" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
