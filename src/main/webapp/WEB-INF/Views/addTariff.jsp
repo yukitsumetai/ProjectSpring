@@ -23,6 +23,7 @@
     <link href="<c:url value="${contextPath}/resource/dist/css/bootstrap.min.css" />" rel="stylesheet">
     <link href="<c:url value="${contextPath}/resource/css/dashboard.css"/>" rel="stylesheet">
 
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../resource/assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="${contextPath}/resource/dist/js/bootstrap.min.js"></script>
@@ -35,45 +36,43 @@
         <h1 class="page-header">Tariff administration</h1>
 
         <div id="option data">
-            <form:form method="post" action="/tariffs/edit" modelAttribute="tariff" class="well">
+            <form id="simpleForm" action="/tariffs/new" method="post" class="well">
                 <div class="table-title">
-                    <h2>Edit tariff details</h2>
+                    <h2>Add tariff details</h2>
                 </div>
                 <div class="form-group">
-                    <label class="control-label">Tariff Name: </label>
-                    <input value="${tariff.name}" id="name" type="text" name="name" class="form-control" disabled/>
+                    <label class="control-label">Tariff Name*</label>
+                    <input id="name" type="text" name="name" class="form-control" required/>
                 </div>
                 <div class="form-group">
-                    <label class="control-label">Monthly Price</label>
-                    <input value="${tariff.price}" id="price" type="number" name="price" class="form-control" disabled/>
+                    <label class="control-label">Monthly Price*</label>
+                    <input id="price" type="number" name="price" class="form-control" required/>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label">Description</label>
-                    <textarea rows="4" id="Description" type="text" name="Description"
-                              class="form-control">${tariff.description}</textarea>
+                    <textarea row="'4" id="Description" type="text" name="Description" class="form-control"></textarea>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Validity: </label>
-                    <input type="checkbox" class="chk" name="isValid" id="isValid"
-                           value="${tariff.isValid}"
-                            <c:if test="${tariff.isValid==true}">
-                                checked
-                            </c:if>/>&nbsp;
+                    <input type="checkbox" class="chk"  name="isValid" id="isValid" value=true checked/>&nbsp;
                 </div>
+
+
                 <div class="form-group">
-                    <label class="control-label">Set/change compatible options: </label>
+                    <label class="control-label">Set compatible options: </label>
                     <input type="checkbox" class="chk" name="compatibleOptions" id="options" value=false/>&nbsp;
                 </div>
 
+
                 <div class="form-group">
-                    <br>
-                    <button type="submit" class="btn btn-success">Change <i
-                            class="glyphicon glyphicon-edit"></i>
+                    <button type="submit" class="btn btn-success">Add <i
+                            class="glyphicon glyphicon-plus"></i>
                     </button>
                 </div>
 
-            </form:form>
+            </form>
+
         </div>
     </div>
 
@@ -89,7 +88,7 @@
         });
     });
 </script>
-<!-- Checkbox tariffs -->
+<!-- Checkbox options -->
 <script type="text/javascript">
     $(document).ready(function () {
         $('#options').change(function () {
@@ -99,5 +98,7 @@
         });
     });
 </script>
+
+
 </body>
 </html>

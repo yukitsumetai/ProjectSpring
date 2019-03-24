@@ -47,6 +47,13 @@ public class OptionServiceImpl implements OptionService {
     }
 
     @Override
+    public List<OptionDTO> getAllValid() {
+
+        List<Option> options = optionDao.getAllValid();
+        return listEntityToDto(options);
+    }
+
+    @Override
     public List<OptionDTO> getAllNoParent() {
         List<Option> options = optionDao.getAllValidNoParent();
         return listEntityToDto(options);

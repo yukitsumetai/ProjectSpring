@@ -92,12 +92,13 @@
                         <%@ include file="tableOptions.jsp" %>
                         <div class="row">
                             <div class="col-sm-2 form-group">
-                                <button type="submit" class="btn btn-success" name="action" value="new">New Client
+                                <button type="submit" class="btn btn-success" name="action" value="new">New Client <i
+                                        class="glyphicon glyphicon-plus"></i>
                                 </button>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group col-sm-1">
                                 <button type="submit" class="btn btn-success" name="action" value="existing">Existing
-                                    client
+                                    client <i class="glyphicon glyphicon-user"></i>
                                 </button>
                             </div>
                         </div>
@@ -107,7 +108,26 @@
                     <form action="/existingContract/optionsAdd/" method="post" command="contract">
                         <%@ include file="tableOptions.jsp" %>
                         <div class="row">
-                            <button type="submit" class="btn btn-success" name="action" value="new">Next</button>
+                            <button type="submit" class="btn btn-success" name="action" value="new">Next <i
+                                    class="glyphicon glyphicon-chevron-right"></i></button>
+                        </div>
+                    </form>
+                </c:when>
+                <c:when test="${table=='tariffAdd'}">
+                <form action="/tariffs/new/options/" method="post" command="contract">
+                    <%@ include file="tableOptions.jsp" %>
+                    <div class="row">
+                        <button type="submit" class="btn btn-success" name="action" value="new">Save <i
+                                class="glyphicon glyphicon-floppy-disk"></i></button>
+                    </div>
+                </form>
+            </c:when>
+                <c:when test="${table=='tariffEdit'}">
+                    <form action="/tariffs/edit/options/" method="post" command="contract">
+                        <%@ include file="tableOptions.jsp" %>
+                        <div class="row">
+                            <button type="submit" class="btn btn-success" name="action" value="new">Save <i
+                                    class="glyphicon glyphicon-floppy-disk"></i></button>
                         </div>
                     </form>
                 </c:when>

@@ -100,7 +100,8 @@
                     <form action="/existingContract/tariffChange" method="post">
                         <%@ include file="tableTariffs.jsp" %>
                         <div>
-                            <button type="submit" class="btn btn-success">Next</button>
+                            <button type="submit" class="btn btn-success">Next <i
+                                    class="glyphicon glyphicon-chevron-right"></i><</button>
                         </div>
                     </form>
                 </c:when>
@@ -108,7 +109,8 @@
                     <form action="/newContract/options" method="post">
                         <%@ include file="tableTariffs.jsp" %>
                         <div>
-                            <button type="submit" class="btn btn-success">Next</button>
+                            <button type="submit" class="btn btn-success">Next <i
+                                class="glyphicon glyphicon-chevron-right"></i></button>
                         </div>
                     </form>
                 </c:when>
@@ -116,7 +118,8 @@
                     <form action="/options/new/tariffs" method="post">
                         <%@ include file="tableTariffs.jsp" %>
                         <div>
-                            <button type="submit" class="btn btn-success">Next</button>
+                            <button type="submit" class="btn btn-success">Save <i
+                                    class="glyphicon glyphicon-floppy-disk"></i></button>
                         </div>
                     </form>
                 </c:when>
@@ -124,7 +127,8 @@
                     <form action="/options/edit/tariffs" method="post">
                         <%@ include file="tableTariffs.jsp" %>
                         <div>
-                            <button type="submit" class="btn btn-success">Next</button>
+                            <button type="submit" class="btn btn-success">Save <i
+                                    class="glyphicon glyphicon-floppy-disk"></i></button>
                         </div>
                     </form>
                 </c:when>
@@ -152,7 +156,7 @@
             </div>
             <div class="modal-body">
                 Are you sure that you want to delete the tariff?<br>
-                Tariff status will be set to invalid and it won't be able to use tariffs in new contracts
+               Existing relations with options will be lost.
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>

@@ -8,6 +8,7 @@ import com.telekom.entityDTO.TariffDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -18,7 +19,7 @@ public class TariffMapper {
         TariffDTO tmp= EntityToDtoWithoutOptions(t);
       if(t.getOptions()!=null){
       Set<Option> options=t.getOptions();
-        List<OptionDTO> tmpOptions=new ArrayList();
+       Set<OptionDTO> tmpOptions=new HashSet<>();
         for (Option o:options) {
             OptionDTO tmp2=new OptionDTO();
             tmp2.setName(o.getName());

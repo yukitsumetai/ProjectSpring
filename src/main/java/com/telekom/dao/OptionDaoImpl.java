@@ -22,6 +22,10 @@ public class OptionDaoImpl implements OptionDao {
     public List<Option> getAll() {
         return entityManager.createQuery("select t from Option t").getResultList();
     }
+    @Override
+    public List<Option> getAllValid() {
+        return entityManager.createQuery("select t from Option t where t.isValid=true ").getResultList();
+    }
 
     @Override
     public List<Option> getAllValidNoParent() {

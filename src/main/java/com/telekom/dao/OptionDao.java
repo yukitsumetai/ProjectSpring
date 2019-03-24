@@ -14,8 +14,12 @@ public interface OptionDao {
     void add(Option option);
 
     Option getOne(Integer id);
+
     List<Option> getAllValidNoParent();
+
     List<Option> getAllValidNoChildrenAndParent();
+
+    List<Option> getAllValid();
 
 
 }

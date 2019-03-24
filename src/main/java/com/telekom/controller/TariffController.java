@@ -1,6 +1,5 @@
 package com.telekom.controller;
 
-import com.telekom.entity.Tariff;
 import com.telekom.entityDTO.TariffDTO;
 import com.telekom.service.OptionService;
 import com.telekom.service.TariffService;
@@ -8,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -29,28 +27,53 @@ public class TariffController {
         TariffDTO tariff=new TariffDTO();
         model.addAttribute("tariff", tariff);
         model.addAttribute("options", optionService.getAll());
-        return "newTariff";
+        return "addTariff";
     }
 
     @PostMapping("/new")
-    public String newTariffAdd( TariffDTO tariff, @RequestParam(name = "opt", required = false) List<Integer> opts, @RequestParam(name = "isValid", required=false) boolean validity) {
+    public String newTariffAdd(Model model, TariffDTO tariff, @RequestParam(name = "isValid", required=false) boolean validity,
+                               @RequestParam(name="compatibleOptions", required=false) boolean options) {
         if (!validity) tariff.setIsValid(false);
-        tariffService.add(tariff, opts);
+        if(options){
+            model.addAttribute("table", "tariffAdd");
+            model.addAttribute("options", optionService.getAllValid());
+            return "options";
+        }
+        tariffService.add(tariff);
+        return "redirect:/tariffs";
+    }
+    @PostMapping("/new/options")
+    public String newTariffOptions(TariffDTO tariff, @RequestParam(name = "optionID", required = false) List<Integer> id) {
+        tariffService.SetOptions(tariff, id);
+        tariffService.add(tariff);
         return "redirect:/tariffs";
     }
 
-
     @GetMapping("/edit/{id}")
-    public ModelAndView getEditForm(@PathVariable(value = "id") Integer id) {
+    public String getEditForm(Model model, @PathVariable(value = "id") Integer id) {
         TariffDTO tariff = tariffService.getOne(id);
-        return new ModelAndView("editTariff", "tariff", tariff);
+model.addAttribute("tariff", tariff);
+        return "editTariff";
     }
 
 
     @PostMapping("/edit")
-    public String editProduct(@ModelAttribute(value = "tariff") TariffDTO tariffDto, @RequestParam(name = "isValid", required=false) boolean validity) {
-        if (!validity) tariffDto.setIsValid(false);
-        tariffService.editTariff(tariffDto);
+    public String editProduct(Model model, @ModelAttribute(value = "tariff") TariffDTO tariff, @RequestParam(name = "isValid", required=false) boolean validity, @RequestParam(name="compatibleOptions", required=false) boolean options) {
+        if (!validity) tariff.setIsValid(false);
+        if(options){
+            model.addAttribute("table", "tariffEdit");
+            model.addAttribute("existingOptions", tariff.getOptions());
+            model.addAttribute("options", optionService.getAllValid());
+            return "options";
+        }
+        tariffService.editTariff(tariff);
+        return "redirect:/tariffs";
+    }
+
+    @PostMapping("/edit/options")
+    public String editTariffOptions(@ModelAttribute(value = "tariff") TariffDTO tariff, @RequestParam(name = "optionID", required = false) List<Integer> id) {
+        tariffService.SetOptions(tariff, id);
+        tariffService.editTariff(tariff);
         return "redirect:/tariffs";
     }
 

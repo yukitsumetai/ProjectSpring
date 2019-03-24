@@ -6,6 +6,7 @@ import com.telekom.dao.OptionDao;
 import com.telekom.dao.TariffDao;
 import com.telekom.entity.Option;
 import com.telekom.entity.Tariff;
+import com.telekom.entityDTO.OptionDTO;
 import com.telekom.entityDTO.TariffDTO;
 import com.telekom.mapper.TariffMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Service
@@ -51,6 +54,20 @@ public class TariffServiceImpl implements TariffService {
         return tariffsDTO;
     }
 
+    @Override
+    public void SetOptions(TariffDTO tariff, List<Integer> id) {
+        Set<OptionDTO> options = new HashSet<>();
+        if (id != null) {
+            for (Integer i : id) {
+                OptionDTO t = new OptionDTO();
+                t.setId(i);
+                options.add(t);
+            }
+            tariff.setOptions(options);
+        }
+        else tariff.setOptions(new HashSet<>());
+
+    }
 
     @Override
     @Transactional
@@ -74,45 +91,44 @@ public class TariffServiceImpl implements TariffService {
 
     }
 
-    @Override
-    @Transactional
-    public void add(TariffDTO tariff, List<Integer> opts) {
-        Tariff t = tariffMapper.DtoToEntity(tariff);
-        if (opts != null) {
-            for (Integer i : opts) {
-                t.addOption(optionDao.getOne(i));
+    private void addOptions(TariffDTO tariff, Tariff t) {
+        if (tariff.getOptions().size() > 0) {
+            Set<OptionDTO> options = tariff.getOptions();
+            for (OptionDTO o : options
+            ) {
+                Option tmp = optionDao.getOne(o.getId());
+                if (tmp != null) {
+                    if (tmp.isValid() == true) t.addOption(tmp);
+                }
             }
         }
-        tariffDao.add(t);
     }
 
     @Override
     @Transactional
-    public void editTariff(TariffDTO t, List<Integer> opts) {
-        Tariff tariff=tariffDao.getOne(t.getId());
-        tariff.setIsValid(t.isIsValid());
-        tariff.setPrice(t.getPrice());
-        tariff.setDescription(t.getDescription());
-        if (opts != null) {
-            for (Integer id : opts
-            ) {
-                tariff.addOption(optionDao.getOne(id));
-            }
-        }
+    public void add(TariffDTO tariff) {
+        Tariff t = tariffMapper.DtoToEntity(tariff);
+        addOptions(tariff, t);
+        tariffDao.add(t);
     }
+
 
     @Override
     @Transactional
     public void editTariff(TariffDTO t) {
-        Tariff tariff=tariffDao.getOne(t.getId());
+        Tariff tariff = tariffDao.getOne(t.getId());
         tariff.setIsValid(t.isIsValid());
         tariff.setDescription(t.getDescription());
+        tariff.setOptions(new HashSet<>());
+        addOptions(t, tariff);
     }
+
 
     @Override
     @Transactional
     public void deleteTariff(Integer id) {
         Tariff tariff = tariffDao.getOne(id);
+        tariff.setOptions(new HashSet<>());
         tariff.setIsValid(false);
     }
 

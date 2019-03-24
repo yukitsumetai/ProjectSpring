@@ -11,16 +11,16 @@ public interface TariffService {
     List<TariffDTO> getAll();
     List<TariffDTO> getAllValid();
 
-    void add(TariffDTO tariff, List<Integer> opts);
+    void add(TariffDTO tariff);
 
 
     TariffDTO getOne(int id);
     Boolean checkContracts(Integer id);
 
     void editTariff(TariffDTO tariffDto);
-    void editTariff(TariffDTO t, List<Integer> opts);
     void deleteTariff(Integer id);
-   // void update(OptionDTO option, Integer id);
+    void SetOptions(TariffDTO tariff, List<Integer> id);
+
 
 }
 

@@ -23,7 +23,6 @@
     <link href="<c:url value="${contextPath}/resource/dist/css/bootstrap.min.css" />" rel="stylesheet">
     <link href="<c:url value="${contextPath}/resource/css/dashboard.css"/>" rel="stylesheet">
 
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../resource/assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="${contextPath}/resource/dist/js/bootstrap.min.js"></script>
@@ -34,12 +33,12 @@
 <div class="container-fluid">
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         <h1 class="page-header">Option administration</h1>
-        <div class="table-title">
-            <h2>Edit option details</h2>
-        </div>
-        <div id="option data">
-            <form id="optionForm" action="/options/edit" method="post">
 
+        <div id="option data">
+            <form id="optionForm" action="/options/edit" method="post" class="well">
+                <div class="table-title">
+                    <h2>Edit option details</h2>
+                </div>
                 <div class="form-group">
                     <label class="control-label">Option Name</label>
                     <input id="name" value="${option.name}" type="text" name="name" class="form-control" disabled/>
@@ -75,16 +74,16 @@
                 </div>
 
                     <div class="table-title">
-                        Current state:<br>
-                        Parent: ${option.parent.name}<br>
+                        <b>Current state:</b><br>
+                        Parent: -${option.parent.name}<br>
                         Children:${fn:length(option.children)}
                     </div>
 
 
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <div class="btn-group btn-group-toggle btn-success" data-toggle="buttons">
                     <input type="hidden" name="relation" id="relation" value="nothing"/>
                     <label class="btn btn-secondary active">
-                        <input type="radio" class="radio" name="options" value="nothing" id="option0" autocomplete="off"> Do nothing
+                        <input type="radio" class="radio"  name="options" value="nothing" id="option0" autocomplete="off"> Do nothing
                     </label>
                     <label class="btn btn-secondary">
                         <input type="radio" class="radio" name="options" value="alone" id="option1" autocomplete="off"> Set stand alone
