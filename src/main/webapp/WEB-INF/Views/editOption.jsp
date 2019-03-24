@@ -55,23 +55,24 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">Description</label>
-                    <textarea row="4" id="Description"  type="text" name="Description"
+                    <textarea row="4" id="Description" type="text" name="Description"
                               class="form-control">${option.description}</textarea>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Validity: </label>
                     <input type="checkbox" class="chk" name="isValid" id="isValid" value=true
                             <c:if test="${option.isValid==true}">
-                                checked
+                                checked disabled
                             </c:if>
-                    />&nbsp;
+                    /><span class="description2"> (Invalid options cannot have relations)</span>
                 </div>
-
-                <div id="table-wrapper">
-                    <div class="table-title">
-                        <h2>Set relation with existing tariffs/options</h2>
+                <input type="hidden" name="relation" id="relation" value="nothing"/>
+                <c:if test="${option.isValid==true}">
+                    <div id="table-wrapper">
+                        <div class="table-title">
+                            <h2>Set relation with existing tariffs/options</h2>
+                        </div>
                     </div>
-                </div>
 
                     <div class="table-title">
                         <b>Current state:</b><br>
@@ -80,33 +81,36 @@
                     </div>
 
 
-                <div class="btn-group btn-group-toggle btn-success" data-toggle="buttons">
-                    <input type="hidden" name="relation" id="relation" value="nothing"/>
-                    <label class="btn btn-secondary active">
-                        <input type="radio" class="radio"  name="options" value="nothing" id="option0" autocomplete="off"> Do nothing
-                    </label>
-                    <label class="btn btn-secondary">
-                        <input type="radio" class="radio" name="options" value="alone" id="option1" autocomplete="off"> Set stand alone
-                    </label>
-                    <label class="btn btn-secondary">
-                        <input type="radio" class="radio" name="options" value="parent" id="option2" autocomplete="off">
-                        Change/set parent
-                    </label>
-                    <label class="btn btn-secondary">
-                        <input type="radio" class="radio" name="options" value="children" id="option3"
-                               autocomplete="off"> Change/set children
-                    </label>
-                </div>
-                <div class="form-group">
-                    <br>
-                    <label class="control-label">Belongs to option group: </label>
-                    <input type="checkbox" class="chk" name="group" id="group" value="true"/>&nbsp;
-                </div>
-                <div class="form-group">
-                    <label class="control-label">Change compatible tariffs: </label>
-                    <input type="checkbox" class="chk2" name="tariffs" id="tariffs" value="false"/>&nbsp;
-                </div>
+                    <div class="btn-group btn-group-toggle btn-success" data-toggle="buttons">
 
+                        <label class="btn btn-secondary active">
+                            <input type="radio" class="radio" name="options" value="nothing" id="option0"
+                                   autocomplete="off"> Do nothing
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" class="radio" name="options" value="alone" id="option1"
+                                   autocomplete="off"> Set stand alone
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" class="radio" name="options" value="parent" id="option2"
+                                   autocomplete="off">
+                            Change/set parent
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" class="radio" name="options" value="children" id="option3"
+                                   autocomplete="off"> Change/set children
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <br>
+                        <label class="control-label">Belongs to option group: </label>
+                        <input type="checkbox" class="chk" name="group" id="group" value="true"/>&nbsp;
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Change compatible tariffs: </label>
+                        <input type="checkbox" class="chk2" name="tariffs" id="tariffs" value="false"/>&nbsp;
+                    </div>
+                </c:if>
 
                 <div class="form-group">
                     <button type="submit" class="btn btn-success"

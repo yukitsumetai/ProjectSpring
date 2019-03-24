@@ -24,17 +24,16 @@ public class TariffController {
 
     @GetMapping("/new")
     public String newTariff(Model model) throws SQLException {
-        TariffDTO tariff=new TariffDTO();
+        TariffDTO tariff = new TariffDTO();
         model.addAttribute("tariff", tariff);
-        model.addAttribute("options", optionService.getAll());
         return "addTariff";
     }
 
     @PostMapping("/new")
-    public String newTariffAdd(Model model, TariffDTO tariff, @RequestParam(name = "isValid", required=false) boolean validity,
-                               @RequestParam(name="compatibleOptions", required=false) boolean options) {
+    public String newTariffAdd(Model model, TariffDTO tariff, @RequestParam(name = "isValid", required = false) boolean validity,
+                               @RequestParam(name = "compatibleOptions", required = false) boolean options) {
         if (!validity) tariff.setIsValid(false);
-        if(options){
+        if (options) {
             model.addAttribute("table", "tariffAdd");
             model.addAttribute("options", optionService.getAllValid());
             return "options";
@@ -42,6 +41,7 @@ public class TariffController {
         tariffService.add(tariff);
         return "redirect:/tariffs";
     }
+
     @PostMapping("/new/options")
     public String newTariffOptions(TariffDTO tariff, @RequestParam(name = "optionID", required = false) List<Integer> id) {
         tariffService.SetOptions(tariff, id);
@@ -52,15 +52,14 @@ public class TariffController {
     @GetMapping("/edit/{id}")
     public String getEditForm(Model model, @PathVariable(value = "id") Integer id) {
         TariffDTO tariff = tariffService.getOne(id);
-model.addAttribute("tariff", tariff);
+        model.addAttribute("tariff", tariff);
         return "editTariff";
     }
 
 
     @PostMapping("/edit")
-    public String editProduct(Model model, @ModelAttribute(value = "tariff") TariffDTO tariff, @RequestParam(name = "isValid", required=false) boolean validity, @RequestParam(name="compatibleOptions", required=false) boolean options) {
-        if (!validity) tariff.setIsValid(false);
-        if(options){
+    public String editProduct(Model model, @ModelAttribute(value = "tariff") TariffDTO tariff, @RequestParam(name = "compatibleOptions", required = false) boolean options) {
+        if (options) {
             model.addAttribute("table", "tariffEdit");
             model.addAttribute("existingOptions", tariff.getOptions());
             model.addAttribute("options", optionService.getAllValid());

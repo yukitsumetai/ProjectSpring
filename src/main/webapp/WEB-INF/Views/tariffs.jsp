@@ -21,8 +21,8 @@
 
     <link rel="icon" href="${contextPath}/resource/images/favicon1.png">
     <!-- Bootstrap core CSS -->
-    <link href="<c:url value="${contextPath}/resource/dist/css/bootstrap.min.css" />" rel="stylesheet">
-    <link href="<c:url value="${contextPath}/resource/css/dashboard.css"/>" rel="stylesheet">
+    <link href="${contextPath}/resource/dist/css/bootstrap.min.css" />" rel="stylesheet">
+    <link href="${contextPath}/resource/css/dashboard.css"/>" rel="stylesheet">
     <title>Tariffs Overview</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../resource/assets/js/vendor/jquery.min.js"><\/script>')</script>
@@ -31,7 +31,7 @@
     <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
 
 
-    <script>
+<script>
         $(document).ready(function () {
             $("#myInput").on("keyup", function () {
                 var value = $(this).val().toLowerCase();

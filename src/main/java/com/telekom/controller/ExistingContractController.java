@@ -52,8 +52,8 @@ public class ExistingContractController {
     }
 
 
-    @GetMapping("/optionsAdd")
-    public String addOptionsChfoose(Model model, ContractDTO contract) {
+    @GetMapping("/options")
+    public String addOptionsChoose(Model model, ContractDTO contract) {
         model.addAttribute("options", contractService.getOptionsForAdd(contract));
         model.addAttribute("table", "add");
         return "options";

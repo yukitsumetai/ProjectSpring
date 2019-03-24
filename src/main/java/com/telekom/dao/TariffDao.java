@@ -16,7 +16,5 @@ public interface TariffDao {
 
     Tariff getOne(Integer id);
 
-    void editTariff(Tariff tariff);
-
 }
 

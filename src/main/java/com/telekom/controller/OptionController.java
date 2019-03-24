@@ -95,9 +95,9 @@ public class OptionController {
     }
 
     @PostMapping("/edit")
-    public String editOption(Model model, @ModelAttribute(value = "option") OptionDTO option, @RequestParam(name = "isValid", required = false) boolean validity,
+    public String editOption(Model model, @ModelAttribute(value = "option") OptionDTO option,
                              @RequestParam(name = "relation") String relation, @RequestParam(name = "group", required = false) boolean group, @RequestParam(name = "tariffs", required = false) boolean tariff) {
-        if (!validity) option.setIsValid(false);
+
         if (!relation.equals("nothing")) {
             if (relation.equals("alone")) {
                 optionService.removeRelations(option);

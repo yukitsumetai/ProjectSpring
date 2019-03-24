@@ -41,7 +41,6 @@ public class myController {
         return "search";
     }
 
-
     @RequestMapping(value = "/view", params = "Customer", method = RequestMethod.POST)
     public String action1() {
         return "index";
@@ -56,13 +55,6 @@ public class myController {
     public String agent() {
         return "shopagent";
     }
-
-    @GetMapping("/users")
-    public String getUsers(Model model) throws SQLException {
-        model.addAttribute("clients", clientService.getAll());
-        return "clients";
-    }
-
 
     @PostMapping("/getUser")
     public String registerCustomer(Model model, @RequestParam(name = "phoneNumber") String number) {
@@ -82,7 +74,8 @@ public class myController {
 
     @Autowired
     private OptionService optionService;
-
+    @Autowired
+    private OptionGroupService optionGroupService;
 
 
     @GetMapping("/tariffs")
@@ -91,15 +84,23 @@ public class myController {
         model.addAttribute("table", "edit");
         return "tariffs";
     }
-
+    @GetMapping("/optionGroups")
+    public String getOptionGroups(Model model) throws SQLException {
+        model.addAttribute("optionGroups", optionGroupService.getAll());
+        return "optionGroups";
+    }
     @GetMapping("/options")
     public String getOptions(Model model) throws SQLException {
         model.addAttribute("options", optionService.getAll());
-        String table = "edit";
-        model.addAttribute("table", table);
+        model.addAttribute("table", "edit");
         return "options";
     }
-
+    @GetMapping("/users")
+    public String getUsers(Model model) throws SQLException {
+        model.addAttribute("clients", clientService.getAll());
+        model.addAttribute("table", "edit");
+        return "clients";
+    }
 
 
 

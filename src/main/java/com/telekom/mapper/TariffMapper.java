@@ -15,26 +15,27 @@ import java.util.Set;
 @Component
 public class TariffMapper {
 
-  public TariffDTO EntityToDto(Tariff t){
-        TariffDTO tmp= EntityToDtoWithoutOptions(t);
-      if(t.getOptions()!=null){
-      Set<Option> options=t.getOptions();
-       Set<OptionDTO> tmpOptions=new HashSet<>();
-        for (Option o:options) {
-            OptionDTO tmp2=new OptionDTO();
-            tmp2.setName(o.getName());
-            tmp2.setId(o.getId());
-            tmp2.setPriceMonthly(o.getPriceMonthly());
-            tmp2.setPriceOneTime(o.getPriceOneTime());
-            tmp2.setDescription(o.getDescription());
-            tmpOptions.add(tmp2);
+    public TariffDTO EntityToDto(Tariff t) {
+        TariffDTO tmp = EntityToDtoWithoutOptions(t);
+        if (t.getOptions().size()>0) {
+            Set<Option> options = t.getOptions();
+            Set<OptionDTO> tmpOptions = new HashSet<>();
+            for (Option o : options) {
+                OptionDTO tmp2 = new OptionDTO();
+                tmp2.setName(o.getName());
+                tmp2.setId(o.getId());
+                tmp2.setPriceMonthly(o.getPriceMonthly());
+                tmp2.setPriceOneTime(o.getPriceOneTime());
+                tmp2.setDescription(o.getDescription());
+                tmpOptions.add(tmp2);
+            }
+            tmp.setOptions(tmpOptions);
         }
-        tmp.setOptions(tmpOptions);}
         return tmp;
-  }
+    }
 
-    public TariffDTO EntityToDtoWithoutOptions(Tariff t){
-        TariffDTO tmp=new TariffDTO();
+    public TariffDTO EntityToDtoWithoutOptions(Tariff t) {
+        TariffDTO tmp = new TariffDTO();
         tmp.setId(t.getId());
         tmp.setDescription(t.getDescription());
         tmp.setName(t.getName());
@@ -43,15 +44,14 @@ public class TariffMapper {
         return tmp;
     }
 
-        public Tariff DtoToEntity(TariffDTO t){
-            Tariff tmp=new Tariff();
-            tmp.setIsValid(t.isIsValid());
-            tmp.setId(t.getId());
-            tmp.setDescription(t.getDescription());
-            tmp.setName(t.getName());
-            tmp.setPrice(t.getPrice());
-            return tmp;
-        }
-
+    public Tariff DtoToEntity(TariffDTO t) {
+        Tariff tmp = new Tariff();
+        tmp.setIsValid(t.isIsValid());
+        tmp.setId(t.getId());
+        tmp.setDescription(t.getDescription());
+        tmp.setName(t.getName());
+        tmp.setPrice(t.getPrice());
+        return tmp;
+    }
 
 }

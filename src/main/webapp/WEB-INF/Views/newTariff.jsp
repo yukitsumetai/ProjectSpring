@@ -79,7 +79,7 @@
 </div>
 
 
-</div><!-- .container -->
+<!-- .container -->
 <!-- Validating Password -->
 <!--option validity-->
 <script type="text/javascript">

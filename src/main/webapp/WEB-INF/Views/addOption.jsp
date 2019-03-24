@@ -30,21 +30,21 @@
         <h1 class="page-header">Option administration</h1>
 
         <div id="personal data">
-            <form:form method="post" action="/options/new" modelAttribute="option" class=""well>
+            <form:form method="post" action="/options/new" modelAttribute="option" class=" well">
                 <div class="table-title">
                     <h2>Add option details</h2>
                 </div>
                 <div class="form-group">
-                    <label class="control-label">Option Name</label>
+                    <label class="control-label">Option Name*</label>
                     <input id="name" type="text" name="name" class="form-control" required/>
                 </div>
                 <div class="form-group">
-                    <label class="control-label">One Time Price</label>
+                    <label class="control-label">One Time Price*</label>
                     <input id="priceOneTime" type="number" name="priceOneTime"
                            class="form-control" required/>
                 </div>
                 <div class="form-group">
-                    <label class="control-label">Monthly Price</label>
+                    <label class="control-label">Monthly Price*</label>
                     <input id="priceMonthly" type="number" name="priceMonthly"
                            class="form-control" required/>
                 </div>
@@ -55,41 +55,44 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">Validity: </label>
-                    <input type="checkbox" class="chk" name="isValid" id="isValid" value=true checked/>&nbsp;
+                    <input type="checkbox" class="chk" name="isValid" id="isValid" value=true checked/><span class="description2"> (Invalid options cannot have relations)</span>
                 </div>
+                <input type="hidden" name="relation" id="relation" value="alone"/>
 
-                <div id="table-wrapper">
-                    <div class="table-title">
-                        <h2>Set relation with existing tariffs/options</h2>
+                <div id="comTariffs" style="display:block">
+                    <div id="table-wrapper">
+                        <div class="table-title">
+                            <h2>Set relation with existing tariffs/options</h2>
+                        </div>
+                    </div>
+
+                    <div class="btn-group btn-group-toggle btn-success" data-toggle="buttons">
+
+                        <label class="btn btn-secondary active">
+                            <input type="radio" class="radio" name="options" value="alone" id="option1"
+                                   autocomplete="off"
+                                   checked> Stand alone
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" class="radio" name="options" value="parent" id="option2"
+                                   autocomplete="off">
+                            Has parent
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" class="radio" name="options" value="children" id="option3"
+                                   autocomplete="off"> Has children
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <br>
+                        <label class="control-label">Belongs to option group: </label>
+                        <input type="checkbox" class="chk" name="group" id="group" value="true"/>&nbsp;
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Has compatible tariffs: </label>
+                        <input type="checkbox" class="chk2" name="tariffs" id="tariffs" value="false"/>&nbsp;
                     </div>
                 </div>
-
-                <div class="btn-group btn-group-toggle btn-success" data-toggle="buttons">
-                    <input type="hidden" name="relation" id="relation" value="alone"/>
-                    <label class="btn btn-secondary active">
-                        <input type="radio" class="radio" name="options" value="alone" id="option1" autocomplete="off"
-                               checked> Stand alone
-                    </label>
-                    <label class="btn btn-secondary">
-                        <input type="radio" class="radio" name="options" value="parent" id="option2" autocomplete="off">
-                        Has parent
-                    </label>
-                    <label class="btn btn-secondary">
-                        <input type="radio" class="radio" name="options" value="children" id="option3"
-                               autocomplete="off"> Has children
-                    </label>
-                </div>
-                <div class="form-group">
-                    <br>
-                    <label class="control-label">Belongs to option group: </label>
-                    <input type="checkbox" class="chk" name="group" id="group" value="true"/>&nbsp;
-                </div>
-                <div class="form-group">
-                    <label class="control-label">Has compatible tariffs: </label>
-                    <input type="checkbox" class="chk2" name="tariffs" id="tariffs" value="false"/>&nbsp;
-                </div>
-
-
                 <div class="form-group">
                     <button type="submit" class="btn btn-success"
                             onclick="return Validate()">Add
@@ -106,9 +109,14 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('#isValid').change(function () {
+            var relation = document.getElementById('comTariffs');
             if ($(this).is(":checked")) {
                 this.value = true;
-            } else this.value = false;
+                relation.style.display = "block";
+            } else {
+                this.value = false;
+                relation.style.display = "none";
+            }
         });
     });
 </script>

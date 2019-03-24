@@ -23,6 +23,7 @@
     <link href="<c:url value="${contextPath}/resource/dist/css/bootstrap.min.css" />" rel="stylesheet">
     <link href="<c:url value="${contextPath}/resource/css/dashboard.css"/>" rel="stylesheet">
 
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../resource/assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="${contextPath}/resource/dist/js/bootstrap.min.js"></script>
@@ -32,49 +33,41 @@
 <body>
 <div class="container-fluid">
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-        <h1 class="page-header">Tariff administration</h1>
+        <h1 class="page-header">Option Groups administration</h1>
 
         <div id="option data">
-            <form:form method="post" action="/tariffs/edit" modelAttribute="tariff" class="well">
+            <form:form id="simpleForm" action="/optionGroups/new" method="post" modelAttribute="optionGroup" class="well">
                 <div class="table-title">
-                    <h2>Edit tariff details</h2>
+                    <h2>Add option group details</h2>
                 </div>
                 <div class="form-group">
-                    <label class="control-label">Tariff Name: </label>
-                    <input value="${tariff.name}" id="name" type="text" name="name" class="form-control" disabled/>
+                    <label class="control-label">Option Group Name*</label>
+                    <input id="name" type="text" name="name" class="form-control" required/>
                 </div>
-                <div class="form-group">
-                    <label class="control-label">Monthly Price</label>
-                    <input value="${tariff.price}" id="price" type="number" name="price" class="form-control" disabled/>
-                </div>
-
                 <div class="form-group">
                     <label class="control-label">Description</label>
-                    <textarea rows="4" id="Description" type="text" name="Description"
-                              class="form-control">${tariff.description}</textarea>
+                    <textarea row="'4" id="Description" type="text" name="Description" class="form-control"></textarea>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Validity: </label>
-                    <input type="checkbox" class="chk" name="isValid" id="isValid"
-                           value="${tariff.isValid}"
-                            <c:if test="${tariff.isValid==true}">
-                                checked disabled
-                            </c:if>/>&nbsp;
+                    <input type="checkbox" class="chk"  name="isValid" id="isValid" value=true checked/><span class="description2"> (Invalid option groups cannot include options)</span>
                 </div>
-                <c:if test="${tariff.isValid==true}">
-                <div class="form-group">
-                    <label class="control-label">Set/change compatible options: </label>
+
+
+                <div class="form-group comOptions" id="comOptions" style="display:block">
+                    <label class="control-label">Include options: </label>
                     <input type="checkbox" class="chk" name="compatibleOptions" id="options" value=false/>&nbsp;
                 </div>
-                </c:if>
+
+
                 <div class="form-group">
-                    <br>
-                    <button type="submit" class="btn btn-success">Change <i
-                            class="glyphicon glyphicon-edit"></i>
+                    <button type="submit" class="btn btn-success">Add <i
+                            class="glyphicon glyphicon-plus"></i>
                     </button>
                 </div>
 
             </form:form>
+
         </div>
     </div>
 
@@ -84,13 +77,19 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('#isValid').change(function () {
+            var relation=  document.getElementById('comOptions');
             if ($(this).is(":checked")) {
                 this.value = true;
-            } else this.value = false;
+                relation.style.display = "block";
+            } else {this.value = false;
+                relation.style.display = "none";
+            }
+
+
         });
     });
 </script>
-<!-- Checkbox tariffs -->
+<!-- Checkbox options -->
 <script type="text/javascript">
     $(document).ready(function () {
         $('#options').change(function () {
@@ -100,5 +99,6 @@
         });
     });
 </script>
+
 </body>
 </html>

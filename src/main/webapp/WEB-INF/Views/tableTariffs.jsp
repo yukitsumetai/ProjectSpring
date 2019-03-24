@@ -173,8 +173,6 @@
         }
     }
 </script>
-
-
 <!--Tooltips-->
 <script type="text/javascript">
     $(document).ready(function () {

@@ -25,16 +25,7 @@ public class OptionDTO implements Serializable {
     private Set<TariffDTO> compatibleTariffs = new HashSet<>();
     private OptionDTO parent;
     private Set<OptionDTO> children = new HashSet<>();
-    private boolean isParentValid;
 
-
-    public boolean isParentValid() {
-        return isParentValid;
-    }
-
-    public void setParentValid(boolean parentValid) {
-        isParentValid = parentValid;
-    }
 
     public void addOption(Integer id, String name) {
         OptionDTO tmp = new OptionDTO();

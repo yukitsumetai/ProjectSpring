@@ -14,6 +14,7 @@
             <ul class="nav nav-sidebar" id="nav">
                 <li class="active"><a href="${contextPath}/tariffs/">Tariffs </a></li>
                 <li><a href="${contextPath}/options/">Options</a></li>
+                <li><a href="${contextPath}/optionGroups/">Option Groups</a></li>
                 <li><a href="${contextPath}/users/">Customers</a></li>
             </ul>
             <ul class="nav nav-sidebar">

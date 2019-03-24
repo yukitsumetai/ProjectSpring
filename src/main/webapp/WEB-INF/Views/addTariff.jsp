@@ -59,7 +59,7 @@
                 </div>
 
 
-                <div class="form-group">
+                <div class="form-group comOptions" id="comOptions" style="display:block">
                     <label class="control-label">Set compatible options: </label>
                     <input type="checkbox" class="chk" name="compatibleOptions" id="options" value=false/>&nbsp;
                 </div>
@@ -82,9 +82,15 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('#isValid').change(function () {
+            var relation=  document.getElementById('comOptions');
             if ($(this).is(":checked")) {
                 this.value = true;
-            } else this.value = false;
+                relation.style.display = "block";
+            } else {this.value = false;
+                relation.style.display = "none";
+            }
+
+
         });
     });
 </script>
@@ -98,7 +104,6 @@
         });
     });
 </script>
-
 
 </body>
 </html>

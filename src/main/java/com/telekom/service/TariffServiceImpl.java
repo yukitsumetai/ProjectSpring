@@ -20,8 +20,6 @@ import java.util.Set;
 
 
 @Service
-
-
 public class TariffServiceImpl implements TariffService {
 
 
@@ -41,6 +39,14 @@ public class TariffServiceImpl implements TariffService {
         else return true;
     }
 
+    private List<TariffDTO> listEntityToDto(List<Tariff> tariffs){
+        List<TariffDTO> tariffsDTO = new ArrayList<>();
+        for (Tariff t : tariffs) {
+
+            tariffsDTO.add(tariffMapper.EntityToDto(t));
+        }
+        return tariffsDTO;
+    }
     @Override
     @Transactional
     public List<TariffDTO> getAll() {
@@ -51,7 +57,15 @@ public class TariffServiceImpl implements TariffService {
 
             tariffsDTO.add(tariffMapper.EntityToDto(t));
         }
-        return tariffsDTO;
+        return listEntityToDto( tariffs);
+    }
+
+    @Override
+    @Transactional
+    public List<TariffDTO> getAllValid() {
+
+        List<Tariff> tariffs = tariffDao.getAllValid();
+        return listEntityToDto( tariffs);
     }
 
     @Override
@@ -69,18 +83,7 @@ public class TariffServiceImpl implements TariffService {
 
     }
 
-    @Override
-    @Transactional
-    public List<TariffDTO> getAllValid() {
 
-        List<Tariff> tariffs = tariffDao.getAllValid();
-        List<TariffDTO> tariffsDTO = new ArrayList<>();
-        for (Tariff t : tariffs) {
-
-            tariffsDTO.add(tariffMapper.EntityToDto(t));
-        }
-        return tariffsDTO;
-    }
 
     @Override
     @Transactional

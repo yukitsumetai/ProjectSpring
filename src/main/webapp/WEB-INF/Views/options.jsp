@@ -10,6 +10,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ include file="TopNavBar.jsp" %>
 <%@ include file="SideBar.jsp" %>
+
+<c:set var="urlPath" value="${requestScope['javax.servlet.forward.request_uri']}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -88,7 +90,7 @@
 
             <c:choose>
                 <c:when test="${NEB=='yes'}">
-                    <form action="/newContract/client" method="post" command="contract">
+                    <form action="${urlPath}/client" method="post" command="contract">
                         <%@ include file="tableOptions.jsp" %>
                         <div class="row">
                             <div class="col-sm-2 form-group">
@@ -104,35 +106,17 @@
                         </div>
                     </form>
                 </c:when>
-                <c:when test="${table=='add'}">
-                    <form action="/existingContract/optionsAdd/" method="post" command="contract">
+                <c:when test="${table=='edit'}">
+                    <%@ include file="tableOptions.jsp" %>
+                </c:when>
+                <c:otherwise>
+                    <form action="${urlPath}/options/" method="post" command="contract">
                         <%@ include file="tableOptions.jsp" %>
                         <div class="row">
                             <button type="submit" class="btn btn-success" name="action" value="new">Next <i
                                     class="glyphicon glyphicon-chevron-right"></i></button>
                         </div>
                     </form>
-                </c:when>
-                <c:when test="${table=='tariffAdd'}">
-                <form action="/tariffs/new/options/" method="post" command="contract">
-                    <%@ include file="tableOptions.jsp" %>
-                    <div class="row">
-                        <button type="submit" class="btn btn-success" name="action" value="new">Save <i
-                                class="glyphicon glyphicon-floppy-disk"></i></button>
-                    </div>
-                </form>
-            </c:when>
-                <c:when test="${table=='tariffEdit'}">
-                    <form action="/tariffs/edit/options/" method="post" command="contract">
-                        <%@ include file="tableOptions.jsp" %>
-                        <div class="row">
-                            <button type="submit" class="btn btn-success" name="action" value="new">Save <i
-                                    class="glyphicon glyphicon-floppy-disk"></i></button>
-                        </div>
-                    </form>
-                </c:when>
-                <c:otherwise>
-                    <%@ include file="tableOptions.jsp" %>
                 </c:otherwise>
             </c:choose>
 

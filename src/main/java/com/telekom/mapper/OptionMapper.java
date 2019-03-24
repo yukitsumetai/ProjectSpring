@@ -34,8 +34,6 @@ public class OptionMapper {
         Option o = t.getParent();
         if (o != null) {
             tmp.setParent(EntityToDtoWithoutTariff(o));
-            if (o.isValid()) tmp.setParentValid(true);
-            else tmp.setParentValid(false);
         }
         if (t.getChildren().size() > 0) {
             Set<Option> children = t.getChildren();

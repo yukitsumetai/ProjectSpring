@@ -35,35 +35,30 @@
         <h1 class="page-header">Tariff administration</h1>
 
         <div id="option data">
-            <form:form method="post" action="/tariffs/edit" modelAttribute="tariff" class="well">
+            <form method="post" action="/optionGroups/edit" class="well">
                 <div class="table-title">
-                    <h2>Edit tariff details</h2>
+                    <h2>Edit optiongroup details</h2>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Tariff Name: </label>
-                    <input value="${tariff.name}" id="name" type="text" name="name" class="form-control" disabled/>
+                    <input value="${optionGroup.name}" id="name" type="text" name="name" class="form-control" disabled/>
                 </div>
-                <div class="form-group">
-                    <label class="control-label">Monthly Price</label>
-                    <input value="${tariff.price}" id="price" type="number" name="price" class="form-control" disabled/>
-                </div>
-
                 <div class="form-group">
                     <label class="control-label">Description</label>
                     <textarea rows="4" id="Description" type="text" name="Description"
-                              class="form-control">${tariff.description}</textarea>
+                              class="form-control">${optionGroup.description}</textarea>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Validity: </label>
                     <input type="checkbox" class="chk" name="isValid" id="isValid"
-                           value="${tariff.isValid}"
-                            <c:if test="${tariff.isValid==true}">
+                           value="${optionGroup.isValid}"
+                            <c:if test="${optionGroup.isValid==true}">
                                 checked disabled
-                            </c:if>/>&nbsp;
+                            </c:if>/><span class="description2"> (Invalid option groups cannot include options)</span>
                 </div>
-                <c:if test="${tariff.isValid==true}">
+                <c:if test="${optionGroup.isValid==true}">
                 <div class="form-group">
-                    <label class="control-label">Set/change compatible options: </label>
+                    <label class="control-label">Set/change included options: </label>
                     <input type="checkbox" class="chk" name="compatibleOptions" id="options" value=false/>&nbsp;
                 </div>
                 </c:if>
@@ -74,7 +69,7 @@
                     </button>
                 </div>
 
-            </form:form>
+            </form>
         </div>
     </div>
 

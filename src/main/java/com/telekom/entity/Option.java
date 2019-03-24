@@ -40,6 +40,21 @@ public class Option {
     @OneToMany(mappedBy = "parent")
     private Set<Option> children=new HashSet<>();
 
+    @ManyToOne
+    @JoinTable(name = "options_optionGroups",
+            joinColumns = @JoinColumn(name = "option_id"),
+            inverseJoinColumns = @JoinColumn(name = "group_id"))
+    private OptionGroup group;
+
+
+    public OptionGroup getGroup() {
+        return group;
+    }
+
+    public void setGroup(OptionGroup group) {
+        this.group = group;
+    }
+
     public Option getParent() {
         return parent;
     }
