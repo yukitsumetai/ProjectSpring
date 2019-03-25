@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
@@ -14,9 +15,9 @@
 
     <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
 
-    <script src="../resource/js/modern.js"></script>
-    <link href="../resource/css/shoppingCart.css" rel="stylesheet">
-    <link href="../resource/css/res.css" rel="stylesheet">
+    <script src="${contextPath}/resource/js/modern.js"></script>
+    <link href="${contextPath}/resource/css/shoppingCart.css" rel="stylesheet">
+    <link href="${contextPath}/resource/css/res.css" rel="stylesheet">
     <title>Side Cart</title>
 </head>
 <body class="foo">

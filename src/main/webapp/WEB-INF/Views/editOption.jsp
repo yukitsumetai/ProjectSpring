@@ -24,10 +24,24 @@
     <link href="<c:url value="${contextPath}/resource/css/dashboard.css"/>" rel="stylesheet">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../resource/assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="${contextPath}/resource/dist/js/bootstrap.min.js"></script>
-    <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+
+    <script src="${contextPath}/resource/js/ComboBox.js"></script>
     <title>Client details</title>
+    <script>
+        $(document).ready(function () {
+            return Validate();
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            var state = "";
+            <c:if test="${option.parent!=null}">
+            state = "children";
+            </c:if>
+            radiobutton(state);
+        });
+    </script>
 </head>
 <body>
 <div class="container-fluid">
@@ -76,7 +90,7 @@
 
                     <div class="table-title">
                         <b>Current state:</b><br>
-                        Parent: -${option.parent.name}<br>
+                        Parent: ${option.parent.name}<br>
                         Children:${fn:length(option.children)}
                     </div>
 
@@ -93,7 +107,7 @@
                         </label>
                         <label class="btn btn-secondary">
                             <input type="radio" class="radio" name="options" value="parent" id="option2"
-                                   autocomplete="off">
+                                   autocomplete="off" >
                             Change/set parent
                         </label>
                         <label class="btn btn-secondary">
@@ -101,10 +115,20 @@
                                    autocomplete="off"> Change/set children
                         </label>
                     </div>
+                    <!-- Dropdown -->
                     <div class="form-group">
-                        <br>
-                        <label class="control-label">Belongs to option group: </label>
-                        <input type="checkbox" class="chk" name="group" id="group" value="true"/>&nbsp;
+                        <label class="control-label">Select option group: </label>
+                        <select class="form-control"
+                                id="select1" name="group" onscroll="scrolled(this, ${option.optionGroup.id})" data-live-search="true"
+                                onfocus='this.size=5;' onblur='this.size=1;' onchange='this.size=1;' this.blur();>
+                            <option value="0">None</option>
+                            <c:if test="${option.optionGroup!=null}">
+                                <option value="${option.optionGroup.id}" selected>${option.optionGroup.name}</option>
+                            </c:if>
+                        </select>
+                        <p class="description2" id="selectForm" style="display:none">(Supplementary options cannot
+                            belong to option group)</p>
+                        <input type="hidden" id="page" value=1>
                     </div>
                     <div class="form-group">
                         <label class="control-label">Change compatible tariffs: </label>
@@ -156,14 +180,13 @@
 </script>
 <!-- Parents -->
 <script type="text/javascript">
+    var state = "";
+    <c:if test="${option.parent!=null}">
+    state = "children";
+    </c:if>
     $('input.radio').on('change', function () {
-        var radios = document.getElementsByName('options');
-        for (var i = 0, length = radios.length; i < length; i++) {
-            if (radios[i].checked) {
-                document.getElementById("relation").value = radios[i].value;
-                break;
-            }
-        }
+
+        radiobutton(state);
     });
 </script>
 

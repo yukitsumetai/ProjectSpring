@@ -71,7 +71,7 @@ public class OptionGroupController {
         return "redirect:/optionGroups";
     }
 
-    @GetMapping("/delete/{id}")
+    @PostMapping("/delete/{id}")
     public String deleteOptionGroup(@PathVariable(value = "id") Integer id) {
         optionGroupService.deleteOptionGroup(id);
         return "redirect:/optionGroups";

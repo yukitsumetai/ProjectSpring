@@ -23,6 +23,7 @@ public interface OptionService {
    void SetChildren(OptionDTO option, List<Integer> id);
    void SetParent(OptionDTO option, Integer id);
    List<OptionDTO> getAllValid();
+   void SetOptionGroup(OptionDTO option, Integer groupId);
 
 }
 

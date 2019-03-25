@@ -1,8 +1,10 @@
 package com.telekom.mapper;
 
 import com.telekom.entity.Option;
+import com.telekom.entity.OptionGroup;
 import com.telekom.entity.Tariff;
 import com.telekom.entityDTO.OptionDTO;
+import com.telekom.entityDTO.OptionGroupDTO;
 import com.telekom.entityDTO.TariffDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -31,6 +33,12 @@ public class OptionMapper {
     public OptionDTO EntityToDtoWithoutTariff(Option t) {
         OptionDTO tmp = new OptionDTO();
         tmp.setIsValid(t.isValid());
+        OptionGroup g = t.getGroup();
+        if (g != null) {
+            OptionGroupDTO og= new OptionGroupDTO();
+            og.setName(g.getName());
+            tmp.setOptionGroup(og);
+        }
         Option o = t.getParent();
         if (o != null) {
             tmp.setParent(EntityToDtoWithoutTariff(o));

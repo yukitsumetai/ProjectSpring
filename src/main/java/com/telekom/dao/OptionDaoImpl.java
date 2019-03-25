@@ -2,7 +2,7 @@ package com.telekom.dao;
 
 
 import com.telekom.entity.Option;
-import com.telekom.entity.Tariff;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +17,17 @@ public class OptionDaoImpl implements OptionDao {
 
     @PersistenceContext(unitName = "entityManagerFactory")
     private EntityManager entityManager;
+
+    //@Override
+    public List<Option> getAllPages() {
+
+        TypedQuery<Option> q= entityManager.createQuery("select t from Option t", Option.class);
+        int pageNumber = 1;
+        int pageSize = 10;
+        q.setFirstResult((pageNumber-1) * pageSize);
+        q.setMaxResults(pageSize);
+        return q.getResultList();
+    }
 
     @Override
     public List<Option> getAll() {
@@ -45,6 +56,8 @@ public class OptionDaoImpl implements OptionDao {
         List<Option> options=q.getResultList();
         return options;
     }
+
+
 
     @Override
     public void add(Option option) {

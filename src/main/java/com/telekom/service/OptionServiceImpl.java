@@ -2,10 +2,13 @@ package com.telekom.service;
 
 
 import com.telekom.dao.OptionDao;
+import com.telekom.dao.OptionGroupDao;
 import com.telekom.dao.TariffDao;
 import com.telekom.entity.Option;
+import com.telekom.entity.OptionGroup;
 import com.telekom.entity.Tariff;
 import com.telekom.entityDTO.OptionDTO;
+import com.telekom.entityDTO.OptionGroupDTO;
 import com.telekom.entityDTO.TariffDTO;
 import com.telekom.mapper.OptionMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,8 @@ public class OptionServiceImpl implements OptionService {
 
     @Autowired
     private OptionDao optionDao;
+    @Autowired
+    private OptionGroupDao optionGroupDao;
     @Autowired
     private TariffDao tariffDao;
     @Autowired
@@ -88,6 +93,17 @@ public class OptionServiceImpl implements OptionService {
             children.add(o);
         }
         option.setChildren(children);}
+    }
+
+    @Override
+    public void SetOptionGroup(OptionDTO option, Integer groupId) {
+        if(groupId!= null){
+            if(groupId>0){
+                OptionGroupDTO og=new OptionGroupDTO();
+                og.setId(groupId);
+                option.setOptionGroup(og);
+            }}
+        else option.setOptionGroup(null);
     }
 
     @Override
@@ -159,12 +175,27 @@ public class OptionServiceImpl implements OptionService {
         else o.setParent(null);
     }
 
+    private void updateOptionGroup(OptionDTO option, Option o) {
+        //Set group if exist
+        OptionGroupDTO p = option.getOptionGroup();
+        if (p != null) {
+            OptionGroup tmp = optionGroupDao.getOne(p.getId());
+            if(tmp != null) {
+                if (tmp.isValid()) {
+                    o.setGroup(tmp);
+                }
+            }
+        }
+        else o.setGroup(null);
+    }
+
     @Override
     @Transactional
     public void add(OptionDTO option) {
         Option o = optionMapper.DtoToEntity(option);
-
         updateOptionParent(option, o);
+        if (o.getParent()==null){
+        updateOptionGroup(option, o);}
 //add option to DB
         optionDao.add(o);
         updateOptionRelations(option, o);
@@ -195,6 +226,10 @@ public class OptionServiceImpl implements OptionService {
             }
         }
         updateOptionParent(option, o);
+        if(o.getParent()==null){
+            updateOptionGroup(option, o);
+        }
+        else o.setGroup(null);
         option.setDescription(o.getDescription());
         updateOptionRelations(option, o);
     }
@@ -202,6 +237,7 @@ public class OptionServiceImpl implements OptionService {
     @Override
     public void removeRelations(OptionDTO option) {
         option.setParent(null);
+
         option.setChildren(new HashSet<>());
     }
 
@@ -210,6 +246,7 @@ public class OptionServiceImpl implements OptionService {
     public void deleteOption(Integer id) {
         Option option = optionDao.getOne(id);
         option.setParent(null);
+        option.setGroup(null);
         if (option.getCompatibleTariffs().size() > 0) {
             Set<Tariff> tariffs = option.getCompatibleTariffs();
             for (Tariff t : tariffs) {

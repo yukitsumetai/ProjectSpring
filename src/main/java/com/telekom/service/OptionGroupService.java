@@ -13,4 +13,7 @@ public interface OptionGroupService {
     List<OptionGroupDTO> getAll();
     List<OptionGroupDTO> getAllValid();
     void SetOptions(OptionGroupDTO optionGroup, List<Integer> id);
+    Integer getTotalPages(Integer page);
+    List<OptionGroupDTO> getPage(Integer size, Integer page);
+    List<OptionGroupDTO> getByName(String name);
 }

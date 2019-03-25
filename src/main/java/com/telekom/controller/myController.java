@@ -41,6 +41,12 @@ public class myController {
         return "search";
     }
 
+    @GetMapping("/combo")
+    public String cb() {
+
+        return "ComboBox element";
+    }
+
     @RequestMapping(value = "/view", params = "Customer", method = RequestMethod.POST)
     public String action1() {
         return "index";
@@ -76,7 +82,6 @@ public class myController {
     private OptionService optionService;
     @Autowired
     private OptionGroupService optionGroupService;
-
 
     @GetMapping("/tariffs")
     public String getTariffs(Model model) throws SQLException {

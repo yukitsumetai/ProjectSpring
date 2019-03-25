@@ -25,6 +25,15 @@ public class OptionDTO implements Serializable {
     private Set<TariffDTO> compatibleTariffs = new HashSet<>();
     private OptionDTO parent;
     private Set<OptionDTO> children = new HashSet<>();
+    private OptionGroupDTO optionGroup;
+
+    public OptionGroupDTO getOptionGroup() {
+        return optionGroup;
+    }
+
+    public void setOptionGroup(OptionGroupDTO optionGroupDTO) {
+        this.optionGroup = optionGroupDTO;
+    }
 
 
     public void addOption(Integer id, String name) {

@@ -26,7 +26,7 @@ public class OptionGroupServiceImpl implements OptionGroupService {
     @Autowired
     private OptionGroupMapper optionGroupMapper;
 
-    private List<OptionGroupDTO> listEntityToDto(List<OptionGroup> optionGroups){
+    private List<OptionGroupDTO> listEntityToDto(List<OptionGroup> optionGroups) {
         List<OptionGroupDTO> optionGroupsDTO = new ArrayList<>();
         for (OptionGroup t : optionGroups) {
 
@@ -34,6 +34,7 @@ public class OptionGroupServiceImpl implements OptionGroupService {
         }
         return optionGroupsDTO;
     }
+
     @Override
     public void SetOptions(OptionGroupDTO optionGroup, List<Integer> id) {
         Set<OptionDTO> options = new HashSet<>();
@@ -44,8 +45,7 @@ public class OptionGroupServiceImpl implements OptionGroupService {
                 options.add(t);
             }
             optionGroup.setOptions(options);
-        }
-        else optionGroup.setOptions(new HashSet<>());
+        } else optionGroup.setOptions(new HashSet<>());
 
     }
 
@@ -59,7 +59,7 @@ public class OptionGroupServiceImpl implements OptionGroupService {
 
             optionGroupsDTO.add(optionGroupMapper.EntityToDto(t));
         }
-        return listEntityToDto( optionGroups);
+        return listEntityToDto(optionGroups);
     }
 
     @Override
@@ -67,10 +67,22 @@ public class OptionGroupServiceImpl implements OptionGroupService {
     public List<OptionGroupDTO> getAllValid() {
 
         List<OptionGroup> optionGroups = optionGroupDao.getAllValid();
-        return listEntityToDto( optionGroups);
+        return listEntityToDto(optionGroups);
     }
 
+    @Override
+    public Integer getTotalPages(Integer size) {
+        Double d = Math.ceil(optionGroupDao.getPagesCount() / size);
+        return d.intValue();
 
+    }
+
+    @Override
+    @Transactional
+    public List<OptionGroupDTO> getPage(Integer size, Integer page) {
+        List<OptionGroup> pageGroups = optionGroupDao.getPages(size, page);
+        return listEntityToDto(pageGroups);
+    }
 
     @Override
     @Transactional
@@ -105,6 +117,14 @@ public class OptionGroupServiceImpl implements OptionGroupService {
                 }
             }
         }
+    }
+
+    @Override
+    public List<OptionGroupDTO> getByName(String name) {
+
+        List<OptionGroup> op = optionGroupDao.findByName(name);
+        return listEntityToDto(op);
+
     }
 
     @Override

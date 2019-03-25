@@ -1,6 +1,7 @@
 package com.telekom.controller;
 
 import com.telekom.entityDTO.OptionDTO;
+import com.telekom.entityDTO.OptionGroupDTO;
 import com.telekom.service.OptionService;
 import com.telekom.service.TariffService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ public class OptionController {
     @Autowired
     private OptionService optionService;
 
+
     @GetMapping("/new")
     public String newOption(Model model) throws SQLException {
         OptionDTO option = new OptionDTO();
@@ -36,8 +38,9 @@ public class OptionController {
     @PostMapping("/new")
     public String newOptionAdd(Model model, OptionDTO option, @RequestParam(name = "opt", required = false) List<Integer> tariffs,
                                @RequestParam(name = "isValid", required = false) boolean validity,
-                               @RequestParam(name = "relation") String relation, @RequestParam(name = "group", required = false) boolean group, @RequestParam(name = "tariffs", required = false) boolean tariff) {
+                               @RequestParam(name = "relation") String relation, @RequestParam(name = "group", required = false) Integer groupId, @RequestParam(name = "tariffs", required = false) boolean tariff) {
         if (!validity) option.setIsValid(false);
+        optionService.SetOptionGroup(option, groupId);
         if (!relation.equals("alone")) {
             if (relation.equals("parent")) model.addAttribute("options", optionService.getAllNoParent());
             else model.addAttribute("options", optionService.getAllNoChildrenAndParent());
@@ -96,8 +99,11 @@ public class OptionController {
 
     @PostMapping("/edit")
     public String editOption(Model model, @ModelAttribute(value = "option") OptionDTO option,
-                             @RequestParam(name = "relation") String relation, @RequestParam(name = "group", required = false) boolean group, @RequestParam(name = "tariffs", required = false) boolean tariff) {
+                             @RequestParam(name = "relation") String relation, @RequestParam(name = "group", required = false) Integer groupId,
+                             @RequestParam(name = "tariffs", required = false) boolean tariff) {
 
+
+       optionService.SetOptionGroup(option, groupId);
         if (!relation.equals("nothing")) {
             if (relation.equals("alone")) {
                 optionService.removeRelations(option);
@@ -108,13 +114,13 @@ public class OptionController {
                     all = optionService.getAllNoParent();
                     model.addAttribute("options", all);
                     existing.add(option.getParent());// to show on FE
-                    model.addAttribute("relation", "parentEdit");
+
                 } else {
                     existing = option.getChildren();
                     all = optionService.getAllNoChildrenAndParent();
                     all.addAll(existing);
-                    model.addAttribute("relation", "childrenEdit");
                 }
+                model.addAttribute("relation", relation);
                 model.addAttribute("existingOptions", existing);
                 optionService.removeRelations(option);
                 all.removeIf(st -> st.getId() == option.getId());
@@ -173,4 +179,7 @@ public class OptionController {
         optionService.deleteOption(id);
         return "redirect:/options";
     }
+
+
+
 }

@@ -10,6 +10,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ include file="TopNavBar.jsp" %>
 <%@ include file="SideBar.jsp" %>
+<c:set var="urlPath" value="${requestScope['javax.servlet.forward.request_uri']}"/>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,12 +20,13 @@
     <!DOCTYPE html>
     <html lang="en">
     <head>
-
+        <script src="${contextPath}/resource/js/ComboBox.js"></script>
         <title>Choose related options</title>
 
         <!--Search-->
         <script>
             $(document).ready(function () {
+                Higlight();
                 $("#myInput").on("keyup", function () {
                     var value = $(this).val().toLowerCase();
                     $("#myTable tr").filter(function () {
@@ -69,7 +72,7 @@
 
             <c:choose>
                 <c:when test="${relation=='children'}">
-                    <form action="/options/new/children" method="post">
+                    <form action="${urlPath}/children" method="post">
                         <%@ include file="tableOptions.jsp" %>
                         <div class="row">
                             <div class="col-sm-2 form-group">
@@ -79,27 +82,14 @@
                                             <c:when test="${tariff==true}">value=true</c:when>
                                             <c:otherwise>value=false</c:otherwise>
                                     </c:choose> name="action">Next
+                                    </button>
                                 </div>
                             </div>
-                    </form>
-                </c:when>
-                <c:when test="${relation=='childrenEdit'}">
-                    <form action="/options/edit/children" method="post">
-                        <%@ include file="tableOptions.jsp" %>
-                        <div class="row">
-                            <div class="col-sm-2 form-group">
-                                <div class="row">
-                                    <button type="submit" class="btn btn-success"
-                                    <c:choose>
-                                            <c:when test="${tariff==true}">value=true</c:when>
-                                            <c:otherwise>value=false</c:otherwise>
-                                    </c:choose> name="action">Next
-                                </div>
-                            </div>
+                        </div>
                     </form>
                 </c:when>
                 <c:when test="${relation=='parent'}">
-                    <form action="/options/new/parent" method="post">
+                    <form action="${urlPath}/parent" method="post">
 
                         <%@ include file="tableOptions.jsp" %>
                         <div class="row">
@@ -111,75 +101,49 @@
                         </div>
                     </form>
                 </c:when>
-                <c:when test="${relation=='parentEdit'}">
-                    <form action="/options/edit/parent" method="post">
-
-                        <%@ include file="tableOptions.jsp" %>
-                        <div class="row">
-                            <button type="submit" class="btn btn-success" <c:choose>
-                                <c:when test="${tariff==true}">value=true</c:when>
-                                <c:otherwise>value=false</c:otherwise>
-                            </c:choose> name="action">Next
-                            </button>
-                        </div>
-                    </form>
-                </c:when>
-                <c:otherwise>
-                    <%@ include file="tableOptions.jsp" %>
-                </c:otherwise>
             </c:choose>
+            <!--Checkbox-->
+            <c:if test="${relation=='children'}">
+                <script>
+                    $('input.chk').on('change', function () {
+                        var generated = document.getElementById('optionsCart').getElementsByClassName('generated');
+                        for (var i = 0; i < generated.length; i++) {
+                            generated[i].remove();
+                        }
+                        var checkboxes = document.getElementsByName('optionID');
+                        for (var i = 0; i < checkboxes.length; i++) {
 
+                            if (checkboxes[i].checked) {
+
+                                var name = checkboxes[i].getAttribute('optionName');
+                                var price = '$' + checkboxes[i].getAttribute('price');
+
+                                var newInput = '<li class="generated">' + name +
+                                    '<div class="cd-price">' + price + '</div></li>';
+                                document.getElementById('optionsCart').insertAdjacentHTML('beforeend', newInput);
+                            }
+                        }
+                    });
+
+                </script>
+            </c:if>
+            <c:if test="${relation=='parent'}">
+                <script>
+                    $('input.chk').on('change', function () {
+                        $('input.chk').not(this).prop('checked', false);
+                        var name = this.getAttribute('tariffName');
+                        var price = this.getAttribute('price');
+                        document.getElementById("tariffName").innerHTML = name;
+                        document.getElementById("tariffPrice").innerHTML = "$" + price;
+                    });
+                </script>
+            </c:if>
         </div>
     </div>
 </div>
 </div>
 
-<!--Checkbox-->
-<c:if test="${relation=='children'}">
-    <script>
-        $('input.chk').on('change', function () {
-            var generated = document.getElementById('optionsCart').getElementsByClassName('generated');
-            for (var i = 0; i < generated.length; i++) {
-                generated[i].remove();
-            }
-            var checkboxes = document.getElementsByName('optionID');
-            for (var i = 0; i < checkboxes.length; i++) {
 
-                if (checkboxes[i].checked) {
-
-                    var name = checkboxes[i].getAttribute('optionName');
-                    var price = '$' + checkboxes[i].getAttribute('price');
-
-                    var newInput = '<li class="generated">' + name +
-                        '<div class="cd-price">' + price + '</div></li>';
-                    document.getElementById('optionsCart').insertAdjacentHTML('beforeend', newInput);
-                }
-
-            }
-
-        });
-
-    </script>
-</c:if>
-<c:if test="${relation=='parent'}">
-    <script>
-        $('input.chk').on('change', function () {
-            $('input.chk').not(this).prop('checked', false);
-            var name = this.getAttribute('tariffName');
-            var price = this.getAttribute('price');
-            document.getElementById("tariffName").innerHTML = name;
-            document.getElementById("tariffPrice").innerHTML = "$" + price;
-        });
-    </script>
-</c:if>
-<!--Highlight-->
-<script>
-    $(document).ready(function () {
-        $('td :checkbox').bind('change click', function () {
-            $(this).closest('tr').toggleClass('highlight', this.checked);
-        }).change();
-    });
-</script>
 
 </body>
 </html>

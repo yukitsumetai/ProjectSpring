@@ -33,12 +33,14 @@
         <th onclick="sortTable(0)">Name<i class="fa fa-sort"></i></th>
         <th onclick="sortTable(1)">One Time Price<i class="fa fa-sort"></i></th>
         <th onclick="sortTable(2)">Monthly Price<i class="fa fa-sort"></i></th>
-
         <th>Description</th>
         <c:if test="${table=='edit'}">
+            <th>Option
+            Group</th>
             <th>Condition</th>
             <th>Is condition to</th>
-            <th>Compatible Tariffs</th>
+            <th>Compatible
+                Tariffs</th>
             <th>Validity</th>
         </c:if>
 
@@ -60,6 +62,7 @@
         <td>${o.priceMonthly}</td>
         <td>${o.description}</td>
         <c:if test="${table=='edit'}">
+        <td>${o.optionGroup.name}</td>
         <td>${o.parent.name}</td>
         <td>
             <c:forEach items="${o.children}" var="t">
