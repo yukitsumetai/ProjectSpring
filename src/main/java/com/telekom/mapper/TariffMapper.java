@@ -1,9 +1,13 @@
 package com.telekom.mapper;
 
 
+import com.telekom.entity.Contract;
 import com.telekom.entity.Option;
+import com.telekom.entity.OptionGroup;
 import com.telekom.entity.Tariff;
+import com.telekom.entityDTO.ContractDTO;
 import com.telekom.entityDTO.OptionDTO;
+import com.telekom.entityDTO.OptionGroupDTO;
 import com.telekom.entityDTO.TariffDTO;
 import org.springframework.stereotype.Component;
 
@@ -17,10 +21,9 @@ public class TariffMapper {
 
     public TariffDTO EntityToDto(Tariff t) {
         TariffDTO tmp = EntityToDtoWithoutOptions(t);
-        if (t.getOptions().size()>0) {
-            Set<Option> options = t.getOptions();
+        if (t.getOptions().size() > 0) {
             Set<OptionDTO> tmpOptions = new HashSet<>();
-            for (Option o : options) {
+            for (Option o : t.getOptions()) {
                 OptionDTO tmp2 = new OptionDTO();
                 tmp2.setName(o.getName());
                 tmp2.setId(o.getId());
@@ -53,5 +56,6 @@ public class TariffMapper {
         tmp.setPrice(t.getPrice());
         return tmp;
     }
+
 
 }

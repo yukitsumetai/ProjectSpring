@@ -32,7 +32,7 @@ public class OptionGroupController {
         if (!validity) optionGroup.setIsValid(false);
         if(options){
             model.addAttribute("table", "optionGroupAdd");
-            model.addAttribute("options", optionService.getAllNoParent());
+            model.addAttribute("options", optionService.getAllNoParentNoGroup());
             return "options";
         }
         optionGroupService.add(optionGroup);
@@ -57,7 +57,7 @@ public class OptionGroupController {
         if (options) {
             model.addAttribute("table", "optionGroupEdit");
             model.addAttribute("existingOptions", optionGroup.getOptions());
-            model.addAttribute("options", optionService.getAllNoParent());
+            model.addAttribute("options", optionService.getAllNoParentNoGroup());
             return "options";
         }
         optionGroupService.editOptionGroup(optionGroup);

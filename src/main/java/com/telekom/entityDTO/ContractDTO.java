@@ -14,13 +14,12 @@ import java.util.*;
 @Entity
 public class ContractDTO implements Serializable {
 
-   private String phoneNumber;
-    private  Double price=0.00;
-    private Double priceOneTime=0.00;
+    private String phoneNumber;
+    private Double price = 0.00;
+    private Double priceOneTime = 0.00;
     private ClientDTO client;
     private TariffDTO tariff;
-    private Set<OptionDTO> options=new HashSet<>();
-
+    private Set<OptionDTO> options = new HashSet<>();
 
 
     public void addOption(OptionDTO option) {
@@ -38,10 +37,12 @@ public class ContractDTO implements Serializable {
     public String getPhoneNumber() {
         return phoneNumber;
     }
+
     public BigInteger getPhoneNumberInt() {
         BigInteger n = new BigInteger(this.getPhoneNumber());
         return n;
     }
+
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
@@ -67,7 +68,7 @@ public class ContractDTO implements Serializable {
     }
 
     public void setTariff(TariffDTO tariff) {
-        this.tariff=tariff;
+        this.tariff = tariff;
     }
 
     public Set<OptionDTO> getOptions() {

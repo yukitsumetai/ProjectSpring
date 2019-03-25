@@ -1,17 +1,12 @@
 package com.telekom.controller;
 
-import com.telekom.entity.*;
 import com.telekom.entityDTO.ClientDTO;
-import com.telekom.entityDTO.ContractDTO;
-import com.telekom.entityDTO.OptionDTO;
-import com.telekom.entityDTO.TariffDTO;
 import com.telekom.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 
 import java.sql.SQLException;
@@ -44,7 +39,7 @@ public class myController {
     @GetMapping("/combo")
     public String cb() {
 
-        return "ComboBox element";
+        return "elements/ComboBox element";
     }
 
     @RequestMapping(value = "/view", params = "Customer", method = RequestMethod.POST)

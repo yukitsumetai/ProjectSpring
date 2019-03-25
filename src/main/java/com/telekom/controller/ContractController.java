@@ -10,6 +10,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @SessionAttributes(types = ContractDTO.class)
@@ -42,15 +43,18 @@ public class ContractController {
     }
 
 
-    @PostMapping("/options")
+    @PostMapping("options")
     public String newContractTariffAdd(Model model, ContractDTO contract, @RequestParam(name = "tariffID") Integer id) {
-        model.addAttribute("options", contractService.setTariff(contract, id)); //нужно ли тянуть тариф опять из базы?
+        contractService.setTariff(contract, id);
+        model.addAttribute("options", contractService.getOptions(contract));
+        model.addAttribute("optionGroups", contractService.getGroups(contract));
+        model.addAttribute("children", contractService.getOptionsChildren(contract));
         model.addAttribute("table", "add");
         model.addAttribute("NEB","yes");
-        return "options";
+        return "contractOptions";
     }
 
-    @PostMapping(value="/client")
+    @PostMapping(value="client")
     public String newContractOptionAdd(Model model, ContractDTO contract,@RequestParam(name="action") String action, @RequestParam(name = "optionID", required = false) List<Integer> id) {
         if (id != null) {
             contractService.setOptions(contract, id);
@@ -68,7 +72,6 @@ public class ContractController {
            return "clients";
        }
     }
-
 
     @PostMapping("/confirmExisting")
     public String newContractOptionAdd(Model model, ContractDTO contract,  @RequestParam(name = "clientID") Integer id) {

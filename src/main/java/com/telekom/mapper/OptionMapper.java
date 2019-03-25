@@ -37,6 +37,7 @@ public class OptionMapper {
         if (g != null) {
             OptionGroupDTO og= new OptionGroupDTO();
             og.setName(g.getName());
+            og.setId(g.getId());
             tmp.setOptionGroup(og);
         }
         Option o = t.getParent();

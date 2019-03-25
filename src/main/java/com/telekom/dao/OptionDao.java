@@ -9,7 +9,7 @@ public interface OptionDao {
 
     List<Option> getAll();
 
-    List<Option> findByTariff(Integer tariffId);
+    List<Option> findByTariffParents(Integer tariffId);
 
     void add(Option option);
 
@@ -21,6 +21,8 @@ public interface OptionDao {
 
     List<Option> getAllValid();
 
+    List<Option> getAllValidNoParentNoGroup();
+    List<Option> findByTariffChildren(Integer id);
 
 }
 

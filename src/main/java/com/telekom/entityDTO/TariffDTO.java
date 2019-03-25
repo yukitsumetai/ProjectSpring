@@ -17,6 +17,19 @@ public class TariffDTO implements Serializable {
     private Set<OptionDTO> options = new HashSet<>();
     private BigInteger phoneNumber;
    private boolean isValid;
+    private Set<OptionGroupDTO> optionGroups = new HashSet<>();
+
+    public void addOptionGroup(OptionGroupDTO optionGroup) {
+        this.optionGroups.add(optionGroup);
+    }
+
+    public Set<OptionGroupDTO> getOptionGroups() {
+        return optionGroups;
+    }
+
+    public void setOptionGroups(Set<OptionGroupDTO> optionGroups) {
+        this.optionGroups = optionGroups;
+    }
 
     public boolean isIsValid() {
         return isValid;

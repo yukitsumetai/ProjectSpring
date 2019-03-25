@@ -161,45 +161,33 @@
     });
 </script>
 <!--Checkbox-->
-<c:choose>
-    <c:when test="${relation=='parent'}">
-        <script>
-            $('input.chk').on('change', function () {
-                $('input.chk').not(this).prop('checked', false);
-                var name = this.getAttribute('tariffName');
-                var price = this.getAttribute('price');
-                document.getElementById("tariffName").innerHTML = name;
-                document.getElementById("tariffPrice").innerHTML = "$" + price;
-            });
-        </script>
-    </c:when>
-    <c:otherwise>
-        <script>
-            $('input.chk').on('change', function () {
-                var generated = document.getElementById('optionsCart').getElementsByClassName('generated');
-                for (var i = 0; i < generated.length; i++) {
-                    generated[i].remove();
-                }
-                var checkboxes = document.getElementsByName('optionID');
-                for (var i = 0; i < checkboxes.length; i++) {
 
-                    if (checkboxes[i].checked) {
+<script>
+    $('input.chk').on('change', function () {
+        var generated = document.getElementById('optionsCart').getElementsByClassName('generated');
+        for (var i = 0; i < generated.length; i++) {
+            generated[i].remove();
+        }
+        var checkboxes = document.getElementsByName('optionID');
+        for (var i = 0; i < checkboxes.length; i++) {
 
-                        var name = checkboxes[i].getAttribute('optionName');
-                        var price = '$' + checkboxes[i].getAttribute('price');
+            if (checkboxes[i].checked) {
 
-                        var newInput = '<li class="generated">' + name +
-                            '<div class="cd-price">' + price + '</div></li>';
-                        document.getElementById('optionsCart').insertAdjacentHTML('beforeend', newInput);
-                    }
+                var name = checkboxes[i].getAttribute('optionName');
+                var price = '$' + checkboxes[i].getAttribute('price');
 
-                }
+                var newInput = '<li class="generated">' + name +
+                    '<div class="cd-price">' + price + '</div></li>';
+                document.getElementById('optionsCart').insertAdjacentHTML('beforeend', newInput);
+            }
 
-            });
+        }
 
-        </script>
-    </c:otherwise>
-</c:choose>
+    });
+
+</script>
+
+
 
 <!--Highlight-->
 <script>

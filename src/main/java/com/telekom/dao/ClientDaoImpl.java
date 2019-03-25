@@ -36,7 +36,7 @@ public class ClientDaoImpl implements ClientDAO {
 
     public Client getOne(BigInteger phoneNumber) {
         TypedQuery<Client> q = entityManager.createQuery(
-                "select t from Client t join fetch t.contract  where t in (select t from Client t join t.contract as c  where c.phoneNumber=:phoneNumber)", Client.class);
+                "select t from Client t join fetch t.contract  where t in (select t from Client t join t.contract as c where c.phoneNumber=:phoneNumber)", Client.class);
         q.setParameter("phoneNumber", phoneNumber);
         return q.getResultList().stream().findAny().orElse(null);
         //"select t from Client t join fetch t.contract as c  where c.phoneNumber=:phoneNumber"

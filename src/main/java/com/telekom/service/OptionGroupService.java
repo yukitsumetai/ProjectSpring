@@ -4,6 +4,7 @@ import com.telekom.entity.OptionGroup;
 import com.telekom.entityDTO.OptionGroupDTO;
 
 import java.util.List;
+import java.util.Set;
 
 public interface OptionGroupService {
     OptionGroupDTO getOne(int id);
@@ -16,4 +17,5 @@ public interface OptionGroupService {
     Integer getTotalPages(Integer page);
     List<OptionGroupDTO> getPage(Integer size, Integer page);
     List<OptionGroupDTO> getByName(String name);
+    Set<OptionGroupDTO> findByTariff(Integer id);
 }

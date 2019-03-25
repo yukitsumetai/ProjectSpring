@@ -7,6 +7,7 @@ import com.telekom.entity.Option;
 import com.telekom.entity.Tariff;
 import com.telekom.entityDTO.ContractDTO;
 import com.telekom.entityDTO.OptionDTO;
+import com.telekom.entityDTO.OptionGroupDTO;
 import com.telekom.entityDTO.TariffDTO;
 import com.telekom.mapper.ClientMapper;
 import com.telekom.mapper.ContractMapper;
@@ -35,6 +36,8 @@ public class ContractServiceImpl implements ContractService {
     private ClientDAO clientDao;
     @Autowired
     private OptionService optionService;
+    @Autowired
+    private OptionGroupService optionGroupService;
     @Autowired
     private TariffService tariffService;
     @Autowired
@@ -91,27 +94,76 @@ public class ContractServiceImpl implements ContractService {
         for (Integer i : id
         ) {
             OptionDTO tmp = optionService.getOne(i);
+            if (tmp!=null){
             contract.addOption(tmp);
             contract.setPrice(tmp.getPriceMonthly());
-            contract.setPriceOneTime(tmp.getPriceOneTime());
+            contract.setPriceOneTime(tmp.getPriceOneTime());}
         }
 
     }
 
     @Override
-    public Set<OptionDTO> setTariff(ContractDTO contract, Integer id) {
+    public Set<OptionDTO> getOptions(ContractDTO contract) {
+        return optionService.findByTariff(contract.getTariff().getId());
+    }
+
+    public boolean OptionValidation(ContractDTO contract) {
+        if (contract.getOptions().size() > 0) {
+            Set<OptionGroupDTO> og = new HashSet<>();
+            for (OptionDTO o : contract.getOptions()
+            ) {
+                if (o.getOptionGroup() != null) {
+                    og.add(o.getOptionGroup());
+                }
+            }
+
+            for (OptionGroupDTO og2 : og
+            ) {
+                int count = 0;
+                for (OptionDTO o : contract.getOptions()) {
+                    if (o.getOptionGroup() != null) {
+                        if (o.getOptionGroup().getId() == og2.getId()) {
+                            count++;
+                        }
+                    }
+                }
+                if (count >= 2) return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public List<OptionDTO> getOptionsChildren(ContractDTO contract) {
+        return optionService.findByTariffChildren(contract.getTariff().getId());
+    }
+
+    @Override
+    public void setTariff(ContractDTO contract, Integer id) {
         TariffDTO tmp = tariffService.getOne(id);
         contract.setTariff(tmp);
         contract.setPrice(0.0);
         contract.setPriceOneTime(0.0);
         contract.setPrice(tmp.getPrice());
-        return optionService.findByTariff(tmp.getId());
+    }
+
+
+    public Set<OptionDTO> getChilds(ContractDTO contract) {
+
+        return optionService.findByTariff(contract.getTariff().getId());
+    }
+
+    @Override
+    public Set<OptionGroupDTO> getGroups(ContractDTO contract) {
+        Set<OptionGroupDTO> groups = optionGroupService.findByTariff(contract.getTariff().getId());
+
+        return groups;
     }
 
     @Override
     @Transactional
     public void setTariffAndUpdate(ContractDTO contractDto, Integer id) {
-       Contract contract= contractDao.getOne(contractDto.getPhoneNumberInt());
+        Contract contract = contractDao.getOne(contractDto.getPhoneNumberInt());
         Tariff t = tariffDao.getOne(id);
         contract.setTariff(t);
         contract.setPrice(0.0);

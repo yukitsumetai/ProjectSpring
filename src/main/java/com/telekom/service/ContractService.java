@@ -2,6 +2,7 @@ package com.telekom.service;
 
 import com.telekom.entityDTO.ContractDTO;
 import com.telekom.entityDTO.OptionDTO;
+import com.telekom.entityDTO.OptionGroupDTO;
 import com.telekom.entityDTO.TariffDTO;
 
 import java.util.List;
@@ -17,12 +18,19 @@ public interface ContractService {
 
     void setOptions(ContractDTO contract, List<Integer> id);
 
-    Set<OptionDTO> setTariff(ContractDTO contract, Integer id);
+    void setTariff(ContractDTO contract, Integer id);
 
     void setOptionsAndUpdate(ContractDTO contract, List<Integer> id);
 
     Set<OptionDTO> getOptionsForAdd(ContractDTO contract);
 
     List<TariffDTO> getTariffsForAdd(ContractDTO contract);
+
     void setTariffAndUpdate(ContractDTO contract, Integer id);
+
+    Set<OptionGroupDTO> getGroups(ContractDTO contract);
+
+    Set<OptionDTO> getOptions(ContractDTO contract);
+
+    List<OptionDTO> getOptionsChildren(ContractDTO contract);
 }

@@ -12,7 +12,7 @@ public interface OptionGroupDao {
 
     void add(OptionGroup optionGroup);
     public List<OptionGroup> findByName(String name);
-
+    List<OptionGroup> findByTariff(Integer id);
     OptionGroup getOne(Integer id);
     List<OptionGroup> getPages(Integer size, Integer page);
     Long getPagesCount();

@@ -106,6 +106,19 @@ public class OptionGroupServiceImpl implements OptionGroupService {
         }
     }
 
+    @Override
+    @Transactional
+    public Set<OptionGroupDTO> findByTariff(Integer id) {
+
+        List<OptionGroup> Options = optionGroupDao.findByTariff(id);
+        Set<OptionGroupDTO> OptionGroupDTO = new HashSet<>();
+        for (OptionGroup t : Options) {
+            OptionGroupDTO.add(optionGroupMapper.EntityToDto(t));
+        }
+        return OptionGroupDTO;
+    }
+
+
     private void deleteOptions(OptionGroup t) {
         if (t.getOptions().size() > 0) {
             Set<Option> options = t.getOptions();

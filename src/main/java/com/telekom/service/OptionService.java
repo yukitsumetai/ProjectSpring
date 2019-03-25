@@ -24,6 +24,8 @@ public interface OptionService {
    void SetParent(OptionDTO option, Integer id);
    List<OptionDTO> getAllValid();
    void SetOptionGroup(OptionDTO option, Integer groupId);
+   List<OptionDTO> getAllNoParentNoGroup();
+   List<OptionDTO> findByTariffChildren(Integer id);
 
 }
 

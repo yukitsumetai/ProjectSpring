@@ -30,7 +30,6 @@ public class ContractMapper {
         tmp.setPhoneNumber(c.getPhoneNumberInt());
         tmp.setPrice(c.getPrice());
         tmp.setTariff(tariffMapper.DtoToEntity(c.getTariff()));
-        tmp.setPriceTariff(c.getTariff().getPrice());
         if (c.getOptions() != null) {
             Set<Option> options = new HashSet<>();
             for (OptionDTO o :
@@ -51,9 +50,9 @@ public class ContractMapper {
         tmp.setTariff(tariffMapper.EntityToDtoWithoutOptions(c.getTariff()));
         tmp.setClient(clientMapper.EntityToDto(c.getClient()));
         tmp.setPhoneNumber(c.getPhoneNumber().toString());
-        tmp.setPriceOneTime(c.getPriceOneTime());
 
-        if (c.getOptions() != null) {
+
+        if (c.getOptions().size()> 0) {
             Set<OptionDTO> options = new HashSet<>();
             for (Option o :
                     c.getOptions()) {
@@ -63,5 +62,7 @@ public class ContractMapper {
         }
         return tmp;
     }
+
+
 
 }

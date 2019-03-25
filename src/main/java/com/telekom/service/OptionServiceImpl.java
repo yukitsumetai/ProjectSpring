@@ -65,6 +65,12 @@ public class OptionServiceImpl implements OptionService {
     }
 
     @Override
+    public List<OptionDTO> getAllNoParentNoGroup() {
+        List<Option> options = optionDao.getAllValidNoParentNoGroup();
+        return listEntityToDto(options);
+    }
+
+    @Override
     public List<OptionDTO> getAllNoChildrenAndParent() {
         List<Option> options = optionDao.getAllValidNoChildrenAndParent();
         return listEntityToDto(options);
@@ -117,14 +123,20 @@ public class OptionServiceImpl implements OptionService {
     @Override
     public Set<OptionDTO> findByTariff(Integer id) {
 
-        List<Option> Options = optionDao.findByTariff(id);
+        List<Option> Options = optionDao.findByTariffParents(id);
         Set<OptionDTO> OptionsDTO = new HashSet<>();
         for (Option t : Options) {
             OptionsDTO.add(optionMapper.EntityToDto(t));
         }
         return OptionsDTO;
     }
+    @Override
+    public List<OptionDTO> findByTariffChildren(Integer id) {
 
+        List<Option> Options= optionDao.findByTariffChildren(id);
+
+        return listEntityToDto(Options);
+    }
     private void updateOptionRelations(OptionDTO option, Option o) {
 
 
@@ -206,7 +218,9 @@ public class OptionServiceImpl implements OptionService {
     @Override
     public OptionDTO getOne(int id) {
         Option t = optionDao.getOne(id);
-        return optionMapper.EntityToDto(t);
+        if(t!=null){
+        return optionMapper.EntityToDto(t);}
+        else return null;
     }
 
 

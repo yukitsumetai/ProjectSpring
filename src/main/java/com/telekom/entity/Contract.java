@@ -30,7 +30,6 @@ public class Contract implements Serializable {
     Set<Option> options;
 
     private Double price;
-    private Double priceTariff;
     private Double priceOneTime;
 
     public void deleteOption(Integer id) {
@@ -81,13 +80,6 @@ public class Contract implements Serializable {
         this.price = price;
     }
 
-    public Double getPriceTariff() {
-        return priceTariff;
-    }
-
-    public void setPriceTariff(Double priceTariff) {
-        this.priceTariff = priceTariff;
-    }
 
     public Client getClient() {
         return client;
