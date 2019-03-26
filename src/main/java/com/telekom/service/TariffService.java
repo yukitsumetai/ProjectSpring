@@ -10,13 +10,8 @@ public interface TariffService {
 
     List<TariffDTO> getAll();
     List<TariffDTO> getAllValid();
-
     void add(TariffDTO tariff);
-
-
     TariffDTO getOne(int id);
-    Boolean checkContracts(Integer id);
-
     void editTariff(TariffDTO tariffDto);
     void deleteTariff(Integer id);
     void SetOptions(TariffDTO tariff, List<Integer> id);

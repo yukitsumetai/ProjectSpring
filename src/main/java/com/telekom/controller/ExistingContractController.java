@@ -1,8 +1,10 @@
 package com.telekom.controller;
 
 
+import com.telekom.entityDTO.ClientDTO;
 import com.telekom.entityDTO.ContractDTO;
 
+import com.telekom.entityDTO.OptionDTO;
 import com.telekom.service.ContractService;
 import com.telekom.service.OptionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @SessionAttributes(types = ContractDTO.class)
@@ -28,14 +31,14 @@ public class ExistingContractController {
     @GetMapping("/{id}")
     public ModelAndView getEditForm(Model model, ContractDTO contract, @PathVariable(value = "id") String id) {
         contract = contractService.getOne(id);
-        if (contract==null){
+        if (contract == null) {
             return new ModelAndView("search", "message", "Contract not found");
         }
         return new ModelAndView("contract", "contractDTO", contract);
     }
 
 
-    @GetMapping("/tariffChange")
+    @GetMapping("/tariffs")
     public String tariffChoose(Model model, ContractDTO contract) {
         model.addAttribute("tariffs", contractService.getTariffsForAdd(contract));
         model.addAttribute("table", "add");
@@ -43,28 +46,45 @@ public class ExistingContractController {
         return "tariffs";
     }
 
-    @PostMapping("/tariffChange")
-    public String tariffAdd(Model model, ContractDTO contract,  @RequestParam(name = "tariffID") Integer id, SessionStatus status) {
+    @PostMapping("/tariffs")
+    public String tariffAdd(Model model, ContractDTO contract, @RequestParam(name = "tariffID") Integer id) {
         contract.setOptions(null);
-       contractService.setTariffAndUpdate(contract, id);
-        status.setComplete();
-        return "redirect:/existingContract/" + contract.getPhoneNumber();
+        contractService.setTariff(contract, id);
+        //model.addAttribute(contract);
+        return "redirect:/existingContract/confirm/";
     }
 
+    @GetMapping("/confirm")
+    public String confirm(Model model) {
+        model.addAttribute("table", "add");
+        return "contract";
+    }
+
+    @PostMapping("/confirm/true")
+    public String confirmation(ContractDTO contract) {
+        contractService.update(contract);
+        return "redirect:/existingContract/" + contract.getPhoneNumber();
+    }
 
     @GetMapping("/options")
     public String addOptionsChoose(Model model, ContractDTO contract) {
-        model.addAttribute("options", contractService.getOptionsForAdd(contract));
-        model.addAttribute("table", "add");
-        return "options";
+        Set<OptionDTO> options = contractService.getOptions(contract);
+        if (!(options.size() > 0)) {
+            model.addAttribute("message", "No options are available"); //add message
+        } else {
+            model.addAttribute("options", contractService.getOptions(contract)); //add existing options!
+            model.addAttribute("optionGroups", contractService.getGroups(contract));
+            model.addAttribute("children", contractService.getOptionsChildren(contract));
+            model.addAttribute("existing", contract.getOptions());
+            model.addAttribute("table", "add");
+        }
+        return "contractOptions";
     }
 
-    @PostMapping("/optionsAdd")
+    @PostMapping("/options")
     public String addOptions(Model model, ContractDTO contract, @RequestParam(name = "optionID", required = false) List<Integer> id) {
-        if (id != null) {
-            contractService.setOptionsAndUpdate(contract, id);
-        }
-        return "redirect:/existingContract/" + contract.getPhoneNumber();
+        contractService.setOptions(contract, id);
+        return "redirect:/existingContract/confirm/";
     }
 
     @GetMapping("/optionsDelete/{id}")

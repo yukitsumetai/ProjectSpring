@@ -26,7 +26,7 @@ public interface ContractService {
 
     List<TariffDTO> getTariffsForAdd(ContractDTO contract);
 
-    void setTariffAndUpdate(ContractDTO contract, Integer id);
+    void update(ContractDTO contract);
 
     Set<OptionGroupDTO> getGroups(ContractDTO contract);
 

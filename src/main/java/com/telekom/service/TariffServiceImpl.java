@@ -33,11 +33,7 @@ public class TariffServiceImpl implements TariffService {
     @Autowired
     private TariffMapper tariffMapper;
 
-    @Override //УДАЛИТЬ!
-    public Boolean checkContracts(Integer id) {
-        if (contractDao.getByTariff(id) != null) return false;
-        else return true;
-    }
+
 
     private List<TariffDTO> listEntityToDto(List<Tariff> tariffs){
         List<TariffDTO> tariffsDTO = new ArrayList<>();
@@ -47,6 +43,7 @@ public class TariffServiceImpl implements TariffService {
         }
         return tariffsDTO;
     }
+
     @Override
     @Transactional
     public List<TariffDTO> getAll() {
@@ -63,7 +60,6 @@ public class TariffServiceImpl implements TariffService {
     @Override
     @Transactional
     public List<TariffDTO> getAllValid() {
-
         List<Tariff> tariffs = tariffDao.getAllValid();
         return listEntityToDto( tariffs);
     }
@@ -80,7 +76,6 @@ public class TariffServiceImpl implements TariffService {
             tariff.setOptions(options);
         }
         else tariff.setOptions(new HashSet<>());
-
     }
 
 
@@ -88,10 +83,8 @@ public class TariffServiceImpl implements TariffService {
     @Override
     @Transactional
     public TariffDTO getOne(int id) {
-
         Tariff t = tariffDao.getOne(id);
         return tariffMapper.EntityToDto(t);
-
     }
 
     private void addOptions(TariffDTO tariff, Tariff t) {
@@ -100,9 +93,7 @@ public class TariffServiceImpl implements TariffService {
             for (OptionDTO o : options
             ) {
                 Option tmp = optionDao.getOne(o.getId());
-                if (tmp != null) {
-                    if (tmp.isValid() == true) t.addOption(tmp);
-                }
+                if (tmp != null) t.addOption(tmp);
             }
         }
     }

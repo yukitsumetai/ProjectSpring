@@ -10,6 +10,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="elements/TopNavBar.jsp" %>
 <%@ include file="elements/SideBar.jsp" %>
+<c:set var="urlPath" value="${requestScope['javax.servlet.forward.request_uri']}"/>
 
 <html>
 <head>
@@ -17,9 +18,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <link rel="icon" href="../resource/images/favicon1.ico">
-
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../resource/assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="../resource/dist/js/bootstrap.min.js"></script>
     <script src="../resource/js/pagination.js"></script>
     <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
@@ -45,13 +53,15 @@
             <c:when test="${table=='add'}">
                 <div class="row">
                     <div class="col-sm-1 form-group">
-                        <form class="form-group" action="/newContract/confirm/true" method="post">
-                            <button type="submit" class="btn btn-success">Confirm<i class="glyphicon glyphicon-floppy-disk"></i></button>
+                        <form class="form-group" action="${urlPath}/true" method="post">
+                            <button type="submit" class="btn btn-success">Confirm <i
+                                    class="glyphicon glyphicon-floppy-disk"></i></button>
                         </form>
                     </div>
                     <div class="col-sm-1 form-group price">
-                        <form class="form-group" action="/tariffs" >
-                            <button type="submit" class="btn btn-danger">Cancel<i class="glyphicon glyphicon-ban-circle"></i></button>
+                        <form class="form-group" action="/users">
+                            <button type="submit" class="btn btn-danger">Cancel <i
+                                    class="glyphicon glyphicon-ban-circle"></i></button>
                         </form>
                     </div>
                 </div>
@@ -68,9 +78,28 @@
         </c:choose>
 
 
-        </main>
+    </main>
+    <!-- Modal -->
+    <div class="modal fade" id="changeTariff" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Change Tariff</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    After changing the tariff all current options will be lost.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Return</button>
+                    <a href="/existingContract/tariffs" class="btn btn-success" role="button">Continue</a>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
 </div>
 
 

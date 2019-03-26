@@ -62,12 +62,12 @@ public class ContractServiceImpl implements ContractService {
         setConditions(tmp);
     }
 
-    private void setConditions(Contract contract){
-        if (contract.getOptions().size()>0){
-            for (Option o:contract.getOptions()
-                 ) {
-                if(o.getParent()!=null){
-                    Condition condition = new Condition(contract, o.getParent().getId(), o.getId() );
+    private void setConditions(Contract contract) {
+        if (contract.getOptions().size() > 0) {
+            for (Option o : contract.getOptions()
+            ) {
+                if (o.getParent() != null) {
+                    Condition condition = new Condition(contract, o.getParent().getId(), o.getId());
                     conditionDao.add(condition);
                 }
             }
@@ -97,23 +97,18 @@ public class ContractServiceImpl implements ContractService {
     }
 
 
-    public void update(ContractDTO contract) {
-        Contract tmp = contractMapper.DtoToEntity(contract);
-        tmp.setClient(clientDao.getOne(contract.getClient().getId()));
-        contractDao.update(tmp);
-    }
-
     @Override
     public void setOptions(ContractDTO contract, List<Integer> id) {
+        contract.setOptions(new HashSet<>());
         for (Integer i : id
         ) {
             OptionDTO tmp = optionService.getOne(i);
-            if (tmp!=null){
-            contract.addOption(tmp);
-            contract.setPrice(tmp.getPriceMonthly());
-            contract.setPriceOneTime(tmp.getPriceOneTime());}
+            if (tmp != null) {
+                contract.addOption(tmp);
+                contract.setPrice(tmp.getPriceMonthly());
+                contract.setPriceOneTime(tmp.getPriceOneTime());
+            }
         }
-
     }
 
     @Override
@@ -176,25 +171,31 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     @Transactional
-    public void setTariffAndUpdate(ContractDTO contractDto, Integer id) {
+    public void update(ContractDTO contractDto) {
         Contract contract = contractDao.getOne(contractDto.getPhoneNumberInt());
-        Tariff t = tariffDao.getOne(id);
-        contract.setTariff(t);
-        contract.setPrice(0.0);
-        contract.setPrice(t.getPrice());
+        if (contract.getTariff().getId() != contractDto.getTariff().getId()) {
+            contract.setOptions(null);
+            Tariff t = tariffDao.getOne(contractDto.getTariff().getId());
+            contract.setTariff(t);
+            contract.setPrice(0.0);
+            contract.setPrice(t.getPrice());
+        } else {
+            contract.setOptions(new HashSet<>());
+            if (contractDto.getOptions().size() > 0) {
+                for (OptionDTO o : contractDto.getOptions()
+                ) {
+                    Option tmp2 = optionDao.getOne(o.getId());
+                    contract.addOption(tmp2);
+                    contract.setPrice(tmp2.getPriceMonthly());
+                }
+            }
+        }
     }
 
     @Override
     @Transactional
     public void setOptionsAndUpdate(ContractDTO contract, List<Integer> id) {
         Contract tmp = contractDao.getOne(contract.getPhoneNumberInt());
-        for (Integer i : id
-        ) {
-            Option tmp2 = optionDao.getOne(i);
-            tmp.addOption(tmp2);
-            contract.setPrice(tmp2.getPriceMonthly());
-            contract.setPriceOneTime(tmp2.getPriceOneTime());
-        }
         //setOptions(contract, id);
     }
 

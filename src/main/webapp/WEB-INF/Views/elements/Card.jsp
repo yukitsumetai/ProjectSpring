@@ -8,22 +8,30 @@
     <link href="<c:url value="${contextPath}/resource/css/dashboard.css"/>" rel="stylesheet">
 </head>
 
-<div class="card text-success border-success"">
+<div class="card text-success border-success">
     <div class="card-body">
         <h5 class="card-title">${o.name}<input class="right chk" right type="checkbox" price="${o.priceMonthly}"
-                                               optionName="${o.name}" name="optionID" value="${o.id}"></h5>
+                                               priceOneTime="${o.priceOneTime}"
+                                               optionName="${o.name}" name="optionID" value="${o.id}"
+        <c:forEach items="${existing}" var="e">
+        <c:if test="${o.id==e.id}"> checked </c:if>
+        </c:forEach>>
+        </h5>
         <p class="card-text text-success border-success"">
-            <em>${o.description}</em>
-            <br>
+        <em>${o.description}</em>
+        <br>
         <p>Monthly price:<span class="right"><b>${o.priceMonthly}$</b></span>
             <br>One Time price:<span class="right"><b>${o.priceOneTime}$</b></span></p>
-        <div class="children" id="${o.id}" style="display: none">
+        <div class="children" id="${o.id}" style="display:none">
             <c:forEach items="${children}" var="c">
                 <c:if test="${o.id==c.parent.id}">
                     <br>
                     <h5 class="card-title">${c.name}<input class="right chk" right type="checkbox"
-                                                           price="${c.priceMonthly}"
-                                                           optionName="${c.name}" name="optionID" value="${c.id}"></h5>
+                                                           price="${c.priceMonthly}" priceOneTime="${o.priceOneTime}"
+                                                           optionName="${c.name}" name="optionID" value="${c.id}"
+                    <c:forEach items="${existing}" var="e">
+                    <c:if test="${c.id==e.id}"> checked </c:if>
+                    </c:forEach>></h5>
                     <p class="card-text text-success border-success">
                         <em>${o.description}</em>
                         <br>

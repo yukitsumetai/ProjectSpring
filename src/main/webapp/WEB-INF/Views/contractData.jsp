@@ -47,9 +47,11 @@
         $${contractDTO.tariff.price}
     </div>
     <div class="col-sm-4 form-group price" color=" #a5aebc">
-        <a href=" /existingContract/tariffChange" class="edit" id="editIcon" title="Edit"><i
-                class="material-icons">&#xE254;</i></a>
-
+    <c:if test="${table!='add'}">
+            <a href=" /existingContract/tariffChange" class="edit" data-toggle="modal"
+               data-target="#changeTariff" id="editIcon" title="Edit"><i
+                    class="material-icons">&#xE254;</i></a>
+    </c:if>
     </div>
 </div>
 
@@ -94,7 +96,7 @@
                 <b>$${contractDTO.priceOneTime}</b>
             </c:when>
             <c:otherwise>
-                <a href="/existingContract/optionsAdd" class="add" id="addIcon" title="Add Options">
+                <a href="/existingContract/options" class="add" id="addIcon" title="Add Options">
                     <i class="material-icons">&#xe854;</i>
                 </a>
             </c:otherwise>

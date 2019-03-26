@@ -90,9 +90,8 @@ public class ContractController {
     }
 
     @PostMapping("/confirm/true")
-    public String confirmation(ContractDTO contract, SessionStatus status) {
+    public String confirmation(ContractDTO contract) {
         contractService.add(contract);
-        status.setComplete();
         return "redirect:/users";
     }
 

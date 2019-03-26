@@ -35,7 +35,7 @@ public class TariffController {
         if (!validity) tariff.setIsValid(false);
         if (options) {
             model.addAttribute("table", "tariffAdd");
-            model.addAttribute("options", optionService.getAllValid());
+            model.addAttribute("options", optionService.getAll());
             return "options";
         }
         tariffService.add(tariff);
@@ -62,7 +62,7 @@ public class TariffController {
         if (options) {
             model.addAttribute("table", "tariffEdit");
             model.addAttribute("existingOptions", tariff.getOptions());
-            model.addAttribute("options", optionService.getAllValid());
+            model.addAttribute("options", optionService.getAll());
             return "options";
         }
         tariffService.editTariff(tariff);

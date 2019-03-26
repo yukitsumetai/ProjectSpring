@@ -19,12 +19,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="icon" href="${contextPath}/resource/images/favicon1.png">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
     <link href="<c:url value="${contextPath}/resource/dist/css/bootstrap.min.css" />" rel="stylesheet">
     <link href="<c:url value="${contextPath}/resource/css/dashboard.css"/>" rel="stylesheet">
     <title>Tariffs Overview</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../resource/assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="${contextPath}/resource/dist/js/bootstrap.min.js"></script>
     <script src="${contextPath}/resource/js/pagination.js"></script>
     <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
@@ -98,7 +98,7 @@
             <c:choose>
 
                 <c:when test="${NEB=='no'}">
-                    <form action="/existingContract/tariffChange" method="post">
+                    <form action="/existingContract/tariffs" method="post">
                         <%@ include file="tableTariffs.jsp" %>
                         <div>
                             <button type="submit" class="btn btn-success">Next <i
@@ -141,12 +141,11 @@
 
         </div>
     </div>
+
 </main>
 
-
 <!-- Modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
-     aria-hidden="true">
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -157,17 +156,18 @@
             </div>
             <div class="modal-body">
                 Are you sure that you want to delete the tariff?<br>
-               Existing relations with options will be lost.
+                Existing relations with options will be lost.
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                 <form id="action" action="">
-                    <button type="submit" class="btn btn-primary">Yes</button>
+                    <button type="submit" class="btn btn-success">Yes</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
 <%-- Modal Script --%>
 <script>
     $('#deleteModal').on('show.bs.modal', function (e) {

@@ -123,7 +123,7 @@ public class OptionServiceImpl implements OptionService {
     @Override
     public Set<OptionDTO> findByTariff(Integer id) {
 
-        List<Option> Options = optionDao.findByTariffParents(id);
+        List<Option> Options = optionDao.findByTariffParents(id); //valid only
         Set<OptionDTO> OptionsDTO = new HashSet<>();
         for (Option t : Options) {
             OptionsDTO.add(optionMapper.EntityToDto(t));
