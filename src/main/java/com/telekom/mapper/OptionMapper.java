@@ -42,7 +42,8 @@ public class OptionMapper {
         }
         Option o = t.getParent();
         if (o != null) {
-            tmp.setParent(EntityToDtoWithoutTariff(o));
+            OptionDTO parent = new OptionDTO(o.getId(), o.getName());
+            tmp.setParent(parent);
         }
         if (t.getChildren().size() > 0) {
             Set<Option> children = t.getChildren();
@@ -66,7 +67,12 @@ public class OptionMapper {
         tmp.setDescription(t.getDescription());
         tmp.setName(t.getName());
         tmp.setPriceMonthly(t.getPriceMonthly());
-
+        if(t.getParent()!=null){
+            Option o=new Option();
+            o.setId(t.getParent().getId());
+            o.setName(t.getParent().getName());
+            tmp.setParent(o);
+        }
         return tmp;
     }
 }

@@ -9,8 +9,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ include file="TopNavBar.jsp" %>
-<%@ include file="SideBar.jsp" %>
+<%@ include file="elements/TopNavBar.jsp" %>
+<%@ include file="elements/SideBar.jsp" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -45,7 +45,7 @@
 </head>
 <body>
 <div class="container-fluid">
-    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <main class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         <h1 class="page-header">Option administration</h1>
 
         <div id="option data">
@@ -144,7 +144,7 @@
 
             </form>
         </div>
-    </div>
+    </main>
 
 </div>
 

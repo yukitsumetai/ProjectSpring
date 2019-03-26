@@ -8,8 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ include file="TopNavBar.jsp" %>
-<%@ include file="SideBar.jsp" %>
+<%@ include file="elements/TopNavBar.jsp" %>
+<%@ include file="elements/SideBar.jsp" %>
 <c:set var="urlPath" value="${requestScope['javax.servlet.forward.request_uri']}"/>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
@@ -42,7 +42,7 @@
 
 <div class="container-fluid">
 
-    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
         <h1 class="page-header">Choose related options</h1>
         <div class="table-wrapper">
             <div class="table-title">

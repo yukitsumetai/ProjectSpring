@@ -8,8 +8,8 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ include file="TopNavBar.jsp" %>
-<%@ include file="SideBar.jsp" %>
+<%@ include file="elements/TopNavBar.jsp" %>
+<%@ include file="elements/SideBar.jsp" %>
 <html>
 <head>
 
@@ -22,7 +22,7 @@
 </head>
 <body>
 <div class="container-fluid">
-    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <main class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         <h1 class="page-header">Contract search</h1>
 
         <div id="table-wrapper">
@@ -46,7 +46,7 @@
                 </div>
             </form>
         </div>
-    </div>
+    </main>
 
 </div>
 <!--Calendar-->

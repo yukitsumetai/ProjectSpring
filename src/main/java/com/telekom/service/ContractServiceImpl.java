@@ -1,10 +1,7 @@
 package com.telekom.service;
 
 import com.telekom.dao.*;
-import com.telekom.entity.Client;
-import com.telekom.entity.Contract;
-import com.telekom.entity.Option;
-import com.telekom.entity.Tariff;
+import com.telekom.entity.*;
 import com.telekom.entityDTO.ContractDTO;
 import com.telekom.entityDTO.OptionDTO;
 import com.telekom.entityDTO.OptionGroupDTO;
@@ -44,6 +41,9 @@ public class ContractServiceImpl implements ContractService {
     private OptionDao optionDao;
     @Autowired
     private TariffDao tariffDao;
+    @Autowired
+    private ConditionDao conditionDao;
+
 
     @Override
     @Transactional
@@ -59,7 +59,21 @@ public class ContractServiceImpl implements ContractService {
         }
         contractDao.add(tmp);
         tmp.setClient(c);
+        setConditions(tmp);
     }
+
+    private void setConditions(Contract contract){
+        if (contract.getOptions().size()>0){
+            for (Option o:contract.getOptions()
+                 ) {
+                if(o.getParent()!=null){
+                    Condition condition = new Condition(contract, o.getParent().getId(), o.getId() );
+                    conditionDao.add(condition);
+                }
+            }
+        }
+    }
+
 
     @Override
     public Set<OptionDTO> getOptionsForAdd(ContractDTO contract) {
@@ -167,7 +181,6 @@ public class ContractServiceImpl implements ContractService {
         Tariff t = tariffDao.getOne(id);
         contract.setTariff(t);
         contract.setPrice(0.0);
-        contract.setPriceOneTime(0.0);
         contract.setPrice(t.getPrice());
     }
 

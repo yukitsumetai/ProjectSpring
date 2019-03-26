@@ -20,7 +20,6 @@ public class ContractDaoImpl implements ContractDao {
 
     @Override
     public void add(Contract contract) {
-
         entityManager.persist(contract);
     }
 

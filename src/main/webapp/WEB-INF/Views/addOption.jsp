@@ -8,8 +8,8 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ include file="TopNavBar.jsp" %>
-<%@ include file="SideBar.jsp" %>
+<%@ include file="elements/TopNavBar.jsp" %>
+<%@ include file="elements/SideBar.jsp" %>
 <c:set var="urlPath" value="${requestScope['javax.servlet.forward.request_uri']}"/>
 <html>
 <head>
@@ -38,12 +38,12 @@
 
 <body>
 <div class="container-fluid">
-    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
         <h1 class="page-header">Option administration</h1>
 
 
         <div id="personal data">
-            <form:form method="post" action="/options/new" modelAttribute="option" class=" well">
+            <form:form method="post" action="/options/new" modelAttribute="option">
                 <div class="table-title">
                     <h2>Add option details</h2>
                 </div>
@@ -81,7 +81,7 @@
                     </div>
                     <div class="btn-group btn-group-toggle btn-success" data-toggle="buttons">
 
-                        <label class="btn btn-secondary active">
+                        <label class="btn btn-success active">
                             <input type="radio" class="radio" name="options" value="alone" id="option1"
                                    autocomplete="off"
                                    checked> Stand alone
@@ -121,7 +121,7 @@
 
             </form:form>
         </div>
-    </div>
+    </main>
 
 </div>
 

@@ -8,8 +8,8 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ include file="TopNavBar.jsp" %>
-<%@ include file="SideBar.jsp" %>
+<%@ include file="elements/TopNavBar.jsp" %>
+
 <html>
 <head>
 
@@ -26,16 +26,19 @@
 </head>
 <body>
 <div class="container-fluid">
-    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+        <%@ include file="elements/SideBar.jsp" %>
         <h1 class="page-header">Client details</h1>
 
-        <div id="table-wrapper">
-            <div class="table-title">
-                <h2>Add personal data</h2>
-            </div>
-        </div>
+
         <div id="personal data">
+
             <form:form method="post" action="/newContract/confirm" modelAttribute="client">
+                <div id="table-wrapper">
+                    <div class="table-title">
+                        <h2>Add personal data</h2>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-sm-6 form-group">
                         <form:label path="name">Name</form:label>
@@ -55,14 +58,14 @@
                 <div class="form-group">
                     <form:label path="birthday">Birthday</form:label>
                     <div class='input-group date' id='datetimepicker1'>
-                        <form:input path="birthday" type='text' class="form-control" />
+                        <form:input path="birthday" type='text' class="form-control"/>
                         <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label >Passport</label>
+                    <label>Passport</label>
                     <form:input path="passport" type="number" name="passport" class="form-control required "/>
                 </div>
 
@@ -104,9 +107,9 @@
                 <div>
                     <div class="form-group col-sm-6">
                         <label path="password">Phone number</label>
-                        <form:select  path="phoneNumber" id="phoneNumber" class="form-control">
+                        <form:select path="phoneNumber" id="phoneNumber" class="form-control">
                             <c:forEach items="${numbers}" var="n">
-                                <option  value="${n}">+${n}</option>
+                                <option value="${n}">+${n}</option>
                             </c:forEach>
                         </form:select>
                     </div>
@@ -122,7 +125,7 @@
             </form:form>
 
         </div>
-    </div>
+    </main>
 
 </div>
 <!--Calendar-->

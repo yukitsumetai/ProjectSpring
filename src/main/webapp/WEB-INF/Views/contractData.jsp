@@ -54,31 +54,31 @@
 </div>
 
 <c:forEach items="${contractDTO.options}" var="option">
-    <div class="row">
-        <div class="col-sm-4 form-group">
-            <label>Options: </label> ${option.name}<br>
-            <div class="row description">
-                    ${option.description}
+            <div class="row">
+                <div class="col-sm-4 form-group">
+                    <label>Options: </label> ${option.name}<br>
+                    <div class="row description">
+                            ${option.description}
+                    </div>
+                </div>
+                <div class="col-sm-4 form-group price">
+                    $${option.priceMonthly}
+                </div>
+
+                <div class="col-sm-4 form-group price">
+                    <c:choose>
+                        <c:when test="${table=='add'}">
+                            $${option.priceOneTime}
+                        </c:when>
+                        <c:otherwise>
+                            <a href="/existingContract/optionsDelete/${option.id}" name="delete" id="deleteIcon"
+                               title="Delete">
+                                <i class="material-icons">&#xE872;</i>
+                            </a>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
             </div>
-        </div>
-        <div class="col-sm-4 form-group price">
-            $${option.priceMonthly}
-        </div>
-
-        <div class="col-sm-4 form-group price">
-            <c:choose>
-                <c:when test="${table=='add'}">
-                    $${option.priceOneTime}
-                </c:when>
-                <c:otherwise>
-                    <a href="/existingContract/optionsDelete/${option.id}" name="delete" id="deleteIcon" title="Delete">
-                        <i class="material-icons">&#xE872;</i>
-                    </a>
-                </c:otherwise>
-            </c:choose>
-        </div>
-    </div>
-
 </c:forEach>
 <div class="row">
     <div class="col-sm-4 form-group">

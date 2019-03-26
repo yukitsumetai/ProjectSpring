@@ -9,8 +9,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-<%@ include file="TopNavBar.jsp" %>
-<%@ include file="SideBar.jsp" %>
 
 
 <head>
@@ -24,7 +22,6 @@
 
 </head>
 
-<body>
 
 
 <table class="table table-striped table-hover table-bordered" id="Table">
@@ -151,4 +148,3 @@
         $('[data-toggle="tooltip"]').tooltip();
     });
 </script>
-</body>

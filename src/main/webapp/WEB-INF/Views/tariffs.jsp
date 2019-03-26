@@ -9,8 +9,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-<%@ include file="TopNavBar.jsp" %>
-<%@ include file="SideBar.jsp" %>
+
+
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 
@@ -20,9 +20,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="icon" href="${contextPath}/resource/images/favicon1.png">
-    <!-- Bootstrap core CSS -->
-    <link href="${contextPath}/resource/dist/css/bootstrap.min.css" />" rel="stylesheet">
-    <link href="${contextPath}/resource/css/dashboard.css"/>" rel="stylesheet">
+    <link href="<c:url value="${contextPath}/resource/dist/css/bootstrap.min.css" />" rel="stylesheet">
+    <link href="<c:url value="${contextPath}/resource/css/dashboard.css"/>" rel="stylesheet">
     <title>Tariffs Overview</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../resource/assets/js/vendor/jquery.min.js"><\/script>')</script>
@@ -44,10 +43,12 @@
 </head>
 
 <body>
-
+<%@ include file="elements/TopNavBar.jsp" %>
 <div class="container-fluid">
 
-    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <%@ include file="elements/SideBar.jsp" %>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
         <c:choose>
             <c:when test="${table=='edit'}">
                 <h1 class="page-header">Tariffs</h1>
@@ -101,7 +102,7 @@
                         <%@ include file="tableTariffs.jsp" %>
                         <div>
                             <button type="submit" class="btn btn-success">Next <i
-                                    class="glyphicon glyphicon-chevron-right"></i><</button>
+                                    class="glyphicon glyphicon-chevron-right"></i></button>
                         </div>
                     </form>
                 </c:when>
@@ -140,7 +141,7 @@
 
         </div>
     </div>
-</div>
+</main>
 
 
 <!-- Modal -->

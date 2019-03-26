@@ -30,13 +30,12 @@ Modules - reusable parts of our design
     overflow: hidden;
     text-indent: 100%;
     white-space: nowrap;
-    padding: 20px;
 }
 
 
 
 #cd-cart-trigger {
-    top: 7px;
+    top: 0px;
     height: 100%;
 }
  #cd-cart-trigger a {
@@ -67,7 +66,6 @@ Modules - reusable parts of our design
     height: 100%;
     width: 200px;
     /* header height */
-    padding-top: 50px;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
@@ -82,7 +80,6 @@ Modules - reusable parts of our design
     #main-nav, #cd-cart {
         width: 20%;
         /* header height has changed */
-        padding-top: 80px;
     }
 }
 
@@ -212,23 +209,8 @@ Modules - reusable parts of our design
 xgallery 
 
 -------------------------------- */
-main {
-    position: relative;
-    min-height: 100%;
-    background: #eeeff7;
-    padding-top: 70px;
-    z-index: 1;
-}
-@media only screen and (min-width: 768px) {
-    main {
-        padding-top: 90px;
-    }
-}
-@media only screen and (min-width: 1200px) {
-    main {
-        padding-top: 120px;
-    }
-}
+
+
 
 #cd-gallery-items li {
     margin-bottom: 1.5em;

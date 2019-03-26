@@ -6,12 +6,12 @@ import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "contracts")
-@DynamicUpdate
 public class Contract implements Serializable {
 
 
@@ -27,25 +27,30 @@ public class Contract implements Serializable {
 
     @ManyToMany
     @JoinColumn(name = "phoneNumber")
-    Set<Option> options;
+    Set<Option> options= new HashSet<>();
+
+
+    @OneToMany(mappedBy="contract")
+    Set<Condition> conditions = new HashSet<>();
 
     private Double price;
-    private Double priceOneTime;
+
+
+
+    public Set<Condition> getConditions() {
+        return conditions;
+    }
+
+    public void setConditions(Set<Condition> conditions) {
+        this.conditions = conditions;
+    }
 
     public void deleteOption(Integer id) {
         this.options.removeIf(st -> st.getId() == id);
     }
+
     public void addOption(Option option) {
         this.options.add(option);
-    }
-
-
-    public Double getPriceOneTime() {
-        return priceOneTime;
-    }
-
-    public void setPriceOneTime(Double priceOneTime) {
-        this.priceOneTime = priceOneTime;
     }
 
     public BigInteger getPhoneNumber() {

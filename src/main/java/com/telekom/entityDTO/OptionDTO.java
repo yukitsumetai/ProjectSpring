@@ -27,6 +27,14 @@ public class OptionDTO implements Serializable {
     private Set<OptionDTO> children = new HashSet<>();
     private OptionGroupDTO optionGroup;
 
+    public OptionDTO() {
+    }
+
+    public OptionDTO(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public OptionGroupDTO getOptionGroup() {
         return optionGroup;
     }
