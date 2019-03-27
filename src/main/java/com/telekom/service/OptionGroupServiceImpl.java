@@ -6,7 +6,9 @@ import com.telekom.entity.Option;
 import com.telekom.entity.OptionGroup;
 import com.telekom.entityDTO.OptionDTO;
 import com.telekom.entityDTO.OptionGroupDTO;
+import com.telekom.entityDTO.Page;
 import com.telekom.mapper.OptionGroupMapper;
+import javafx.scene.control.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +19,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class OptionGroupServiceImpl implements OptionGroupService {
+public class OptionGroupServiceImpl extends PaginationImpl<OptionGroupDTO> implements OptionGroupService {
 
     @Autowired
     private OptionGroupDao optionGroupDao;
@@ -71,17 +73,11 @@ public class OptionGroupServiceImpl implements OptionGroupService {
     }
 
     @Override
-    public Integer getTotalPages(Integer size) {
-        Double d = Math.ceil(optionGroupDao.getPagesCount() / size);
-        return d.intValue();
-
-    }
-
-    @Override
     @Transactional
-    public List<OptionGroupDTO> getPage(Integer size, Integer page) {
-        List<OptionGroup> pageGroups = optionGroupDao.getPages(size, page);
-        return listEntityToDto(pageGroups);
+    public Page<OptionGroupDTO> getPage(Integer size, Integer page) {
+        List<OptionGroupDTO> pageGroups = listEntityToDto(optionGroupDao.getPages(size, page));
+        Long total=optionGroupDao.getPagesCount();
+        return getPageDraft(pageGroups, total, page, size);
     }
 
     @Override

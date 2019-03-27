@@ -2,6 +2,7 @@ package com.telekom.dao;
 
 
 import com.telekom.entity.Option;
+import com.telekom.entity.PhoneNumber;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -13,21 +14,11 @@ import java.util.List;
 
 @Component
 @Repository
-public class OptionDaoImpl implements OptionDao {
+public class OptionDaoImpl extends PaginationDaoImpl<Option> implements OptionDao {
 
     @PersistenceContext(unitName = "entityManagerFactory")
     private EntityManager entityManager;
 
-    //@Override
-    public List<Option> getAllPages() {
-
-        TypedQuery<Option> q= entityManager.createQuery("select t from Option t", Option.class);
-        int pageNumber = 1;
-        int pageSize = 10;
-        q.setFirstResult((pageNumber-1) * pageSize);
-        q.setMaxResults(pageSize);
-        return q.getResultList();
-    }
 
     @Override
     public List<Option> getAll() {
@@ -99,7 +90,18 @@ public class OptionDaoImpl implements OptionDao {
     }
 
 
+    @Override
+    public List<Option> getPages(Integer size, Integer page) {
+        TypedQuery<Option> q = entityManager.createQuery("select t from Option t", Option.class);
+        pageCount(page, size, q);
+        return q.getResultList();
+    }
 
+    @Override
+    public Long getPagesCount() {
+        TypedQuery<Long> q = entityManager.createQuery("Select count(f) from PhoneNumber f", Long.class);
+        return q.getSingleResult();
+    }
 
 
 }

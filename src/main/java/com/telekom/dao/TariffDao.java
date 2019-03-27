@@ -1,12 +1,10 @@
 package com.telekom.dao;
 
-import com.telekom.entity.Option;
 import com.telekom.entity.Tariff;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-public interface TariffDao {
+public interface TariffDao extends PaginationDao {
 
     List<Tariff> getAll();
 
@@ -15,6 +13,7 @@ public interface TariffDao {
     void add(Tariff tariff);
 
     Tariff getOne(Integer id);
+
 
 }
 

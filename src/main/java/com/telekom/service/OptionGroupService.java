@@ -2,11 +2,12 @@ package com.telekom.service;
 
 import com.telekom.entity.OptionGroup;
 import com.telekom.entityDTO.OptionGroupDTO;
+import com.telekom.entityDTO.Page;
 
 import java.util.List;
 import java.util.Set;
 
-public interface OptionGroupService {
+public interface OptionGroupService extends Pagination{
     OptionGroupDTO getOne(int id);
     void add(OptionGroupDTO optionGroup);
     void editOptionGroup(OptionGroupDTO t);
@@ -14,8 +15,7 @@ public interface OptionGroupService {
     List<OptionGroupDTO> getAll();
     List<OptionGroupDTO> getAllValid();
     void SetOptions(OptionGroupDTO optionGroup, List<Integer> id);
-    Integer getTotalPages(Integer page);
-    List<OptionGroupDTO> getPage(Integer size, Integer page);
+    Page<OptionGroupDTO> getPage(Integer size, Integer page);
     List<OptionGroupDTO> getByName(String name);
     Set<OptionGroupDTO> findByTariff(Integer id);
 }

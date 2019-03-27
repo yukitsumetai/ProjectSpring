@@ -1,11 +1,10 @@
 package com.telekom.dao;
 
 import com.telekom.entity.OptionGroup;
-import com.telekom.entityDTO.OptionGroupDTO;
 
 import java.util.List;
 
-public interface OptionGroupDao {
+public interface OptionGroupDao extends PaginationDao {
     List<OptionGroup> getAll();
 
     List<OptionGroup> getAllValid();

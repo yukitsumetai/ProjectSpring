@@ -207,10 +207,6 @@
         <script>
             $('input.chk').on('change', function () {
                 $('input.chk').not(this).prop('checked', false);
-                var name = this.getAttribute('tariffName');
-                var price = this.getAttribute('price');
-                //document.getElementById("tariffName").innerHTML = name;
-                // document.getElementById("tariffPrice").innerHTML = "$" + price;
             });
         </script>
     </c:otherwise>

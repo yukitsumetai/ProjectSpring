@@ -32,31 +32,37 @@
     <title>Options</title>
     <script>
         var flag = true;
-        var priceTotal =${contractDTO.tariff.price};
-        document.getElementById("totalMonthlyPrice").innerHTML = "$" + priceTotal;
         $(document).ready(function () {
-          //  checksBasket()
             var checkboxes = document.getElementsByClassName('myClass');
             for (var i = 0; i < checkboxes.length; i++) {
                 var value = checkboxes[i].value;
                 if (checkboxes[i].checked) {
                     var children = document.getElementById(value);
-                    children.style.display = "block";
+                    if (children!=null){
+                        children.style.display = "block";}
                 }
             }
         });
+        flag = false;
+    </script>
+    <script>
         $(document).ready(function () {
-         // radioBasket();
             var checkboxes = document.getElementsByClassName('myClass1');
             for (var i = 0; i < checkboxes.length; i++) {
                 var value = checkboxes[i].value;
                 if (checkboxes[i].checked) {
                     var children = document.getElementById(value);
-                    children.style.display = "block";
-                }
-            }
+                    if (children!=null){
+                        children.style.display = "block";
+                    }
+                }}
         });
-        flag = false;
+    </script>
+    <script>
+        $(document).ready(function () {
+            radioBasket(${contractDTO.tariff.price});
+            checksBasket(${contractDTO.tariff.price});
+        });
     </script>
 </head>
 <body>
@@ -64,7 +70,7 @@
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
 
-        <h1 class="page-header">Choose options ${urlPath}</h1>
+        <h1 class="page-header">Choose options</h1>
         <h2 class="table-title">${message}</h2>
 
         <c:choose>

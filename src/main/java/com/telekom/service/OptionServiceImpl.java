@@ -9,6 +9,7 @@ import com.telekom.entity.OptionGroup;
 import com.telekom.entity.Tariff;
 import com.telekom.entityDTO.OptionDTO;
 import com.telekom.entityDTO.OptionGroupDTO;
+import com.telekom.entityDTO.Page;
 import com.telekom.entityDTO.TariffDTO;
 import com.telekom.mapper.OptionMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ import java.util.Set;
 
 @Service
 @Transactional(readOnly = true)
-public class OptionServiceImpl implements OptionService {
+public class OptionServiceImpl extends PaginationImpl<OptionDTO> implements OptionService {
 
 
     @Autowired
@@ -86,6 +87,14 @@ public class OptionServiceImpl implements OptionService {
     public List<OptionDTO> getAllNoChildrenParentInvalid() {
         List<Option> options = optionDao.getAllNoChildrenAndParent();
         return listEntityToDto(options);
+    }
+
+    @Override
+    @Transactional
+    public Page<OptionDTO> getPage(Integer size, Integer page) {
+        List<OptionDTO> pageGroups =optionDao.getPages(size, page);
+        Long total=optionDao.getPagesCount();
+        return getPageDraft(pageGroups, total, page, size);
     }
 
 

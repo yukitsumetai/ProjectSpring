@@ -12,7 +12,7 @@ import java.util.List;
 
 @Component
 @Repository
-public class TariffDaoImpl2 implements TariffDao {
+public class TariffDaoImpl2 extends PaginationDaoImpl<Tariff> implements TariffDao {
 
     @PersistenceContext(unitName = "entityManagerFactory")
     private EntityManager entityManager;
@@ -33,7 +33,6 @@ public class TariffDaoImpl2 implements TariffDao {
 
     }
 
-
     @Override
     public Tariff getOne(Integer id) {
         TypedQuery<Tariff> q = entityManager.createQuery(
@@ -43,5 +42,6 @@ public class TariffDaoImpl2 implements TariffDao {
         return q.getResultList().stream().findAny().orElse(null);
 
     }
+
 
 }

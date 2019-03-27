@@ -1,6 +1,5 @@
 package com.telekom.dao;
 
-import com.telekom.entity.Option;
 import com.telekom.entity.OptionGroup;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -12,7 +11,7 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 @Component
 @Repository
-public class OptionGroupDaoImpl implements OptionGroupDao {
+public class OptionGroupDaoImpl extends PaginationDaoImpl<OptionGroup> implements OptionGroupDao {
     @PersistenceContext(unitName = "entityManagerFactory")
     private EntityManager entityManager;
 
@@ -33,13 +32,10 @@ public class OptionGroupDaoImpl implements OptionGroupDao {
     @Override
     public List<OptionGroup> getPages(Integer size, Integer page) {
         TypedQuery<OptionGroup> q= entityManager.createQuery("select t from OptionGroup t where t.isValid=true", OptionGroup.class);
-        int pageNumber = page;
-        int pageSize = size;
-        q.setFirstResult((pageNumber-1) * pageSize);
-        q.setMaxResults(pageSize);
+       pageCount(page, size, q);
         return q.getResultList();
     }
-@Override
+    @Override
     public Long getPagesCount(){
         TypedQuery<Long> q = entityManager.createQuery("Select count(f.id) from OptionGroup f", Long.class);
         return q.getSingleResult();
@@ -52,8 +48,6 @@ public class OptionGroupDaoImpl implements OptionGroupDao {
         List<OptionGroup> optionGroups=q.getResultList();
         return optionGroups;
     }
-
-
 
     @Override
     public OptionGroup getOne(Integer id) {

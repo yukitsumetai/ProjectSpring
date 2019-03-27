@@ -21,8 +21,15 @@
     <script>window.jQuery || document.write('<script src="../resource/assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="../resource/dist/js/bootstrap.min.js"></script>
     <script src="../resource/js/pagination.js"></script>
+    <script src="../resource/js/ComboBox.js"></script>
     <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
     <title>Client details</title>
+
+    <script>
+        $(document).ready(function () {
+            return phoneNumber();
+        });
+    </script>
 </head>
 <body>
 <div class="container-fluid">
@@ -104,14 +111,13 @@
                 <div class="table-title">
                     <h2>Add Contract Details</h2>
                 </div>
-                <div>
+                <div class="row">
                     <div class="form-group col-sm-6">
-                        <label path="password">Phone number</label>
-                        <form:select path="phoneNumber" id="phoneNumber" class="form-control">
-                            <c:forEach items="${numbers}" var="n">
-                                <option value="${n}">+${n}</option>
-                            </c:forEach>
-                        </form:select>
+                        <form:label path="phoneNumber">Phone number</form:label>
+                                <form:select class="form-control" path="phoneNumber"
+                                         id="select1" name="group" onscroll="scrolledPhone(this)" data-live-search="true" onfocus='this.size=5;' onblur='this.size=1;' onchange='this.size=1;'>
+                                </form:select>
+                                <input type="hidden" id="page" value=1>
                     </div>
                     <div class="form-group col-sm-6">
                         <form:label path="password">Password</form:label>

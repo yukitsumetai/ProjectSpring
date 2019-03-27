@@ -26,6 +26,7 @@ public class OptionDTO implements Serializable {
     private OptionDTO parent;
     private Set<OptionDTO> children = new HashSet<>();
     private OptionGroupDTO optionGroup;
+    private boolean existing;
 
     public OptionDTO() {
     }
@@ -43,6 +44,13 @@ public class OptionDTO implements Serializable {
         this.optionGroup = optionGroupDTO;
     }
 
+    public boolean isExisting() {
+        return existing;
+    }
+
+    public void setExisting(boolean existing) {
+        this.existing = existing;
+    }
 
     public void addOption(Integer id, String name) {
         OptionDTO tmp = new OptionDTO();

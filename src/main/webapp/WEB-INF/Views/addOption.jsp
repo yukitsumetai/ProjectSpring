@@ -27,7 +27,7 @@
 
     <title>Client details</title>
 
-    <!--Pagination dropdown-->
+    <!--PaginationDao dropdown-->
     <script>
         $(document).ready(function () {
             return Validate();

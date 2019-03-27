@@ -54,7 +54,7 @@ public class ContractController {
         return "contractOptions";
     }
 
-    @PostMapping(value="client")
+    @PostMapping("client")
     public String newContractOptionAdd(Model model, ContractDTO contract,@RequestParam(name="action") String action, @RequestParam(name = "optionID", required = false) List<Integer> id) {
         if (id != null) {
             contractService.setOptions(contract, id);
@@ -69,15 +69,16 @@ public class ContractController {
            return "newClient";}
        else {
            model.addAttribute("clients", clientService.getAll());
+
            return "clients";
        }
     }
 
     @PostMapping("/confirmExisting")
-    public String newContractOptionAdd(Model model, ContractDTO contract,  @RequestParam(name = "clientID") Integer id) {
+    public String newContractOptionAdd(Model model, ContractDTO contract,  @RequestParam(name = "clientID") Integer id, @RequestParam String phoneNumber) {
         model.addAttribute("table", "add");
         contract.setClient(clientService.getOne(id));
-        contract.setPhoneNumber("465766854347");
+        contract.setPhoneNumber(phoneNumber);
         return "contract";
     }
 
@@ -87,6 +88,12 @@ public class ContractController {
         contract.setClient(client);
         contract.setPhoneNumber(client.getPhoneNumber());
         return "contract";
+    }
+
+    @PostMapping("/confirmExisting/true")
+    public String confirmationExisting(ContractDTO contract) {
+        contractService.add(contract);
+        return "redirect:/users";
     }
 
     @PostMapping("/confirm/true")

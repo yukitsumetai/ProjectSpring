@@ -19,19 +19,34 @@ public class Contract implements Serializable {
     private BigInteger phoneNumber;
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "clientId", referencedColumnName = "id")
-    Client client;
+    private Client client;
 
     @ManyToOne
     @JoinColumn(name = "tariffId")
-    Tariff tariff;
+    private Tariff tariff;
 
     @ManyToMany
     @JoinColumn(name = "phoneNumber")
-    Set<Option> options= new HashSet<>();
-
-
+    private Set<Option> options = new HashSet<>();
+    private boolean blocked;
+    private boolean agentBlock;
     private Double price;
 
+    public boolean isBlocked() {
+        return blocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
+    }
+
+    public boolean isAgentBlock() {
+        return agentBlock;
+    }
+
+    public void setAgentBlock(boolean agentBlock) {
+        this.agentBlock = agentBlock;
+    }
 
     public void deleteOption(Integer id) {
         this.options.removeIf(st -> st.getId() == id);

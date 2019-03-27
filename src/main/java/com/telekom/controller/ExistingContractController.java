@@ -77,16 +77,29 @@ public class ExistingContractController {
             model.addAttribute("options", contractService.getParentsForExisting(contract));
             model.addAttribute("optionGroups", contractService.getGroups(contract));
             model.addAttribute("children", contractService.getChildrenForExisting(contract));
-            model.addAttribute("existing", contract.getOptions());
             model.addAttribute("table", "add");
+           // contract.setOptions(null);
         }
         return "contractOptions";
     }
 
     @PostMapping("/options")
-    public String addOptions(Model model, ContractDTO contract, @RequestParam(name = "optionID", required = false) List<Integer> id) {
+    public String addOptions(ContractDTO contract, @RequestParam(name = "optionID", required = false) List<Integer> id) {
         contractService.setOptions(contract, id);
         return "redirect:/existingContract/confirm/";
     }
+
+    @GetMapping("/block")
+    public String block(ContractDTO contract) {
+        contractService.block(contract);
+        return "redirect:/existingContract/confirm/";
+    }
+
+    @GetMapping("/unblock")
+    public String unblock(ContractDTO contract) {
+        contractService.unblock(contract);
+        return "redirect:/existingContract/confirm/";
+    }
+
 
 }

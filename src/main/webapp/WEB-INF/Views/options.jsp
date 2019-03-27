@@ -18,10 +18,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="${contextPath}/resource/dist/js/bootstrap.min.js"></script>
+    <script src="../resource/js/pagination.js"></script>
+    <script src="../resource/js/Pagination2.js"></script>
+
     <!DOCTYPE html>
     <html lang="en">
     <head>
-
+        <input type="hidden" id="page" value=1>
         <title>Options Overview</title>
 
         <!--Search-->
@@ -33,6 +36,11 @@
                         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                     });
                 });
+            });
+        </script>
+        <script>
+            $(document).ready(function () {
+                return optionPagination();
             });
         </script>
         <script>
@@ -112,7 +120,7 @@
                                         class="glyphicon glyphicon-plus"></i>
                                 </button>
                             </div>
-                            <div class="form-group col-sm-1">
+                            <div class="form-group col-sm-2">
                                 <button type="submit" class="btn btn-success" name="action" value="existing">Existing
                                     client <i class="glyphicon glyphicon-user"></i>
                                 </button>

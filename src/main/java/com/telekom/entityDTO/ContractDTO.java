@@ -20,7 +20,25 @@ public class ContractDTO implements Serializable {
     private ClientDTO client;
     private TariffDTO tariff;
     private Set<OptionDTO> options = new HashSet<>();
+    private boolean agentBlock;
+    private boolean blocked;
 
+
+    public boolean isBlocked() {
+        return blocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
+    }
+
+    public boolean isAgentBlock() {
+        return agentBlock;
+    }
+
+    public void setAgentBlock(boolean agentBlock) {
+        this.agentBlock = agentBlock;
+    }
 
     public void addOption(OptionDTO option) {
         this.options.add(option);
@@ -29,9 +47,11 @@ public class ContractDTO implements Serializable {
     public Double getPriceOneTime() {
         return priceOneTime;
     }
+
     public void addPriceOneTime(Double price) {
         this.priceOneTime += price;
     }
+
     public void setPriceOneTime(Double priceOneTime) {
         this.priceOneTime += priceOneTime;
     }
@@ -52,9 +72,11 @@ public class ContractDTO implements Serializable {
     public Double getPrice() {
         return price;
     }
+
     public void addPrice(Double price) {
         this.price += price;
     }
+
     public void setPrice(Double price) {
         this.price = price;
     }

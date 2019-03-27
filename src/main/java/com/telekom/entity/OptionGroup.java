@@ -1,12 +1,13 @@
 package com.telekom.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "option_groups")
-public class OptionGroup {
+public class OptionGroup implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

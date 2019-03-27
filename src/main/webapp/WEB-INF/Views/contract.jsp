@@ -70,7 +70,15 @@
                 <div class="row">
                     <div class="col-sm-1 form-group">
                         <form class="form-group" action="" method="post">
-                            <button type="submit" class="btn btn-danger">Block Sim card</button>
+                            <c:choose>
+                                <c:when test="${contractDTO.blocked==true}">
+                                    <a type="button" href="/existingContract/unblock" class="btn btn-danger">Unblock Sim card</a>
+                                </c:when>
+                            <c:otherwise>
+                                <a type="button" href="/existingContract/block" class="btn btn-danger">Block Sim card</a>
+                            </c:otherwise>
+                            </c:choose>
+
                         </form>
                     </div>
                 </div>

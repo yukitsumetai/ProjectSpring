@@ -8,7 +8,7 @@ import com.telekom.entityDTO.TariffDTO;
 import java.util.List;
 import java.util.Set;
 
-public interface OptionService {
+public interface OptionService extends Pagination {
 
    List<OptionDTO> getAll();
    List<OptionDTO> getAllNoParent();

@@ -10,18 +10,25 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ include file="elements/TopNavBar.jsp" %>
 <%@ include file="elements/SideBar.jsp" %>
+<c:set var="urlPath" value="${requestScope['javax.servlet.forward.request_uri']}"/>
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../resource/assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../resource/dist/js/bootstrap.min.js"></script>
+    <script src="../resource/js/pagination.js"></script>
+    <script src="../resource/js/ComboBox.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
 
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
 
-        <title>Current Clients</title>
-
-    </head>
+    <title>Current Clients</title>
+    <script>
+        $(document).ready(function () {
+            return phoneNumber();
+        });
+    </script>
+</head>
 
 <body>
 
@@ -41,17 +48,14 @@
                     </div>
                     <div class="col-sm-6">
                         <form action="/getUser" method="post">
-                        <div class="search-box" class="col-sm-4">
-                            <i class="material-icons">&#xE8B6;</i>
-                            <input type="text" class="form-control" id="myInput" name="phoneNumber"
-                                   placeholder="Search by phone number&hellip;">
-
-                        </div>
-
-                        <div class="newtariff col-sm-2">
-
+                            <div class="search-box" class="col-sm-4">
+                                <i class="material-icons">&#xE8B6;</i>
+                                <input type="text" class="form-control" id="myInput" name="phoneNumber"
+                                       placeholder="Search by phone number&hellip;">
+                            </div>
+                            <div class="newtariff col-sm-2">
                                 <button type="submit" class="btn btn-success">Find</button>
-                        </div>
+                            </div>
                         </form>
                     </div>
 
@@ -61,10 +65,24 @@
             <form action="/newContract/confirmExisting" method="post" command="contract">
 
                 <%@ include file="tableClients.jsp" %>
+                <c:if test="${urlPath=='/newContract/client'}">
+                <br><br>
+                <div>
+                    <div class="form-group">
+                        <label class="control-label">Select phone number: </label>
+                        <select class="form-control" name="phoneNumber"
+                                id="select1" name="group" onscroll="scrolledPhone(this)" data-live-search="true"
+                                onfocus='this.size=5;' onblur='this.size=1;' onchange='this.size=1;' this.blur();>
+                        </select>
+                        <input type="hidden" id="page" value=1>
+                    </div>
+                </div>
 
                 <div>
                     <button type="submit" class="btn btn-success">Next</button>
                 </div>
+                </c:if>
+
             </form>
 
 
@@ -76,15 +94,15 @@
 <!--Checkbox-->
 <script>
     $('input.chk').on('change', function () {
-        $('input.chk').not(this).prop('checked', false);
-    });
-</script>
-<!--Highlight-->
-<script>
-    $(document).ready(function () {
-        $('td :checkbox').bind('change click', function () {
-            $(this).closest('tr').toggleClass('highlight', this.checked);
-        }).change();
+        var checkboxes = document.getElementsByClassName('chk');
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                checkboxes[i].closest('tr').classList.add("highlight");
+            } else {
+                checkboxes[i].closest('tr').classList.remove("highlight");
+                checkboxes[i].checked=false;
+            }
+        }
     });
 </script>
 

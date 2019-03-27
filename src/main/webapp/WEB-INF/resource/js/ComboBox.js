@@ -21,6 +21,29 @@ function Validate(optId) {
     document.getElementById('page').value = page;
 };
 
+function phoneNumber() {
+    var page = document.getElementById('page').value;
+    $.ajax({
+        url: "/phoneNumbers",
+        data: {
+            page: page
+        },
+        error: function (e) {
+            document.getElementById('page').value = 0;
+        },
+        success: function (data) {
+            $.each(data, function (i, item) {
+                    var addInput = '<option value=' + item.number + '>' + item.number + '</option>';
+                    document.getElementById('select1').insertAdjacentHTML('beforeend', addInput);
+            });
+        }
+    });
+    page++;
+    document.getElementById('page').value = page;
+};
+
+
+
 function Highlight(){
     $('td :checkbox').bind('change click', function () {
         $(this).closest('tr').toggleClass('highlight', this.checked);
@@ -35,6 +58,16 @@ function scrolled(o, optId) {
         }
     }
     scrolled(this);
+}
+
+function scrolledPhone(o) {
+    if (document.getElementById('page').value > 0) {
+        //visible height + pixel scrolled = total height
+        if (o.offsetHeight + o.scrollTop >= o.scrollHeight) {
+           phoneNumber();
+        }
+    }
+    scrolledPhone(this);
 }
 
 function radiobutton(state) {
@@ -233,7 +266,7 @@ function radioBasket(tariffPrice){
 function checksBasket(tariffPrice){
     $('.generated').remove();
     var priceTotal =tariffPrice;
-    var priceTotalOneTime=0;
+    var priceTotalOneTime=0.00;
     var checkboxes = document.getElementsByClassName('myClass1');
     for (var i = 0; i < checkboxes.length; i++) {
         if (checkboxes[i].checked) {

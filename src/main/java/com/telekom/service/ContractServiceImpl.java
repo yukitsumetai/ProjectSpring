@@ -81,8 +81,15 @@ public class ContractServiceImpl implements ContractService {
             if (o.getParent() == null) {
                 boolean flag = true;
                 for (OptionDTO p : options) {
-                    if (p.getId() == o.getId()) flag = false; }
-                if (flag) options.add(o);
+                    if (p.getId() == o.getId()) {
+                        flag = false;
+                        p.setExisting(true);
+                        p.setPriceOneTime(0.00);
+                    } }
+                if (flag)  {
+                    o.setExisting(true);
+                    o.setPriceOneTime(0.00);
+                   options.add(o);}
             }
         }
         return options;
@@ -97,9 +104,17 @@ public class ContractServiceImpl implements ContractService {
                 if (o.getParent() != null) {
                     boolean flag = true;
                     for (OptionDTO c : children) {
-                        if (c.getId() == o.getId()) flag = false;
+                        if (c.getId() == o.getId()){
+                            flag = false;
+                            c.setExisting(true);
+                            c.setPriceOneTime(0.00);
+                        }
                     }
-                    if (flag) children.add(o);
+                    if (flag) {
+                        o.setExisting(true);
+                        o.setPriceOneTime(0.00);
+                        children.add(o);
+                    }
                 }
             }
             return children;
@@ -119,18 +134,28 @@ public class ContractServiceImpl implements ContractService {
 
         @Override
         public void setOptions (ContractDTO contract, List < Integer > id){
-            contract.setOptions(new HashSet<>());
+
+        Set<OptionDTO> temporary = new HashSet<>();
+
             if (id!=null){
                 contract.setPriceOneTime(0.00);
-            for (Integer i : id
-            ) {
+                contract.setPrice(0.00);
+                contract.addPrice(contract.getTariff().getPrice());
+            for (Integer i : id) {
                 OptionDTO tmp = optionService.getOne(i);
                 if (tmp != null) { //0 exist
-                    contract.addOption(tmp);
+                    temporary.add(tmp);
                     contract.addPrice(tmp.getPriceMonthly());
+                    if(contract.getOptions()!=null){
+                        for (OptionDTO op:contract.getOptions()
+                             ) {
+                            if(op.getId()==tmp.getId())tmp.setPriceOneTime(0.00); //if option already existed
+                        }
+                    }
                     contract.addPriceOneTime(tmp.getPriceOneTime());
                 }
             }
+            contract.setOptions(temporary);
         }}
 
         @Override
@@ -242,6 +267,22 @@ public class ContractServiceImpl implements ContractService {
             Contract tmp = contractDao.getOne(n);
             tmp.deleteOption(id);
         }
+    @Override
+    @Transactional
+    public void block(ContractDTO contract){
+        Contract tmp = contractDao.getOne(contract.getPhoneNumberInt());
+       tmp.setBlocked(true);
+       tmp.setAgentBlock(true);
+    }
+    @Override
+    @Transactional
+    public void unblock(ContractDTO contract){
+        Contract tmp = contractDao.getOne(contract.getPhoneNumberInt());
+        tmp.setAgentBlock(false);
+        tmp.setBlocked(false);
+
+    }
+
     }
 
 

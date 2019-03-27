@@ -10,37 +10,30 @@
 
 <div class="card text-success border-success">
     <div class="card-body">
-        <h5 class="card-title">${o.name}<input class="right chk myClass1" right type="checkbox" price="${o.priceMonthly}"
-        <c:if test="${o.id!=e.id}">  priceOneTime="${o.priceOneTime}" </c:if>
+        <h5 class="card-title">${o.name}
+            <input class="right chk myClass1" right type="checkbox" price="${o.priceMonthly}"
         optionName="${o.name}" name="optionID" value="${o.id}"
-        <c:forEach items="${existing}" var="e">
-        <c:if test="${o.id==e.id}"> checked </c:if>
-        </c:forEach>>
+        <c:if test="${o.existing==true}"> checked </c:if> priceOneTime="${o.priceOneTime}">
         </h5>
         <p class="card-text text-success border-success">
         <em>${o.description}</em>
-        <br>
         <p>Monthly price:<span class="right"><b>${o.priceMonthly}$</b></span>
-            <br>One Time price:<span class="right"><b>${o.priceOneTime}$</b></span></p>
+        <c:if test="${o.existing==false}"> <br>One Time price:<span class="right"><b>${o.priceOneTime}$</b></span></c:if></p>
         <div class="children" id="${o.id}" style="display:none">
             <c:forEach items="${children}" var="c">
                 <c:if test="${o.id==c.parent.id}">
                     <br>
-                    <h5 class="card-title">${c.name}<input class="right chk myClass1" right type="checkbox"
-                                                           price="${c.priceMonthly}"
-                    <c:if test="${c.id!=e.id}">  priceOneTime="${c.priceOneTime}" </c:if>
-
-
-
+                    <h5 class="card-title">${c.name}
+                        <input class="right chk myClass1" right type="checkbox" price="${c.priceMonthly}"
+                     priceOneTime="${c.priceOneTime}"
                     optionName="${c.name}" name="optionID" value="${c.id}"
-                    <c:forEach items="${existing}" var="e">
-                    <c:if test="${c.id==e.id}"> checked </c:if>
-                    </c:forEach>></h5>
+                    <c:if test="${c.existing==true}"> checked </c:if>>
+                    </h5>
                     <p class="card-text text-success border-success">
-                        <em>${o.description}</em>
-                        <br>
+                        <em>${c.description}</em>
                     <p>Monthly price:<span class="right"><b>${c.priceMonthly}$</b></span>
-                        <br>One Time price:<span class="right"><b>${c.priceOneTime}$</b></span></p>
+                    <c:if test="${c.existing==false}"> <br>One Time price:<span class="right"><b>${c.priceOneTime}$</b></span> </c:if></p>
+
                 </c:if>
             </c:forEach>
         </div>
