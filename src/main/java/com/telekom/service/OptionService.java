@@ -12,7 +12,9 @@ public interface OptionService {
 
    List<OptionDTO> getAll();
    List<OptionDTO> getAllNoParent();
+   List<OptionDTO> getAllNoParentInvalid(); //includes invalid options for administration
    List<OptionDTO> getAllNoChildrenAndParent();
+   List<OptionDTO> getAllNoChildrenParentInvalid(); //includes invalid options for administration
    Set<OptionDTO> findByTariff(Integer tariffId);
    void add(OptionDTO option);
    OptionDTO getOne(int id);
@@ -25,7 +27,7 @@ public interface OptionService {
    List<OptionDTO> getAllValid();
    void SetOptionGroup(OptionDTO option, Integer groupId);
    List<OptionDTO> getAllNoParentNoGroup();
-   List<OptionDTO> findByTariffChildren(Integer id);
+   Set<OptionDTO> findByTariffChildren(Integer id);
 
 }
 

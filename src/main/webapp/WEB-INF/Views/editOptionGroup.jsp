@@ -35,7 +35,7 @@
         <h1 class="page-header">Tariff administration</h1>
 
         <div id="option data">
-            <form method="post" action="/optionGroups/edit" class="well">
+            <form method="post" action="/optionGroups/edit" >
                 <div class="table-title">
                     <h2>Edit optiongroup details</h2>
                 </div>

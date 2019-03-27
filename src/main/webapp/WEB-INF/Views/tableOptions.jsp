@@ -17,10 +17,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../resource/assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="../resource/dist/js/bootstrap.min.js"></script>
     <script src="../resource/js/pagination.js"></script>
 
 
@@ -83,12 +84,12 @@
                             class="material-icons">&#xE254;</i></a>
                     <c:if test="${o.isValid==true}">
                         <a href="#deleteModal" class="delete" title="Delete" data-toggle="modal"
-                           data-toggle="tooltip" data-target="#deleteModal" data-id="${o.id}"><i
+                          data-target="#deleteModal" data-id="${o.id}"><i
                                 class="material-icons">&#xE872;</i></a>
                     </c:if>
                 </c:when>
                 <c:otherwise>
-                    <input type="checkbox" class="chk" value="${o.id}" price="${o.priceMonthly}" optionName="${o.name}"
+                    <input type="checkbox" class="chk" value="${o.id}" price="${o.priceMonthly}"  priceOneTime="${o.priceOneTime}" optionName="${o.name}"
                            name="optionID"<c:forEach items="${existingOptions}" var="t">
                         <c:if test="${o.id==t.id}"> checked </c:if>
                     </c:forEach>/>&nbsp;

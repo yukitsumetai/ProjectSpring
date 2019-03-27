@@ -10,14 +10,14 @@
 
 <div class="card text-success border-success">
     <div class="card-body">
-        <h5 class="card-title">${o.name}<input class="right chk" right type="checkbox" price="${o.priceMonthly}"
-                                               priceOneTime="${o.priceOneTime}"
-                                               optionName="${o.name}" name="optionID" value="${o.id}"
+        <h5 class="card-title">${o.name}<input class="right chk myClass1" right type="checkbox" price="${o.priceMonthly}"
+        <c:if test="${o.id!=e.id}">  priceOneTime="${o.priceOneTime}" </c:if>
+        optionName="${o.name}" name="optionID" value="${o.id}"
         <c:forEach items="${existing}" var="e">
         <c:if test="${o.id==e.id}"> checked </c:if>
         </c:forEach>>
         </h5>
-        <p class="card-text text-success border-success"">
+        <p class="card-text text-success border-success">
         <em>${o.description}</em>
         <br>
         <p>Monthly price:<span class="right"><b>${o.priceMonthly}$</b></span>
@@ -26,9 +26,13 @@
             <c:forEach items="${children}" var="c">
                 <c:if test="${o.id==c.parent.id}">
                     <br>
-                    <h5 class="card-title">${c.name}<input class="right chk" right type="checkbox"
-                                                           price="${c.priceMonthly}" priceOneTime="${o.priceOneTime}"
-                                                           optionName="${c.name}" name="optionID" value="${c.id}"
+                    <h5 class="card-title">${c.name}<input class="right chk myClass1" right type="checkbox"
+                                                           price="${c.priceMonthly}"
+                    <c:if test="${c.id!=e.id}">  priceOneTime="${c.priceOneTime}" </c:if>
+
+
+
+                    optionName="${c.name}" name="optionID" value="${c.id}"
                     <c:forEach items="${existing}" var="e">
                     <c:if test="${c.id==e.id}"> checked </c:if>
                     </c:forEach>></h5>

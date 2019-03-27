@@ -43,14 +43,16 @@ public class ExistingContractController {
         model.addAttribute("tariffs", contractService.getTariffsForAdd(contract));
         model.addAttribute("table", "add");
         model.addAttribute("NEB", "no");
+        contract.setTariff(null);
+        contract.setOptions(null);
+        contract.setPrice(0.00);
         return "tariffs";
     }
 
     @PostMapping("/tariffs")
-    public String tariffAdd(Model model, ContractDTO contract, @RequestParam(name = "tariffID") Integer id) {
+    public String tariffAdd(ContractDTO contract, @RequestParam(name = "tariffID") Integer id) {
         contract.setOptions(null);
         contractService.setTariff(contract, id);
-        //model.addAttribute(contract);
         return "redirect:/existingContract/confirm/";
     }
 
@@ -72,9 +74,9 @@ public class ExistingContractController {
         if (!(options.size() > 0)) {
             model.addAttribute("message", "No options are available"); //add message
         } else {
-            model.addAttribute("options", contractService.getOptions(contract)); //add existing options!
+            model.addAttribute("options", contractService.getParentsForExisting(contract));
             model.addAttribute("optionGroups", contractService.getGroups(contract));
-            model.addAttribute("children", contractService.getOptionsChildren(contract));
+            model.addAttribute("children", contractService.getChildrenForExisting(contract));
             model.addAttribute("existing", contract.getOptions());
             model.addAttribute("table", "add");
         }
@@ -86,14 +88,5 @@ public class ExistingContractController {
         contractService.setOptions(contract, id);
         return "redirect:/existingContract/confirm/";
     }
-
-    @GetMapping("/optionsDelete/{id}")
-    public String showContract(ContractDTO contract, @PathVariable(value = "id") String id) {
-        Integer n = Integer.valueOf(id);
-        contractService.deleteOption(contract, n);
-
-        return "redirect:/existingContract/" + contract.getPhoneNumber();
-    }
-
 
 }

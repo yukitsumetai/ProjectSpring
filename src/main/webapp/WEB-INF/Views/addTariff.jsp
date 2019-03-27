@@ -36,7 +36,7 @@
         <h1 class="page-header">Tariff administration</h1>
 
         <div id="option data">
-            <form id="simpleForm" action="/tariffs/new" method="post" class="well">
+            <form id="simpleForm" action="/tariffs/new" method="post">
                 <div class="table-title">
                     <h2>Add tariff details</h2>
                 </div>
@@ -78,22 +78,7 @@
 
 </div>
 
-<!-- Valid -->
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#isValid').change(function () {
-            var relation=  document.getElementById('comOptions');
-            if ($(this).is(":checked")) {
-                this.value = true;
-                relation.style.display = "block";
-            } else {this.value = false;
-                relation.style.display = "none";
-            }
 
-
-        });
-    });
-</script>
 <!-- Checkbox options -->
 <script type="text/javascript">
     $(document).ready(function () {

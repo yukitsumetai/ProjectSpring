@@ -35,7 +35,7 @@
         <h1 class="page-header">Tariff administration</h1>
 
         <div id="option data">
-            <form:form method="post" action="/tariffs/edit" modelAttribute="tariff" class="well">
+            <form:form method="post" action="/tariffs/edit" modelAttribute="tariff">
                 <div class="table-title">
                     <h2>Edit tariff details</h2>
                 </div>
@@ -61,12 +61,12 @@
                                 checked disabled
                             </c:if>/>&nbsp;
                 </div>
-                <c:if test="${tariff.isValid==true}">
+
                 <div class="form-group">
                     <label class="control-label">Set/change compatible options: </label>
                     <input type="checkbox" class="chk" name="compatibleOptions" id="options" value=false/>&nbsp;
                 </div>
-                </c:if>
+
                 <div class="form-group">
                     <br>
                     <button type="submit" class="btn btn-success">Change <i

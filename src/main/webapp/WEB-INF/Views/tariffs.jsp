@@ -12,7 +12,8 @@
 
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-
+<%@ include file="elements/TopNavBar.jsp" %>
+<%@ include file="elements/SideBar.jsp" %>
 
 <html lang="en">
 <head>
@@ -23,42 +24,48 @@
     <link href="<c:url value="${contextPath}/resource/dist/css/bootstrap.min.css" />" rel="stylesheet">
     <link href="<c:url value="${contextPath}/resource/css/dashboard.css"/>" rel="stylesheet">
     <title>Tariffs Overview</title>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="${contextPath}/resource/dist/js/bootstrap.min.js"></script>
+    <
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
     <script src="${contextPath}/resource/js/pagination.js"></script>
     <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
 
+    <%-- Modal Script --%>
+    <script>
+        $(document).on('shown.bs.modal', '#deleteModal', function (e) {
+            //get data-id attribute of the clicked element
+            var id = $(e.relatedTarget).data('id');
 
-<script>
-        $(document).ready(function () {
-            $("#myInput").on("keyup", function () {
-                var value = $(this).val().toLowerCase();
-                $("#myTable tr").filter(function () {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
+            //populate the textbox
+            $(e.currentTarget).find('form[id="action"]').val(id);
+            var $form = $('#action');
+            $form.attr('action', '/tariffs/delete/' + id);
         });
     </script>
 </head>
 
 <body>
-<%@ include file="elements/TopNavBar.jsp" %>
+
 <div class="container-fluid">
 
-    <%@ include file="elements/SideBar.jsp" %>
-
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
         <c:choose>
-            <c:when test="${table=='edit'}">
-                <h1 class="page-header">Tariffs</h1>
-            </c:when>
-            <c:when test="${table=='add'}">
-                <h1 class="page-header">New contract</h1>
-            </c:when>
-            <c:otherwise>
-                <h1 class="page-header">Tariffs</h1>
-            </c:otherwise>
+        <c:when test="${table=='edit'}">
+        <h1 class="page-header">Tariffs</h1>
+        </c:when>
+        <c:when test="${table=='add'}">
+        <h1 class="page-header">New contract</h1>
+        </c:when>
+        <c:otherwise>
+        <h1 class="page-header">Tariffs</h1>
+        </c:otherwise>
         </c:choose>
 
         <div class="table-wrapper">
@@ -101,7 +108,7 @@
                     <form action="/existingContract/tariffs" method="post">
                         <%@ include file="tableTariffs.jsp" %>
                         <div>
-                            <button type="submit" class="btn btn-success">Next <i
+                            <button type="submit" class="btn btn-success" id="options" disabled>Next <i
                                     class="glyphicon glyphicon-chevron-right"></i></button>
                         </div>
                     </form>
@@ -110,8 +117,8 @@
                     <form action="/newContract/options" method="post">
                         <%@ include file="tableTariffs.jsp" %>
                         <div>
-                            <button type="submit" class="btn btn-success">Next <i
-                                class="glyphicon glyphicon-chevron-right"></i></button>
+                            <button type="submit" class="btn btn-success" id="options" disabled>Next <i
+                                    class="glyphicon glyphicon-chevron-right"></i></button>
                         </div>
                     </form>
                 </c:when>
@@ -140,12 +147,13 @@
 
 
         </div>
-    </div>
+</div>
 
 </main>
 
 <!-- Modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -156,10 +164,12 @@
             </div>
             <div class="modal-body">
                 Are you sure that you want to delete the tariff?<br>
-                Existing relations with options will be lost.
+                It would not be able to choose it for contracts.
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <form>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                </form>
                 <form id="action" action="">
                     <button type="submit" class="btn btn-success">Yes</button>
                 </form>
@@ -168,19 +178,7 @@
     </div>
 </div>
 
-<%-- Modal Script --%>
-<script>
-    $('#deleteModal').on('show.bs.modal', function (e) {
 
-        //get data-id attribute of the clicked element
-        var id = $(e.relatedTarget).data('id');
-
-        //populate the textbox
-        $(e.currentTarget).find('form[id="action"]').val(id);
-        var $form = $('#action');
-        $form.attr('action', '/tariffs/delete/' + id);
-    });
-</script>
 <%--Modal delete refused--%>
 <c:if test="${refusedDelete=='yes'}">
     <script type="text/javascript">
@@ -211,20 +209,38 @@
                 $('input.chk').not(this).prop('checked', false);
                 var name = this.getAttribute('tariffName');
                 var price = this.getAttribute('price');
-                document.getElementById("tariffName").innerHTML = name;
-                document.getElementById("tariffPrice").innerHTML = "$" + price;
+                //document.getElementById("tariffName").innerHTML = name;
+                // document.getElementById("tariffPrice").innerHTML = "$" + price;
             });
         </script>
     </c:otherwise>
 </c:choose>
 <%-- Highlight clicked --%>
 <script>
-    $(document).ready(function () {
-        $('td :checkbox').bind('change checked', function () {
-            $(this).closest('tr').toggleClass('highlight', this.checked);
-        }).change();
+    $('input.chk').on('change', function () {
+        $('.generated1').remove();
+        var flag=true;
+        var priceTotal;
+        var checkboxes = document.getElementsByClassName('chk');
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                checkboxes[i].closest('tr').classList.add("highlight");
+                var name = checkboxes[i].getAttribute('tariffName');
+                var price = '$' + checkboxes[i].getAttribute('price');
+                priceTotal=parseFloat(checkboxes[i].getAttribute('price'));
+                flag=false;
+                document.getElementById("totalMonthlyPrice").innerHTML = "$" + priceTotal;
+                var newInput = '<li class="generated1">' + name +
+                    '<div class="right">' + price + '</div></li>';
+                document.getElementById('tariffCart').insertAdjacentHTML('beforeend', newInput);
+                document.getElementById('options').disabled=false;
+            } else {
+                checkboxes[i].closest('tr').classList.remove("highlight");
+            }
+        }
+        if (flag)  document.getElementById("totalMonthlyPrice").innerHTML = "$" + 0;
+        if (flag) document.getElementById('options').disabled=true;
     });
 </script>
-
 </body>
 </html>

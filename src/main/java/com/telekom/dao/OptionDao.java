@@ -16,11 +16,10 @@ public interface OptionDao {
     Option getOne(Integer id);
 
     List<Option> getAllValidNoParent();
-
+    List<Option> getAllNoParent();
     List<Option> getAllValidNoChildrenAndParent();
-
+    List<Option> getAllNoChildrenAndParent();
     List<Option> getAllValid();
-
     List<Option> getAllValidNoParentNoGroup();
     List<Option> findByTariffChildren(Integer id);
 

@@ -42,10 +42,14 @@ public class OptionDaoImpl implements OptionDao {
     public List<Option> getAllValidNoParent() {
         return entityManager.createQuery("select t from Option t  where t.isValid=true and t.id not in(select t from Option t join t.parent)").getResultList();
     }
+    @Override
+    public List<Option> getAllNoParent() {
+        return entityManager.createQuery("select t from Option t  where t.id not in(select t from Option t join t.parent)").getResultList();
+    }
 
     @Override
     public List<Option> getAllValidNoParentNoGroup() {
-        return entityManager.createQuery("select t from Option t  where t.isValid=true and t.id not in(select t from Option t join t.parent) and t.id not in(select t from Option t join t.group)").getResultList();
+        return entityManager.createQuery("select t from Option t where t.id not in(select t from Option t join t.parent) and t.id not in(select t from Option t join t.group)").getResultList();
     }
 
     @Override
@@ -53,6 +57,10 @@ public class OptionDaoImpl implements OptionDao {
         return entityManager.createQuery("select t from Option t  where t.isValid=true and t.id not in(select t from Option t join t.children) and t.id not in(select t from Option t join t.parent)").getResultList();
     }
 
+    @Override
+    public List<Option> getAllNoChildrenAndParent() {
+        return entityManager.createQuery("select t from Option t  where t.id not in(select t from Option t join t.children) and t.id not in(select t from Option t join t.parent)").getResultList();
+    }
 
     @Override
     public List<Option> findByTariffParents(Integer id) {

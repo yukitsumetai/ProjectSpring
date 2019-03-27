@@ -122,7 +122,6 @@ public class TariffServiceImpl implements TariffService {
     @Transactional
     public void deleteTariff(Integer id) {
         Tariff tariff = tariffDao.getOne(id);
-        tariff.setOptions(new HashSet<>());
         tariff.setIsValid(false);
     }
 

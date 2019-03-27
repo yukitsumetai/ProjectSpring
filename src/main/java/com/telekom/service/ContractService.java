@@ -32,5 +32,8 @@ public interface ContractService {
 
     Set<OptionDTO> getOptions(ContractDTO contract);
 
-    List<OptionDTO> getOptionsChildren(ContractDTO contract);
+   Set<OptionDTO> getOptionsChildren(ContractDTO contract);
+
+    Set<OptionDTO> getParentsForExisting(ContractDTO contract);
+    Set<OptionDTO> getChildrenForExisting(ContractDTO contract);
 }

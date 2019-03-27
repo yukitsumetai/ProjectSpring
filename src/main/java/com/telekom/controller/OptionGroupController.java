@@ -32,7 +32,7 @@ public class OptionGroupController {
         if (!validity) optionGroup.setIsValid(false);
         if(options){
             model.addAttribute("table", "optionGroupAdd");
-            model.addAttribute("options", optionService.getAllNoParentNoGroup());
+            model.addAttribute("options", optionService.getAllNoParentNoGroup()); //including invalid
             return "options";
         }
         optionGroupService.add(optionGroup);
@@ -71,7 +71,7 @@ public class OptionGroupController {
         return "redirect:/optionGroups";
     }
 
-    @PostMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteOptionGroup(@PathVariable(value = "id") Integer id) {
         optionGroupService.deleteOptionGroup(id);
         return "redirect:/optionGroups";

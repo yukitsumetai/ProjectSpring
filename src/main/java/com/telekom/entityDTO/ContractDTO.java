@@ -29,7 +29,9 @@ public class ContractDTO implements Serializable {
     public Double getPriceOneTime() {
         return priceOneTime;
     }
-
+    public void addPriceOneTime(Double price) {
+        this.priceOneTime += price;
+    }
     public void setPriceOneTime(Double priceOneTime) {
         this.priceOneTime += priceOneTime;
     }
@@ -50,9 +52,11 @@ public class ContractDTO implements Serializable {
     public Double getPrice() {
         return price;
     }
-
-    public void setPrice(Double price) {
+    public void addPrice(Double price) {
         this.price += price;
+    }
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public ClientDTO getClient() {

@@ -10,19 +10,6 @@ Primary style
 Modules - reusable parts of our design
 
 -------------------------------- */
-.cd-container {
-    /* this class is used to horizontally align the gallery of items */
-    position: relative;
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-.cd-container::after {
-    /* clearfix */
-    content: '';
-    display: table;
-    clear: both;
-}
 
 .cd-img-replace {
     /* replace text with a background-image */
@@ -30,12 +17,14 @@ Modules - reusable parts of our design
     overflow: hidden;
     text-indent: 100%;
     white-space: nowrap;
+    padding: 15px;
+    top: -17px;
 }
 
 
 
 #cd-cart-trigger {
-    top: 0px;
+    top: -20px;
     height: 100%;
 }
  #cd-cart-trigger a {
@@ -66,6 +55,7 @@ Modules - reusable parts of our design
     height: 100%;
     width: 200px;
     /* header height */
+    padding-top: 50px;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
@@ -80,16 +70,11 @@ Modules - reusable parts of our design
     #main-nav, #cd-cart {
         width: 20%;
         /* header height has changed */
+        padding-top: 80px;
     }
 }
 
-#main-nav {
-    left: -100%;
-    background: #FFF;
-    -webkit-transition: left 0.3s;
-    -moz-transition: left 0.3s;
-    transition: left 0.3s;
-}
+
 #main-nav.speed-in {
     left: 0;
 }
@@ -103,7 +88,7 @@ Modules - reusable parts of our design
 
 #cd-cart {
     right: -100%;
-    background: #FFF;
+    background: #e8ffd8;
     -webkit-transition: right 0.3s;
     -moz-transition: right 0.3s;
     transition: right 0.3s;
@@ -133,7 +118,7 @@ Modules - reusable parts of our design
     border-bottom: 1px solid #e0e6ef;
 }
 #cd-cart .cd-qty, #cd-cart .cd-price {
-    color: #a5aebc;
+    color: #4eb265;
 }
 #cd-cart .cd-price {
     margin-top: .4em;
@@ -212,39 +197,6 @@ xgallery
 
 
 
-#cd-gallery-items li {
-    margin-bottom: 1.5em;
-}
-#cd-gallery-items li img {
-    width: 100%;
-    display: block;
-    border-radius: 0.25em;
-}
-@media only screen and (min-width: 768px) {
-    #cd-gallery-items li {
-        width: 48%;
-        float: left;
-        margin-bottom: 2em;
-        margin-right: 4%;
-    }
-    #cd-gallery-items li:nth-child(2n) {
-        margin-right: 0;
-    }
-}
-@media only screen and (min-width: 1200px) {
-    #cd-gallery-items li {
-        width: 31%;
-        float: left;
-        margin-bottom: 2.5em;
-        margin-right: 3.5%;
-    }
-    #cd-gallery-items li:nth-child(2n) {
-        margin-right: 3.5%;
-    }
-    #cd-gallery-items li:nth-child(3n) {
-        margin-right: 0;
-    }
-}
 
 #cd-shadow-layer {
     position: fixed;

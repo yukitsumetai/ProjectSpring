@@ -36,7 +36,7 @@
         <h1 class="page-header">Option Groups administration</h1>
 
         <div id="option data">
-            <form:form id="simpleForm" action="/optionGroups/new" method="post" modelAttribute="optionGroup" class="well">
+            <form:form id="simpleForm" action="/optionGroups/new" method="post" modelAttribute="optionGroup">
                 <div class="table-title">
                     <h2>Add option group details</h2>
                 </div>
@@ -50,7 +50,8 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">Validity: </label>
-                    <input type="checkbox" class="chk"  name="isValid" id="isValid" value=true checked/><span class="description2"> (Invalid option groups cannot include options)</span>
+                    <input type="checkbox" class="chk" name="isValid" id="isValid" value=true checked/><span
+                        class="description2"> (Invalid option groups cannot include options)</span>
                 </div>
 
 
@@ -77,15 +78,16 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('#isValid').change(function () {
-            var relation=  document.getElementById('comOptions');
+            var relation = document.getElementById('comOptions');
             if ($(this).is(":checked")) {
                 this.value = true;
                 relation.style.display = "block";
-            } else {this.value = false;
+                $("#comOptions :input").attr("disabled", false);
+            } else {
+                this.value = false;
                 relation.style.display = "none";
+                $("#comOptions :input").attr("disabled", true);
             }
-
-
         });
     });
 </script>

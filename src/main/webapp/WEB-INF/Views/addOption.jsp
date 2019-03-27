@@ -68,8 +68,7 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">Validity: </label>
-                    <input type="checkbox" class="chk" name="isValid" id="isValid" value=true checked/><span
-                        class="description2"> (Invalid options cannot have relations)</span>
+                    <input type="checkbox" class="chk" name="isValid" id="isValid" value=true checked/>
                 </div>
                 <input type="hidden" name="relation" id="relation" value="alone"/>
 
@@ -86,12 +85,12 @@
                                    autocomplete="off"
                                    checked> Stand alone
                         </label>
-                        <label class="btn btn-secondary">
+                        <label class="btn btn-success">
                             <input type="radio" class="radio" name="options" value="parent" id="option2"
                                    autocomplete="off">
                             Has parent
                         </label>
-                        <label class="btn btn-secondary">
+                        <label class="btn btn-success">
                             <input type="radio" class="radio" name="options" value="children" id="option3"
                                    autocomplete="off"> Has children
                         </label>
@@ -125,21 +124,6 @@
 
 </div>
 
-<!-- Valid -->
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#isValid').change(function () {
-            var relation = document.getElementById('comTariffs');
-            if ($(this).is(":checked")) {
-                this.value = true;
-                relation.style.display = "block";
-            } else {
-                this.value = false;
-                relation.style.display = "none";
-            }
-        });
-    });
-</script>
 
 <!-- Checkbox tariffs -->
 <script type="text/javascript">

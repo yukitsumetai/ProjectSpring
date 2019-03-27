@@ -35,8 +35,20 @@
     </div>
 </div>
 <div class="row">
+    <div class="col-sm-8 form-group">
+        <label><b>TARRIFF</b> </label>
+    </div>
+    <div class="col-sm-4 form-group price" color=" #a5aebc">
+        <c:if test="${table!='add'}">
+            <a href=" /existingContract/tariffChange" class="edit" data-toggle="modal"
+               data-target="#changeTariff" id="editIcon" title="Change Tariff"><i
+                    class="material-icons">&#xE254;</i></a>
+        </c:if>
+    </div>
+</div>
+<div class="row">
     <div class="col-sm-4 form-group">
-        <label>Tariff: </label> ${contractDTO.tariff.name}<br>
+        ${contractDTO.tariff.name}<br>
         <div class="row description">
             ${contractDTO.tariff.description}
         </div>
@@ -46,19 +58,24 @@
 
         $${contractDTO.tariff.price}
     </div>
+
+</div>
+<div class="row">
+    <div class="col-sm-8 form-group">
+        <label><b>OPTIONS</b> </label>
+    </div>
     <div class="col-sm-4 form-group price" color=" #a5aebc">
-    <c:if test="${table!='add'}">
-            <a href=" /existingContract/tariffChange" class="edit" data-toggle="modal"
-               data-target="#changeTariff" id="editIcon" title="Edit"><i
-                    class="material-icons">&#xE254;</i></a>
-    </c:if>
+        <c:if test="${table!='add'}">
+            <a href="/existingContract/options" class="add" id="editIcon" title="Edit Options">
+                <i class="material-icons">&#xE254;</i>
+            </a>
+        </c:if>
     </div>
 </div>
-
 <c:forEach items="${contractDTO.options}" var="option">
             <div class="row">
                 <div class="col-sm-4 form-group">
-                    <label>Options: </label> ${option.name}<br>
+                    ${option.name}<br>
                     <div class="row description">
                             ${option.description}
                     </div>
@@ -72,12 +89,6 @@
                         <c:when test="${table=='add'}">
                             $${option.priceOneTime}
                         </c:when>
-                        <c:otherwise>
-                            <a href="/existingContract/optionsDelete/${option.id}" name="delete" id="deleteIcon"
-                               title="Delete">
-                                <i class="material-icons">&#xE872;</i>
-                            </a>
-                        </c:otherwise>
                     </c:choose>
                 </div>
             </div>
@@ -95,11 +106,6 @@
             <c:when test="${table=='add'}">
                 <b>$${contractDTO.priceOneTime}</b>
             </c:when>
-            <c:otherwise>
-                <a href="/existingContract/options" class="add" id="addIcon" title="Add Options">
-                    <i class="material-icons">&#xe854;</i>
-                </a>
-            </c:otherwise>
         </c:choose>
     </div>
 </div>

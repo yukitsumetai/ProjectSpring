@@ -45,11 +45,11 @@
 </head>
 <body>
 <div class="container-fluid">
-    <main class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
         <h1 class="page-header">Option administration</h1>
 
         <div id="option data">
-            <form id="optionForm" action="/options/edit" method="post" class="well">
+            <form id="optionForm" action="/options/edit" method="post">
                 <div class="table-title">
                     <h2>Edit option details</h2>
                 </div>
@@ -76,12 +76,11 @@
                     <label class="control-label">Validity: </label>
                     <input type="checkbox" class="chk" name="isValid" id="isValid" value=true
                             <c:if test="${option.isValid==true}">
-                                checked disabled
-                            </c:if>
-                    /><span class="description2"> (Invalid options cannot have relations)</span>
+                                checked
+                            </c:if>/>
                 </div>
                 <input type="hidden" name="relation" id="relation" value="nothing"/>
-                <c:if test="${option.isValid==true}">
+
                     <div id="table-wrapper">
                         <div class="table-title">
                             <h2>Set relation with existing tariffs/options</h2>
@@ -94,23 +93,22 @@
                         Children:${fn:length(option.children)}
                     </div>
 
-
                     <div class="btn-group btn-group-toggle btn-success" data-toggle="buttons">
 
-                        <label class="btn btn-secondary active">
+                        <label class="btn  btn-success active">
                             <input type="radio" class="radio" name="options" value="nothing" id="option0"
                                    autocomplete="off"> Do nothing
                         </label>
-                        <label class="btn btn-secondary">
+                        <label class="btn  btn-success">
                             <input type="radio" class="radio" name="options" value="alone" id="option1"
                                    autocomplete="off"> Set stand alone
                         </label>
-                        <label class="btn btn-secondary">
+                        <label class="btn  btn-success">
                             <input type="radio" class="radio" name="options" value="parent" id="option2"
                                    autocomplete="off" >
                             Change/set parent
                         </label>
-                        <label class="btn btn-secondary">
+                        <label class="btn  btn-success">
                             <input type="radio" class="radio" name="options" value="children" id="option3"
                                    autocomplete="off"> Change/set children
                         </label>
@@ -134,8 +132,6 @@
                         <label class="control-label">Change compatible tariffs: </label>
                         <input type="checkbox" class="chk2" name="tariffs" id="tariffs" value="false"/>&nbsp;
                     </div>
-                </c:if>
-
                 <div class="form-group">
                     <button type="submit" class="btn btn-success"
                             onclick="return Validate()">Next

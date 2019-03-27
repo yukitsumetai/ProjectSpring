@@ -30,20 +30,8 @@ public class Contract implements Serializable {
     Set<Option> options= new HashSet<>();
 
 
-    @OneToMany(mappedBy="contract")
-    Set<Condition> conditions = new HashSet<>();
-
     private Double price;
 
-
-
-    public Set<Condition> getConditions() {
-        return conditions;
-    }
-
-    public void setConditions(Set<Condition> conditions) {
-        this.conditions = conditions;
-    }
 
     public void deleteOption(Integer id) {
         this.options.removeIf(st -> st.getId() == id);

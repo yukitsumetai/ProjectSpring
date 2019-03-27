@@ -35,6 +35,11 @@ public class OptionController {
         return "addOption";
     }
 
+    private void tariffPageNew(Model model) {
+        model.addAttribute("table", "option");
+        model.addAttribute("tariffs", tariffService.getAll());
+    }
+
     @PostMapping("/new")
     public String newOptionAdd(Model model, OptionDTO option, @RequestParam(name = "opt", required = false) List<Integer> tariffs,
                                @RequestParam(name = "isValid", required = false) boolean validity,
@@ -42,15 +47,14 @@ public class OptionController {
         if (!validity) option.setIsValid(false);
         optionService.SetOptionGroup(option, groupId);
         if (!relation.equals("alone")) {
-            if (relation.equals("parent")) model.addAttribute("options", optionService.getAllNoParent());
-            else model.addAttribute("options", optionService.getAllNoChildrenAndParent());
+            if (relation.equals("parent")) model.addAttribute("options", optionService.getAllNoParentInvalid());
+            else model.addAttribute("options", optionService.getAllNoChildrenParentInvalid());
             model.addAttribute("relation", relation);
             model.addAttribute("tariff", tariff);
             return "optionsRelations";
         }
         if (tariff) {
-            model.addAttribute("table", "option");
-            model.addAttribute("tariffs", tariffService.getAllValid());
+            tariffPageNew(model);
             return "tariffs";
         }
         optionService.add(option);
@@ -61,21 +65,21 @@ public class OptionController {
     public String newOptionParent(Model model, OptionDTO option, @RequestParam(name = "optionID", required = false) Integer id, @RequestParam(name = "action") boolean tariff) {
         optionService.SetParent(option, id);
         if (tariff) {
-            model.addAttribute("table", "option");
-            model.addAttribute("tariffs", tariffService.getAllValid());
+            tariffPageNew(model);
             return "tariffs";
         }
         optionService.add(option);
         return "redirect:/options";
     }
 
+
+
     @PostMapping("/new/children")
     public String newOptionChildren(Model model, OptionDTO option, @RequestParam(name = "optionID", required = false) List<Integer> id,
                                     @RequestParam(name = "action") boolean tariff) {
        optionService.SetChildren(option, id);
         if (tariff) {
-            model.addAttribute("table", "option");
-            model.addAttribute("tariffs", tariffService.getAll());
+            tariffPageNew(model);
             return "tariffs";
         }
         optionService.add(option);
@@ -97,12 +101,18 @@ public class OptionController {
         return "editOption";
     }
 
+    private void tariffPage(Model model, OptionDTO option) {
+        model.addAttribute("table", "optionEdit");
+        model.addAttribute("tariffs", tariffService.getAll());
+        model.addAttribute("existingTariffs", option.getCompatibleTariffs());
+    }
+
     @PostMapping("/edit")
-    public String editOption(Model model, @ModelAttribute(value = "option") OptionDTO option,
+    public String editOption(Model model, @ModelAttribute(value = "option") OptionDTO option,  @RequestParam(name = "isValid", required = false) boolean validity,
                              @RequestParam(name = "relation") String relation, @RequestParam(name = "group", required = false) Integer groupId,
                              @RequestParam(name = "tariffs", required = false) boolean tariff) {
 
-
+        if (!validity) option.setIsValid(false);
        optionService.SetOptionGroup(option, groupId);
         if (!relation.equals("nothing")) {
             if (relation.equals("alone")) {
@@ -111,13 +121,13 @@ public class OptionController {
                 List<OptionDTO> all = new ArrayList<>();
                 Set<OptionDTO> existing = new HashSet<>();
                 if (relation.equals("parent")) {
-                    all = optionService.getAllNoParent();
+                    all = optionService.getAllNoParentInvalid();
                     model.addAttribute("options", all);
                     existing.add(option.getParent());// to show on FE
 
                 } else {
                     existing = option.getChildren();
-                    all = optionService.getAllNoChildrenAndParent();
+                    all = optionService.getAllNoChildrenParentInvalid();
                     all.addAll(existing);
                 }
                 model.addAttribute("relation", relation);
@@ -148,11 +158,7 @@ public class OptionController {
         return "redirect:/options";
     }
 
-    private void tariffPage(Model model, OptionDTO option) {
-        model.addAttribute("table", "optionEdit");
-        model.addAttribute("tariffs", tariffService.getAllValid());
-        model.addAttribute("existingTariffs", option.getCompatibleTariffs());
-    }
+
 
     @PostMapping("/edit/children")
     public String existingOptionChildren(Model model, @ModelAttribute(value = "option") OptionDTO option, @RequestParam(name = "optionID", required = false) List<Integer> id,
@@ -179,7 +185,4 @@ public class OptionController {
         optionService.deleteOption(id);
         return "redirect:/options";
     }
-
-
-
 }

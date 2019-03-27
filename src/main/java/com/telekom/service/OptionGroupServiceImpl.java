@@ -125,9 +125,7 @@ public class OptionGroupServiceImpl implements OptionGroupService {
             for (Option o : options
             ) {
                 Option tmp = optionDao.getOne(o.getId());
-                if (tmp != null) {
                     tmp.setGroup(null);
-                }
             }
         }
     }

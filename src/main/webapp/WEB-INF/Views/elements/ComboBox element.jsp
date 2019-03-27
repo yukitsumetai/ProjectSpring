@@ -18,14 +18,20 @@
         </div>
         <ul class="list-group  list-group-flush">
             <li class="list-group-item text-white bg-success">
-                <b>None</b><input class="right radio" type="radio" name="optionID" value=0><br>
+                <b>None</b><input class="right radio" type="radio" name="${og.name}" value=0 checked><br>
             </li>
             <c:forEach items="${og.options}" var="o">
                 <c:forEach items="${options}" var="o2">
                     <c:if test="${o.id==o2.id}">
                         <li class="list-group-item text-white bg-success">
-                            <b>${o2.name}</b><input class="right radio" type="radio" price="${o.priceMonthly}" class="radio"
-                                                    optionName="${o.name}" priceOneTime="${o.priceOneTime}" name="optionID" value="${o2.id}"
+                            <b>${o2.name}</b><input class="right radio myClass" type="radio" price="${o2.priceMonthly}"
+
+                        <c:forEach items="${existing}" var="e">
+                        <c:if test="${o2.id==e.id}"> checked </c:if>
+                        </c:forEach>
+
+
+                                                    optionName="${o2.name}" priceOneTime="${o2.priceOneTime}" name="${og.name}" value="${o2.id}"
                         <c:forEach items="${existing}" var="e">
                         <c:if test="${o2.id==e.id}"> checked </c:if>
                         </c:forEach>><br>
@@ -37,9 +43,9 @@
                                 <c:forEach items="${children}" var="c">
                                     <c:if test="${o.id==c.parent.id}">
                                         <br>
-                                        <h5 class="card-title">${c.name}<input class="right chk" right type="checkbox"
+                                        <h5 class="card-title">${c.name}<input class="right chk myClass1" right type="checkbox"
                                                                                price="${c.priceMonthly}"
-                                                                               priceOneTime="${o.priceOneTime}"
+                                                                               priceOneTime="${c.priceOneTime}"
                                                                                optionName="${c.name}" name="optionID"
                                                                                value="${c.id}"
                                         <c:forEach items="${existing}" var="e">
@@ -62,3 +68,13 @@
     </div>
 </div>
 
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("input[type='button']").click(function(){
+            var radioValue = $("input[name='gender']:checked").val();
+            if(radioValue){
+                alert("Your are a - " + radioValue);
+            }
+        });
+    });
+</script>

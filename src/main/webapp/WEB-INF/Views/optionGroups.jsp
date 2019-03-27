@@ -21,14 +21,13 @@
 
     <link rel="icon" href="${contextPath}/resource/images/favicon1.png">
     <!-- Bootstrap core CSS -->
-    <link href="${contextPath}/resource/dist/css/bootstrap.min.css" />" rel="stylesheet">
-    <link href="${contextPath}/resource/css/dashboard.css"/>" rel="stylesheet">
-    <title>Tariffs Overview</title>
+    <link href="${contextPath}/resource/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${contextPath}/resource/css/dashboard.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../resource/assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="${contextPath}/resource/dist/js/bootstrap.min.js"></script>
-    <script src="${contextPath}/resource/js/pagination.js"></script>
-    <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
 
 
     <script>
@@ -39,6 +38,17 @@
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
+        });
+    </script>
+    <%-- Modal Script --%>
+    <script>
+        $(document).on('shown.bs.modal', '#deleteModal', function (e) {
+            //get data-id attribute of the clicked element
+            var id = $(e.relatedTarget).data('id');
+            //populate the textbox
+            $(e.currentTarget).find('form[id="action"]').val(id);
+            var $form = $('#action');
+            $form.attr('action', '/optionGroups/delete/' + id);
         });
     </script>
 </head>
@@ -81,10 +91,7 @@
                     <th>Description</th>
                     <th>Compatible Options</th>
                     <th>Validity</th>
-
-
                     <th>Actions</th>
-
                 </tr>
                 </thead>
                 <tbody id="myTable">
@@ -93,8 +100,6 @@
                         <td>${optionGroup.name}</td>
                         <td>${optionGroup.description}</td>
                         <td>
-                            <a href="/optionGroups/optionList/${optionGroup.id}" class="add" title="View options"><i
-                                    class="material-icons">&#xE8f4;</i></a>
                             <c:forEach items="${optionGroup.options}" var="option">
                                 <li>${option.name}</li>
                             </c:forEach>
@@ -105,8 +110,7 @@
                             <a href="/optionGroups/edit/${optionGroup.id}" class="edit" title="Edit"><i
                                     class="material-icons">&#xE254;</i></a>
                             <c:if test="${optionGroup.isValid==true}">
-                                <a href="#deleteModal" class="delete" title="Delete" data-toggle="modal"
-                                   data-toggle="tooltip" data-target="#deleteModal" data-id="${optionGroup.id}"><i
+                                <a href="#deleteModal" class="delete" title="Delete" data-toggle="modal" data-target="#deleteModal" data-id="${optionGroup.id}"><i
                                         class="material-icons">&#xE872;</i></a>
                             </c:if>
                         </td>
@@ -118,50 +122,34 @@
                 <div class="hint-text">Showing <b>4</b> out of <b>${fn:length(optionGroups)}</b> entries</div>
                 <ul class="pagination pagination-lg pager" id="pagination"></ul>
             </div>
-
         </div>
-    </div>
-</div>
+        <!-- Modal -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Delete Tariff</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure that you want to delete the option group?<br>
+                        Existing relations with options will be lost.
+                    </div>
+                    <div class="modal-footer">
+                        <form> <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                        </form>
 
-
-<!-- Modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Delete Tariff</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Are you sure that you want to delete the option group?<br>
-                Existing relations with options will be lost.
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                <form id="action" action="">
-                    <button type="submit" class="btn btn-primary">Yes</button>
-                </form>
+                        <form id="action" action="">
+                            <button type="submit" class="btn btn-success">Yes</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-<%-- Modal Script --%>
-<script>
-    $('#deleteModal').on('show.bs.modal', function (e) {
-
-        //get data-id attribute of the clicked element
-        var id = $(e.relatedTarget).data('id');
-
-        //populate the textbox
-        $(e.currentTarget).find('form[id="action"]').val(id);
-        var $form = $('#action');
-        $form.attr('action', '/optionGroups/delete/' + id);
-    });
-</script>
-
+    </main>
 <!--Pagination-->
 <script>
     $(document).ready(function () {
