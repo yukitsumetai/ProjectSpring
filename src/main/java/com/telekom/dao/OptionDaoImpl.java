@@ -3,7 +3,6 @@ package com.telekom.dao;
 
 import com.telekom.entity.Option;
 import com.telekom.entity.PhoneNumber;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 

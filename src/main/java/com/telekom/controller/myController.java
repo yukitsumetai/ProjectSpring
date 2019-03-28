@@ -27,7 +27,7 @@ public class myController {
     @GetMapping("/view")
     public String view(@RequestParam(value = "name", required = false, defaultValue = "stranger ") String name, Model model) {
         model.addAttribute("msg", "Hello " + name);
-        return "index";
+        return "login";
     }
 
     @GetMapping("/existingContract/search")
@@ -44,7 +44,7 @@ public class myController {
 
     @RequestMapping(value = "/view", params = "Customer", method = RequestMethod.POST)
     public String action1() {
-        return "index";
+        return "login";
     }
 
     @RequestMapping(value = "/view", params = "Shop", method = RequestMethod.POST)

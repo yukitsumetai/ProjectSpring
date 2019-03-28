@@ -57,16 +57,16 @@
                             <p class="lead">We make your life easier</p> <p class="lead">
                         </div>
                         <!-- Login Form -->
-                        <form>
+                        <form action="login/process" metod="post">
                             <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
                             <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
                             <input type="submit" class="fadeIn fourth" value="Log In">
                         </form>
 
-                        <!-- Remind Passowrd -->
+                        <!-- Remind Passowrd
                         <div id="formFooter">
                             <a class="underlineHover" href="#">Forgot Password?</a>
-                        </div>
+                        </div>-->
 
                     </div>
                 </div>
