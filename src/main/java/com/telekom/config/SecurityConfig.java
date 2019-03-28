@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+
 @Configuration
 @EnableWebSecurity
 @ComponentScan("com.telekom.entity")
@@ -20,17 +21,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/login").anonymous()
-                .antMatchers("/tariffs", "/options").authenticated()
+                .antMatchers("/tariffs", "/options", "/users", "/optionGroups", "/newContract" , "/existingContract").authenticated()
                 .and().csrf().disable()
                 .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/login/process")
-                .usernameParameter("login")
+                .defaultSuccessUrl("/tariffs", true)
+                .failureUrl("/login?error=true")
+                .usernameParameter("login").passwordParameter("password").permitAll()
                 .and().logout();
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(authProvider);
     }
 }

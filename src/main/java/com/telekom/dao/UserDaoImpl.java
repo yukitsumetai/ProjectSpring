@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.math.BigInteger;
 
 @Repository
 @Component
@@ -30,7 +31,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User getByLogin(String login) {
+    public User getByLogin(BigInteger login) {
         TypedQuery<User> q = entityManager.createQuery(
                 "select t from User t join t.contract t2 where t2.phoneNumber=:login", User.class
         );

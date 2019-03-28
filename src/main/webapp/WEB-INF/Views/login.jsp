@@ -1,5 +1,6 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="urlPath" value="${requestScope['javax.servlet.forward.request_uri']}"/>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -47,26 +48,30 @@
             </div>
             <div class="inner cover">
 
-                <div class="wrapper fadeInDown">
+                <div class="wrapper  <c:if test="${param.error == false}">fadeInDown </c:if>">
                     <div id="formContent">
                         <!-- Tabs Titles -->
                         <!-- Icon -->
-                        <div class="fadeIn first">
+                        <div class="<c:if test="${param.error == false}">fadeIn first </c:if> ">
                             <br>
                             <h1 class="cover-heading">Spring Line</h1>
                             <p class="lead">We make your life easier</p> <p class="lead">
                         </div>
                         <!-- Login Form -->
-                        <form action="login/process" metod="post">
-                            <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
-                            <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
-                            <input type="submit" class="fadeIn fourth" value="Log In">
+                        <form action="${urlPath}/process" method="post">
+                            <input type="text" id="login" class="<c:if test="${param.error == false}">fadeIn second </c:if>" name="login" placeholder="login">
+                            <input type="text" id="password" class="<c:if test="${param.error == false}">fadeIn third </c:if>" name="password" placeholder="password">
+                            <input type="submit" class="<c:if test="${param.error == false}">fadeIn fourth </c:if>" value="Log In">
                         </form>
 
-                        <!-- Remind Passowrd
+
                         <div id="formFooter">
-                            <a class="underlineHover" href="#">Forgot Password?</a>
-                        </div>-->
+
+                            <c:if test="${param.error == true}">
+                            <p class="underlineHover">Bad credentials</p>
+                        </c:if>
+                           <!-- <a class="underlineHover" href="#">Forgot Password?</a> -->
+                        </div>
 
                     </div>
                 </div>
@@ -75,9 +80,6 @@
             </div>
 
             <div class="mastfoot">
-                <div class="inner">
-                    <p>Website for <a href="http://getbootstrap.com">Bootstrap</a>, by <a href="https://github.com/yukitsumetai/ProjectSpring">@Ekaterina</a>.</p>
-                </div>
             </div>
 
         </div>
