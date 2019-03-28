@@ -8,7 +8,6 @@ import com.telekom.entityDTO.OptionGroupDTO;
 import com.telekom.entityDTO.TariffDTO;
 import com.telekom.mapper.ClientMapper;
 import com.telekom.mapper.ContractMapper;
-import jdk.nashorn.internal.runtime.options.Options;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +40,8 @@ public class ContractServiceImpl implements ContractService {
     private OptionDao optionDao;
     @Autowired
     private TariffDao tariffDao;
-
+    @Autowired
+    private UserDao userDao;
 
     @Override
     @Transactional
@@ -53,7 +53,13 @@ public class ContractServiceImpl implements ContractService {
         if (c == null) {
             c = clientMapper.DtoToEntity(contract.getClient());
             c.setContract(tmp);
+            User user = new User(tmp, contract.getClient().getPassword());
+            c.setUser(user);
             clientDao.add(c);
+        }
+      else {
+            User user = userDao.getOne(c.getUser().getId());
+            user.addContract(tmp);
         }
         contractDao.add(tmp);
         tmp.setClient(c);

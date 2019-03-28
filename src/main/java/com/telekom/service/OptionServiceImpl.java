@@ -92,7 +92,7 @@ public class OptionServiceImpl extends PaginationImpl<OptionDTO> implements Opti
     @Override
     @Transactional
     public Page<OptionDTO> getPage(Integer size, Integer page) {
-        List<OptionDTO> pageGroups =optionDao.getPages(size, page);
+        List<OptionDTO> pageGroups =listEntityToDto(optionDao.getPages(size, page));
         Long total=optionDao.getPagesCount();
         return getPageDraft(pageGroups, total, page, size);
     }

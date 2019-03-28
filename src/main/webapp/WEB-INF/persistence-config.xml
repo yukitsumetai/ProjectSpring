@@ -63,7 +63,7 @@ http://www.springframework.org/schema/security/spring-security.xsd">
             <security:jdbc-user-service
                     data-source-ref="dataSource"
                     users-by-username-query="SELECT
-				login, password, enabled, roles FROM users WHERE login=? " />
+				id, password, enabled, roles FROM users WHERE id=? " />
         </security:authentication-provider>
 
     </security:authentication-manager>

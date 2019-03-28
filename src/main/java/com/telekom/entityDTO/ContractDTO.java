@@ -61,8 +61,7 @@ public class ContractDTO implements Serializable {
     }
 
     public BigInteger getPhoneNumberInt() {
-        BigInteger n = new BigInteger(this.getPhoneNumber());
-        return n;
+        return new BigInteger(this.getPhoneNumber());
     }
 
     public void setPhoneNumber(String phoneNumber) {

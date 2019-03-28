@@ -35,8 +35,7 @@ public class ContractDaoImpl implements ContractDao {
                 "select t from Contract t left join fetch t.options as o where t.phoneNumber=:phoneNumber", Contract.class
         );
         q.setParameter("phoneNumber", phoneNumber);
-        Contract c=q.getResultList().stream().findAny().orElse(null);
-        return c;
+        return q.getResultList().stream().findAny().orElse(null);
 
     }
 

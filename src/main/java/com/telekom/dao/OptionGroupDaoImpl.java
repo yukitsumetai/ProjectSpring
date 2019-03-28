@@ -45,8 +45,7 @@ public class OptionGroupDaoImpl extends PaginationDaoImpl<OptionGroup> implement
     public List<OptionGroup> findByName(String name) {
         TypedQuery<OptionGroup> q= entityManager.createQuery("select o from OptionGroup o where o.name like :name and o.isValid=true", OptionGroup.class);
         q.setParameter("name",  "%"+name+"%");
-        List<OptionGroup> optionGroups=q.getResultList();
-        return optionGroups;
+        return q.getResultList();
     }
 
     @Override
@@ -64,8 +63,7 @@ public class OptionGroupDaoImpl extends PaginationDaoImpl<OptionGroup> implement
     public List<OptionGroup> findByTariff(Integer id) {
         TypedQuery<OptionGroup> q= entityManager.createQuery ("select distinct og from OptionGroup og inner join og.options where og in(select og from OptionGroup og inner join og.options o where o in (select o from Option o inner join o.compatibleTariffs as t where t.id=:id and o.isValid=true) group by og.id having count(og)>1)", OptionGroup.class);
         q.setParameter("id", id);
-        List<OptionGroup> optionGroups=q.getResultList();
-        return optionGroups;
+        return q.getResultList();
     }
 
 }

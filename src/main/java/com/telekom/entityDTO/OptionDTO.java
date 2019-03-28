@@ -1,15 +1,7 @@
 package com.telekom.entityDTO;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 
@@ -45,7 +37,7 @@ public class OptionDTO implements Serializable {
     }
 
     public boolean isExisting() {
-        return existing;
+        return !existing;
     }
 
     public void setExisting(boolean existing) {

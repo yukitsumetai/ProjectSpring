@@ -57,16 +57,7 @@ public class SharedRestController {
         return resultPage;
     }
 
-    @GetMapping(value = "/data")
-    public List<OptionDTO> pageOption2(Model model) {
 
-        Page<OptionDTO> resultPage = optionService.getPage(GROUPS_PER_PAGE, 1);
-        model.addAttribute("phoneNumber", resultPage);
-        if (1 > resultPage.getTotalPages()) {
-            throw new NullPointerException();
-        }
-        return resultPage.getData();
-    }
 
 
     @GetMapping(value = "/search")

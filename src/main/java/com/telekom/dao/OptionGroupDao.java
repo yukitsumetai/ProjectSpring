@@ -10,7 +10,7 @@ public interface OptionGroupDao extends PaginationDao {
     List<OptionGroup> getAllValid();
 
     void add(OptionGroup optionGroup);
-    public List<OptionGroup> findByName(String name);
+    List<OptionGroup> findByName(String name);
     List<OptionGroup> findByTariff(Integer id);
     OptionGroup getOne(Integer id);
     List<OptionGroup> getPages(Integer size, Integer page);

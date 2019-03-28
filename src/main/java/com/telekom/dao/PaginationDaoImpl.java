@@ -27,8 +27,7 @@ public class PaginationDaoImpl< T extends Serializable > {
 
     public Long getPagesCount(){
         Query q = entityManager.createQuery("Select count(f) from"+ clazz.getName()+"f");
-        Long n= (long) q.getSingleResult();
-        return n;
+        return (Long) (long) q.getSingleResult();
     }
 
 }

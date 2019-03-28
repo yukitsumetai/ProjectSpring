@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface OptionDao extends PaginationDao {
 
-    List<Option> getAll();
+    List getAll();
 
     List<Option> findByTariffParents(Integer tariffId);
 
@@ -14,12 +14,12 @@ public interface OptionDao extends PaginationDao {
 
     Option getOne(Integer id);
 
-    List<Option> getAllValidNoParent();
-    List<Option> getAllNoParent();
-    List<Option> getAllValidNoChildrenAndParent();
-    List<Option> getAllNoChildrenAndParent();
-    List<Option> getAllValid();
-    List<Option> getAllValidNoParentNoGroup();
+    List getAllValidNoParent();
+    List getAllNoParent();
+    List getAllValidNoChildrenAndParent();
+    List getAllNoChildrenAndParent();
+    List getAllValid();
+    List getAllValidNoParentNoGroup();
     List<Option> findByTariffChildren(Integer id);
 
 }

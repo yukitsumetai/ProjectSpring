@@ -38,13 +38,15 @@
     <div class="col-sm-8 form-group">
         <label><b>TARRIFF</b> </label>
     </div>
+<c:if test="${contractDTO.blocked==false}">
     <div class="col-sm-4 form-group price" color=" #a5aebc">
         <c:if test="${table!='add'}">
             <a href=" /existingContract/tariffChange" class="edit" data-toggle="modal"
-               data-target="#changeTariff" id="editIcon" title="Change Tariff"  <c:if test="${contractDTO.blocked==true}">disabled</c:if> ><i
+               data-target="#changeTariff" id="editIcon" title="Change Tariff"><i
                     class="material-icons">&#xE254;</i></a>
         </c:if>
     </div>
+</c:if>
 </div>
 <div class="row">
     <div class="col-sm-4 form-group">
@@ -64,13 +66,15 @@
     <div class="col-sm-8 form-group">
         <label><b>OPTIONS</b> </label>
     </div>
+    <c:if test="${contractDTO.blocked==false}">
     <div class="col-sm-4 form-group price" color=" #a5aebc">
         <c:if test="${table!='add'}">
-            <a href="/existingContract/options" class="add" id="editIcon" title="Edit Options"  <c:if test="${contractDTO.blocked==true}">disabled</c:if>>
+            <a href="/existingContract/options" class="add" id="editIcon" title="Edit Options" >
                 <i class="material-icons">&#xE254;</i>
             </a>
         </c:if>
     </div>
+    </c:if>
 </div>
 <c:forEach items="${contractDTO.options}" var="option">
             <div class="row">

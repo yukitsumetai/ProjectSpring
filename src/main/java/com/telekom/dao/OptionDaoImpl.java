@@ -57,16 +57,14 @@ public class OptionDaoImpl extends PaginationDaoImpl<Option> implements OptionDa
     public List<Option> findByTariffParents(Integer id) {
         TypedQuery<Option> q= entityManager.createQuery("select o from Option o  join o.compatibleTariffs as t2 where t2.id=:id and o.isValid=true and o.id not in(select o from Option o join o.parent) ", Option.class);
         q.setParameter("id", id);
-        List<Option> options=q.getResultList();
-        return options;
+        return q.getResultList();
     }
 
     @Override
     public List<Option> findByTariffChildren(Integer id) {
         TypedQuery<Option> q= entityManager.createQuery("select o from Option o  join o.compatibleTariffs as t2 where t2.id=:id and o.isValid=true and o.id in(select o from Option o join o.parent) ", Option.class);
         q.setParameter("id", id);
-        List<Option> options=q.getResultList();
-        return options;
+        return q.getResultList();
     }
 
 
@@ -84,8 +82,7 @@ public class OptionDaoImpl extends PaginationDaoImpl<Option> implements OptionDa
                 "select t from Option t where t.id=:id", Option.class
         );
         q.setParameter("id", id);
-        Option c=q.getResultList().stream().findAny().orElse(null);
-        return c;
+        return q.getResultList().stream().findAny().orElse(null);
 
     }
 

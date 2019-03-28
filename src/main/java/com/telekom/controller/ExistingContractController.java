@@ -29,7 +29,7 @@ public class ExistingContractController {
     OptionService optionService;
 
     @GetMapping("/{id}")
-    public ModelAndView getEditForm(Model model, ContractDTO contract, @PathVariable(value = "id") String id) {
+    public ModelAndView getEditForm(ContractDTO contract, @PathVariable(value = "id") String id) {
         contract = contractService.getOne(id);
         if (contract == null) {
             return new ModelAndView("search", "message", "Contract not found");

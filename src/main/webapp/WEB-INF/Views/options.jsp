@@ -39,11 +39,6 @@
             });
         </script>
         <script>
-            $(document).ready(function () {
-                return optionPagination();
-            });
-        </script>
-        <script>
             $(document).on('shown.bs.modal', '#deleteModal', function (e) {
                 //get data-id attribute of the clicked element
                 var id = $(e.relatedTarget).data('id');

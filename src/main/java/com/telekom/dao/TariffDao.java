@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface TariffDao extends PaginationDao {
 
-    List<Tariff> getAll();
+    List getAll();
 
     List<Tariff> getAllValid();
 

@@ -28,21 +28,6 @@
             crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../resource/assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script>
-        $.getJSON("data").function(data)
-        {
-            var items =[];
-            $.each(data, function(val){
-                items.push("tr");
-                items.push("td >"+val.name+"</td>")
-                items.push("/tr");
-            });
-            $("<tbody/>", {html:items.join("")}).appendto("myTable")
-
-        }
-
-    </script>
-
 </head>
 
 <body>
