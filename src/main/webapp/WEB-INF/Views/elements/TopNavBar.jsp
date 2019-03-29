@@ -7,7 +7,7 @@
 --%>
 
 <!-- navigation Bar -->
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <c:if test="${table=='add'}">
@@ -23,7 +23,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="../../resource/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <link href="../../resource/css/dashboard.css" rel="stylesheet">
 
     <!-- Custom styles for this page -->
     <link href="../../resource/css/dashboard.css" rel="stylesheet">
@@ -35,14 +35,21 @@
 
 
 <nav class="navbar navbar-inverse sticky-top flex-md-nowrap p-0">
-    <a class="navbar-brand col-sm-3">Spring Line</a>
+    <a class=" brand navbar-brand">
+        <img src="../../resource/images/cd-remove-item.svg" width="30" height="30" class="d-inline-block align-top"
+             alt="">
+        Spring Line</a>
 
-        <ul class="nav navbar-nav">
-            <li class="nav-item text-nowrap"><a class="cd-img-replace" href="#0"></a></li>
-            <c:if test="${table=='add'}">
-                <li id="cd-cart-trigger" class="nav-item text-nowrap"><a class="cd-img-replace" href="#0"></a></li>
-            </c:if>
-        </ul><!--end navbar-right -->
+    <div class="navbar-nav mr-auto">
+        <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+    </div>
+    <c:if test="${table=='add'}">
+        <ul class=" my-2 my-lg-0">
+            <li id="cd-cart-trigger" class="nav-item"/><a class="cd-img-replace" href="#0"></a></li>
+        </ul>
+    </c:if>
+
+    <!--end navbar-right -->
 
 </nav>
 

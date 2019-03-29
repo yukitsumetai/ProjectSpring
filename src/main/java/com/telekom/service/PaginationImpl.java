@@ -10,7 +10,7 @@ public class PaginationImpl<T>  {
         Long total=total2;
         Double d = Math.ceil((double) total / (double) size);
         Double lastPage=(total+size)-(d*size);
-        Page<T> page2 = new Page<T>(data, d.intValue(), page, lastPage.intValue());
+        Page<T> page2 = new Page<T>(data,  page, d.intValue(), lastPage.intValue());
         return page2;
     }
 }

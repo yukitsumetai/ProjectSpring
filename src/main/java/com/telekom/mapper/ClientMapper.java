@@ -6,6 +6,8 @@ import com.telekom.entity.Contract;
 import com.telekom.entityDTO.AddressDTO;
 import com.telekom.entityDTO.ClientDTO;
 import com.telekom.entityDTO.ContractDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;
@@ -14,6 +16,8 @@ import java.util.List;
 
 @Component
 public class ClientMapper {
+
+
 
     public ClientDTO EntityToDto(Client t){
         ClientDTO tmp=EntityToDtoWithoutContract(t);
@@ -62,7 +66,6 @@ public class ClientMapper {
         tmp.setPassport(t.getPassport());
         tmp.setBirthday(t.getBirthday());
         tmp.setPassword(t.getPassword());
-        BigInteger number=new BigInteger(t.getPhoneNumber());
         tmp.setEmail(t.getEmail());
         tmp.setAddress(DtoToEntityAddress(t.getAddress()));
         return tmp;

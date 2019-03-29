@@ -48,7 +48,7 @@ public class SharedRestController {
         return resultPage.getData();
     }
 
-    @GetMapping(value = "/optionPages")
+    @GetMapping(value = "/options/optionPages")
     public Page<OptionDTO> pageOption(Model model, @RequestParam Integer page) {
         Page<OptionDTO> resultPage = optionService.getPage(GROUPS_PER_PAGE, page);
         if (page > resultPage.getTotalPages()) {

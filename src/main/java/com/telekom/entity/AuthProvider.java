@@ -8,7 +8,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;
@@ -19,7 +21,8 @@ import java.util.List;
 public class AuthProvider implements AuthenticationProvider {
     @Autowired
     private UserDao userDao;
-
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public AuthProvider() {
         super();
@@ -28,9 +31,9 @@ public class AuthProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         BigInteger login;
-        try{ login = new BigInteger(authentication.getName());}
-        catch (NumberFormatException exception)
-        {
+        try {
+            login = new BigInteger(authentication.getName());
+        } catch (NumberFormatException exception) {
             throw new BadCredentialsException("Bad login");
         }
         User user = userDao.getByLogin(login);
@@ -38,10 +41,11 @@ public class AuthProvider implements AuthenticationProvider {
             throw new UsernameNotFoundException("Bad credentials");
         }
         String password = authentication.getCredentials().toString();
-        if(!password.equals(user.getPassword())){
+        if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new BadCredentialsException("Bad credentials");
         }
         List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(user.getRole().toString()));
         return new UsernamePasswordAuthenticationToken(user, null, authorities);
     }
 

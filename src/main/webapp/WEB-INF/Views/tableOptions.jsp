@@ -35,7 +35,7 @@
     <thead>
     <tr>
         <th>Name</th>
-        <th>One Time Pric</th>
+        <th>One Time Price</th>
         <th >Monthly Price</th>
         <th>Description</th>
         <th>Option
@@ -46,9 +46,6 @@
         <th>Compatible
             Tariffs
         </th>
-        <th>Validity</th>
-
-
         <c:choose>
             <c:when test="${table=='edit'}">
                 <th>Actions</th>
@@ -78,12 +75,10 @@
                 <li>${t.name}</li>
             </c:forEach>
         </td>
-        <td>${o.isValid}</td>
         <td>
             <c:choose>
                 <c:when test="${table=='edit'}">
-                    <a href="/options/edit/${o.id}" class="edit" title="Edit"><i
-                            class="material-icons">&#xE254;</i></a>
+                    <a href='/options/edit/' class='edit' title='Edit'><i class='material-icons'>&#xE254</i></a>
                     <c:if test="${o.isValid==true}">
                         <a href="#deleteModal" class="delete" title="Delete" data-toggle="modal"
                            data-target="#deleteModal" data-id="${o.id}"><i
@@ -105,8 +100,12 @@
     </tbody>
 </table>
 <div class="col-md-12 text-center">
-    <div class="hint-text">Showing <b>4</b> out of <b>${fn:length(options)}</b> entries</div>
-    <ul class="pagination pagination-lg pager" id="pagination"></ul>
+    <div class="hint-text">Showing <b id="current">4</b> out of <b id="total"></b> entries</div>
+    <ul class="pagination" id="pagination">
+
+    </ul>
+    <input type="hidden" id="page" value=1>
+</div>
 </div>
 <!--PaginationDao-->
 <script>
@@ -115,63 +114,6 @@
         $('#myTable').pageMe({pagerSelector: '#pagination', showPrevNext: true, hidePageNumbers: false, perPage: 4});
 
     });
-</script>
-<!--Sort-->
-<script>
-    function sortTable(n) {
-        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-        table = document.getElementById("Table");
-        switching = true;
-        // Set the sorting direction to ascending:
-        dir = "asc";
-        /* Make a loop that will continue until
-        no switching has been done: */
-        while (switching) {
-            // Start by saying: no switching is done:
-            switching = false;
-            rows = table.rows;
-            /* Loop through all table rows (except the
-            first, which contains table headers): */
-            for (i = 1; i < (rows.length - 1); i++) {
-                // Start by saying there should be no switching:
-                shouldSwitch = false;
-                /* Get the two elements you want to compare,
-                one from current row and one from the next: */
-                x = rows[i].getElementsByTagName("TD")[n];
-                y = rows[i + 1].getElementsByTagName("TD")[n];
-                /* Check if the two rows should switch place,
-                based on the direction, asc or desc: */
-                if (dir == "asc") {
-                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                        // If so, mark as a switch and break the loop:
-                        shouldSwitch = true;
-                        break;
-                    }
-                } else if (dir == "desc") {
-                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-                        // If so, mark as a switch and break the loop:
-                        shouldSwitch = true;
-                        break;
-                    }
-                }
-            }
-            if (shouldSwitch) {
-                /* If a switch has been marked, make the switch
-                and mark that a switch has been done: */
-                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                switching = true;
-                // Each time a switch is done, increase this count by 1:
-                switchcount++;
-            } else {
-                /* If no switching has been done AND the direction is "asc",
-                set the direction to "desc" and run the while loop again. */
-                if (switchcount == 0 && dir == "asc") {
-                    dir = "desc";
-                    switching = true;
-                }
-            }
-        }
-    }
 </script>
 <!--Tooltips-->
 <script type="text/javascript">

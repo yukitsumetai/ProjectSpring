@@ -3,6 +3,7 @@ package com.telekom.controller;
 import com.telekom.entityDTO.*;
 import com.telekom.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,14 +16,10 @@ import java.util.Set;
 @Controller
 @SessionAttributes(types = ContractDTO.class)
 @RequestMapping(value = "/newContract")
-
 public class ContractController {
 
     @Autowired
     private TariffService tariffService;
-
-    @Autowired
-    private OptionService optionService;
 
     @Autowired
     private ClientService clientService;

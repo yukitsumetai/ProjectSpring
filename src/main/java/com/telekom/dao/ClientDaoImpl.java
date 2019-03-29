@@ -37,10 +37,17 @@ public class ClientDaoImpl extends PaginationDaoImpl<Client> implements ClientDA
 
     public Client getOne(BigInteger phoneNumber) {
         TypedQuery<Client> q = entityManager.createQuery(
-                "select t from Client t join fetch t.contract  where t in (select t from Client t join t.contract as c where c.phoneNumber=:phoneNumber)", Client.class);
+                "select t from Client t join t.contract  where t in (select t from Client t join t.contract as c where c.phoneNumber=:phoneNumber)", Client.class);
         q.setParameter("phoneNumber", phoneNumber);
         return q.getResultList().stream().findAny().orElse(null);
         //"select t from Client t join fetch t.contract as c  where c.phoneNumber=:phoneNumber"
+    }
+
+    public Client getOne(Long userId) {
+        TypedQuery<Client> q = entityManager.createQuery(
+                "select t from Client t join t.contract join t.user u where u.id=:id", Client.class);
+        q.setParameter("id", userId);
+        return q.getResultList().stream().findAny().orElse(null);
     }
 
     public Client getOne(Integer id) {

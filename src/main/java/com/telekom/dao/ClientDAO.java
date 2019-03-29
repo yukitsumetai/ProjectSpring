@@ -10,5 +10,6 @@ public interface ClientDAO  extends PaginationDao {
     void add(Client client);
     Client getOne(BigInteger n);
     Client getOne(Integer n);
+    Client getOne(Long userId);
 }
 

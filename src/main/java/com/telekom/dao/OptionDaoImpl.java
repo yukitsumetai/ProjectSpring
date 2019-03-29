@@ -95,8 +95,9 @@ public class OptionDaoImpl extends PaginationDaoImpl<Option> implements OptionDa
 
     @Override
     public Long getPagesCount() {
-        TypedQuery<Long> q = entityManager.createQuery("Select count(f) from PhoneNumber f", Long.class);
-        return q.getSingleResult();
+        TypedQuery<Long> q = entityManager.createQuery("Select count(o) from Option o", Long.class);
+        Long c= q.getSingleResult();
+        return c;
     }
 
 

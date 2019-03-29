@@ -36,6 +36,6 @@ public interface ContractService {
 
     Set<OptionDTO> getParentsForExisting(ContractDTO contract);
     Set<OptionDTO> getChildrenForExisting(ContractDTO contract);
-    void block(ContractDTO contract);
-    void unblock(ContractDTO contract);
+    void block(ContractDTO contract, boolean admin);
+    void unblock(ContractDTO contract, boolean admin);
 }

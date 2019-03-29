@@ -55,6 +55,13 @@ public class ClientServiceImpl implements ClientService {
     }
 
 
+    @Transactional
+    public ClientDTO getOne(Long id) {
+        return  clientMapper.EntityToDto(clientDao.getOne(id));
+    }
+
+
+
     public ClientDTO getOne(Integer id) {
         Client tmp=clientDao.getOne(id);
         return clientMapper.EntityToDtoWithoutContract(tmp);

@@ -11,6 +11,7 @@
 <%@ include file="elements/TopNavBar.jsp" %>
 <%@ include file="elements/SideBar.jsp" %>
 <c:set var="urlPath" value="${requestScope['javax.servlet.forward.request_uri']}"/>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 
 <html>
 <head>
@@ -59,7 +60,7 @@
                         </form>
                     </div>
                     <div class="col-sm-1 form-group price">
-                        <form class="form-group" action="/users">
+                        <form class="form-group" action="/welcome">
                             <button type="submit" class="btn btn-danger">Cancel <i
                                     class="glyphicon glyphicon-ban-circle"></i></button>
                         </form>
@@ -68,18 +69,31 @@
             </c:when>
             <c:otherwise>
                 <div class="row">
-                    <div class="col-sm-1 form-group">
-                        <form class="form-group" action="" method="post">
+                    <div class="form-group">
+
                             <c:choose>
                                 <c:when test="${contractDTO.blocked==true}">
-                                    <a type="button" href="/existingContract/unblock" class="btn btn-danger">Unblock Sim card</a>
+                                <form class="form-group" action="/existingContract/unblock" method="get">
+                                    <button type="submit" class="btn btn-danger"
+                                                <c:if test="${contractDTO.agentBlock==true}">
+                                                    <security:authorize access="hasRole('ROLE_USER')">
+                                                    disabled
+                                                    </security:authorize>
+                                                </c:if>
+                                    >Unblock Sim card</button>
+                                    <c:if test="${contractDTO.agentBlock==true}">
+                                        <security:authorize access="hasRole('ROLE_USER')">
+                                         <p class="description2"> You should contact shop agent to unblock sim-card</p>
+                                        </security:authorize>
+                                    </c:if>
+                                </form>
                                 </c:when>
                             <c:otherwise>
                                 <a type="button" href="/existingContract/block" class="btn btn-danger">Block Sim card</a>
                             </c:otherwise>
                             </c:choose>
 
-                        </form>
+
                     </div>
                 </div>
             </c:otherwise>

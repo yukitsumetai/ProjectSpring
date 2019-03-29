@@ -2,7 +2,9 @@ package com.telekom.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -22,12 +24,26 @@ public class User implements Serializable {
     private List<Contract> contract = new ArrayList<>();
     private String password;
 
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     public User() {
     }
 
     public User(Contract contract, String password) {
         this.contract.add(contract);
         this.password = password;
+        this.role = Role.ROLE_USER;
+    }
+
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public List<Contract> getContract() {
@@ -37,6 +53,7 @@ public class User implements Serializable {
     public void addContract(Contract contract) {
         this.contract.add(contract);
     }
+
     public void setContract(List<Contract> contract) {
         this.contract = contract;
     }

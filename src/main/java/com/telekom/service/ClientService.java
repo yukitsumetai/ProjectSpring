@@ -13,5 +13,6 @@ public interface ClientService {
 
     ClientDTO getOne(String number);
     ClientDTO getOne(Integer number);
+    ClientDTO getOne(Long id);
 }
 

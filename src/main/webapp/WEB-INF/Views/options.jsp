@@ -24,7 +24,7 @@
     <!DOCTYPE html>
     <html lang="en">
     <head>
-        <input type="hidden" id="page" value=1>
+
         <title>Options Overview</title>
 
         <!--Search-->
@@ -47,6 +47,12 @@
                 $(e.currentTarget).find('form[id="action"]').val(id);
                 var $form = $('#action');
                 $form.attr('action', '/options/delete/' + id);
+            });
+        </script>
+        <script>
+            $(document).ready(function () {
+                if (!('hasCodeRunBefore' in localStorage)){
+                return optionPagination(1);}
             });
         </script>
     </head>

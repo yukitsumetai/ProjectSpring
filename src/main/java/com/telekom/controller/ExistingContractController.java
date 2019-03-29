@@ -7,13 +7,19 @@ import com.telekom.entityDTO.ContractDTO;
 import com.telekom.entityDTO.OptionDTO;
 import com.telekom.service.ContractService;
 import com.telekom.service.OptionService;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -28,8 +34,12 @@ public class ExistingContractController {
     @Autowired
     OptionService optionService;
 
+
     @GetMapping("/{id}")
     public ModelAndView getEditForm(ContractDTO contract, @PathVariable(value = "id") String id) {
+
+
+
         contract = contractService.getOne(id);
         if (contract == null) {
             return new ModelAndView("search", "message", "Contract not found");
@@ -37,7 +47,7 @@ public class ExistingContractController {
         return new ModelAndView("contract", "contractDTO", contract);
     }
 
-
+    @PreAuthorize("contractDTO.blocked == false")
     @GetMapping("/tariffs")
     public String tariffChoose(Model model, ContractDTO contract) {
         model.addAttribute("tariffs", contractService.getTariffsForAdd(contract));
@@ -53,7 +63,7 @@ public class ExistingContractController {
     public String tariffAdd(ContractDTO contract, @RequestParam(name = "tariffID") Integer id) {
         contract.setOptions(null);
         contractService.setTariff(contract, id);
-        return "redirect:/existingContract/confirm/";
+        return "redirect:/existingContract/confirm";
     }
 
     @GetMapping("/confirm")
@@ -86,19 +96,27 @@ public class ExistingContractController {
     @PostMapping("/options")
     public String addOptions(ContractDTO contract, @RequestParam(name = "optionID", required = false) List<Integer> id) {
         contractService.setOptions(contract, id);
-        return "redirect:/existingContract/confirm/";
+        return "redirect:/existingContract/confirm";
     }
 
     @GetMapping("/block")
-    public String block(ContractDTO contract) {
-        contractService.block(contract);
-        return "redirect:/existingContract/confirm/";
+    public String block(Model model, ContractDTO contract, HttpServletRequest request) {
+       boolean admin=false;
+        if (request.isUserInRole("ADMIN")) {
+          admin=true;
+        }
+        contractService.block(contract, admin);
+        return "redirect:/existingContract/" + contract.getPhoneNumber();
     }
 
     @GetMapping("/unblock")
-    public String unblock(ContractDTO contract) {
-        contractService.unblock(contract);
-        return "redirect:/existingContract/confirm/";
+    public String unblock(ContractDTO contract, HttpServletRequest request) {
+        boolean admin=false;
+        if (request.isUserInRole("ADMIN")) {
+            admin=true;
+        }
+        contractService.unblock(contract, admin);
+        return "redirect:/existingContract/" + contract.getPhoneNumber();
     }
 
 
