@@ -7,6 +7,7 @@ import com.telekom.dao.TariffDao;
 import com.telekom.entity.Option;
 import com.telekom.entity.Tariff;
 import com.telekom.entityDTO.OptionDTO;
+import com.telekom.entityDTO.Page;
 import com.telekom.entityDTO.TariffDTO;
 import com.telekom.mapper.TariffMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,15 +21,13 @@ import java.util.Set;
 
 
 @Service
-public class TariffServiceImpl implements TariffService {
+public class TariffServiceImpl extends PaginationImpl<TariffDTO> implements TariffService {
 
 
     @Autowired
     private TariffDao tariffDao;
     @Autowired
     private OptionDao optionDao;
-    @Autowired
-    private ContractDao contractDao;
 
     @Autowired
     private TariffMapper tariffMapper;
@@ -48,14 +47,11 @@ public class TariffServiceImpl implements TariffService {
     @Transactional
     public List<TariffDTO> getAll() {
 
-        List<Tariff> tariffs = tariffDao.getAll();
-        List<TariffDTO> tariffsDTO = new ArrayList<>();
-        for (Tariff t : tariffs) {
+        List<TariffDTO> tariffsDTO = listEntityToDto(tariffDao.getAll());
 
-            tariffsDTO.add(tariffMapper.EntityToDto(t));
-        }
-        return listEntityToDto( tariffs);
+        return tariffsDTO;
     }
+
 
     @Override
     @Transactional
@@ -125,7 +121,28 @@ public class TariffServiceImpl implements TariffService {
         tariff.setIsValid(false);
     }
 
+    @Override
+    @Transactional
+    public Page<TariffDTO> getPage(Integer size, Integer page) {
+        List<TariffDTO> pageGroups =listEntityToDto(tariffDao.getPages(size, page));
+        Long total=tariffDao.getPagesCount();
+        return getPageDraft(pageGroups, total, page, size);
+    }
 
+    @Override
+    @Transactional
+    public Page<TariffDTO> getPage(Integer size, Integer page, Integer optionId) {
+        List<TariffDTO> pageGroups =listEntityToDto(tariffDao.getPages(size, page));
+        Set<Tariff> existing =optionDao.getOne(optionId).getCompatibleTariffs();
+        for (Tariff i:existing) {
+            for (TariffDTO o:pageGroups
+            ) {
+                if(o.getId()==i.getId()) o.setExisting(true);
+            }
+        }
+        Long total=tariffDao.getPagesCount();
+        return getPageDraft(pageGroups, total, page, size);
+    }
 
 
 }

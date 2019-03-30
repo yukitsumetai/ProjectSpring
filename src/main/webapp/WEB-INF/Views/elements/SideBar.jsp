@@ -34,8 +34,7 @@
         </h6>
         <ul class="nav nav-sidebar">
             <li class="nav-item"><a href="${contextPath}/newContract/tariffs">New Contract</a></li>
-            <li class="nav-item"><a href="${contextPath}/existingContract/search">Existing Contract</a></li>
-            <li class="nav-item"><a href="${contextPath}/users/">Customers</a></li>
+            <li class="nav-item"><a href="${contextPath}/users/">Existing Customers</a></li>
         </ul>
         </security:authorize>
         <security:authorize access="hasRole('ROLE_USER')">

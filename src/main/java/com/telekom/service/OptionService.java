@@ -3,6 +3,7 @@ package com.telekom.service;
 import com.telekom.entity.Client;
 import com.telekom.entity.Option;
 import com.telekom.entityDTO.OptionDTO;
+import com.telekom.entityDTO.Page;
 import com.telekom.entityDTO.TariffDTO;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.Set;
 public interface OptionService extends Pagination {
 
    List<OptionDTO> getAll();
+   List<OptionDTO> getAll(TariffDTO tariff);
    List<OptionDTO> getAllNoParent();
    List<OptionDTO> getAllNoParentInvalid(); //includes invalid options for administration
    List<OptionDTO> getAllNoChildrenAndParent();
@@ -28,6 +30,6 @@ public interface OptionService extends Pagination {
    void SetOptionGroup(OptionDTO option, Integer groupId);
    List<OptionDTO> getAllNoParentNoGroup();
    Set<OptionDTO> findByTariffChildren(Integer id);
-
+   Page<OptionDTO> getPage(Integer size, Integer page, Integer tariffId);
 }
 

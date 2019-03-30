@@ -53,6 +53,22 @@ public class OptionServiceImpl extends PaginationImpl<OptionDTO> implements Opti
     }
 
     @Override
+    public List<OptionDTO> getAll(TariffDTO tariff) {
+
+        List<OptionDTO> options = listEntityToDto(optionDao.getAll());
+        for (OptionDTO o:options
+             ) {
+            for (OptionDTO e:tariff.getOptions()
+                 ) {
+                if(o.getId()==e.getId()){
+                    o.setExisting(true);
+                }
+            }
+        }
+        return options;
+    }
+
+    @Override
     public List<OptionDTO> getAllValid() {
 
         List<Option> options = optionDao.getAllValid();
@@ -93,6 +109,22 @@ public class OptionServiceImpl extends PaginationImpl<OptionDTO> implements Opti
     @Transactional
     public Page<OptionDTO> getPage(Integer size, Integer page) {
         List<OptionDTO> pageGroups =listEntityToDto(optionDao.getPages(size, page));
+        Long total=optionDao.getPagesCount();
+        return getPageDraft(pageGroups, total, page, size);
+    }
+
+    @Override
+    @Transactional
+    public Page<OptionDTO> getPage(Integer size, Integer page, Integer tariffId) {
+        List<OptionDTO> pageGroups =listEntityToDto(optionDao.getPages(size, page));
+        Set<Option> existing =tariffDao.getOne(tariffId).getOptions();
+        for (Option i:existing
+             ) {
+            for (OptionDTO o:pageGroups
+                 ) {
+                if(o.getId()==i.getId()) o.setExisting(true);
+            }
+        }
         Long total=optionDao.getPagesCount();
         return getPageDraft(pageGroups, total, page, size);
     }

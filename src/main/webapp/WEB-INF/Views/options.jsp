@@ -27,34 +27,7 @@
 
         <title>Options Overview</title>
 
-        <!--Search-->
-        <script>
-            $(document).ready(function () {
-                $("#myInput").on("keyup", function () {
-                    var value = $(this).val().toLowerCase();
-                    $("#myTable tr").filter(function () {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    });
-                });
-            });
-        </script>
-        <script>
-            $(document).on('shown.bs.modal', '#deleteModal', function (e) {
-                //get data-id attribute of the clicked element
-                var id = $(e.relatedTarget).data('id');
 
-                //populate the textbox
-                $(e.currentTarget).find('form[id="action"]').val(id);
-                var $form = $('#action');
-                $form.attr('action', '/options/delete/' + id);
-            });
-        </script>
-        <script>
-            $(document).ready(function () {
-                if (!('hasCodeRunBefore' in localStorage)){
-                return optionPagination(1);}
-            });
-        </script>
     </head>
 
 <body>
@@ -72,7 +45,7 @@
                 <h1 class="page-header">New contract</h1>
             </c:when>
             <c:otherwise>
-                <h2>New contract</h2>
+                <h1 class="page-header">Options</h1>
             </c:otherwise>
         </c:choose>
 
@@ -80,7 +53,7 @@
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-7">
                         <c:choose>
                             <c:when test="${table=='edit'}">
                                 <h2>Options administration</h2>
@@ -90,23 +63,22 @@
                             </c:otherwise>
                         </c:choose>
                     </div>
-                    <div class="col-sm-6">
-
-                        <div class="search-box">
+                    <div class="col-sm-5">
+                        <div class="row right">
+                        <div class="search-box col-sm-8">
                             <i class="material-icons">&#xE8B6;</i>
                             <input type="text" class="form-control" id="myInput" placeholder="Search&hellip;">
                         </div>
-                        <div class="newtariff">
 
-                            <c:if test="${table=='edit'}">
+                        <c:if test="${table=='edit'}">
+                            <div class="right col-sm-1">
                                 <form action="/options/new">
-                                    <button type="submit" class="btn btn-success">Add Option</button>
+                                    <button type="submit" class="btn btn-success ">Add Option</button>
                                 </form>
+                            </div>
                             </c:if>
-
                         </div>
                     </div>
-
                 </div>
             </div>
 
@@ -174,7 +146,54 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+    $('input.chk').on('change', function () {
+        var checkboxes = document.getElementsByClassName('chk');
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) checkboxes[i].closest('tr').classList.add("highlight");
+            else checkboxes[i].closest('tr').classList.remove("highlight");
+        }
+    })
+    });
+</script>
+<!--Search-->
+<script>
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+<!--Modal-->
+<script>
+    $(document).on('shown.bs.modal', '#deleteModal', function (e) {
+        //get data-id attribute of the clicked element
+        var id = $(e.relatedTarget).data('id');
 
+        $(e.currentTarget).find('form[id="action"]').val(id);
+        var $form = $('#action');
+        $form.attr('action', '/options/delete/' + id);
+    });
+</script>
+<!--initial pagination-->
+<script>
+    $(document).ready(function () {
+        var curr = document.getElementById('page').value;
+        if(curr==0){
+            var table;
+            <c:if test="${table=='edit'}">
+            var table=1;
+            </c:if>
+            var id="${id}"
+            if (!('hasCodeRunBefore' in localStorage)){
+                return optionPagination(0, 1, table, id);}}
+        document.getElementById('page').value = 1;
+    });
+</script>
 
 
 </body>

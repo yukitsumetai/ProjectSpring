@@ -34,8 +34,6 @@ public class TariffController {
                                @RequestParam(name = "compatibleOptions", required = false) boolean options) {
         if (!validity) tariff.setIsValid(false);
         if (options) {
-            model.addAttribute("table", "tariffAdd");
-            model.addAttribute("options", optionService.getAll());
             return "options";
         }
         tariffService.add(tariff);
@@ -60,9 +58,8 @@ public class TariffController {
     @PostMapping("/edit")
     public String editProduct(Model model, @ModelAttribute(value = "tariff") TariffDTO tariff, @RequestParam(name = "compatibleOptions", required = false) boolean options) {
         if (options) {
-            model.addAttribute("table", "tariffEdit");
-            model.addAttribute("existingOptions", tariff.getOptions());
-            model.addAttribute("options", optionService.getAll());
+            model.addAttribute("id", tariff.getId());
+            //model.addAttribute("options", optionService.getAll(tariff));
             return "options";
         }
         tariffService.editTariff(tariff);

@@ -179,24 +179,6 @@
 </div>
 
 
-<%--Modal delete refused--%>
-<c:if test="${refusedDelete=='yes'}">
-    <script type="text/javascript">
-        $(window).on('load', function () {
-            $('#deleteRefusedModal').modal('show');
-        });
-    </script>
-</c:if>
-
-<%--Alert--%>
-<script type="text/javascript">
-    function validate() {
-        if (document.getElementById('tariffID').checked) {
-        } else {
-            alert("You didn't choose any tariff!");
-        }
-    }
-</script>
 <!--Cart checkboxes-->
 <c:choose>
     <c:when test="${table=='option'}">
@@ -236,6 +218,21 @@
         }
         if (flag)  document.getElementById("totalMonthlyPrice").innerHTML = "$" + 0;
         if (flag) document.getElementById('options').disabled=true;
+    });
+</script>
+<!--initial pagination-->
+<script>
+    $(document).ready(function () {
+        var curr = document.getElementById('page').value;
+        if(curr==0){
+            var table;
+            <c:if test="${table=='edit'}">
+            var table=1;
+            </c:if>
+            var id="${id}"
+            if (!('hasCodeRunBefore' in localStorage)){
+                return optionPagination(1, 1, table, id);}}
+        document.getElementById('page').value = 1;
     });
 </script>
 </body>

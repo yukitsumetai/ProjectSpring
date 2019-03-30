@@ -91,7 +91,6 @@ public class myController {
     }
     @GetMapping("/options")
     public String getOptions(Model model) throws SQLException {
-        model.addAttribute("options", optionService.getAll());
         model.addAttribute("table", "edit");
         return "options";
     }

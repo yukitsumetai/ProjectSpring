@@ -36,7 +36,7 @@
     <tr>
         <th>Name</th>
         <th>One Time Price</th>
-        <th >Monthly Price</th>
+        <th>Monthly Price</th>
         <th>Description</th>
         <th>Option
             Group
@@ -57,45 +57,8 @@
     </tr>
     </thead>
     <tbody id="myTable">
-    <c:forEach items="${options}" var="o">
-    <tr>
-        <td>${o.name}</td>
-        <td>${o.priceOneTime}</td>
-        <td>${o.priceMonthly}</td>
-        <td>${o.description}</td>
-        <td>${o.optionGroup.name}</td>
-        <td>${o.parent.name}</td>
-        <td>
-            <c:forEach items="${o.children}" var="t">
-                <li>${t.name}</li>
-            </c:forEach>
-        </td>
-        <td>
-            <c:forEach items="${o.compatibleTariffs}" var="t">
-                <li>${t.name}</li>
-            </c:forEach>
-        </td>
-        <td>
-            <c:choose>
-                <c:when test="${table=='edit'}">
-                    <a href='/options/edit/' class='edit' title='Edit'><i class='material-icons'>&#xE254</i></a>
-                    <c:if test="${o.isValid==true}">
-                        <a href="#deleteModal" class="delete" title="Delete" data-toggle="modal"
-                           data-target="#deleteModal" data-id="${o.id}"><i
-                                class="material-icons">&#xE872;</i></a>
-                    </c:if>
-                </c:when>
-                <c:otherwise>
-                    <input type="checkbox" class="chk" value="${o.id}" price="${o.priceMonthly}"
-                           priceOneTime="${o.priceOneTime}" optionName="${o.name}"
-                           name="optionID"<c:forEach items="${existingOptions}" var="t">
-                        <c:if test="${o.id==t.id}"> checked </c:if>
-                    </c:forEach>/>&nbsp;
-                </c:otherwise>
-            </c:choose>
-        </td>
 
-        </c:forEach>
+
 
     </tbody>
 </table>
@@ -104,23 +67,10 @@
     <ul class="pagination" id="pagination">
 
     </ul>
-    <input type="hidden" id="page" value=1>
+    <input type="hidden" id="page" value=0>
 </div>
 </div>
-<!--PaginationDao-->
-<script>
-    $(document).ready(function () {
 
-        $('#myTable').pageMe({pagerSelector: '#pagination', showPrevNext: true, hidePageNumbers: false, perPage: 4});
-
-    });
-</script>
-<!--Tooltips-->
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-    });
-</script>
 
 </body>
 

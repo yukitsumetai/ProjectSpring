@@ -1,6 +1,7 @@
 package com.telekom.service;
 
 import com.telekom.entity.OptionGroup;
+import com.telekom.entityDTO.OptionDTO;
 import com.telekom.entityDTO.OptionGroupDTO;
 import com.telekom.entityDTO.Page;
 
@@ -18,4 +19,5 @@ public interface OptionGroupService extends Pagination{
     Page<OptionGroupDTO> getPage(Integer size, Integer page);
     List<OptionGroupDTO> getByName(String name);
     Set<OptionGroupDTO> findByTariff(Integer id);
+
 }

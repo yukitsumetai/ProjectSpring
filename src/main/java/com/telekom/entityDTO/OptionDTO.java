@@ -37,7 +37,7 @@ public class OptionDTO implements Serializable {
     }
 
     public boolean isExisting() {
-        return !existing;
+        return existing;
     }
 
     public void setExisting(boolean existing) {

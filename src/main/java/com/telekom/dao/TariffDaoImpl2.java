@@ -43,5 +43,20 @@ public class TariffDaoImpl2 extends PaginationDaoImpl<Tariff> implements TariffD
 
     }
 
+    @Override
+    public List<Tariff> getPages(Integer size, Integer page) {
+        TypedQuery<Tariff> q = entityManager.createQuery("select t from Tariff t", Tariff.class);
+        pageCount(page, size, q);
+        return q.getResultList();
+    }
+
+    @Override
+    public Long getPagesCount() {
+        TypedQuery<Long> q = entityManager.createQuery("Select count(o) from Tariff o", Long.class);
+        Long c= q.getSingleResult();
+        return c;
+    }
+
+
 
 }

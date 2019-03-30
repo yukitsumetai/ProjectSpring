@@ -176,7 +176,7 @@
 
 .search-box {
     position: relative;
-    float: right;
+
 }
 
 .newtariff {
@@ -266,24 +266,27 @@ table.table td i {
 }
 
 .pagination li a {
-    border: none;
+    border: 5px;
     font-size: 95%;
     width: 30px;
     height: 30px;
     color: #999;
     margin: 0 2px;
     line-height: 30px;
-    border-radius: 30px !important;
+    border-radius: 30px;
     text-align: center;
     padding: 0;
 }
 
-.pagination li a:hover {
+.pagination li button:hover {
     color: #666;
 }
 
 .pagination li.active a {
     background: #4eb265;
+}
+.pagination li.active button {
+    background: #bc4b49;
 }
 
 .pagination li.inactive a {

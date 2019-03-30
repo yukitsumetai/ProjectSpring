@@ -105,8 +105,10 @@
 
 
 <div class="col-md-12 text-center">
-    <div class="hint-text">Showing <b>4</b> out of <b>${fn:length(tariffs)}</b> entries</div>
-    <ul class="pagination pagination-lg pager" id="pagination"></ul>
+    <div class="hint-text">Showing <b id="current">4</b> out of <b id="total"></b> entries</div>
+    <ul class="pagination" id="pagination">
+    </ul>
+    <input type="hidden" id="page" value=0>
 </div>
 
 
