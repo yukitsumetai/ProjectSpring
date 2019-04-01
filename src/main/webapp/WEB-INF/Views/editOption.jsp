@@ -59,17 +59,26 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">One Time Price</label>
-                    <input id="priceOneTime" value="${option.priceOneTime}" type="number" name="priceOneTime"
-                           class="form-control" disabled/>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">$</span>
+                        </div>
+                        <input id="priceOneTime" type="number" value="${option.priceOneTime}" step="0.01" name="priceOneTime" class="form-control" required/>
+                    </div>
+
                 </div>
                 <div class="form-group">
                     <label class="control-label">Monthly Price</label>
-                    <input id="priceMonthly" value="${option.priceMonthly}" type="number" name="priceMonthly"
-                           class="form-control" disabled/>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">$</span>
+                        </div>
+                        <input id="priceMonthly" type="number" value="${option.priceMonthly}" step="0.01" name="priceMonthly" class="form-control" required/>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Description</label>
-                    <textarea row="4" id="Description" type="text" name="Description"
+                    <textarea row="4" id="Description" type="text" name="Description" maxlength="200"
                               class="form-control">${option.description}</textarea>
                 </div>
                 <div class="form-group">

@@ -22,7 +22,6 @@
     <!--Search-->
     <script>
         $(document).ready(function () {
-            sortTable();
             $('[data-toggle="tooltip"]').tooltip();
             $('#myTable').pageMe({pagerSelector: '#pagination', showPrevNext: true, hidePageNumbers: false, perPage: 4});
             $("#myInput").on("keyup", function () {
@@ -44,11 +43,7 @@
         <th onclick="sortTable(0)">Name<i class="fa fa-sort"></i></th>
         <th onclick="sortTable(1)">Price<i class="fa fa-sort"></i></th>
         <th>Description</th>
-        <c:if test="${table=='edit'}">
-            <th>Compatible Options</th>
-
-            <th>Validity</th>
-        </c:if>
+        <th>Compatible Options</th>
         <c:choose>
             <c:when test="${table=='edit'}">
                 <th>Actions</th>
@@ -60,56 +55,29 @@
     </tr>
     </thead>
     <tbody id="myTable">
-    <c:forEach items="${tariffs}" var="tariff">
-        <tr class="tableRow">
-            <td>${tariff.name}</td>
-            <td>${tariff.price}</td>
-            <td>${tariff.description}</td>
-            <c:if test="${table=='edit'}">
-                <td>
-                    <a href="/tariffs/optionList/${tariff.id}" class="add" title="View options"><i
-                            class="material-icons">&#xE8f4;</i></a>
-                    <c:forEach items="${tariff.options}" var="option">
-                        <li>${option.name}</li>
-                    </c:forEach>
-                </td>
-                <td>${tariff.isValid}</td>
-            </c:if>
-            <td>
-                <c:choose>
-                    <c:when test="${table=='edit'}">
-                        <a href="/tariffs/edit/${tariff.id}" class="edit" title="Edit"><i
-                                class="material-icons">&#xE254;</i></a>
-                        <c:if test="${tariff.isValid==true}">
-                            <a href="#deleteModal" class="delete" title="Delete" data-toggle="modal"
-                              data-target="#deleteModal" data-id="${tariff.id}"><i
-                                    class="material-icons">&#xE872;</i></a>
-                        </c:if>
-                    </c:when>
-                    <c:otherwise>
-                        <input type="checkbox" class="chk" tariffName="${tariff.name}" price="${tariff.price}"
-                               value="${tariff.id}" name="tariffID" id="${tariff.id}"
-                        <c:forEach items="${existingTariffs}" var="t">
-                            <c:if test="${tariff.id==t.id}"> checked </c:if>
-                        </c:forEach>
-                        />&nbsp;
-                    </c:otherwise>
-                </c:choose>
-
-
-            </td>
-        </tr>
-    </c:forEach>
     </tbody>
 </table>
-
-
+<div id="checked">
+<c:forEach items="${existing}" var="e">
+    <input name="tariffID2" class="opt2" value=${e.id}>
+</c:forEach>
+</div>
 <div class="col-md-12 text-center">
-    <div class="hint-text">Showing <b id="current">4</b> out of <b id="total"></b> entries</div>
+    <div class="hint-text">Showing <b id="current"></b> out of <b id="total"></b> entries</div>
     <ul class="pagination" id="pagination">
     </ul>
-    <input type="hidden" id="page" value=0>
-</div>
 
+</div>
+<!--highlight-->
+<script>
+
+    $(document).on('click', '.chk', function() {
+        var checkboxes = document.getElementsByClassName('chk');
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) checkboxes[i].closest('tr').classList.add("highlight");
+            else checkboxes[i].closest('tr').classList.remove("highlight");
+        }
+    });
+</script>
 
 </body>

@@ -1,5 +1,8 @@
 package com.telekom.entityDTO;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -11,13 +14,14 @@ import java.util.Set;
 public class TariffDTO implements Serializable {
 
     private int id;
+    @Size(max = 60)
     private String name;
+    @Min(0)
     private double price;
+    @Size(max = 200)
     private String description;
     private Set<OptionDTO> options = new HashSet<>();
-    private BigInteger phoneNumber;
-   private boolean isValid;
-    private Set<OptionGroupDTO> optionGroups = new HashSet<>();
+    private boolean isValid;
     private boolean existing;
 
 
@@ -29,17 +33,6 @@ public class TariffDTO implements Serializable {
         this.existing = existing;
     }
 
-    public void addOptionGroup(OptionGroupDTO optionGroup) {
-        this.optionGroups.add(optionGroup);
-    }
-
-    public Set<OptionGroupDTO> getOptionGroups() {
-        return optionGroups;
-    }
-
-    public void setOptionGroups(Set<OptionGroupDTO> optionGroups) {
-        this.optionGroups = optionGroups;
-    }
 
     public boolean isIsValid() {
         return isValid;
@@ -47,14 +40,6 @@ public class TariffDTO implements Serializable {
 
     public void setIsValid(boolean valid) {
         isValid = valid;
-    }
-
-    public BigInteger getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(BigInteger phoneNumber) {
-        this.phoneNumber = phoneNumber;
     }
 
     public Set<OptionDTO> getOptions() {

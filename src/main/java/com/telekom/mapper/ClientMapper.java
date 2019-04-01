@@ -40,7 +40,6 @@ public class ClientMapper {
         tmp.setPassport(t.getPassport());
         tmp.setEmail(t.getEmail());
         tmp.setBirthday(t.getBirthday());
-        tmp.setPassword(t.getPassword());
         tmp.setAddress(EntityToDtoAddress(t.getAddress()));
         return tmp;
     }
@@ -65,7 +64,6 @@ public class ClientMapper {
         tmp.setSurname(t.getSurname());
         tmp.setPassport(t.getPassport());
         tmp.setBirthday(t.getBirthday());
-        tmp.setPassword(t.getPassword());
         tmp.setEmail(t.getEmail());
         tmp.setAddress(DtoToEntityAddress(t.getAddress()));
         return tmp;

@@ -95,9 +95,7 @@ public class OptionGroupServiceImpl extends PaginationImpl<OptionGroupDTO> imple
             for (OptionDTO o : options
             ) {
                 Option tmp = optionDao.getOne(o.getId());
-                if (tmp != null) {
-                    if (tmp.isValid()) tmp.setGroup(t);
-                }
+                if (tmp != null) { tmp.setGroup(t); }
             }
         }
     }

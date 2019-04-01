@@ -18,7 +18,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="${contextPath}/resource/dist/js/bootstrap.min.js"></script>
-    <script src="../resource/js/pagination.js"></script>
     <script src="../resource/js/Pagination2.js"></script>
 
     <!DOCTYPE html>
@@ -65,13 +64,13 @@
                     </div>
                     <div class="col-sm-5">
                         <div class="row right">
-                        <div class="search-box col-sm-8">
+                        <div class="search-box">
                             <i class="material-icons">&#xE8B6;</i>
                             <input type="text" class="form-control" id="myInput" placeholder="Search&hellip;">
                         </div>
 
                         <c:if test="${table=='edit'}">
-                            <div class="right col-sm-1">
+                            <div class="newtariff">
                                 <form action="/options/new">
                                     <button type="submit" class="btn btn-success ">Add Option</button>
                                 </form>
@@ -87,18 +86,18 @@
                 <c:when test="${NEB=='yes'}">
                     <form action="${urlPath}/client" method="post" command="contract">
                         <%@ include file="tableOptions.jsp" %>
-                        <div class="row">
-                            <div class="col-sm-2 form-group">
-                                <button type="submit" class="btn btn-success" name="action" value="new">New Client <i
+                        <br>
+
+                            <div class="col-sm-3 form-group">
+                                <button type="submit" class="btn btn-success newtariff" name="action" value="new">New Client <i
                                         class="glyphicon glyphicon-plus"></i>
                                 </button>
                             </div>
-                            <div class="form-group col-sm-2">
+                            <div class="form-group col-sm-3">
                                 <button type="submit" class="btn btn-success" name="action" value="existing">Existing
                                     client <i class="glyphicon glyphicon-user"></i>
                                 </button>
                             </div>
-                        </div>
                     </form>
                 </c:when>
                 <c:when test="${table=='edit'}">
@@ -146,17 +145,7 @@
         </div>
     </div>
 </div>
-<script>
-    $(document).ready(function () {
-    $('input.chk').on('change', function () {
-        var checkboxes = document.getElementsByClassName('chk');
-        for (var i = 0; i < checkboxes.length; i++) {
-            if (checkboxes[i].checked) checkboxes[i].closest('tr').classList.add("highlight");
-            else checkboxes[i].closest('tr').classList.remove("highlight");
-        }
-    })
-    });
-</script>
+
 <!--Search-->
 <script>
     $(document).ready(function () {
@@ -188,13 +177,41 @@
             <c:if test="${table=='edit'}">
             var table=1;
             </c:if>
-            var id="${id}"
-            if (!('hasCodeRunBefore' in localStorage)){
-                return optionPagination(0, 1, table, id);}}
+            var id="${id}";
+            var group="${group}";
+                return pagination(0, 1, table, id, null, null, group);}
         document.getElementById('page').value = 1;
     });
 </script>
-
+<!--checkboxes-->
+<script>
+    $(document).on('click', '.chk', function () {
+        var checkboxes = document.getElementsByClassName('chk');
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                var value = checkboxes[i].value;
+                var flag=true;
+                var existing = document.getElementsByClassName('opt2');
+                if (existing != null) {
+                    for (var j = 0; j < existing.length; j++) {
+                        if (existing[j].value == checkboxes[i].value) flag=false;
+                    }
+                }
+                if (flag) {
+                    var newInput = '<input name="optionID2" type="hidden" class="opt2" value="' + value + '">';
+                    document.getElementById('checked').insertAdjacentHTML('beforeend', newInput);
+                }
+            } else {
+                var existing = document.getElementsByClassName('opt2');
+                if (existing != null) {
+                    for (var j = 0; j < existing.length; j++) {
+                        if (existing[j].value == checkboxes[i].value) existing[j].remove();
+                    }
+                }
+            }
+        }
+    });
+</script>
 
 </body>
 </html>

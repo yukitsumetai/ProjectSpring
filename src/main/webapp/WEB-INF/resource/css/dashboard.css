@@ -181,7 +181,7 @@
 
 .newtariff {
     position: relative;
-    float: right;
+    padding-left: 35px;
 }
 
 .search-box input {

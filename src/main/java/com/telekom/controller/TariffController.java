@@ -18,10 +18,6 @@ public class TariffController {
     @Autowired
     private TariffService tariffService;
 
-    @Autowired
-    private OptionService optionService;
-
-
     @GetMapping("/new")
     public String newTariff(Model model) throws SQLException {
         TariffDTO tariff = new TariffDTO();
@@ -41,7 +37,7 @@ public class TariffController {
     }
 
     @PostMapping("/new/options")
-    public String newTariffOptions(TariffDTO tariff, @RequestParam(name = "optionID", required = false) List<Integer> id) {
+    public String newTariffOptions(TariffDTO tariff, @RequestParam(name = "optionID2", required = false) List<Integer> id) {
         tariffService.SetOptions(tariff, id);
         tariffService.add(tariff);
         return "redirect:/tariffs";
@@ -58,8 +54,8 @@ public class TariffController {
     @PostMapping("/edit")
     public String editProduct(Model model, @ModelAttribute(value = "tariff") TariffDTO tariff, @RequestParam(name = "compatibleOptions", required = false) boolean options) {
         if (options) {
+            model.addAttribute("existing", tariff.getOptions());
             model.addAttribute("id", tariff.getId());
-            //model.addAttribute("options", optionService.getAll(tariff));
             return "options";
         }
         tariffService.editTariff(tariff);
@@ -67,7 +63,7 @@ public class TariffController {
     }
 
     @PostMapping("/edit/options")
-    public String editTariffOptions(@ModelAttribute(value = "tariff") TariffDTO tariff, @RequestParam(name = "optionID", required = false) List<Integer> id) {
+    public String editTariffOptions(@ModelAttribute(value = "tariff") TariffDTO tariff, @RequestParam(name = "optionID2", required = false) List<Integer> id) {
         tariffService.SetOptions(tariff, id);
         tariffService.editTariff(tariff);
         return "redirect:/tariffs";

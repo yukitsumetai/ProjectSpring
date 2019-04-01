@@ -1,25 +1,17 @@
 package com.telekom.controller;
 
 
-import com.telekom.entityDTO.ClientDTO;
 import com.telekom.entityDTO.ContractDTO;
-
 import com.telekom.entityDTO.OptionDTO;
 import com.telekom.service.ContractService;
 import com.telekom.service.OptionService;
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -28,6 +20,7 @@ import java.util.Set;
 @RequestMapping(value = "/existingContract")
 
 public class ExistingContractController {
+
     @Autowired
     ContractService contractService;
 
@@ -38,8 +31,6 @@ public class ExistingContractController {
     @GetMapping("/{id}")
     public ModelAndView getEditForm(ContractDTO contract, @PathVariable(value = "id") String id) {
 
-
-
         contract = contractService.getOne(id);
         if (contract == null) {
             return new ModelAndView("search", "message", "Contract not found");
@@ -47,20 +38,22 @@ public class ExistingContractController {
         return new ModelAndView("contract", "contractDTO", contract);
     }
 
-    @PreAuthorize("contractDTO.blocked == false")
+
     @GetMapping("/tariffs")
     public String tariffChoose(Model model, ContractDTO contract) {
-        model.addAttribute("tariffs", contractService.getTariffsForAdd(contract));
-        model.addAttribute("table", "add");
-        model.addAttribute("NEB", "no");
-        contract.setTariff(null);
-        contract.setOptions(null);
-        contract.setPrice(0.00);
-        return "tariffs";
+        if (!contract.isBlocked()) {
+            model.addAttribute("tariffs", contractService.getTariffsForAdd(contract));
+            model.addAttribute("table", "add");
+            model.addAttribute("NEB", "no");
+            contract.setTariff(null);
+            contract.setOptions(null);
+            contract.setPrice(0.00);
+            return "tariffs";
+        } else return null;
     }
 
     @PostMapping("/tariffs")
-    public String tariffAdd(ContractDTO contract, @RequestParam(name = "tariffID") Integer id) {
+    public String tariffAdd(ContractDTO contract, @RequestParam(name = "tariffID2") Integer id) {
         contract.setOptions(null);
         contractService.setTariff(contract, id);
         return "redirect:/existingContract/confirm";
@@ -80,17 +73,18 @@ public class ExistingContractController {
 
     @GetMapping("/options")
     public String addOptionsChoose(Model model, ContractDTO contract) {
-        Set<OptionDTO> options = contractService.getOptions(contract);
-        if (!(options.size() > 0)) {
-            model.addAttribute("message", "No options are available"); //add message
-        } else {
-            model.addAttribute("options", contractService.getParentsForExisting(contract));
-            model.addAttribute("optionGroups", contractService.getGroups(contract));
-            model.addAttribute("children", contractService.getChildrenForExisting(contract));
-            model.addAttribute("table", "add");
-           // contract.setOptions(null);
-        }
-        return "contractOptions";
+        if (!contract.isBlocked()) {
+            Set<OptionDTO> options = contractService.getOptions(contract);
+            if (!(options.size() > 0)) {
+                model.addAttribute("message", "No options are available"); //add message
+            } else {
+                model.addAttribute("options", contractService.getParentsForExisting(contract));
+                model.addAttribute("optionGroups", contractService.getGroups(contract));
+                model.addAttribute("children", contractService.getChildrenForExisting(contract));
+                model.addAttribute("table", "add");
+            }
+            return "contractOptions";
+        } else return null;
     }
 
     @PostMapping("/options")
@@ -100,10 +94,10 @@ public class ExistingContractController {
     }
 
     @GetMapping("/block")
-    public String block(Model model, ContractDTO contract, HttpServletRequest request) {
-       boolean admin=false;
+    public String block(ContractDTO contract, HttpServletRequest request) {
+        boolean admin = false;
         if (request.isUserInRole("ADMIN")) {
-          admin=true;
+            admin = true;
         }
         contractService.block(contract, admin);
         return "redirect:/existingContract/" + contract.getPhoneNumber();
@@ -111,9 +105,9 @@ public class ExistingContractController {
 
     @GetMapping("/unblock")
     public String unblock(ContractDTO contract, HttpServletRequest request) {
-        boolean admin=false;
+        boolean admin = false;
         if (request.isUserInRole("ADMIN")) {
-            admin=true;
+            admin = true;
         }
         contractService.unblock(contract, admin);
         return "redirect:/existingContract/" + contract.getPhoneNumber();

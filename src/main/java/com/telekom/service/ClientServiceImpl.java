@@ -4,6 +4,8 @@ import com.telekom.dao.ClientDAO;
 import com.telekom.entity.Client;
 
 import com.telekom.entityDTO.ClientDTO;
+import com.telekom.entityDTO.Page;
+import com.telekom.entityDTO.TariffDTO;
 import com.telekom.mapper.ClientMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -18,7 +20,7 @@ import java.util.List;
 
 
 @Service
-public class ClientServiceImpl implements ClientService {
+public class ClientServiceImpl extends PaginationImpl<ClientDTO> implements ClientService {
 
     @Autowired
     private ClientDAO clientDao;
@@ -33,6 +35,28 @@ public class ClientServiceImpl implements ClientService {
             clients.add(clientMapper.EntityToDto(c));
         }
         return clients;
+    }
+
+
+
+    @Override
+    @Transactional
+    public Page<ClientDTO> getPage(Integer size, Integer page) {
+        List<ClientDTO> pageGroups = new ArrayList<>();
+        for (Client c : clientDao.getPages(size, page)
+        ) {
+            pageGroups.add(clientMapper.EntityToDto(c));
+        }
+        Long total=clientDao.getPagesCount();
+        return getPageDraft(pageGroups, total, page, size);
+    }
+
+    @Override
+    public Boolean checkExisting(String email, Integer passport){
+        Boolean isEmail=clientDao.getOneByEmail(email);
+        Boolean isPassport=clientDao.getOneByPassport(passport);
+        if(isEmail || isPassport) return true;
+        return false;
     }
 
     @Override

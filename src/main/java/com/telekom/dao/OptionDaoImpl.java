@@ -18,7 +18,6 @@ public class OptionDaoImpl extends PaginationDaoImpl<Option> implements OptionDa
     @PersistenceContext(unitName = "entityManagerFactory")
     private EntityManager entityManager;
 
-
     @Override
     public List<Option> getAll() {
         return entityManager.createQuery("select t from Option t").getResultList();
@@ -26,30 +25,6 @@ public class OptionDaoImpl extends PaginationDaoImpl<Option> implements OptionDa
     @Override
     public List<Option> getAllValid() {
         return entityManager.createQuery("select t from Option t where t.isValid=true ").getResultList();
-    }
-
-    @Override
-    public List<Option> getAllValidNoParent() {
-        return entityManager.createQuery("select t from Option t  where t.isValid=true and t.id not in(select t from Option t join t.parent)").getResultList();
-    }
-    @Override
-    public List<Option> getAllNoParent() {
-        return entityManager.createQuery("select t from Option t  where t.id not in(select t from Option t join t.parent)").getResultList();
-    }
-
-    @Override
-    public List<Option> getAllValidNoParentNoGroup() {
-        return entityManager.createQuery("select t from Option t where t.id not in(select t from Option t join t.parent) and t.id not in(select t from Option t join t.group)").getResultList();
-    }
-
-    @Override
-    public List<Option> getAllValidNoChildrenAndParent() {
-        return entityManager.createQuery("select t from Option t  where t.isValid=true and t.id not in(select t from Option t join t.children) and t.id not in(select t from Option t join t.parent)").getResultList();
-    }
-
-    @Override
-    public List<Option> getAllNoChildrenAndParent() {
-        return entityManager.createQuery("select t from Option t  where t.id not in(select t from Option t join t.children) and t.id not in(select t from Option t join t.parent)").getResultList();
     }
 
     @Override
@@ -65,8 +40,6 @@ public class OptionDaoImpl extends PaginationDaoImpl<Option> implements OptionDa
         q.setParameter("id", id);
         return q.getResultList();
     }
-
-
 
     @Override
     public void add(Option option) {
@@ -100,6 +73,61 @@ public class OptionDaoImpl extends PaginationDaoImpl<Option> implements OptionDa
         return c;
     }
 
+    @Override
+    public List<Option> getAllNoParent(Integer size, Integer page) {
+        TypedQuery<Option> q = entityManager.createQuery("select t from Option t  where t.id not in(select t from Option t join t.parent)", Option.class);
+        pageCount(page, size, q);
+        return q.getResultList();
+    }
 
+    @Override
+    public Long getPagesCountNoParent() {
+        TypedQuery<Long> q = entityManager.createQuery("Select count(o) from Option o where o.id not in(select t from Option t join t.parent)", Long.class);
+        Long c= q.getSingleResult();
+        return c;
+    }
+
+    @Override
+    public List<Option> getAllNoChildrenAndParent(Integer size, Integer page) {
+        TypedQuery<Option> q = entityManager.createQuery("select t from Option t  where t.id not in(select t from Option t join t.children) and t.id not in(select t from Option t join t.parent)", Option.class);
+        pageCount(page, size, q);
+        return q.getResultList();
+    }
+
+    @Override
+    public Long getPagesCountNoParentNoChildren() {
+        TypedQuery<Long> q = entityManager.createQuery("select count(t) from Option t  where t.id not in(select t from Option t join t.children) and t.id not in(select t from Option t join t.parent)", Long.class);
+        Long c= q.getSingleResult();
+        return c;
+    }
+
+    @Override
+    public List<Option> getAllNoChildrenAndParentExisting(Integer size, Integer page, Integer id) {
+        TypedQuery<Option> q = entityManager.createQuery("select t from Option t  where t.id not in(select t from Option t join t.children) and t.id not in(select t from Option t join t.parent) or t.id in(select t from Option t join t.parent p where p.id=:id)", Option.class);
+        q.setParameter("id", id);
+        pageCount(page, size, q);
+        return q.getResultList();
+    }
+
+    @Override
+    public Long getPagesNoChildrenAndParentExisting() {
+        TypedQuery<Long> q = entityManager.createQuery("select count(t) from Option t  where t.id not in(select t from Option t join t.children) and t.id not in(select t from Option t join t.parent) or t.id in(select t from Option t join t.parent p where p.id=:id)", Long.class);
+        Long c= q.getSingleResult();
+        return c;
+    }
+
+    @Override
+    public List<Option> getAllNoParentNoGroup(Integer size, Integer page) {
+        TypedQuery<Option> q = entityManager.createQuery( "select t from Option t where t.id not in(select t from Option t join t.parent) and t.id not in(select t from Option t join t.group)", Option.class);
+        pageCount(page, size, q);
+        return q.getResultList();
+    }
+
+    @Override
+    public Long getPagesCountNoParentNoGroup() {
+        TypedQuery<Long> q = entityManager.createQuery("select count(t) from Option t where t.id not in(select t from Option t join t.parent) and t.id not in(select t from Option t join t.group)", Long.class);
+        Long c= q.getSingleResult();
+        return c;
+    }
 }
 

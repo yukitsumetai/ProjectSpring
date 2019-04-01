@@ -49,21 +49,29 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">Option Name*</label>
-                    <input id="name" type="text" name="name" class="form-control" required/>
+                    <input id="name" type="text" name="name" placeholder="Maximum 60 characters..." maxlength="60" class="form-control" required/>
                 </div>
                 <div class="form-group">
                     <label class="control-label">One Time Price*</label>
-                    <input id="priceOneTime" type="number" name="priceOneTime"
-                           class="form-control" required/>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">$</span>
+                        </div>
+                        <input id="price" type="number" min="0" step="0.01" name="priceOneTime" class="form-control" required/>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Monthly Price*</label>
-                    <input id="priceMonthly" type="number" name="priceMonthly"
-                           class="form-control" required/>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">$</span>
+                        </div>
+                        <input id="priceOneTime" type="number" step="0.01" min="0" name="priceMonthly" class="form-control" required/>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Description</label>
-                    <textarea row="4" id="Description" type="text" name="Description"
+                    <textarea row="4" id="Description" type="text" name="Description" maxlength="200"
                               class="form-control"></textarea>
                 </div>
                 <div class="form-group">

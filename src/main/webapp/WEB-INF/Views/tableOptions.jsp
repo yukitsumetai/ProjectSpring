@@ -65,12 +65,27 @@
 <div class="col-md-12 text-center">
     <div class="hint-text">Showing <b id="current">4</b> out of <b id="total"></b> entries</div>
     <ul class="pagination" id="pagination">
-
     </ul>
     <input type="hidden" id="page" value=0>
-</div>
-</div>
 
+</div>
+<div id="checked">
+    <c:forEach items="${existing}" var="e">
+        <input name="optionID2" class="opt2" type="hidden" value=${e.id}>
+    </c:forEach>
+</div>
+</div>
+<!--highlight-->
+<script>
+
+    $(document).on('click', '.chk', function() {
+        var checkboxes = document.getElementsByClassName('chk');
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) checkboxes[i].closest('tr').classList.add("highlight");
+            else checkboxes[i].closest('tr').classList.remove("highlight");
+        }
+    });
+</script>
 
 </body>
 

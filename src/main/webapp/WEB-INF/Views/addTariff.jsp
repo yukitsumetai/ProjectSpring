@@ -42,20 +42,27 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">Tariff Name*</label>
-                    <input id="name" type="text" name="name" class="form-control" required/>
+                    <input id="name" type="text" name="name" placeholder="Maximum 60 characters..." class="form-control"
+                           maxlength="60" required/>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Monthly Price*</label>
-                    <input id="price" type="number" name="price" class="form-control" required/>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">$</span>
+                        </div>
+                        <input id="price" type="number" step="0.01" min="0" name="price" class="form-control" required/>
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label">Description</label>
-                    <textarea row="'4" id="Description" type="text" name="Description" class="form-control"></textarea>
+                    <textarea row="'4" id="Description" type="text" name="Description" maxlength="200"
+                              class="form-control"></textarea>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Validity: </label>
-                    <input type="checkbox" class="chk"  name="isValid" id="isValid" value=true checked/>&nbsp;
+                    <input type="checkbox" class="chk" name="isValid" id="isValid" value=true checked/>&nbsp;
                 </div>
 
 

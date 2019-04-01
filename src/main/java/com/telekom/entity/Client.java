@@ -8,7 +8,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,9 +29,11 @@ public class Client implements Serializable {
 
     @Email
     private String email;
+
     private String birthday;
-    private String password;
-    private BigInteger passport;
+
+    private Integer passport;
+
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<Contract> contract=new ArrayList<>();
 
@@ -68,15 +69,13 @@ public class Client implements Serializable {
         this.contract.add(contract);
     }
 
-
-    public BigInteger getPassport() {
+    public Integer getPassport() {
         return passport;
     }
 
-    public void setPassport(BigInteger passport) {
+    public void setPassport(Integer passport) {
         this.passport = passport;
     }
-
 
     public int getId() {
         return id;
@@ -108,14 +107,6 @@ public class Client implements Serializable {
 
     public void setBirthday(String birthday) {
         this.birthday = birthday;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getName() {

@@ -1,16 +1,28 @@
 package com.telekom.entityDTO;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 
 public class AddressDTO implements Serializable {
 
         private int id;
+        @NotBlank
+        @Size(min=2, max=20)
         private String street;
+        @NotBlank
+        @Size(min=1, max=4)
         private String houseNo;
+        @NotBlank
+        @Size(min=2, max=20)
         private String city;
+        @NotBlank
+        @Size(min=2, max=20)
         private String country;
+        @NotBlank
+        @Size(min=5, max=5)
         private int zip;
 
 

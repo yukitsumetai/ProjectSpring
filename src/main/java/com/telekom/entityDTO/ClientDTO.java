@@ -1,22 +1,34 @@
 package com.telekom.entityDTO;
 
 
-import com.telekom.entity.Contract;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.List;
 
 public class ClientDTO implements Serializable {
 
-
+    @NotBlank
+    @Size(min = 2, max = 20)
     private String name;
+
+    @NotBlank
+    @Size(min = 2, max = 20)
     private String surname;
     private int id;
+    @NotBlank
+    @Email
     private String email;
+    @NotBlank
+    @DateTimeFormat
     private String birthday;
+    @NotBlank
     private String password;
-    private java.math.BigInteger passport;
+    @NotBlank
+    private Integer passport;
     private String phoneNumber;
     private List<ContractDTO> contracts;
     private AddressDTO address;
@@ -42,11 +54,11 @@ public class ClientDTO implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public BigInteger getPassport() {
+    public Integer getPassport() {
         return passport;
     }
 
-    public void setPassport(BigInteger passport) {
+    public void setPassport(Integer passport) {
         this.passport = passport;
     }
 

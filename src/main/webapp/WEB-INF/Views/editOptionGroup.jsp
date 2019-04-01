@@ -45,7 +45,7 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">Description</label>
-                    <textarea rows="4" id="Description" type="text" name="Description"
+                    <textarea rows="4" id="Description" type="text" name="Description" maxlength="200"
                               class="form-control">${optionGroup.description}</textarea>
                 </div>
                 <div class="form-group">

@@ -36,13 +36,8 @@
 
             <div class="masthead clearfix">
                 <div class="inner">
-                    <h3 class="masthead-brand">TeleSpring</h3>
+                    <h3 class="masthead-brand">Spring Line</h3>
                     <nav>
-                        <ul class="nav masthead-nav">
-                            <li class="active"><a href="#">Home</a></li>
-                            <li><a href="#">Sign in</a></li>
-                            <li><a href="#">PHelp</a></li>
-                        </ul>
                     </nav>
                 </div>
             </div>
@@ -61,7 +56,7 @@
                         <form action="${urlPath}/process" method="post">
                             <input type="text" id="login" class="<c:if test="${param.error == false}">fadeIn second </c:if>" name="login" placeholder="login">
                             <input type="text" id="password" class="<c:if test="${param.error == false}">fadeIn third </c:if>" name="password" placeholder="password">
-                            <input type="submit" class="<c:if test="${param.error == false}">fadeIn fourth </c:if>" value="Log In">
+                            <input type="submit" class="<c:if test="${param.error == false}">fadeIn fourth </c:if> btn-success" value="Log In">
                         </form>
 
 

@@ -42,11 +42,11 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">Option Group Name*</label>
-                    <input id="name" type="text" name="name" class="form-control" required/>
+                    <input id="name" type="text" name="name" class="form-control" maxlength="60" required/>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Description</label>
-                    <textarea row="'4" id="Description" type="text" name="Description" class="form-control"></textarea>
+                    <textarea row="'4" id="Description" type="text" name="Description" maxlength="200" class="form-control"></textarea>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Validity: </label>

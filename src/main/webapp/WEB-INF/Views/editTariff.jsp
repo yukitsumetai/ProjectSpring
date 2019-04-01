@@ -45,12 +45,17 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">Monthly Price</label>
-                    <input value="${tariff.price}" id="price" type="number" name="price" class="form-control" disabled/>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">$</span>
+                        </div>
+                        <input id="price" type="number" step="0.01" name="price" value="${tariff.price}" class="form-control" disabled/>
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label">Description</label>
-                    <textarea rows="4" id="Description" type="text" name="Description"
+                    <textarea rows="4" id="Description" type="text" maxlength="200" name="Description"
                               class="form-control">${tariff.description}</textarea>
                 </div>
                 <div class="form-group">

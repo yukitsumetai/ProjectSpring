@@ -92,8 +92,6 @@
                                 <a type="button" href="/existingContract/block" class="btn btn-danger">Block Sim card</a>
                             </c:otherwise>
                             </c:choose>
-
-
                     </div>
                 </div>
             </c:otherwise>

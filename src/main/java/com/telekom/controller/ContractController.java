@@ -41,7 +41,7 @@ public class ContractController {
 
 
     @PostMapping("options")
-    public String newContractTariffAdd(Model model, ContractDTO contract, @RequestParam(name = "tariffID") Integer id) {
+    public String newContractTariffAdd(Model model, ContractDTO contract, @RequestParam(name = "tariffID2") Integer id) {
         contractService.setTariff(contract, id);
         model.addAttribute("options", contractService.getOptions(contract));
         model.addAttribute("optionGroups", contractService.getGroups(contract));
@@ -72,7 +72,7 @@ public class ContractController {
     }
 
     @PostMapping("/confirmExisting")
-    public String newContractOptionAdd(Model model, ContractDTO contract,  @RequestParam(name = "clientID") Integer id, @RequestParam String phoneNumber) {
+    public String newContractOptionAdd(Model model, ContractDTO contract,  @RequestParam(name = "clientID2") Integer id, @RequestParam String phoneNumber) {
         model.addAttribute("table", "add");
         contract.setClient(clientService.getOne(id));
         contract.setPhoneNumber(phoneNumber);
@@ -90,13 +90,13 @@ public class ContractController {
     @PostMapping("/confirmExisting/true")
     public String confirmationExisting(ContractDTO contract) {
         contractService.add(contract);
-        return "redirect:/users";
+        return  "redirect:/existingContract/" + contract.getPhoneNumber();
     }
 
     @PostMapping("/confirm/true")
     public String confirmation(ContractDTO contract) {
         contractService.add(contract);
-        return "redirect:/users";
+        return "redirect:/existingContract/" + contract.getPhoneNumber();
     }
 
 }

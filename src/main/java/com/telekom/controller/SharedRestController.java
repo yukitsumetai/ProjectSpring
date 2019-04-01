@@ -2,14 +2,8 @@ package com.telekom.controller;
 
 
 import com.telekom.entity.PhoneNumber;
-import com.telekom.entityDTO.OptionDTO;
-import com.telekom.entityDTO.OptionGroupDTO;
-import com.telekom.entityDTO.Page;
-import com.telekom.entityDTO.TariffDTO;
-import com.telekom.service.OptionGroupService;
-import com.telekom.service.OptionService;
-import com.telekom.service.PhoneNumberService;
-import com.telekom.service.TariffService;
+import com.telekom.entityDTO.*;
+import com.telekom.service.*;
 import javafx.scene.control.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -34,8 +28,11 @@ public class SharedRestController {
     @Autowired
     TariffService tariffService;
 
+    @Autowired
+    ClientService clientService;
+
     @GetMapping(value = "/test")
-    public List<OptionGroupDTO> findPaginated(Model model, @RequestParam Integer page) {
+    public List<OptionGroupDTO> findPaginated(@RequestParam Integer page) {
 
         Page<OptionGroupDTO> resultPage = optionGroupService.getPage(GROUPS_PER_PAGE, page);
         if (page > resultPage.getTotalPages()) {
@@ -45,7 +42,7 @@ public class SharedRestController {
     }
 
      @GetMapping(value = "/phoneNumbers")
-    public List<PhoneNumber> pagePhoneNumber(Model model, @RequestParam Integer page) {
+    public List<PhoneNumber> pagePhoneNumber(@RequestParam Integer page) {
 
         Page<PhoneNumber> resultPage = phoneNumberService.getPage(GROUPS_PER_PAGE, 1);
         if (page > resultPage.getTotalPages()) {
@@ -55,9 +52,16 @@ public class SharedRestController {
     }
 
     @GetMapping(value = "/options/optionPages")
-    public Page<OptionDTO> pageOption(Model model, @RequestParam Integer page, @RequestParam (required=false)Integer id) {
+    public Page<OptionDTO> pageOption( @RequestParam Integer page, @RequestParam (required=false)Integer id,
+                                       @RequestParam (required=false)Boolean parent, @RequestParam (required=false)Integer optionId,
+                                       @RequestParam (required=false)Boolean group) {
         Page<OptionDTO> resultPage;
         if (id!=null)resultPage = optionService.getPage(GROUPS_PER_PAGE, page, id);
+        else if(parent!=null){
+            if (optionId==null) resultPage = optionService.getPageForNew(GROUPS_PER_PAGE, page, parent);
+            else  resultPage = optionService.getPageForExisting(GROUPS_PER_PAGE, page, parent, optionId);
+        }
+        else if(group!=null) resultPage = optionService.getPageForGroup(GROUPS_PER_PAGE, page);
         else resultPage = optionService.getPage(GROUPS_PER_PAGE, page);
         if (page > resultPage.getTotalPages()) {
             throw new NullPointerException();
@@ -66,7 +70,7 @@ public class SharedRestController {
     }
 
     @GetMapping(value = "/tariffs/tariffPages")
-    public Page<TariffDTO> pageTariff(Model model, @RequestParam Integer page, @RequestParam (required=false)Integer id) {
+    public Page<TariffDTO> pageTariff(@RequestParam Integer page, @RequestParam (required=false)Integer id) {
         Page<TariffDTO> resultPage;
         if (id!=null)resultPage = tariffService.getPage(GROUPS_PER_PAGE, page, id);
         else resultPage = tariffService.getPage(GROUPS_PER_PAGE, page);
@@ -76,6 +80,24 @@ public class SharedRestController {
         return resultPage;
     }
 
+
+    @GetMapping(value = "/clients/clientPages")
+    public Page<ClientDTO> pageClient(@RequestParam Integer page) {
+        Page<ClientDTO> resultPage = clientService.getPage(GROUPS_PER_PAGE, page);
+        return resultPage;
+    }
+
+    @GetMapping(value = "/clients/search")
+    public ClientDTO pageClient(@RequestParam String phoneNumber) {
+        ClientDTO resultPage = clientService.getOne(phoneNumber);
+        return resultPage;
+    }
+
+
+    @GetMapping(value = "/newContract/client/check")
+    public Boolean pageTariff(@RequestParam Integer passport, @RequestParam String email) {
+        return clientService.checkExisting(email, passport);
+    }
 
 
     @GetMapping(value = "/search")

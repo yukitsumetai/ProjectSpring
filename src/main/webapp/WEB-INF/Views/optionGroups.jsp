@@ -69,15 +69,16 @@
                         <h2>Option Groups administration</h2>
                     </div>
                     <div class="col-sm-6">
-
+                        <div class="row float-right">
                         <div class="search-box">
                             <i class="material-icons">&#xE8B6;</i>
                             <input type="text" class="form-control" id="myInput" placeholder="Search&hellip;">
                         </div>
-                        <div class="newtariff">
+                        <div class="newtariff ">
                             <form action="/optionGroups/new">
                                 <button type="submit" class="btn btn-success">Add Option Group</button>
                             </form>
+                        </div>
                         </div>
                     </div>
 

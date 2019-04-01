@@ -22,39 +22,35 @@ public class myController {
     private ClientService clientService;
 
     @Autowired
-    private ContractService contractService;
+    private TariffService tariffService;
 
-    @GetMapping("/view")
-    public String view(@RequestParam(value = "name", required = false, defaultValue = "stranger ") String name, Model model) {
-        model.addAttribute("msg", "Hello " + name);
-        return "login";
+    @Autowired
+    private OptionGroupService optionGroupService;
+
+
+
+
+    @GetMapping("/tariffs")
+    public String getTariffs(Model model)  {
+        model.addAttribute("tariffs", tariffService.getAll());
+        model.addAttribute("table", "edit");
+        return "tariffs";
     }
-
-    @GetMapping("/existingContract/search")
-    public String searchContract() {
-
-        return "search";
+    @GetMapping("/optionGroups")
+    public String getOptionGroups(Model model){
+        model.addAttribute("optionGroups", optionGroupService.getAll());
+        return "optionGroups";
     }
-
-    @GetMapping("/combo")
-    public String cb() {
-
-        return "elements/ComboBox element";
+    @GetMapping("/options")
+    public String getOptions(Model model)  {
+        model.addAttribute("table", "edit");
+        return "options";
     }
-
-    @RequestMapping(value = "/view", params = "Customer", method = RequestMethod.POST)
-    public String action1() {
-        return "login";
-    }
-
-    @RequestMapping(value = "/view", params = "Shop", method = RequestMethod.POST)
-    public String action2() {
-        return "redirect:/shopagent";
-    }
-
-    @GetMapping("/shopagent")
-    public String agent() {
-        return "shopagent";
+    @GetMapping("/users")
+    public String getUsers(Model model) {
+        model.addAttribute("clients", clientService.getAll());
+        model.addAttribute("table", "edit");
+        return "clients";
     }
 
     @PostMapping("/getUser")
@@ -69,38 +65,6 @@ public class myController {
         model.addAttribute("clients", clients);
         return "clients";
     }
-
-    @Autowired
-    private TariffService tariffService;
-
-    @Autowired
-    private OptionService optionService;
-    @Autowired
-    private OptionGroupService optionGroupService;
-
-    @GetMapping("/tariffs")
-    public String getTariffs(Model model) throws SQLException {
-        model.addAttribute("tariffs", tariffService.getAll());
-        model.addAttribute("table", "edit");
-        return "tariffs";
-    }
-    @GetMapping("/optionGroups")
-    public String getOptionGroups(Model model) throws SQLException {
-        model.addAttribute("optionGroups", optionGroupService.getAll());
-        return "optionGroups";
-    }
-    @GetMapping("/options")
-    public String getOptions(Model model) throws SQLException {
-        model.addAttribute("table", "edit");
-        return "options";
-    }
-    @GetMapping("/users")
-    public String getUsers(Model model) throws SQLException {
-        model.addAttribute("clients", clientService.getAll());
-        model.addAttribute("table", "edit");
-        return "clients";
-    }
-
 
 
 }

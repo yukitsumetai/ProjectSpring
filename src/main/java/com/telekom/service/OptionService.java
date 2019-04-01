@@ -13,10 +13,6 @@ public interface OptionService extends Pagination {
 
    List<OptionDTO> getAll();
    List<OptionDTO> getAll(TariffDTO tariff);
-   List<OptionDTO> getAllNoParent();
-   List<OptionDTO> getAllNoParentInvalid(); //includes invalid options for administration
-   List<OptionDTO> getAllNoChildrenAndParent();
-   List<OptionDTO> getAllNoChildrenParentInvalid(); //includes invalid options for administration
    Set<OptionDTO> findByTariff(Integer tariffId);
    void add(OptionDTO option);
    OptionDTO getOne(int id);
@@ -28,8 +24,10 @@ public interface OptionService extends Pagination {
    void SetParent(OptionDTO option, Integer id);
    List<OptionDTO> getAllValid();
    void SetOptionGroup(OptionDTO option, Integer groupId);
-   List<OptionDTO> getAllNoParentNoGroup();
    Set<OptionDTO> findByTariffChildren(Integer id);
    Page<OptionDTO> getPage(Integer size, Integer page, Integer tariffId);
+    Page<OptionDTO> getPageForNew(Integer size, Integer page, boolean parent);
+    Page<OptionDTO> getPageForExisting(Integer size, Integer page, boolean parent, Integer optionId);
+   Page<OptionDTO> getPageForGroup(Integer size, Integer page);
 }
 

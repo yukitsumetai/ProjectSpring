@@ -9,6 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<c:set var="urlPath" value="${requestScope['javax.servlet.forward.request_uri']}"/>
 
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
@@ -19,12 +20,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <script src="${contextPath}/resource/js/Pagination2.js"></script>
+    <script src="${contextPath}/resource/js/pagination.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
     <link href="<c:url value="${contextPath}/resource/dist/css/bootstrap.min.css" />" rel="stylesheet">
     <link href="<c:url value="${contextPath}/resource/css/dashboard.css"/>" rel="stylesheet">
     <title>Tariffs Overview</title>
-    <
+
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
             crossorigin="anonymous"></script>
@@ -49,6 +51,23 @@
             $form.attr('action', '/tariffs/delete/' + id);
         });
     </script>
+    <!--initial pagination-->
+    <script>
+        $(document).ready(function () {
+            var curr = document.getElementById('page').value;
+            if (curr == 0) {
+                var table;
+                <c:if test="${table=='edit'}">
+                var table = 1;
+                </c:if>
+                var id = "${id}"
+                if (!('hasCodeRunBefore' in localStorage)) {
+                    return pagination(1, 1, table, id);
+                }
+            }
+            document.getElementById('page').value = 1;
+        });
+    </script>
 </head>
 
 <body>
@@ -56,6 +75,8 @@
 <div class="container-fluid">
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+        <input type="hidden" id="page" value=0>
+
         <c:choose>
         <c:when test="${table=='edit'}">
         <h1 class="page-header">Tariffs</h1>
@@ -108,6 +129,7 @@
                     <form action="/existingContract/tariffs" method="post">
                         <%@ include file="tableTariffs.jsp" %>
                         <div>
+                            <br><br>
                             <button type="submit" class="btn btn-success" id="options" disabled>Next <i
                                     class="glyphicon glyphicon-chevron-right"></i></button>
                         </div>
@@ -117,24 +139,17 @@
                     <form action="/newContract/options" method="post">
                         <%@ include file="tableTariffs.jsp" %>
                         <div>
+                            <br><br>
                             <button type="submit" class="btn btn-success" id="options" disabled>Next <i
                                     class="glyphicon glyphicon-chevron-right"></i></button>
                         </div>
                     </form>
                 </c:when>
-                <c:when test="${table=='option'}">
-                    <form action="/options/new/tariffs" method="post">
+                <c:when test="${table=='option' || table=='optionEdit'}">
+                    <form action="tariffs" method="post">
                         <%@ include file="tableTariffs.jsp" %>
                         <div>
-                            <button type="submit" class="btn btn-success">Save <i
-                                    class="glyphicon glyphicon-floppy-disk"></i></button>
-                        </div>
-                    </form>
-                </c:when>
-                <c:when test="${table=='optionEdit'}">
-                    <form action="/options/edit/tariffs" method="post">
-                        <%@ include file="tableTariffs.jsp" %>
-                        <div>
+                            <br><br>
                             <button type="submit" class="btn btn-success">Save <i
                                     class="glyphicon glyphicon-floppy-disk"></i></button>
                         </div>
@@ -173,6 +188,7 @@
                 <form id="action" action="">
                     <button type="submit" class="btn btn-success">Yes</button>
                 </form>
+
             </div>
         </div>
     </div>
@@ -182,58 +198,80 @@
 <!--Cart checkboxes-->
 <c:choose>
     <c:when test="${table=='option'}">
-    </c:when>
-    <c:when test="${table=='optionEdit'}">
+        <script>
+        $(document).on('click', '.chk', function () {
+            var checkboxes = document.getElementsByClassName('chk');
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].checked) {
+                    var value = checkboxes[i].value;
+                    var flag=true;
+                    var existing = document.getElementsByClassName('opt2');
+                    if (existing != null) {
+                        for (var j = 0; j < existing.length; j++) {
+                            if (existing[j].value == checkboxes[i].value) flag=false;
+                        }
+                    }
+                    if (flag) {
+                        var newInput = '<input name="tariffID2" type="hidden" class="opt2" value="' + value + '">';
+                        document.getElementById('checked').insertAdjacentHTML('beforeend', newInput);
+                    }
+                } else {
+                    var existing = document.getElementsByClassName('opt2');
+                    if (existing != null) {
+                        for (var j = 0; j < existing.length; j++) {
+                            if (existing[j].value == checkboxes[i].value) existing[j].remove();
+                        }
+                    }
+                }
+            }
+        });
+    </script>
     </c:when>
     <c:otherwise>
         <script>
-            $('input.chk').on('change', function () {
+            $(document).on('click', '.chk', function () {
                 $('input.chk').not(this).prop('checked', false);
+            });
+        </script>
+        <script>
+            $(document).on('click', '.chk', function () {
+                var checkboxes = document.getElementsByClassName('chk');
+                $('.opt2').remove();
+                for (var i = 0; i < checkboxes.length; i++) {
+                    if (checkboxes[i].checked) {
+                        var value = checkboxes[i].value;
+                        var newInput = '<input name="tariffID2" type="hidden" class="opt2" value="' + value + '">';
+                        document.getElementById('checked').insertAdjacentHTML('beforeend', newInput);
+                    }
+                }
             });
         </script>
     </c:otherwise>
 </c:choose>
 <%-- Highlight clicked --%>
 <script>
-    $('input.chk').on('change', function () {
+    $(document).on('click', '.chk', function () {
         $('.generated1').remove();
-        var flag=true;
+        var flag = true;
         var priceTotal;
         var checkboxes = document.getElementsByClassName('chk');
         for (var i = 0; i < checkboxes.length; i++) {
             if (checkboxes[i].checked) {
-                checkboxes[i].closest('tr').classList.add("highlight");
                 var name = checkboxes[i].getAttribute('tariffName');
                 var price = '$' + checkboxes[i].getAttribute('price');
-                priceTotal=parseFloat(checkboxes[i].getAttribute('price'));
-                flag=false;
+                priceTotal = parseFloat(checkboxes[i].getAttribute('price'));
+                flag = false;
                 document.getElementById("totalMonthlyPrice").innerHTML = "$" + priceTotal;
                 var newInput = '<li class="generated1">' + name +
                     '<div class="right">' + price + '</div></li>';
                 document.getElementById('tariffCart').insertAdjacentHTML('beforeend', newInput);
-                document.getElementById('options').disabled=false;
-            } else {
-                checkboxes[i].closest('tr').classList.remove("highlight");
+                document.getElementById('options').disabled = false;
             }
         }
-        if (flag)  document.getElementById("totalMonthlyPrice").innerHTML = "$" + 0;
-        if (flag) document.getElementById('options').disabled=true;
+        if (flag) document.getElementById("totalMonthlyPrice").innerHTML = "$" + 0;
+        if (flag) document.getElementById('options').disabled = true;
     });
 </script>
-<!--initial pagination-->
-<script>
-    $(document).ready(function () {
-        var curr = document.getElementById('page').value;
-        if(curr==0){
-            var table;
-            <c:if test="${table=='edit'}">
-            var table=1;
-            </c:if>
-            var id="${id}"
-            if (!('hasCodeRunBefore' in localStorage)){
-                return optionPagination(1, 1, table, id);}}
-        document.getElementById('page').value = 1;
-    });
-</script>
+
 </body>
 </html>

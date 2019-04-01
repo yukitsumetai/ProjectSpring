@@ -16,7 +16,7 @@
 <html>
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
+    <script src="../resource/js/Pagination2.js"></script>
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -35,12 +35,29 @@
                 });
             });
         </script>
+
+        <script>
+            $(document).ready(function () {
+                var curr = document.getElementById('page').value;
+                if(curr==0){
+                    var table;
+                    <c:if test="${table=='edit'}">
+                    var table=1;
+                    </c:if>
+                    var parent="${parent}"
+                    var id="${id}"
+                    var optionId="${optionId}"
+                        return pagination(0, 1, table, id, parent, optionId, null);
+                }
+                document.getElementById('page').value = 1;
+            });
+        </script>
     </head>
 
 <body>
 
 
-<div class="container-fluid">
+<main class="container-fluid">
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
         <h1 class="page-header">Choose related options</h1>
@@ -49,7 +66,7 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <c:choose>
-                            <c:when test="${relation=='parent' ||relation=='parentEdit'}">
+                            <c:when test="${parent==true ||relation=='parentEdit'}">
                                 <h2>Choose parent</h2>
                             </c:when>
                             <c:otherwise>
@@ -71,7 +88,7 @@
 
 
             <c:choose>
-                <c:when test="${relation=='children'}">
+                <c:when test="${parent==false}">
                     <form action="${urlPath}/children" method="post">
                         <%@ include file="tableOptions.jsp" %>
                         <div class="row">
@@ -88,7 +105,7 @@
                         </div>
                     </form>
                 </c:when>
-                <c:when test="${relation=='parent'}">
+                <c:when test="${parent==true}">
                     <form action="${urlPath}/parent" method="post">
 
                         <%@ include file="tableOptions.jsp" %>
@@ -103,18 +120,58 @@
                 </c:when>
             </c:choose>
             <!--Checkbox-->
-            <c:if test="${relation=='children'}">
-
-            </c:if>
-            <c:if test="${relation=='parent'}">
+            <c:if test="${parent==false}">
                 <script>
-                    $('input.chk').on('change', function () {
+                    $(document).on('click', '.chk', function () {
+                        var checkboxes = document.getElementsByClassName('chk');
+                        for (var i = 0; i < checkboxes.length; i++) {
+                            if (checkboxes[i].checked) {
+                                var value = checkboxes[i].value;
+                                var flag=true;
+                                var existing = document.getElementsByClassName('opt2');
+                                if (existing != null) {
+                                    for (var j = 0; j < existing.length; j++) {
+                                        if (existing[j].value == checkboxes[i].value) flag=false;
+                                    }
+                                }
+                                if (flag) {
+                                    var newInput = '<input name="optionID2" class="opt2" value="' + value + '">';
+                                    document.getElementById('checked').insertAdjacentHTML('beforeend', newInput);
+                                }
+                            } else {
+                                var existing = document.getElementsByClassName('opt2');
+                                if (existing != null) {
+                                    for (var j = 0; j < existing.length; j++) {
+                                        if (existing[j].value == checkboxes[i].value) existing[j].remove();
+                                    }
+                                }
+                            }
+                        }
+                    });
+                </script>
+            </c:if>
+            <c:if test="${parent==true}">
+                <script>
+                    $(document).on('click', '.chk', function() {
                         $('input.chk').not(this).prop('checked', false);
+                    });
+                </script>
+                <script>
+                    $(document).on('click', '.chk', function () {
+                        var checkboxes = document.getElementsByClassName('chk');
+                        $('.opt2').remove();
+                        for (var i = 0; i < checkboxes.length; i++) {
+                            if (checkboxes[i].checked) {
+                                var value = checkboxes[i].value;
+                                var newInput = '<input name="optionID2" type="hidden" class="opt2" value="' + value + '">';
+                                document.getElementById('checked').insertAdjacentHTML('beforeend', newInput);
+                            }
+                        }
                     });
                 </script>
             </c:if>
         </div>
-    </div>
+    </main>
 </div>
 </div>
 

@@ -18,16 +18,13 @@
     <script>window.jQuery || document.write('<script src="../resource/assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="../resource/dist/js/bootstrap.min.js"></script>
     <script src="../resource/js/pagination.js"></script>
+    <script src="../resource/js/Pagination2.js"></script>
     <script src="../resource/js/ComboBox.js"></script>
+    <script src="../resource/js/Client.js"></script>
     <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
 
 
     <title>Current Clients</title>
-    <script>
-        $(document).ready(function () {
-            return phoneNumber();
-        });
-    </script>
 </head>
 
 <body>
@@ -42,21 +39,18 @@
             <div class="table-title">
                 <div class="row">
                     <div class="col-sm-6">
-
-                        <h2>Clients Administration</h2>
-
+                        <h2>Clients administration</h2>
                     </div>
                     <div class="col-sm-6">
-                        <form action="/getUser" method="post">
-                            <div class="search-box" class="col-sm-4">
+                        <div class="row float-right">
+                            <div class="search-box">
                                 <i class="material-icons">&#xE8B6;</i>
-                                <input type="text" class="form-control" id="myInput" name="phoneNumber"
-                                       placeholder="Search by phone number&hellip;">
+                                <input type="text" class="form-control" id="phoneNumber" placeholder="Search&hellip;">
                             </div>
-                            <div class="newtariff col-sm-2">
-                                <button type="submit" class="btn btn-success">Find</button>
+                            <div class="newtariff ">
+                                    <button type="submit" onclick="searchClient(<c:if test="${table=='edit'}">1</c:if>)" class="btn btn-success">Find</button>
                             </div>
-                        </form>
+                        </div>
                     </div>
 
                 </div>
@@ -79,7 +73,7 @@
                 </div>
 
                 <div>
-                    <button type="submit" class="btn btn-success">Next</button>
+                    <button type="submit" id="client" class="btn btn-success" disabled>Next</button>
                 </div>
                 </c:if>
 
@@ -95,17 +89,59 @@
 <script>
     $('input.chk').on('change', function () {
         var checkboxes = document.getElementsByClassName('chk');
+        var flag = true;
         for (var i = 0; i < checkboxes.length; i++) {
             if (checkboxes[i].checked) {
                 checkboxes[i].closest('tr').classList.add("highlight");
+                document.getElementById('client').disabled = false;
+                flag = false;
             } else {
                 checkboxes[i].closest('tr').classList.remove("highlight");
                 checkboxes[i].checked=false;
             }
         }
+        if (flag) document.getElementById('client').disabled = true;
     });
 </script>
-
+<!--initial pagination-->
+<script>
+    $(document).ready(function () {
+        var curr = document.getElementById('page').value;
+        if (curr == 0) {
+            var table;
+            <c:if test="${table=='edit'}">
+            var table = 1;
+            </c:if>
+                return pagination(2, 1, table);
+        }
+        document.getElementById('page').value = 1;
+    });
+</script>
+<!--pagination cart-->
+<script>
+    $(document).on('click', '.chk', function () {
+        $('input.chk').not(this).prop('checked', false);
+    });
+</script>
+<script>
+    $(document).on('click', '.chk', function () {
+        var checkboxes = document.getElementsByClassName('chk');
+        $('.opt2').remove();
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                var value = checkboxes[i].value;
+                var newInput = '<input name="clientID2" type="hidden" class="opt2" value="' + value + '">';
+                document.getElementById('checked').insertAdjacentHTML('beforeend', newInput);
+            }
+        }
+    });
+</script>
+<!--PaginationDao dropdown-->
+<script>
+    $(document).ready(function () {
+        return phoneNumber();
+    });
+</script>
 </body>
 </html>
 

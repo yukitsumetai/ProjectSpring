@@ -32,14 +32,14 @@ public class OptionGroupController {
         if (!validity) optionGroup.setIsValid(false);
         if(options){
             model.addAttribute("table", "optionGroupAdd");
-            model.addAttribute("options", optionService.getAllNoParentNoGroup()); //including invalid
+            model.addAttribute("group", true); //including invalid
             return "options";
         }
         optionGroupService.add(optionGroup);
         return "redirect:/optionGroups";
     }
     @PostMapping("/new/options")
-    public String newTariffOptions(OptionGroupDTO optionGroup, @RequestParam(name = "optionID", required = false) List<Integer> id) {
+    public String newTariffOptions(OptionGroupDTO optionGroup, @RequestParam(name = "optionID2", required = false) List<Integer> id) {
         optionGroupService.SetOptions(optionGroup, id);
         optionGroupService.add(optionGroup);
         return "redirect:/optionGroups";
@@ -56,8 +56,8 @@ public class OptionGroupController {
     public String editProduct(Model model, @ModelAttribute(value = "optionGroup") OptionGroupDTO optionGroup, @RequestParam(name = "compatibleOptions", required = false) boolean options) {
         if (options) {
             model.addAttribute("table", "optionGroupEdit");
-            model.addAttribute("existingOptions", optionGroup.getOptions());
-            model.addAttribute("options", optionService.getAllNoParentNoGroup());
+            model.addAttribute("existing", optionGroup.getOptions());
+            model.addAttribute("group", true);
             return "options";
         }
         optionGroupService.editOptionGroup(optionGroup);
@@ -65,7 +65,7 @@ public class OptionGroupController {
     }
 
     @PostMapping("/edit/options")
-    public String editOptionGroupOptions(@ModelAttribute(value = "optionGroup") OptionGroupDTO optionGroup, @RequestParam(name = "optionID", required = false) List<Integer> id) {
+    public String editOptionGroupOptions(@ModelAttribute(value = "optionGroup") OptionGroupDTO optionGroup, @RequestParam(name = "optionID2", required = false) List<Integer> id) {
         optionGroupService.SetOptions(optionGroup, id);
         optionGroupService.editOptionGroup(optionGroup);
         return "redirect:/optionGroups";
