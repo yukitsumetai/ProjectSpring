@@ -34,13 +34,6 @@
 
         <div class="cover-container">
 
-            <div class="masthead clearfix">
-                <div class="inner">
-                    <h3 class="masthead-brand">Spring Line</h3>
-                    <nav>
-                    </nav>
-                </div>
-            </div>
             <div class="inner cover">
 
                 <div class="wrapper  <c:if test="${param.error == false}">fadeInDown </c:if>">

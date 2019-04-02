@@ -1,6 +1,8 @@
 package com.telekom.entityDTO;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -10,20 +12,28 @@ import java.util.Set;
 public class OptionDTO implements Serializable {
 
     private int id;
+
     @Size(max = 60)
+    @NotEmpty
     private String name;
+
     @Size(max = 200)
     private String description;
-    private boolean isValid;
+
     @Min(0)
+    @NotNull
     private double priceMonthly;
+
     @Min(0)
+    @NotNull
     private double priceOneTime;
+
     private Set<TariffDTO> compatibleTariffs = new HashSet<>();
     private OptionDTO parent;
     private Set<OptionDTO> children = new HashSet<>();
     private OptionGroupDTO optionGroup;
     private boolean existing;
+    private boolean isValid;
 
     public OptionDTO() {
     }

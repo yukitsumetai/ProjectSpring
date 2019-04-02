@@ -1,8 +1,6 @@
 package com.telekom.entityDTO;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -14,10 +12,15 @@ import java.util.Set;
 public class TariffDTO implements Serializable {
 
     private int id;
+
     @Size(max = 60)
+    @NotBlank
     private String name;
+
     @Min(0)
+    @NotNull
     private double price;
+
     @Size(max = 200)
     private String description;
     private Set<OptionDTO> options = new HashSet<>();

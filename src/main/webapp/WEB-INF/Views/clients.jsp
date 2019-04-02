@@ -87,7 +87,7 @@
 
 <!--Checkbox-->
 <script>
-    $('input.chk').on('change', function () {
+    $(document).on('click', '.chk', function () {
         var checkboxes = document.getElementsByClassName('chk');
         var flag = true;
         for (var i = 0; i < checkboxes.length; i++) {

@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -80,7 +82,11 @@ public class ContractController {
     }
 
     @PostMapping("/confirm")
-    public String newContractOptionAdd(Model model, ContractDTO contract, @ModelAttribute ClientDTO client) {
+    public String newContractOptionAdd(Model model, ContractDTO contract,  @ModelAttribute @Valid ClientDTO client, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("error", "Operation cannot be proceeded further because received data contains some errors");
+            return "contract";
+        }
         model.addAttribute("table", "add");
         contract.setClient(client);
         contract.setPhoneNumber(client.getPhoneNumber());

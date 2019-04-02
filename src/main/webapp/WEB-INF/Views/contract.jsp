@@ -46,6 +46,8 @@
                 <h1 class="page-header">Contract details</h1>
             </c:otherwise>
         </c:choose>
+        <h2 class="page-header text-danger">${error}</h2>
+        <c:if test="${error==null}">
         <%@ include file="customerData.jsp" %>
         <br>
         <%@ include file="contractData.jsp" %>
@@ -96,7 +98,7 @@
                 </div>
             </c:otherwise>
         </c:choose>
-
+        </c:if>
 
     </main>
     <!-- Modal -->

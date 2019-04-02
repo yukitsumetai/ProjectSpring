@@ -1,34 +1,37 @@
 package com.telekom.entityDTO;
 
-
-import org.springframework.format.annotation.DateTimeFormat;
-
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.List;
 
 public class ClientDTO implements Serializable {
 
-    @NotBlank
+    private int id;
+
     @Size(min = 2, max = 20)
+    @NotBlank
     private String name;
 
     @NotBlank
     @Size(min = 2, max = 20)
     private String surname;
-    private int id;
+
     @NotBlank
     @Email
     private String email;
+
     @NotBlank
-    @DateTimeFormat
     private String birthday;
+
     @NotBlank
     private String password;
-    @NotBlank
+
+    @NotNull
+    @Digits(integer=8, fraction=0)
     private Integer passport;
+
+    @NotNull
+    @Digits(integer=13, fraction=0)
     private String phoneNumber;
     private List<ContractDTO> contracts;
     private AddressDTO address;

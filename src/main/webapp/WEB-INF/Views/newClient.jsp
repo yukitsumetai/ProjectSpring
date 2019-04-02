@@ -52,7 +52,7 @@
                     <div class="col-sm-6 form-group">
                         <form:label path="name">Name</form:label>
                         <form:input type="text" placeholder="Enter first name.." pattern="[A-Za-z\s-]{2,20}"  title="Only letters, space and hyphen are allowed. Min 2 max 20 characters"
-                                    path="name" class="form-control required" required="true"/>
+                                    path="name" class="form-control" required="true"/>
                     </div>
                     <div class="col-sm-6 form-group">
                         <form:label path="surname">Surname</form:label>

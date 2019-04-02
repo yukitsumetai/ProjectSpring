@@ -64,10 +64,6 @@
                     </div>
                     <div class="col-sm-5">
                         <div class="row right">
-                        <div class="search-box">
-                            <i class="material-icons">&#xE8B6;</i>
-                            <input type="text" class="form-control" id="myInput" placeholder="Search&hellip;">
-                        </div>
 
                         <c:if test="${table=='edit'}">
                             <div class="newtariff">

@@ -6,8 +6,10 @@ import com.telekom.service.OptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @SessionAttributes(types = OptionGroupDTO.class)
@@ -27,8 +29,13 @@ public class OptionGroupController {
     }
 
     @PostMapping("/new")
-    public String newTariffAdd(Model model, OptionGroupDTO optionGroup, @RequestParam(name = "isValid", required=false) boolean validity,
+
+    public String newTariffAdd(Model model, @Valid OptionGroupDTO optionGroup, BindingResult bindingResult, @RequestParam(name = "isValid", required=false) boolean validity,
                                @RequestParam(name="compatibleOptions", required=false) boolean options) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("error", "Tariff was not added because received data contains some errors");
+            return "addOptionGroup";
+        } else{
         if (!validity) optionGroup.setIsValid(false);
         if(options){
             model.addAttribute("table", "optionGroupAdd");
@@ -36,7 +43,7 @@ public class OptionGroupController {
             return "options";
         }
         optionGroupService.add(optionGroup);
-        return "redirect:/optionGroups";
+        return "redirect:/optionGroups";}
     }
     @PostMapping("/new/options")
     public String newTariffOptions(OptionGroupDTO optionGroup, @RequestParam(name = "optionID2", required = false) List<Integer> id) {

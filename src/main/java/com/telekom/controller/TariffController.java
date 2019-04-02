@@ -1,13 +1,16 @@
 package com.telekom.controller;
 
+import com.telekom.entityDTO.ClientDTO;
 import com.telekom.entityDTO.TariffDTO;
 import com.telekom.service.OptionService;
 import com.telekom.service.TariffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -26,14 +29,19 @@ public class TariffController {
     }
 
     @PostMapping("/new")
-    public String newTariffAdd(Model model, TariffDTO tariff, @RequestParam(name = "isValid", required = false) boolean validity,
+    public String newTariffAdd(Model model, @Valid TariffDTO tariff, BindingResult bindingResult, @RequestParam(name = "isValid", required = false) boolean validity,
                                @RequestParam(name = "compatibleOptions", required = false) boolean options) {
-        if (!validity) tariff.setIsValid(false);
-        if (options) {
-            return "options";
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("error", "Tariff cannot be added because received data contains some errors");
+            return "addTariff";
+        } else {
+            if (!validity) tariff.setIsValid(false);
+            if (options) {
+                return "options";
+            }
+            tariffService.add(tariff);
+            return "redirect:/tariffs";
         }
-        tariffService.add(tariff);
-        return "redirect:/tariffs";
     }
 
     @PostMapping("/new/options")

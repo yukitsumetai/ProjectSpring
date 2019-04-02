@@ -7,8 +7,10 @@ import com.telekom.service.TariffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -33,9 +35,14 @@ public class OptionController {
     }
 
     @PostMapping("/new")
-    public String newOptionAdd(Model model, OptionDTO option, @RequestParam(name = "opt", required = false) List<Integer> tariffs,
-                               @RequestParam(name = "isValid", required = false) boolean validity,
-                               @RequestParam(name = "relation") String relation, @RequestParam(name = "group", required = false) Integer groupId, @RequestParam(name = "tariffs", required = false) boolean tariff) {
+    public String newOptionAdd(Model model, @Valid OptionDTO option, BindingResult bindingResult, @RequestParam(name = "isValid", required = false) boolean validity,
+                               @RequestParam(name = "relation") String relation, @RequestParam(name = "group", required = false) Integer groupId,
+                               @RequestParam(name = "tariffs", required = false) boolean tariff) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("error", "Tariff was not added because received data contains some errors");
+            return "addOption";
+        }
+        else{
         if (!validity) option.setIsValid(false);
         optionService.SetOptionGroup(option, groupId);
         if (!relation.equals("alone")) {
@@ -49,7 +56,7 @@ public class OptionController {
             return "tariffs";
         }
         optionService.add(option);
-        return "redirect:/options";
+        return "redirect:/options";}
     }
 
     @PostMapping("/new/parent")

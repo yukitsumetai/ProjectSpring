@@ -103,65 +103,56 @@
                         </c:choose>
                     </div>
                     <div class="col-sm-6">
-
-                        <div class="search-box">
-                            <i class="material-icons">&#xE8B6;</i>
-                            <input type="text" class="form-control" id="myInput" placeholder="Search&hellip;">
-                        </div>
-                        <div class="newtariff">
-
-                            <c:if test="${table=='edit'}">
-                                <form action="/tariffs/new">
-                                    <button type="submit" class="btn btn-success">Add Tariff</button>
-                                </form>
-                            </c:if>
-
-                        </div>
+                        <c:if test="${table=='edit'}">
+                            <form action="/tariffs/new">
+                                <button type="submit" class="btn btn-success">Add Tariff</button>
+                            </form>
+                        </c:if>
                     </div>
-
                 </div>
             </div>
-
-
-            <c:choose>
-
-                <c:when test="${NEB=='no'}">
-                    <form action="/existingContract/tariffs" method="post">
-                        <%@ include file="tableTariffs.jsp" %>
-                        <div>
-                            <br><br>
-                            <button type="submit" class="btn btn-success" id="options" disabled>Next <i
-                                    class="glyphicon glyphicon-chevron-right"></i></button>
-                        </div>
-                    </form>
-                </c:when>
-                <c:when test="${table=='add'}">
-                    <form action="/newContract/options" method="post">
-                        <%@ include file="tableTariffs.jsp" %>
-                        <div>
-                            <br><br>
-                            <button type="submit" class="btn btn-success" id="options" disabled>Next <i
-                                    class="glyphicon glyphicon-chevron-right"></i></button>
-                        </div>
-                    </form>
-                </c:when>
-                <c:when test="${table=='option' || table=='optionEdit'}">
-                    <form action="tariffs" method="post">
-                        <%@ include file="tableTariffs.jsp" %>
-                        <div>
-                            <br><br>
-                            <button type="submit" class="btn btn-success">Save <i
-                                    class="glyphicon glyphicon-floppy-disk"></i></button>
-                        </div>
-                    </form>
-                </c:when>
-                <c:otherwise>
-                    <%@ include file="tableTariffs.jsp" %>
-                </c:otherwise>
-            </c:choose>
-
-
         </div>
+
+
+        <c:choose>
+
+        <c:when test="${NEB=='no'}">
+        <form action="/existingContract/tariffs" method="post">
+            <%@ include file="tableTariffs.jsp" %>
+            <div>
+                <br><br>
+                <button type="submit" class="btn btn-success" id="options" disabled>Next <i
+                        class="glyphicon glyphicon-chevron-right"></i></button>
+            </div>
+        </form>
+        </c:when>
+        <c:when test="${table=='add'}">
+        <form action="/newContract/options" method="post">
+            <%@ include file="tableTariffs.jsp" %>
+            <div>
+                <br><br>
+                <button type="submit" class="btn btn-success" id="options" disabled>Next <i
+                        class="glyphicon glyphicon-chevron-right"></i></button>
+            </div>
+        </form>
+        </c:when>
+        <c:when test="${table=='option' || table=='optionEdit'}">
+        <form action="tariffs" method="post">
+            <%@ include file="tableTariffs.jsp" %>
+            <div>
+                <br><br>
+                <button type="submit" class="btn btn-success">Save <i
+                        class="glyphicon glyphicon-floppy-disk"></i></button>
+            </div>
+        </form>
+        </c:when>
+        <c:otherwise>
+            <%@ include file="tableTariffs.jsp" %>
+        </c:otherwise>
+        </c:choose>
+
+
+</div>
 </div>
 
 </main>
@@ -199,33 +190,33 @@
 <c:choose>
     <c:when test="${table=='option'}">
         <script>
-        $(document).on('click', '.chk', function () {
-            var checkboxes = document.getElementsByClassName('chk');
-            for (var i = 0; i < checkboxes.length; i++) {
-                if (checkboxes[i].checked) {
-                    var value = checkboxes[i].value;
-                    var flag=true;
-                    var existing = document.getElementsByClassName('opt2');
-                    if (existing != null) {
-                        for (var j = 0; j < existing.length; j++) {
-                            if (existing[j].value == checkboxes[i].value) flag=false;
+            $(document).on('click', '.chk', function () {
+                var checkboxes = document.getElementsByClassName('chk');
+                for (var i = 0; i < checkboxes.length; i++) {
+                    if (checkboxes[i].checked) {
+                        var value = checkboxes[i].value;
+                        var flag = true;
+                        var existing = document.getElementsByClassName('opt2');
+                        if (existing != null) {
+                            for (var j = 0; j < existing.length; j++) {
+                                if (existing[j].value == checkboxes[i].value) flag = false;
+                            }
                         }
-                    }
-                    if (flag) {
-                        var newInput = '<input name="tariffID2" type="hidden" class="opt2" value="' + value + '">';
-                        document.getElementById('checked').insertAdjacentHTML('beforeend', newInput);
-                    }
-                } else {
-                    var existing = document.getElementsByClassName('opt2');
-                    if (existing != null) {
-                        for (var j = 0; j < existing.length; j++) {
-                            if (existing[j].value == checkboxes[i].value) existing[j].remove();
+                        if (flag) {
+                            var newInput = '<input name="tariffID2" type="hidden" class="opt2" value="' + value + '">';
+                            document.getElementById('checked').insertAdjacentHTML('beforeend', newInput);
+                        }
+                    } else {
+                        var existing = document.getElementsByClassName('opt2');
+                        if (existing != null) {
+                            for (var j = 0; j < existing.length; j++) {
+                                if (existing[j].value == checkboxes[i].value) existing[j].remove();
+                            }
                         }
                     }
                 }
-            }
-        });
-    </script>
+            });
+        </script>
     </c:when>
     <c:otherwise>
         <script>
