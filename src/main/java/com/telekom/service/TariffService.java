@@ -4,9 +4,10 @@ import com.telekom.entity.Option;
 import com.telekom.entity.Tariff;
 import com.telekom.entityDTO.Page;
 import com.telekom.entityDTO.TariffDTO;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public interface TariffService {
 
     List<TariffDTO> getAll();
@@ -18,7 +19,6 @@ public interface TariffService {
     void SetOptions(TariffDTO tariff, List<Integer> id);
     Page<TariffDTO> getPage(Integer size, Integer page, Integer optionId);
     Page<TariffDTO> getPage(Integer size, Integer page);
-
-
+    Page<TariffDTO> getPageValid(Integer size, Integer page);
 }
 

@@ -2,7 +2,6 @@ package com.telekom.dao;
 
 
 import com.telekom.entity.Option;
-import com.telekom.entity.PhoneNumber;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
@@ -110,8 +109,9 @@ public class OptionDaoImpl extends PaginationDaoImpl<Option> implements OptionDa
     }
 
     @Override
-    public Long getPagesNoChildrenAndParentExisting() {
+    public Long getPagesNoChildrenAndParentExisting(Integer id) {
         TypedQuery<Long> q = entityManager.createQuery("select count(t) from Option t  where t.id not in(select t from Option t join t.children) and t.id not in(select t from Option t join t.parent) or t.id in(select t from Option t join t.parent p where p.id=:id)", Long.class);
+        q.setParameter("id", id);
         Long c= q.getSingleResult();
         return c;
     }
@@ -126,6 +126,22 @@ public class OptionDaoImpl extends PaginationDaoImpl<Option> implements OptionDa
     @Override
     public Long getPagesCountNoParentNoGroup() {
         TypedQuery<Long> q = entityManager.createQuery("select count(t) from Option t where t.id not in(select t from Option t join t.parent) and t.id not in(select t from Option t join t.group)", Long.class);
+        Long c= q.getSingleResult();
+        return c;
+    }
+
+    @Override
+    public List<Option> getAllNoParentNoGroupExisting(Integer size, Integer page, Integer id) {
+        TypedQuery<Option> q = entityManager.createQuery( "select t from Option t where t.id not in(select t from Option t join t.parent) and t.id not in(select t from Option t join t.group) or t.id in(select t from Option t join t.group p where p.id=:id)", Option.class);
+        q.setParameter("id", id);
+        pageCount(page, size, q);
+        return q.getResultList();
+    }
+
+    @Override
+    public Long getPagesCountNoParentNoGroupExisting(Integer id) {
+        TypedQuery<Long> q = entityManager.createQuery("select count(t) from Option t where t.id not in(select t from Option t join t.parent) and t.id not in(select t from Option t join t.group)  or t.id in(select t from Option t join t.group p where p.id=:id)", Long.class);
+        q.setParameter("id", id);
         Long c= q.getSingleResult();
         return c;
     }

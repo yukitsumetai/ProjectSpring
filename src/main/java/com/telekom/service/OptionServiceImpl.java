@@ -114,7 +114,7 @@ public class OptionServiceImpl extends PaginationImpl<OptionDTO> implements Opti
                     }
                 }
             }
-            total = optionDao.getPagesNoChildrenAndParentExisting();
+            total = optionDao.getPagesNoChildrenAndParentExisting(optionId);
         }
         pageGroups.removeIf(st -> st.getId() == o.getId());
         return getPageDraft(pageGroups, total, page, size);
@@ -153,6 +153,22 @@ public class OptionServiceImpl extends PaginationImpl<OptionDTO> implements Opti
     }
 
     @Override
+    @Transactional
+    public Page<OptionDTO> getPageForExistingGroup(Integer size, Integer page, Integer optionGroupId) {
+        OptionGroup og = optionGroupDao.getOne(optionGroupId);
+        List<OptionDTO>pageGroups = listEntityToDto(optionDao.getAllNoParentNoGroupExisting(size, page, optionGroupId));
+        for (OptionDTO o2 : pageGroups) {
+            for (Option o : og.getOptions()) {
+                if (o.getId() == o2.getId()) {
+                    o2.setExisting(true);
+                }
+            }
+        }
+        Long total = optionDao.getPagesCountNoParentNoGroupExisting(optionGroupId);
+        return getPageDraft(pageGroups, total, page, size);
+    }
+
+    @Override
     public void SetCompatibleTariffs(OptionDTO option, List<Integer> id) {
         Set<TariffDTO> tariffs = new HashSet<>();
         if (id != null) {
@@ -185,7 +201,7 @@ public class OptionServiceImpl extends PaginationImpl<OptionDTO> implements Opti
                 OptionGroupDTO og = new OptionGroupDTO();
                 og.setId(groupId);
                 option.setOptionGroup(og);
-            }
+            } else option.setOptionGroup(null);
         } else option.setOptionGroup(null);
     }
 
@@ -309,6 +325,7 @@ public class OptionServiceImpl extends PaginationImpl<OptionDTO> implements Opti
             ) {
                 Option tmp = optionDao.getOne(child.getId());
                 tmp.setParent(null);
+                tmp.setGroup(null);
             }
         }
         updateOptionParent(option, o);

@@ -8,7 +8,6 @@ import com.telekom.entityDTO.OptionDTO;
 import com.telekom.entityDTO.OptionGroupDTO;
 import com.telekom.entityDTO.Page;
 import com.telekom.mapper.OptionGroupMapper;
-import javafx.scene.control.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -2,7 +2,6 @@ package com.telekom.controller;
 
 import com.telekom.entityDTO.OptionGroupDTO;
 import com.telekom.service.OptionGroupService;
-import com.telekom.service.OptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,8 +15,6 @@ import java.util.List;
 @RequestMapping(value = "/optionGroups")
 @Controller
 public class OptionGroupController {
-    @Autowired
-    private OptionService optionService;
     @Autowired
     private OptionGroupService optionGroupService;
 
@@ -64,6 +61,7 @@ public class OptionGroupController {
         if (options) {
             model.addAttribute("table", "optionGroupEdit");
             model.addAttribute("existing", optionGroup.getOptions());
+            model.addAttribute("id", optionGroup.getId());
             model.addAttribute("group", true);
             return "options";
         }

@@ -1,7 +1,5 @@
 package com.telekom.service;
 
-
-import com.telekom.dao.ContractDao;
 import com.telekom.dao.OptionDao;
 import com.telekom.dao.TariffDao;
 import com.telekom.entity.Option;
@@ -28,7 +26,6 @@ public class TariffServiceImpl extends PaginationImpl<TariffDTO> implements Tari
     private TariffDao tariffDao;
     @Autowired
     private OptionDao optionDao;
-
     @Autowired
     private TariffMapper tariffMapper;
 
@@ -126,6 +123,14 @@ public class TariffServiceImpl extends PaginationImpl<TariffDTO> implements Tari
     public Page<TariffDTO> getPage(Integer size, Integer page) {
         List<TariffDTO> pageGroups =listEntityToDto(tariffDao.getPages(size, page));
         Long total=tariffDao.getPagesCount();
+        return getPageDraft(pageGroups, total, page, size);
+    }
+
+    @Override
+    @Transactional
+    public Page<TariffDTO> getPageValid(Integer size, Integer page) {
+        List<TariffDTO> pageGroups =listEntityToDto(tariffDao.getPagesValid(size, page));
+        Long total=tariffDao.getPagesValidCount();
         return getPageDraft(pageGroups, total, page, size);
     }
 

@@ -1,6 +1,5 @@
 package com.telekom.entity;
 
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigInteger;

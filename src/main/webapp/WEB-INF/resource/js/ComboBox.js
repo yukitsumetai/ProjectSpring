@@ -43,13 +43,6 @@ function phoneNumber() {
 };
 
 
-
-function Highlight(){
-    $('td :checkbox').bind('change click', function () {
-        $(this).closest('tr').toggleClass('highlight', this.checked);
-    }).change();
-}
-
 function scrolled(o, optId) {
     if (document.getElementById('page').value > 0) {
         //visible height + pixel scrolled = total height
@@ -203,8 +196,8 @@ function radioBasket(tariffPrice){
             document.getElementById('optionsCart').insertAdjacentHTML('beforeend', newInput);
         }
     }
-    document.getElementById("totalMonthlyPrice").innerHTML = "$" + priceTotal;
-    document.getElementById("totalOneTimePrice").innerHTML = "$" + priceTotalOneTime;
+    document.getElementById("totalMonthlyPrice").innerHTML = "$" + Number(priceTotal.toFixed(2));
+    document.getElementById("totalOneTimePrice").innerHTML = "$" + Number(priceTotalOneTime.toFixed(2));
 
 }
 function checksBasket(tariffPrice){
@@ -232,6 +225,6 @@ function checksBasket(tariffPrice){
             priceTotalOneTime+=parseFloat(checkboxes[i].getAttribute('priceOneTime'));
         }
     }
-    document.getElementById("totalMonthlyPrice").innerHTML = "$" + priceTotal;
-    document.getElementById("totalOneTi,ePrice").innerHTML = "$" + priceTotalOneTime;
+    document.getElementById("totalMonthlyPrice").innerHTML = "$" + Number(priceTotal.toFixed(2));
+    document.getElementById("totalOneTimePrice").innerHTML = "$" + Number(priceTotalOneTime.toFixed(2));
 }

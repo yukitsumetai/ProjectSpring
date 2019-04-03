@@ -28,8 +28,6 @@ function pagination(entity, page, table1, id, parent, optionId, group) {
             } else if(entity ==2){
                 addRowsClient(data.data, table1);
             }
-
-
             checkboxes();
 
             document.getElementById('total').innerHTML = ((data.totalPages - 1) * 5 + data.lastPage);
@@ -120,7 +118,7 @@ function addRowsTariff(data, table) {
         $.each(val.options, function (key, option) {
             var c = (option || {}).name;
             c2 = (typeof (c) !== 'undefined' ? c : '');
-            tariffsTable.push(c2 + "<br>");
+            tariffsTable.push(c2);
         })
         var icon;
         var icon2 = ""
@@ -139,7 +137,7 @@ function addRowsTariff(data, table) {
         items.push("<td>" + val.name + "</td>");
         items.push("<td>" + val.price + "</td>");
         items.push("<td>" + val.description + "</td>");
-        items.push("<td>" + tariffsTable.join('') + "</td>");
+        items.push("<td>" + tariffsTable.join(', ') + "</td>");
         items.push("<td>" + icon + icon2 + "</td>");
 
         items.push("</tr>");

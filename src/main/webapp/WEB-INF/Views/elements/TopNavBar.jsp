@@ -35,13 +35,13 @@
 
 
 <nav class="navbar navbar-inverse sticky-top flex-md-nowrap p-0">
-    <a class=" brand navbar-brand">
-        <img src="../../resource/images/cd-remove-item.svg" width="30" height="30" class="d-inline-block align-top"
+    <a class=" brand navbar-brand text-light">
+        <img src="${contextPath}/resource/images/conHp.png" width="30" height="30" class="d-inline-block align-top"
              alt="">
         Spring Line</a>
 
     <div class="navbar-nav mr-auto">
-        <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+        <li class="nav-item"><a class="text-secondary" href="/logout">Logout</a></li>
     </div>
     <c:if test="${table=='add'}">
         <ul class=" my-2 my-lg-0">

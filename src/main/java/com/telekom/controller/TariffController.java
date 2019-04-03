@@ -1,8 +1,6 @@
 package com.telekom.controller;
 
-import com.telekom.entityDTO.ClientDTO;
 import com.telekom.entityDTO.TariffDTO;
-import com.telekom.service.OptionService;
 import com.telekom.service.TariffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,7 +20,7 @@ public class TariffController {
     private TariffService tariffService;
 
     @GetMapping("/new")
-    public String newTariff(Model model) throws SQLException {
+    public String newTariff(Model model) {
         TariffDTO tariff = new TariffDTO();
         model.addAttribute("tariff", tariff);
         return "addTariff";

@@ -63,7 +63,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">$</span>
                         </div>
-                        <input id="priceOneTime" type="number" value="${option.priceOneTime}" step="0.01" name="priceOneTime" class="form-control" required/>
+                        <input id="priceOneTime" type="number" value="${option.priceOneTime}" step="0.01" name="priceOneTime" class="form-control" disabled/>
                     </div>
 
                 </div>
@@ -73,7 +73,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">$</span>
                         </div>
-                        <input id="priceMonthly" type="number" value="${option.priceMonthly}" step="0.01" name="priceMonthly" class="form-control" required/>
+                        <input id="priceMonthly" type="number" value="${option.priceMonthly}" step="0.01" name="priceMonthly" class="form-control" disabled/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -85,7 +85,7 @@
                     <label class="control-label">Validity: </label>
                     <input type="checkbox" class="chk" name="isValid" id="isValid" value=true
                             <c:if test="${option.isValid==true}">
-                                checked
+                                checked disabled
                             </c:if>/>
                 </div>
                 <input type="hidden" name="relation" id="relation" value="nothing"/>

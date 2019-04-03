@@ -101,13 +101,13 @@
                 <div class="row">
                     <div class="col-sm-6 form-group">
                         <form:label path="address.city">City</form:label>
-                        <form:input type="text" placeholder="Enter city.."
+                        <form:input type="text" placeholder="Enter city.."  required="true"
                                     path="address.city" class="form-control required" pattern="[A-Za-z\s-]{0,20}"   title="Only letters and hyphen are allowed. Min 2 max 20 characters"/>
                     </div>
                     <div class="col-sm-6 form-group">
                         <form:label path="address.zip">Zipcode</form:label>
                         <form:input type="text" placeholder="Enter Zipcode.." required="true"
-                                    path="address.zip" class="form-control required"  pattern="[0-9]{5}"  title="ZIP should consist of 5 digits"/>
+                                    path="address.zip" class="form-control required" pattern="[0-9]{5}" title="ZIP should consist of 5 digits"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -123,7 +123,7 @@
                         <form:label path="phoneNumber">Phone number</form:label>
                         <form:select class="form-control" path="phoneNumber"
                                      id="select1" name="group" onscroll="scrolledPhone(this)" data-live-search="true" required="true"
-                                     onfocus='this.size=5;' onblur='this.size=1;' onchange='this.size=1;'>
+                                     onfocus='this.size=4;' onblur='this.size=1;' onchange='this.size=1;'>
                         </form:select>
                         <input type="hidden" id="page" value=1>
                     </div>

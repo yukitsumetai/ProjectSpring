@@ -1,11 +1,5 @@
 package com.telekom.entityDTO;
 
-
-import com.telekom.entity.Client;
-import com.telekom.entity.Option;
-import com.telekom.entity.Tariff;
-import org.springframework.stereotype.Component;
-
 import javax.persistence.Entity;
 import java.io.Serializable;
 import java.math.BigInteger;
@@ -45,11 +39,11 @@ public class ContractDTO implements Serializable {
     }
 
     public Double getPriceOneTime() {
-        return priceOneTime;
+        return Math.round(priceOneTime*100.0)/100.0;
     }
 
     public void addPriceOneTime(Double price) {
-        this.priceOneTime += price;
+        this.priceOneTime += Math.round(price*100.0)/100.0;
     }
 
     public void setPriceOneTime(Double priceOneTime) {
@@ -69,12 +63,10 @@ public class ContractDTO implements Serializable {
     }
 
     public Double getPrice() {
-        return price;
+        return Math.round(price*100.0)/100.0;
     }
 
-    public void addPrice(Double price) {
-        this.price += price;
-    }
+    public void addPrice(Double price) { this.price += Math.round(price*100.0)/100.0; }
 
     public void setPrice(Double price) {
         this.price = price;

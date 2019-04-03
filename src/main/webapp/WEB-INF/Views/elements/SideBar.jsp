@@ -20,21 +20,21 @@
     <div class="sidebar-sticky">
 
         <security:authorize access="hasRole('ROLE_ADMIN')">
-        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+        <h6 class="sidebar-heading d-flex justify-content-between mt-4 mb-1 text-muted">
                 <span>ADMINISTRATION</span>
             </h6>
         <ul class="nav flex-column" id="nav">
-            <li class="nav-item"><a href="${contextPath}/tariffs/">Tariffs </a></li>
-            <li class="nav-item"><a href="${contextPath}/options/"></span>Options</a></li>
-            <li class="nav-item"><a href="${contextPath}/optionGroups/">Option Groups</a></li>
+            <li class="nav-item"><a class="text-success" href="${contextPath}/tariffs/">Tariffs </a></li>
+            <li class="nav-item"><a class="text-success" href="${contextPath}/options/">Options</a></li>
+            <li class="nav-item"><a class="text-success" href="${contextPath}/optionGroups/">Option Groups</a></li>
 
         </ul>
-        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+        <h6 class="sidebar-heading d-flex justify-content-between mt-4 mb-1 text-muted">
             <span>BUSINESS PROCESSES</span>
         </h6>
-        <ul class="nav nav-sidebar">
-            <li class="nav-item"><a href="${contextPath}/newContract/tariffs">New Contract</a></li>
-            <li class="nav-item"><a href="${contextPath}/users/">Existing Customers</a></li>
+        <ul class="nav flex-column">
+            <li class="nav-item"><a class="text-success" href="${contextPath}/newContract/tariffs">New Contract</a></li>
+            <li class="nav-item"><a class="text-success" href="${contextPath}/users/">Existing Customers</a></li>
         </ul>
         </security:authorize>
         <security:authorize access="hasRole('ROLE_USER')">

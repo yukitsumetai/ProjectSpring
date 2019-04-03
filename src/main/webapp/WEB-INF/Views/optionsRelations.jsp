@@ -23,31 +23,19 @@
         <script src="${contextPath}/resource/js/ComboBox.js"></script>
         <title>Choose related options</title>
 
-        <!--Search-->
-        <script>
-            $(document).ready(function () {
-                Higlight();
-                $("#myInput").on("keyup", function () {
-                    var value = $(this).val().toLowerCase();
-                    $("#myTable tr").filter(function () {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    });
-                });
-            });
-        </script>
-
+        <!--Pagination initial-->
         <script>
             $(document).ready(function () {
                 var curr = document.getElementById('page').value;
-                if(curr==0){
+                if (curr == 0) {
                     var table;
                     <c:if test="${table=='edit'}">
-                    var table=1;
+                    var table = 1;
                     </c:if>
-                    var parent="${parent}"
-                    var id="${id}"
-                    var optionId="${optionId}"
-                        return pagination(0, 1, table, id, parent, optionId, null);
+                    var parent = "${parent}"
+                    var id = "${id}"
+                    var optionId = "${optionId}"
+                    return pagination(0, 1, table, id, parent, optionId, null);
                 }
                 document.getElementById('page').value = 1;
             });
@@ -74,15 +62,6 @@
                             </c:otherwise>
                         </c:choose>
                     </div>
-                    <div class="col-sm-6">
-
-                        <div class="search-box">
-                            <i class="material-icons">&#xE8B6;</i>
-                            <input type="text" class="form-control" id="myInput" placeholder="Search&hellip;">
-                        </div>
-
-                    </div>
-
                 </div>
             </div>
 
@@ -95,10 +74,10 @@
                             <div class="col-sm-2 form-group">
                                 <div class="row">
                                     <button type="submit" class="btn btn-success"
-                                    <c:choose>
-                                            <c:when test="${tariff==true}">value=true</c:when>
-                                            <c:otherwise>value=false</c:otherwise>
-                                    </c:choose> name="action">Next
+                                            <c:choose>
+                                                <c:when test="${tariff==true}">value=true</c:when>
+                                                <c:otherwise>value=false</c:otherwise>
+                                            </c:choose> name="action">Next
                                     </button>
                                 </div>
                             </div>
@@ -127,15 +106,15 @@
                         for (var i = 0; i < checkboxes.length; i++) {
                             if (checkboxes[i].checked) {
                                 var value = checkboxes[i].value;
-                                var flag=true;
+                                var flag = true;
                                 var existing = document.getElementsByClassName('opt2');
                                 if (existing != null) {
                                     for (var j = 0; j < existing.length; j++) {
-                                        if (existing[j].value == checkboxes[i].value) flag=false;
+                                        if (existing[j].value == checkboxes[i].value) flag = false;
                                     }
                                 }
                                 if (flag) {
-                                    var newInput = '<input name="optionID2" class="opt2" value="' + value + '">';
+                                    var newInput = '<input name="optionID2" type="hidden" class="opt2" value="' + value + '">';
                                     document.getElementById('checked').insertAdjacentHTML('beforeend', newInput);
                                 }
                             } else {
@@ -152,7 +131,7 @@
             </c:if>
             <c:if test="${parent==true}">
                 <script>
-                    $(document).on('click', '.chk', function() {
+                    $(document).on('click', '.chk', function () {
                         $('input.chk').not(this).prop('checked', false);
                     });
                 </script>
@@ -172,9 +151,8 @@
             </c:if>
         </div>
     </main>
-</div>
-</div>
-
+    </div>
+    </div>
 
 
 </body>

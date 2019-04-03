@@ -14,6 +14,10 @@ public interface TariffDao extends PaginationDao {
 
     Tariff getOne(Integer id);
 
+    List<Tariff> getPagesValid(Integer size, Integer page);
+
+    Long getPagesValidCount();
+
 
 }
 

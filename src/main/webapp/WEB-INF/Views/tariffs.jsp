@@ -60,9 +60,12 @@
                 <c:if test="${table=='edit'}">
                 var table = 1;
                 </c:if>
+                <c:if test="${table=='add'}">
+                var parent = true;
+                </c:if>
                 var id = "${id}"
                 if (!('hasCodeRunBefore' in localStorage)) {
-                    return pagination(1, 1, table, id);
+                    return pagination(1, 1, table, id, parent);
                 }
             }
             document.getElementById('page').value = 1;
@@ -78,15 +81,15 @@
         <input type="hidden" id="page" value=0>
 
         <c:choose>
-        <c:when test="${table=='edit'}">
-        <h1 class="page-header">Tariffs</h1>
-        </c:when>
-        <c:when test="${table=='add'}">
-        <h1 class="page-header">New contract</h1>
-        </c:when>
-        <c:otherwise>
-        <h1 class="page-header">Tariffs</h1>
-        </c:otherwise>
+            <c:when test="${table=='edit'}">
+                <h1 class="page-header">Tariffs</h1>
+            </c:when>
+            <c:when test="${table=='add'}">
+                <h1 class="page-header">New contract</h1>
+            </c:when>
+            <c:otherwise>
+                <h1 class="page-header">Tariffs</h1>
+            </c:otherwise>
         </c:choose>
 
         <div class="table-wrapper">
@@ -102,60 +105,67 @@
                             </c:otherwise>
                         </c:choose>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 ">
                         <c:if test="${table=='edit'}">
                             <form action="/tariffs/new">
-                                <button type="submit" class="btn btn-success">Add Tariff</button>
+                                <button type="submit" class="btn btn-success right">Add Tariff</button>
                             </form>
                         </c:if>
                     </div>
                 </div>
             </div>
+            <c:choose>
+
+                <c:when test="${NEB=='no'}">
+                    <form action="/existingContract/tariffs" method="post">
+                        <%@ include file="tableTariffs.jsp" %>
+                        <div>
+                            <br><br>
+                            <button type="submit" class="btn btn-success" id="options" disabled>Next <i
+                                    class="glyphicon glyphicon-chevron-right"></i></button>
+                        </div>
+                    </form>
+                </c:when>
+                <c:when test="${table=='add'}">
+                    <form action="/newContract/options" method="post">
+                        <%@ include file="tableTariffs.jsp" %>
+                        <div>
+                            <br><br>
+                            <button type="submit" class="btn btn-success" id="options" disabled>Next <i
+                                    class="glyphicon glyphicon-chevron-right"></i></button>
+                        </div>
+                    </form>
+                </c:when>
+                <c:when test="${table=='option'}">
+                    <form action="tariffs" method="post">
+                        <%@ include file="tableTariffs.jsp" %>
+                        <div>
+                            <br><br>
+                            <button type="submit" class="btn btn-success">Save <i
+                                    class="glyphicon glyphicon-floppy-disk"></i></button>
+                        </div>
+                    </form>
+                </c:when>
+                <c:when test="${table=='optionEdit'}">
+                    <form action="edit/tariffs" method="post">
+                        <%@ include file="tableTariffs.jsp" %>
+                        <div>
+                            <br><br>
+                            <button type="submit" class="btn btn-success">Save <i
+                                    class="glyphicon glyphicon-floppy-disk"></i></button>
+                        </div>
+                    </form>
+                </c:when>
+                <c:otherwise>
+                    <%@ include file="tableTariffs.jsp" %>
+                </c:otherwise>
+            </c:choose>
+
+
         </div>
-
-
-        <c:choose>
-
-        <c:when test="${NEB=='no'}">
-        <form action="/existingContract/tariffs" method="post">
-            <%@ include file="tableTariffs.jsp" %>
-            <div>
-                <br><br>
-                <button type="submit" class="btn btn-success" id="options" disabled>Next <i
-                        class="glyphicon glyphicon-chevron-right"></i></button>
-            </div>
-        </form>
-        </c:when>
-        <c:when test="${table=='add'}">
-        <form action="/newContract/options" method="post">
-            <%@ include file="tableTariffs.jsp" %>
-            <div>
-                <br><br>
-                <button type="submit" class="btn btn-success" id="options" disabled>Next <i
-                        class="glyphicon glyphicon-chevron-right"></i></button>
-            </div>
-        </form>
-        </c:when>
-        <c:when test="${table=='option' || table=='optionEdit'}">
-        <form action="tariffs" method="post">
-            <%@ include file="tableTariffs.jsp" %>
-            <div>
-                <br><br>
-                <button type="submit" class="btn btn-success">Save <i
-                        class="glyphicon glyphicon-floppy-disk"></i></button>
-            </div>
-        </form>
-        </c:when>
-        <c:otherwise>
-            <%@ include file="tableTariffs.jsp" %>
-        </c:otherwise>
-        </c:choose>
-
-
-</div>
+    </main>
 </div>
 
-</main>
 
 <!-- Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -188,7 +198,7 @@
 
 <!--Cart checkboxes-->
 <c:choose>
-    <c:when test="${table=='option'}">
+    <c:when test="${table=='option' || table=='optionEdit'}">
         <script>
             $(document).on('click', '.chk', function () {
                 var checkboxes = document.getElementsByClassName('chk');

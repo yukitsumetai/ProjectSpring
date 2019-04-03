@@ -18,7 +18,6 @@ public class TariffDTO implements Serializable {
     private String name;
 
     @Min(0)
-    @NotNull
     private double price;
 
     @Size(max = 200)

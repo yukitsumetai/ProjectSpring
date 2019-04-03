@@ -1319,173 +1319,183 @@
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="328" parent="278" name="FK78x35p7lndruhco5qccp48p3c">
+    <index id="328" parent="278" name="FK2i0gjbn44q63y3oow4h07o5be">
+      <ColNames>Contract_phoneNumber</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="329" parent="278" name="FK78x35p7lndruhco5qccp48p3c">
       <ColNames>options_id</ColNames>
       <Type>btree</Type>
     </index>
-    <foreign-key id="329" parent="278" name="FK78x35p7lndruhco5qccp48p3c">
+    <foreign-key id="330" parent="278" name="FK2i0gjbn44q63y3oow4h07o5be">
+      <ColNames>Contract_phoneNumber</ColNames>
+      <RefSchemaName>projectspring</RefSchemaName>
+      <RefTableName>contracts</RefTableName>
+      <RefColNames>phoneNumber</RefColNames>
+    </foreign-key>
+    <foreign-key id="331" parent="278" name="FK78x35p7lndruhco5qccp48p3c">
       <ColNames>options_id</ColNames>
       <RefSchemaName>projectspring</RefSchemaName>
       <RefTableName>options</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <column id="330" parent="279" name="phoneNumber">
+    <column id="332" parent="279" name="phoneNumber">
       <Position>1</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="331" parent="279" name="PRIMARY">
+    <key id="333" parent="279" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>phoneNumber</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="332" parent="280" name="next_val">
+    <column id="334" parent="280" name="next_val">
       <Position>1</Position>
       <DataType>bigint(20)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="333" parent="281" name="id">
+    <column id="335" parent="281" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="334" parent="281" name="name">
+    <column id="336" parent="281" name="name">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="335" parent="281" name="description">
+    <column id="337" parent="281" name="description">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="336" parent="281" name="isValid">
+    <column id="338" parent="281" name="isValid">
       <Position>4</Position>
       <DataType>bit(1)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="337" parent="281" name="PRIMARY">
+    <key id="339" parent="281" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="338" parent="282" name="id">
+    <column id="340" parent="282" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="339" parent="282" name="name">
+    <column id="341" parent="282" name="name">
       <Position>2</Position>
       <DataType>varchar(30)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="340" parent="282" name="description">
+    <column id="342" parent="282" name="description">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="341" parent="282" name="priceOneTime">
+    <column id="343" parent="282" name="priceOneTime">
       <Position>4</Position>
       <DataType>int(30)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="342" parent="282" name="priceMonthly">
+    <column id="344" parent="282" name="priceMonthly">
       <Position>5</Position>
       <DataType>int(30)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="343" parent="282" name="isValid">
+    <column id="345" parent="282" name="isValid">
       <Position>6</Position>
       <DataType>bit(1)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="344" parent="282" name="PRIMARY">
+    <key id="346" parent="282" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="345" parent="283" name="group_id">
+    <column id="347" parent="283" name="group_id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="346" parent="283" name="option_id">
+    <column id="348" parent="283" name="option_id">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="347" parent="283" name="FK9g0aqso2kv32sdsq4nsp2miqs">
+    <index id="349" parent="283" name="FK9g0aqso2kv32sdsq4nsp2miqs">
       <ColNames>group_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="348" parent="283" name="PRIMARY">
+    <key id="350" parent="283" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>option_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="349" parent="283" name="FK9g0aqso2kv32sdsq4nsp2miqs">
+    <foreign-key id="351" parent="283" name="FK9g0aqso2kv32sdsq4nsp2miqs">
       <ColNames>group_id</ColNames>
       <RefSchemaName>projectspring</RefSchemaName>
       <RefTableName>option_groups</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <foreign-key id="350" parent="283" name="FKh4mts4h1ga6l16deehiwo2n0t">
+    <foreign-key id="352" parent="283" name="FKh4mts4h1ga6l16deehiwo2n0t">
       <ColNames>option_id</ColNames>
       <RefSchemaName>projectspring</RefSchemaName>
       <RefTableName>options</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <column id="351" parent="284" name="parent_id">
+    <column id="353" parent="284" name="parent_id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="352" parent="284" name="child_id">
+    <column id="354" parent="284" name="child_id">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="353" parent="284" name="FK9i55rwfhcvit9oby3pds63dgh">
+    <index id="355" parent="284" name="FK9i55rwfhcvit9oby3pds63dgh">
       <ColNames>parent_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="354" parent="284" name="PRIMARY">
+    <key id="356" parent="284" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>child_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="355" parent="284" name="FK9i55rwfhcvit9oby3pds63dgh">
+    <foreign-key id="357" parent="284" name="FK9i55rwfhcvit9oby3pds63dgh">
       <ColNames>parent_id</ColNames>
       <RefSchemaName>projectspring</RefSchemaName>
       <RefTableName>options</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <foreign-key id="356" parent="284" name="FKa36uv04jwm7c1vnjldnqpt6vr">
+    <foreign-key id="358" parent="284" name="FKa36uv04jwm7c1vnjldnqpt6vr">
       <ColNames>child_id</ColNames>
       <RefSchemaName>projectspring</RefSchemaName>
       <RefTableName>options</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <column id="357" parent="285" name="id">
+    <column id="359" parent="285" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="358" parent="285" name="name">
+    <column id="360" parent="285" name="name">
       <Position>2</Position>
       <Comment>Name of the tariff</Comment>
       <DataType>varchar(40)|0s</DataType>
@@ -1493,119 +1503,125 @@
       <DefaultExpression>&apos;&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="359" parent="285" name="description">
+    <column id="361" parent="285" name="description">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="360" parent="285" name="price">
+    <column id="362" parent="285" name="price">
       <Position>4</Position>
       <DataType>double(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="361" parent="285" name="isValid">
+    <column id="363" parent="285" name="isValid">
       <Position>5</Position>
       <DataType>bit(1)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="362" parent="285" name="PRIMARY">
+    <key id="364" parent="285" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="363" parent="286" name="tariff_id">
+    <column id="365" parent="286" name="tariff_id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="364" parent="286" name="option_id">
+    <column id="366" parent="286" name="option_id">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="365" parent="286" name="tariff_id">
+    <index id="367" parent="286" name="tariff_id">
       <ColNames>tariff_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="366" parent="286" name="option_id">
+    <index id="368" parent="286" name="option_id">
       <ColNames>option_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="367" parent="286" name="PRIMARY">
+    <key id="369" parent="286" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>tariff_id
 option_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="368" parent="286" name="FK_Tariffs">
+    <foreign-key id="370" parent="286" name="FK_Tariffs">
       <ColNames>tariff_id</ColNames>
       <RefSchemaName>projectspring</RefSchemaName>
       <RefTableName>tariffs</RefTableName>
       <RefColNames>id</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="369" parent="286" name="FK_Options">
+    <foreign-key id="371" parent="286" name="FK_Options">
       <ColNames>option_id</ColNames>
       <RefSchemaName>projectspring</RefSchemaName>
       <RefTableName>options</RefTableName>
       <RefColNames>id</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="370" parent="287" name="id">
+    <column id="372" parent="287" name="id">
       <Position>1</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="371" parent="287" name="password">
+    <column id="373" parent="287" name="password">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="372" parent="287" name="role">
+    <column id="374" parent="287" name="role">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="373" parent="287" name="PRIMARY">
+    <key id="375" parent="287" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="374" parent="288" name="user_id">
+    <column id="376" parent="288" name="user_id">
       <Position>1</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="375" parent="288" name="phoneNumber">
+    <column id="377" parent="288" name="phoneNumber">
       <Position>2</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="376" parent="288" name="UK_jmqesbhhlewj8bw0jixpqs9n">
+    <index id="378" parent="288" name="UK_jmqesbhhlewj8bw0jixpqs9n">
       <ColNames>phoneNumber</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <index id="377" parent="288" name="FKgbrkwd1vp6vc9qxdfdp3uc7fj">
+    <index id="379" parent="288" name="FKgbrkwd1vp6vc9qxdfdp3uc7fj">
       <ColNames>user_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="378" parent="288" name="UK_jmqesbhhlewj8bw0jixpqs9n">
+    <key id="380" parent="288" name="UK_jmqesbhhlewj8bw0jixpqs9n">
       <ColNames>phoneNumber</ColNames>
       <UnderlyingIndexName>UK_jmqesbhhlewj8bw0jixpqs9n</UnderlyingIndexName>
     </key>
-    <foreign-key id="379" parent="288" name="FKgbrkwd1vp6vc9qxdfdp3uc7fj">
+    <foreign-key id="381" parent="288" name="FKgbrkwd1vp6vc9qxdfdp3uc7fj">
       <ColNames>user_id</ColNames>
       <RefSchemaName>projectspring</RefSchemaName>
       <RefTableName>users</RefTableName>
       <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="382" parent="288" name="FKqdnc4dn7dxa5734hvobqnwehe">
+      <ColNames>phoneNumber</ColNames>
+      <RefSchemaName>projectspring</RefSchemaName>
+      <RefTableName>contracts</RefTableName>
+      <RefColNames>phoneNumber</RefColNames>
     </foreign-key>
   </database-model>
 </dataSource>

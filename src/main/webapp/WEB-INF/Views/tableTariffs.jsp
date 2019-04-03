@@ -59,7 +59,7 @@
 </table>
 <div id="checked">
 <c:forEach items="${existing}" var="e">
-    <input name="tariffID2" class="opt2" value=${e.id}>
+    <input name="tariffID2" type="hidden" class="opt2" value=${e.id}>
 </c:forEach>
 </div>
 <div class="col-md-12 text-center">

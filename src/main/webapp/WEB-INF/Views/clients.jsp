@@ -66,7 +66,7 @@
                         <label class="control-label">Select phone number: </label>
                         <select class="form-control" name="phoneNumber"
                                 id="select1" name="group" onscroll="scrolledPhone(this)" data-live-search="true"
-                                onfocus='this.size=5;' onblur='this.size=1;' onchange='this.size=1;' this.blur();>
+                                onfocus='this.size=4;' onblur='this.size=1;' onchange='this.size=1;' this.blur();>
                         </select>
                         <input type="hidden" id="page" value=1>
                     </div>

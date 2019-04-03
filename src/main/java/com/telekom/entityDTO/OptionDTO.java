@@ -21,11 +21,9 @@ public class OptionDTO implements Serializable {
     private String description;
 
     @Min(0)
-    @NotNull
     private double priceMonthly;
 
     @Min(0)
-    @NotNull
     private double priceOneTime;
 
     private Set<TariffDTO> compatibleTariffs = new HashSet<>();

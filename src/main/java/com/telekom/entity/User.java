@@ -2,10 +2,7 @@ package com.telekom.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 import javax.persistence.*;
 
 @Entity
@@ -36,7 +33,6 @@ public class User implements Serializable {
         this.password = password;
         this.role = Role.ROLE_USER;
     }
-
 
     public Role getRole() {
         return role;
@@ -73,6 +69,4 @@ public class User implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-
-
 }

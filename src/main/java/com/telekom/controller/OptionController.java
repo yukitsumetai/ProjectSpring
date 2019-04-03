@@ -1,9 +1,7 @@
 package com.telekom.controller;
 
 import com.telekom.entityDTO.OptionDTO;
-import com.telekom.entityDTO.OptionGroupDTO;
 import com.telekom.service.OptionService;
-import com.telekom.service.TariffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -60,7 +57,7 @@ public class OptionController {
     }
 
     @PostMapping("/new/parent")
-    public String newOptionParent(Model model, OptionDTO option, @RequestParam(name = "optionID", required = false) Integer id, @RequestParam(name = "action") boolean tariff) {
+    public String newOptionParent(Model model, OptionDTO option, @RequestParam(name = "optionID2", required = false) Integer id, @RequestParam(name = "action") boolean tariff) {
         optionService.SetParent(option, id);
         if (tariff) {
             model.addAttribute("table", "option");
@@ -71,7 +68,7 @@ public class OptionController {
     }
 
     @PostMapping("/new/children")
-    public String newOptionChildren(Model model, OptionDTO option, @RequestParam(name = "optionID", required = false) List<Integer> id,
+    public String newOptionChildren(Model model, OptionDTO option, @RequestParam(name = "optionID2", required = false) List<Integer> id,
                                     @RequestParam(name = "action") boolean tariff) {
        optionService.SetChildren(option, id);
         if (tariff) {
@@ -107,8 +104,6 @@ public class OptionController {
     public String editOption(Model model, @ModelAttribute(value = "option") OptionDTO option,  @RequestParam(name = "isValid", required = false) boolean validity,
                              @RequestParam(name = "relation") String relation, @RequestParam(name = "group", required = false) Integer groupId,
                              @RequestParam(name = "tariffs", required = false) boolean tariff) {
-
-        if (!validity) option.setIsValid(false);
        optionService.SetOptionGroup(option, groupId);
         if (!relation.equals("nothing")) {
             if (relation.equals("alone")) {
@@ -138,7 +133,7 @@ public class OptionController {
     }
 
     @PostMapping("/edit/parent")
-    public String existingOptionParent(Model model, @ModelAttribute(value = "option") OptionDTO option, @RequestParam(name = "optionID", required = false) Integer id, @RequestParam(name = "action") boolean tariff) {
+    public String existingOptionParent(Model model, @ModelAttribute(value = "option") OptionDTO option, @RequestParam(name = "optionID2", required = false) Integer id, @RequestParam(name = "action") boolean tariff) {
        optionService.SetParent(option, id);
         if (tariff) {
             tariffPage(model, option);
@@ -151,7 +146,7 @@ public class OptionController {
 
 
     @PostMapping("/edit/children")
-    public String existingOptionChildren(Model model, @ModelAttribute(value = "option") OptionDTO option, @RequestParam(name = "optionID", required = false) List<Integer> id,
+    public String existingOptionChildren(Model model, @ModelAttribute(value = "option") OptionDTO option, @RequestParam(name = "optionID2", required = false) List<Integer> id,
                                          @RequestParam(name = "action") boolean tariff) {
         optionService.SetChildren(option, id);
         if (tariff) {

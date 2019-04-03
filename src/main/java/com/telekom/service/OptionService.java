@@ -29,5 +29,6 @@ public interface OptionService extends Pagination {
     Page<OptionDTO> getPageForNew(Integer size, Integer page, boolean parent);
     Page<OptionDTO> getPageForExisting(Integer size, Integer page, boolean parent, Integer optionId);
    Page<OptionDTO> getPageForGroup(Integer size, Integer page);
+   Page<OptionDTO> getPageForExistingGroup(Integer size, Integer page, Integer optionGroupId);
 }
 

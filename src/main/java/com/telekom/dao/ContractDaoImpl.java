@@ -1,13 +1,10 @@
 package com.telekom.dao;
 
 import com.telekom.entity.Contract;
-import com.telekom.entity.Option;
-import com.telekom.entity.Tariff;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.math.BigInteger;
 import java.util.List;

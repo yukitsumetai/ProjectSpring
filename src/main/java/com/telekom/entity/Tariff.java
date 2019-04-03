@@ -1,12 +1,8 @@
 package com.telekom.entity;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -16,12 +12,7 @@ public class Tariff implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotBlank(message = "Name is required")
-    @Size(min = 1, max = 30, message = "TariffDTO name should be from 1 to 30 symbols")
     private String name;
-
-
-    @NotBlank(message = "Price is required")
     private double price;
     private String description;
     private boolean isValid;
@@ -30,10 +21,7 @@ public class Tariff implements Serializable {
     @JoinTable(name = "tariffs_options",
             joinColumns = @JoinColumn(name = "tariff_id"),
             inverseJoinColumns = @JoinColumn(name = "option_id"))
-    private Set<Option> options=new HashSet<>();
-
-    public Tariff() {
-    }
+    private Set<Option> options = new HashSet<>();
 
     public boolean isIsValid() {
         return isValid;
@@ -46,6 +34,7 @@ public class Tariff implements Serializable {
     public void addOption(Option o) {
         this.options.add(o);
     }
+
     public void removeOption(Option o) {
         this.options.remove(o);
     }

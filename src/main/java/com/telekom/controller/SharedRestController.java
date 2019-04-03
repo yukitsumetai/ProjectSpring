@@ -4,7 +4,6 @@ package com.telekom.controller;
 import com.telekom.entity.PhoneNumber;
 import com.telekom.entityDTO.*;
 import com.telekom.service.*;
-import javafx.scene.control.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,17 +30,7 @@ public class SharedRestController {
     @Autowired
     ClientService clientService;
 
-    @GetMapping(value = "/test")
-    public List<OptionGroupDTO> findPaginated(@RequestParam Integer page) {
-
-        Page<OptionGroupDTO> resultPage = optionGroupService.getPage(GROUPS_PER_PAGE, page);
-        if (page > resultPage.getTotalPages()) {
-            throw new NullPointerException();
-        }
-        return resultPage.getData();
-    }
-
-     @GetMapping(value = "/phoneNumbers")
+    @GetMapping(value = "/phoneNumbers")
     public List<PhoneNumber> pagePhoneNumber(@RequestParam Integer page) {
 
         Page<PhoneNumber> resultPage = phoneNumberService.getPage(GROUPS_PER_PAGE, 1);
@@ -52,16 +41,17 @@ public class SharedRestController {
     }
 
     @GetMapping(value = "/options/optionPages")
-    public Page<OptionDTO> pageOption( @RequestParam Integer page, @RequestParam (required=false)Integer id,
-                                       @RequestParam (required=false)Boolean parent, @RequestParam (required=false)Integer optionId,
-                                       @RequestParam (required=false)Boolean group) {
+    public Page<OptionDTO> pageOption(@RequestParam Integer page, @RequestParam(required = false) Integer id,
+                                      @RequestParam(required = false) Boolean parent, @RequestParam(required = false) Integer optionId,
+                                      @RequestParam(required = false) Boolean group) {
         Page<OptionDTO> resultPage;
-        if (id!=null)resultPage = optionService.getPage(GROUPS_PER_PAGE, page, id);
-        else if(parent!=null){
-            if (optionId==null) resultPage = optionService.getPageForNew(GROUPS_PER_PAGE, page, parent);
-            else  resultPage = optionService.getPageForExisting(GROUPS_PER_PAGE, page, parent, optionId);
-        }
-        else if(group!=null) resultPage = optionService.getPageForGroup(GROUPS_PER_PAGE, page);
+        if (id != null) {
+            if (group != null) resultPage = optionService.getPageForExistingGroup(GROUPS_PER_PAGE, page, id);
+            else resultPage = optionService.getPage(GROUPS_PER_PAGE, page, id);
+        } else if (parent != null) {
+            if (optionId == null) resultPage = optionService.getPageForNew(GROUPS_PER_PAGE, page, parent);
+            else resultPage = optionService.getPageForExisting(GROUPS_PER_PAGE, page, parent, optionId);
+        } else if (group != null) resultPage = optionService.getPageForGroup(GROUPS_PER_PAGE, page);
         else resultPage = optionService.getPage(GROUPS_PER_PAGE, page);
         if (page > resultPage.getTotalPages()) {
             throw new NullPointerException();
@@ -70,16 +60,13 @@ public class SharedRestController {
     }
 
     @GetMapping(value = "/tariffs/tariffPages")
-    public Page<TariffDTO> pageTariff(@RequestParam Integer page, @RequestParam (required=false)Integer id) {
+    public Page<TariffDTO> pageTariff(@RequestParam Integer page, @RequestParam(required = false) Integer id, @RequestParam(name = "parent", required = false) Boolean newContract) {
         Page<TariffDTO> resultPage;
-        if (id!=null)resultPage = tariffService.getPage(GROUPS_PER_PAGE, page, id);
+        if (id != null) resultPage = tariffService.getPage(GROUPS_PER_PAGE, page, id);
+        else if (newContract != null) resultPage = tariffService.getPageValid(GROUPS_PER_PAGE, page);
         else resultPage = tariffService.getPage(GROUPS_PER_PAGE, page);
-        if (page > resultPage.getTotalPages()) {
-            throw new NullPointerException();
-        }
         return resultPage;
     }
-
 
     @GetMapping(value = "/clients/clientPages")
     public Page<ClientDTO> pageClient(@RequestParam Integer page) {
@@ -106,6 +93,16 @@ public class SharedRestController {
         List<OptionGroupDTO> resultPage = optionGroupService.getByName(name);
         model.addAttribute("optionGroups", resultPage);
         return resultPage;
+    }
+
+    @GetMapping(value = "/test")
+    public List<OptionGroupDTO> findPaginated(@RequestParam Integer page) {
+
+        Page<OptionGroupDTO> resultPage = optionGroupService.getPage(GROUPS_PER_PAGE, page);
+        if (page > resultPage.getTotalPages()) {
+            throw new NullPointerException();
+        }
+        return resultPage.getData();
     }
 
 

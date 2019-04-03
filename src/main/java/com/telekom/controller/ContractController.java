@@ -67,8 +67,6 @@ public class ContractController {
            model.addAttribute("numbers", phoneNumberService.getAll());
            return "newClient";}
        else {
-           model.addAttribute("clients", clientService.getAll());
-
            return "clients";
        }
     }
