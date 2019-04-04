@@ -26,7 +26,7 @@ public class OptionController {
     @GetMapping("/new")
     public String newOption(Model model) throws SQLException {
         OptionDTO option = new OptionDTO();
-        model.addAttribute("option", option);
+        model.addAttribute("optionDTO", option);
         model.addAttribute("table", "add");
         return "addOption";
     }

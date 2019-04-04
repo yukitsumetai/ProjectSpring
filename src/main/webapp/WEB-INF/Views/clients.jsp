@@ -58,7 +58,7 @@
 
             <form action="/newContract/confirmExisting" method="post" command="contract">
 
-                <%@ include file="tableClients.jsp" %>
+                <%@ include file="tables/tableClients.jsp" %>
                 <c:if test="${urlPath=='/newContract/client'}">
                 <br><br>
                 <div>

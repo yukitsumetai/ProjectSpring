@@ -16,8 +16,8 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../resource/assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="../resource/dist/js/bootstrap.min.js"></script>
-    <script src="../resource/js/pagination.js"></script>
+    <script src="../../resource/dist/js/bootstrap.min.js"></script>
+    <script src="../../resource/js/pagination.js"></script>
     <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
 
 </head>

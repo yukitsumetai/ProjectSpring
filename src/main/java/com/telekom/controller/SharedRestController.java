@@ -48,7 +48,7 @@ public class SharedRestController {
         if (id != null) {
             if (group != null) resultPage = optionService.getPageForExistingGroup(GROUPS_PER_PAGE, page, id);
             else resultPage = optionService.getPage(GROUPS_PER_PAGE, page, id);
-        } else if (parent != null) {
+        } else if (parent !=null) {
             if (optionId == null) resultPage = optionService.getPageForNew(GROUPS_PER_PAGE, page, parent);
             else resultPage = optionService.getPageForExisting(GROUPS_PER_PAGE, page, parent, optionId);
         } else if (group != null) resultPage = optionService.getPageForGroup(GROUPS_PER_PAGE, page);
@@ -60,10 +60,10 @@ public class SharedRestController {
     }
 
     @GetMapping(value = "/tariffs/tariffPages")
-    public Page<TariffDTO> pageTariff(@RequestParam Integer page, @RequestParam(required = false) Integer id, @RequestParam(name = "parent", required = false) Boolean newContract) {
+    public Page<TariffDTO> pageTariff(@RequestParam Integer page, @RequestParam(required = false) Integer id, @RequestParam(required = false) Boolean parent) {
         Page<TariffDTO> resultPage;
         if (id != null) resultPage = tariffService.getPage(GROUPS_PER_PAGE, page, id);
-        else if (newContract != null) resultPage = tariffService.getPageValid(GROUPS_PER_PAGE, page);
+        else if (parent ==true) resultPage = tariffService.getPageValid(GROUPS_PER_PAGE, page);
         else resultPage = tariffService.getPage(GROUPS_PER_PAGE, page);
         return resultPage;
     }

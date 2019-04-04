@@ -26,7 +26,17 @@
 
         <title>Options Overview</title>
 
-
+        <%-- Modal Script --%>
+        <script>
+            $(document).on('shown.bs.modal', '#deleteModal', function (e) {
+                //get data-id attribute of the clicked element
+                var id = $(e.relatedTarget).data('id');
+                //populate the textbox
+                $(e.currentTarget).find('form[id="action"]').val(id);
+                var $form = $('#action');
+                $form.attr('action', '/options/delete/' + id);
+            });
+        </script>
     </head>
 
 <body>
@@ -81,7 +91,7 @@
             <c:choose>
                 <c:when test="${NEB=='yes'}">
                     <form action="${urlPath}/client" method="post" command="contract">
-                        <%@ include file="tableOptions.jsp" %>
+                        <%@ include file="tables/tableOptions.jsp" %>
                         <br>
 
                             <div class="col-sm-3 form-group">
@@ -97,11 +107,11 @@
                     </form>
                 </c:when>
                 <c:when test="${table=='edit'}">
-                    <%@ include file="tableOptions.jsp" %>
+                    <%@ include file="tables/tableOptions.jsp" %>
                 </c:when>
                 <c:otherwise>
                     <form action="${urlPath}/options/" method="post" command="contract">
-                        <%@ include file="tableOptions.jsp" %>
+                        <%@ include file="tables/tableOptions.jsp" %>
                         <div class="row">
                             <button type="submit" class="btn btn-success" name="action" value="new">Next <i
                                     class="glyphicon glyphicon-chevron-right"></i></button>
@@ -169,13 +179,13 @@
     $(document).ready(function () {
         var curr = document.getElementById('page').value;
         if(curr==0){
-            var table;
+            var table=0;
             <c:if test="${table=='edit'}">
-            var table=1;
+             table=1;
             </c:if>
             var id="${id}";
             var group="${group}";
-                return pagination(0, 1, table, id, null, null, group);}
+                return pagination(0, 1, table, id, null, "", group);}
         document.getElementById('page').value = 1;
     });
 </script>

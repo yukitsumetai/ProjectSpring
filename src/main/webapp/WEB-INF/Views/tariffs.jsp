@@ -56,12 +56,13 @@
         $(document).ready(function () {
             var curr = document.getElementById('page').value;
             if (curr == 0) {
-                var table;
+                var table=0;
+                 var parent=false;
                 <c:if test="${table=='edit'}">
-                var table = 1;
+                table = 1;
                 </c:if>
                 <c:if test="${table=='add'}">
-                var parent = true;
+                parent = true;
                 </c:if>
                 var id = "${id}"
                 if (!('hasCodeRunBefore' in localStorage)) {
@@ -118,7 +119,7 @@
 
                 <c:when test="${NEB=='no'}">
                     <form action="/existingContract/tariffs" method="post">
-                        <%@ include file="tableTariffs.jsp" %>
+                        <%@ include file="tables/tableTariffs.jsp" %>
                         <div>
                             <br><br>
                             <button type="submit" class="btn btn-success" id="options" disabled>Next <i
@@ -128,7 +129,7 @@
                 </c:when>
                 <c:when test="${table=='add'}">
                     <form action="/newContract/options" method="post">
-                        <%@ include file="tableTariffs.jsp" %>
+                        <%@ include file="tables/tableTariffs.jsp" %>
                         <div>
                             <br><br>
                             <button type="submit" class="btn btn-success" id="options" disabled>Next <i
@@ -137,8 +138,8 @@
                     </form>
                 </c:when>
                 <c:when test="${table=='option'}">
-                    <form action="tariffs" method="post">
-                        <%@ include file="tableTariffs.jsp" %>
+                    <form action="/options/new/tariffs" method="post">
+                        <%@ include file="tables/tableTariffs.jsp" %>
                         <div>
                             <br><br>
                             <button type="submit" class="btn btn-success">Save <i
@@ -147,8 +148,8 @@
                     </form>
                 </c:when>
                 <c:when test="${table=='optionEdit'}">
-                    <form action="edit/tariffs" method="post">
-                        <%@ include file="tableTariffs.jsp" %>
+                    <form action="/options/edit/tariffs" method="post">
+                        <%@ include file="tables/tableTariffs.jsp" %>
                         <div>
                             <br><br>
                             <button type="submit" class="btn btn-success">Save <i
@@ -157,7 +158,7 @@
                     </form>
                 </c:when>
                 <c:otherwise>
-                    <%@ include file="tableTariffs.jsp" %>
+                    <%@ include file="tables/tableTariffs.jsp" %>
                 </c:otherwise>
             </c:choose>
 

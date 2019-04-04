@@ -36,20 +36,20 @@
 
             <div class="inner cover">
 
-                <div class="wrapper  <c:if test="${param.error == false}">fadeInDown </c:if>">
+                <div class="wrapper  <c:if test="${param.error !=true}">fadeInDown </c:if>">
                     <div id="formContent">
                         <!-- Tabs Titles -->
                         <!-- Icon -->
-                        <div class="<c:if test="${param.error == false}">fadeIn first </c:if> ">
+                        <div class="<c:if test="${param.error !=true}">fadeIn first </c:if> ">
                             <br>
                             <h1 class="cover-heading">Spring Line</h1>
                             <p class="lead">We make your life easier</p> <p class="lead">
                         </div>
                         <!-- Login Form -->
                         <form action="${urlPath}/process" method="post">
-                            <input type="text" id="login" class="<c:if test="${param.error == false}">fadeIn second </c:if>" name="login" placeholder="login">
-                            <input type="text" id="password" class="<c:if test="${param.error == false}">fadeIn third </c:if>" name="password" placeholder="password">
-                            <input type="submit" class="<c:if test="${param.error == false}">fadeIn fourth </c:if> btn-success" value="Log In">
+                            <input type="text" id="login" class="<c:if test="${param.error !=true}">fadeIn second </c:if>" name="login" placeholder="login">
+                            <input type="text" id="password" class="<c:if test="${param.error !=true}">fadeIn third </c:if>" name="password" placeholder="password">
+                            <input type="submit" class="btn-success <c:if test="${param.error !=true}">fadeIn fourth </c:if>" value="Log In">
                         </form>
 
 

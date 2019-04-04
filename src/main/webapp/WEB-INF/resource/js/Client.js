@@ -23,8 +23,6 @@ function CheckClient() {
 
 function searchClient(table) {
     var number = document.getElementById('phoneNumber').value;
-    if(number!=null) {
-
         $.ajax({
             url: "/clients/search/",
             data: {
@@ -37,7 +35,6 @@ function searchClient(table) {
                 addRowClient(data, table); //table for add
             }
         });
-    }
 };
 
 function addRowClient(val, table) {

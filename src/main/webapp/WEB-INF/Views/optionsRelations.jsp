@@ -28,13 +28,13 @@
             $(document).ready(function () {
                 var curr = document.getElementById('page').value;
                 if (curr == 0) {
-                    var table;
+                    var table=0;
                     <c:if test="${table=='edit'}">
-                    var table = 1;
+                    table = 1;
                     </c:if>
-                    var parent = "${parent}"
-                    var id = "${id}"
-                    var optionId = "${optionId}"
+                    var parent = "${parent}";
+                    var id = "${id}";
+                    var optionId = "${optionId}";
                     return pagination(0, 1, table, id, parent, optionId, null);
                 }
                 document.getElementById('page').value = 1;
@@ -69,7 +69,7 @@
             <c:choose>
                 <c:when test="${parent==false}">
                     <form action="${urlPath}/children" method="post">
-                        <%@ include file="tableOptions.jsp" %>
+                        <%@ include file="tables/tableOptions.jsp" %>
                         <div class="row">
                             <div class="col-sm-2 form-group">
                                 <div class="row">
@@ -87,7 +87,7 @@
                 <c:when test="${parent==true}">
                     <form action="${urlPath}/parent" method="post">
 
-                        <%@ include file="tableOptions.jsp" %>
+                        <%@ include file="tables/tableOptions.jsp" %>
                         <div class="row">
                             <button type="submit" class="btn btn-success" <c:choose>
                                 <c:when test="${tariff==true}">value=true</c:when>
