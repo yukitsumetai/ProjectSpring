@@ -11,7 +11,7 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 @Component
 @Repository
-public class OptionGroupDaoImpl extends PaginationDaoImpl<OptionGroup> implements OptionGroupDao {
+public class OptionGroupDaoImpl extends PaginationDaoImpl implements OptionGroupDao {
     @PersistenceContext(unitName = "entityManagerFactory")
     private EntityManager entityManager;
 

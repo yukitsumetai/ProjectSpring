@@ -9,7 +9,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.sql.SQLException;
 import java.util.List;
 
 @SessionAttributes(types = TariffDTO.class)
@@ -22,7 +21,7 @@ public class TariffController {
     @GetMapping("/new")
     public String newTariff(Model model) {
         TariffDTO tariff = new TariffDTO();
-        model.addAttribute("tariff", tariff);
+        model.addAttribute( tariff);
         return "addTariff";
     }
 

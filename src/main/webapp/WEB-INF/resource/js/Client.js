@@ -32,7 +32,8 @@ function searchClient(table) {
                 alert("Customer not found");
             },
             success: function (data) {
-                addRowClient(data, table); //table for add
+                if (data!="") addRowClient(data, table);//table for add
+                else  alert("Customer not found");
             }
         });
 };

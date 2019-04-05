@@ -1,7 +1,5 @@
 package com.telekom.service;
 
-import com.telekom.entity.Option;
-import com.telekom.entity.Tariff;
 import com.telekom.entityDTO.Page;
 import com.telekom.entityDTO.TariffDTO;
 import org.springframework.stereotype.Service;

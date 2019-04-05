@@ -9,8 +9,7 @@ import java.math.BigInteger;
 public class PhoneNumber implements Serializable {
 
     @Id
-    BigInteger phoneNumber ;
-
+    private BigInteger phoneNumber ;
 
     public BigInteger getNumber() {
         return phoneNumber;

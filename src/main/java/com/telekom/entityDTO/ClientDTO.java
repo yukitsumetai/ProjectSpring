@@ -37,10 +37,6 @@ public class ClientDTO implements Serializable {
     private AddressDTO address;
 
 
-    public ClientDTO() {
-
-    }
-
     public List<ContractDTO> getContracts() {
         return contracts;
     }

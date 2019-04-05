@@ -6,7 +6,6 @@ import com.telekom.entityDTO.OptionDTO;
 import com.telekom.entityDTO.OptionGroupDTO;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @Component
@@ -17,7 +16,7 @@ public class OptionGroupMapper {
         tmp.setDescription(t.getDescription());
         tmp.setName(t.getName());
         tmp.setIsValid(t.isValid());
-        if (t.getOptions().size() > 0) {
+        if (!t.getOptions().isEmpty()) {
             Set<Option> options = t.getOptions();
             for (Option o : options) {
                 OptionDTO tmp2 = new OptionDTO();

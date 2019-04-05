@@ -12,7 +12,7 @@ import java.util.List;
 
 @Component
 @Repository
-public class OptionDaoImpl extends PaginationDaoImpl<Option> implements OptionDao {
+public class OptionDaoImpl extends PaginationDaoImpl implements OptionDao {
 
     @PersistenceContext(unitName = "entityManagerFactory")
     private EntityManager entityManager;
@@ -68,8 +68,7 @@ public class OptionDaoImpl extends PaginationDaoImpl<Option> implements OptionDa
     @Override
     public Long getPagesCount() {
         TypedQuery<Long> q = entityManager.createQuery("Select count(o) from Option o", Long.class);
-        Long c= q.getSingleResult();
-        return c;
+        return q.getSingleResult();
     }
 
     @Override
@@ -82,8 +81,7 @@ public class OptionDaoImpl extends PaginationDaoImpl<Option> implements OptionDa
     @Override
     public Long getPagesCountNoParent() {
         TypedQuery<Long> q = entityManager.createQuery("Select count(o) from Option o where o.id not in(select t from Option t join t.parent)", Long.class);
-        Long c= q.getSingleResult();
-        return c;
+        return q.getSingleResult();
     }
 
     @Override
@@ -96,8 +94,7 @@ public class OptionDaoImpl extends PaginationDaoImpl<Option> implements OptionDa
     @Override
     public Long getPagesCountNoParentNoChildren() {
         TypedQuery<Long> q = entityManager.createQuery("select count(t) from Option t  where t.id not in(select t from Option t join t.children) and t.id not in(select t from Option t join t.parent)", Long.class);
-        Long c= q.getSingleResult();
-        return c;
+        return q.getSingleResult();
     }
 
     @Override
@@ -112,8 +109,7 @@ public class OptionDaoImpl extends PaginationDaoImpl<Option> implements OptionDa
     public Long getPagesNoChildrenAndParentExisting(Integer id) {
         TypedQuery<Long> q = entityManager.createQuery("select count(t) from Option t  where t.id not in(select t from Option t join t.children) and t.id not in(select t from Option t join t.parent) or t.id in(select t from Option t join t.parent p where p.id=:id)", Long.class);
         q.setParameter("id", id);
-        Long c= q.getSingleResult();
-        return c;
+        return q.getSingleResult();
     }
 
     @Override
@@ -126,8 +122,7 @@ public class OptionDaoImpl extends PaginationDaoImpl<Option> implements OptionDa
     @Override
     public Long getPagesCountNoParentNoGroup() {
         TypedQuery<Long> q = entityManager.createQuery("select count(t) from Option t where t.id not in(select t from Option t join t.parent) and t.id not in(select t from Option t join t.group)", Long.class);
-        Long c= q.getSingleResult();
-        return c;
+        return q.getSingleResult();
     }
 
     @Override
@@ -142,8 +137,7 @@ public class OptionDaoImpl extends PaginationDaoImpl<Option> implements OptionDa
     public Long getPagesCountNoParentNoGroupExisting(Integer id) {
         TypedQuery<Long> q = entityManager.createQuery("select count(t) from Option t where t.id not in(select t from Option t join t.parent) and t.id not in(select t from Option t join t.group)  or t.id in(select t from Option t join t.group p where p.id=:id)", Long.class);
         q.setParameter("id", id);
-        Long c= q.getSingleResult();
-        return c;
+        return q.getSingleResult();
     }
 }
 

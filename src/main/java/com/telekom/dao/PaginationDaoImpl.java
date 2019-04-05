@@ -1,9 +1,8 @@
 package com.telekom.dao;
 
 import javax.persistence.Query;
-import java.io.Serializable;
 
-public class PaginationDaoImpl< T extends Serializable > {
+public class PaginationDaoImpl {
 
     void pageCount(Integer page, Integer size, Query q){
         int pageNumber = page;

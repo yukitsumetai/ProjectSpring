@@ -36,12 +36,4 @@ public class ContractDaoImpl implements ContractDao {
 
     }
 
-    @Override
-    public List<Contract> getByTariff(Integer id) {
-        TypedQuery<Contract> q = entityManager.createQuery(
-                "select t from Contract t where t.tariff.id=:id", Contract.class);
-        q.setParameter("id", id);
-        return q.getResultList();
-    }
-
 }

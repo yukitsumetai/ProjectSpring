@@ -6,12 +6,9 @@ import com.telekom.entity.Tariff;
 import com.telekom.entityDTO.OptionDTO;
 import com.telekom.entityDTO.OptionGroupDTO;
 import com.telekom.entityDTO.TariffDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Component

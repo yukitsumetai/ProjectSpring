@@ -269,6 +269,7 @@
                 document.getElementById('tariffCart').insertAdjacentHTML('beforeend', newInput);
                 document.getElementById('options').disabled = false;
             }
+            else {checkboxes[i].closest('tr').classList.remove("highlight")}
         }
         if (flag) document.getElementById("totalMonthlyPrice").innerHTML = "$" + 0;
         if (flag) document.getElementById('options').disabled = true;

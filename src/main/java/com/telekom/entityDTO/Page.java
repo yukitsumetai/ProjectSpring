@@ -4,10 +4,10 @@ import java.util.List;
 
 public class Page<T> {
 
-    List<T> data;
-    Integer currentPage;
-    Integer totalPages;
-    Integer lastPage;
+    private List<T> data;
+    private Integer currentPage;
+    private Integer totalPages;
+    private Integer lastPage;
 
 
     public Page(List<T> data, Integer currentPage, Integer totalPages, Integer lastPage) {

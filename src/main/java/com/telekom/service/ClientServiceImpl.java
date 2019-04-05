@@ -5,7 +5,6 @@ import com.telekom.entity.Client;
 
 import com.telekom.entityDTO.ClientDTO;
 import com.telekom.entityDTO.Page;
-import com.telekom.entityDTO.TariffDTO;
 import com.telekom.mapper.ClientMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -28,18 +27,6 @@ public class ClientServiceImpl extends PaginationImpl<ClientDTO> implements Clie
     private ClientMapper clientMapper;
 
     @Override
-    public List<ClientDTO> getAll() {
-        List<ClientDTO> clients = new ArrayList<>();
-        for (Client c : clientDao.getAll()
-        ) {
-            clients.add(clientMapper.EntityToDto(c));
-        }
-        return clients;
-    }
-
-
-
-    @Override
     @Transactional
     public Page<ClientDTO> getPage(Integer size, Integer page) {
         List<ClientDTO> pageGroups = new ArrayList<>();
@@ -55,8 +42,7 @@ public class ClientServiceImpl extends PaginationImpl<ClientDTO> implements Clie
     public Boolean checkExisting(String email, Integer passport){
         Boolean isEmail=clientDao.getOneByEmail(email);
         Boolean isPassport=clientDao.getOneByPassport(passport);
-        if(isEmail || isPassport) return true;
-        return false;
+        return isEmail || isPassport;
     }
 
     @Override

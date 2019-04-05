@@ -26,16 +26,6 @@ public class Address implements Serializable {
         this.id = id;
     }
 
-
-
-    public int getAddressID() {
-        return id;
-    }
-
-    public void setAddressID(int addressID) {
-        this.id = addressID;
-    }
-
     public String getHouseNo() {
         return houseNo;
     }

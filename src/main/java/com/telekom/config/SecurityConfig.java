@@ -26,8 +26,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/login").anonymous()
-                .antMatchers("/tariffs", "/options", "/users", "/optionGroups","/existingContract","/newContract" ).hasRole("ADMIN")
-                .antMatchers("/existingContract", "/welcome" ).hasRole("USER")
+                .antMatchers("/tariffs/**", "/options/**", "/users/**", "/optionGroups/**","/newContract/**" ).hasRole("ADMIN")
+                .antMatchers( "/welcome" ).hasRole("USER")
+                .antMatchers( "/existingContract/**" ).hasAnyRole("USER", "ADMIN")
                 .and().csrf().disable()
                 .formLogin()
                 .loginPage("/login")

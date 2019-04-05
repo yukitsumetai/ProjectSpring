@@ -52,9 +52,11 @@ public class ExistingContractController {
     }
 
     @PostMapping("/tariffs")
-    public String tariffAdd(ContractDTO contract, @RequestParam(name = "tariffID2") Integer id) {
-        contract.setOptions(null);
-        contractService.setTariff(contract, id);
+    public String tariffAdd(Model model, ContractDTO contract, @RequestParam(name = "tariffID2") Integer id) {
+        if(!contractService.setTariff(contract, id)){
+            model.addAttribute("message", "Tariff is not valid");
+            return "error";
+        }
         return "redirect:/existingContract/confirm";
     }
 
@@ -74,7 +76,7 @@ public class ExistingContractController {
     public String addOptionsChoose(Model model, ContractDTO contract) {
         if (!contract.isBlocked()) {
             Set<OptionDTO> options = contractService.getOptions(contract);
-            if (!(options.size() > 0)) {
+            if (options.isEmpty()) {
                 model.addAttribute("message", "No options are available"); //add message
             } else {
                 model.addAttribute("options", contractService.getParentsForExisting(contract));
@@ -87,8 +89,11 @@ public class ExistingContractController {
     }
 
     @PostMapping("/options")
-    public String addOptions(ContractDTO contract, @RequestParam(name = "optionID", required = false) List<Integer> id) {
-        contractService.setOptions(contract, id);
+    public String addOptions(Model model, ContractDTO contract, @RequestParam(name = "optionID", required = false) List<Integer> id) {
+        if (!contractService.setOptions(contract, id, true)){
+            model.addAttribute("message", "Options are not compatible");
+            return "error";
+        }
         return "redirect:/existingContract/confirm";
     }
 

@@ -145,6 +145,7 @@
                                 var newInput = '<input name="optionID2" type="hidden" class="opt2" value="' + value + '">';
                                 document.getElementById('checked').insertAdjacentHTML('beforeend', newInput);
                             }
+                            else {checkboxes[i].closest('tr').classList.remove("highlight")}
                         }
                     });
                 </script>
@@ -153,8 +154,7 @@
     </main>
     </div>
     </div>
-
-
+</main>
 </body>
 </html>
 

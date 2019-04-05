@@ -63,21 +63,19 @@ public class SharedRestController {
     public Page<TariffDTO> pageTariff(@RequestParam Integer page, @RequestParam(required = false) Integer id, @RequestParam(required = false) Boolean parent) {
         Page<TariffDTO> resultPage;
         if (id != null) resultPage = tariffService.getPage(GROUPS_PER_PAGE, page, id);
-        else if (parent ==true) resultPage = tariffService.getPageValid(GROUPS_PER_PAGE, page);
+        else if (parent) resultPage = tariffService.getPageValid(GROUPS_PER_PAGE, page);
         else resultPage = tariffService.getPage(GROUPS_PER_PAGE, page);
         return resultPage;
     }
 
     @GetMapping(value = "/clients/clientPages")
     public Page<ClientDTO> pageClient(@RequestParam Integer page) {
-        Page<ClientDTO> resultPage = clientService.getPage(GROUPS_PER_PAGE, page);
-        return resultPage;
+        return clientService.getPage(GROUPS_PER_PAGE, page);
     }
 
     @GetMapping(value = "/clients/search")
     public ClientDTO pageClient(@RequestParam String phoneNumber) {
-        ClientDTO resultPage = clientService.getOne(phoneNumber);
-        return resultPage;
+        return clientService.getOne(phoneNumber);
     }
 
 

@@ -36,7 +36,7 @@ public class OptionServiceImpl extends PaginationImpl<OptionDTO> implements Opti
     @Autowired
     private OptionMapper optionMapper;
 
-    List<OptionDTO> listEntityToDto(List<Option> options) {
+    private List<OptionDTO> listEntityToDto(List<Option> options) {
         List<OptionDTO> OptionsDTO = new ArrayList<>();
         for (Option t : options) {
             OptionsDTO.add(optionMapper.EntityToDto(t));
@@ -242,13 +242,13 @@ public class OptionServiceImpl extends PaginationImpl<OptionDTO> implements Opti
             for (OptionDTO child : children
             ) {
                 Option tmp = optionDao.getOne(child.getId());
-                if (o != tmp && tmp.getParent() == null && tmp.getChildren().size() == 0) {
+                if (o != tmp && tmp.getParent() == null && tmp.getChildren().isEmpty()) {
                     tmp.setParent(o);
                 }
             }
         }
         //Remove current tariffs
-        if (o.getCompatibleTariffs().size() > 0) {
+        if (!o.getCompatibleTariffs().isEmpty()) {
             Set<Tariff> tariffs = o.getCompatibleTariffs();
             for (Tariff t : tariffs
             ) {
@@ -319,7 +319,7 @@ public class OptionServiceImpl extends PaginationImpl<OptionDTO> implements Opti
         Option o = optionDao.getOne(option.getId());
         o.setValid(option.isIsValid());
         //Remove children if exist
-        if (o.getChildren().size() > 0) {
+        if (!o.getChildren().isEmpty()) {
             Set<Option> children = o.getChildren();
             for (Option child : children
             ) {

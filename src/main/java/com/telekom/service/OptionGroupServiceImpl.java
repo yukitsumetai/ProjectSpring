@@ -89,7 +89,7 @@ public class OptionGroupServiceImpl extends PaginationImpl<OptionGroupDTO> imple
     }
 
     private void addOptions(OptionGroupDTO optionGroup, OptionGroup t) {
-        if (optionGroup.getOptions().size() > 0) {
+        if (!optionGroup.getOptions().isEmpty()) {
             Set<OptionDTO> options = optionGroup.getOptions();
             for (OptionDTO o : options
             ) {
@@ -113,7 +113,7 @@ public class OptionGroupServiceImpl extends PaginationImpl<OptionGroupDTO> imple
 
 
     private void deleteOptions(OptionGroup t) {
-        if (t.getOptions().size() > 0) {
+        if (!t.getOptions().isEmpty()) {
             Set<Option> options = t.getOptions();
             for (Option o : options
             ) {

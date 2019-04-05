@@ -13,7 +13,7 @@ import java.util.List;
 
 @Component
 @Repository
-public final class ClientDaoImpl extends PaginationDaoImpl<Client> implements ClientDAO {
+public final class ClientDaoImpl extends PaginationDaoImpl implements ClientDAO {
 
     @PersistenceContext(unitName = "entityManagerFactory")
     private EntityManager entityManager;
@@ -60,8 +60,7 @@ public final class ClientDaoImpl extends PaginationDaoImpl<Client> implements Cl
         );
         q.setParameter("id", id);
         Client c= q.getResultList().stream().findAny().orElse(null);
-        if (c!=null) return true;
-        else return false;
+        return c != null;
 
     }
     @Override
@@ -71,8 +70,7 @@ public final class ClientDaoImpl extends PaginationDaoImpl<Client> implements Cl
         );
         q.setParameter("email", email);
         Client c= q.getResultList().stream().findAny().orElse(null);
-        if (c!=null) return true;
-        else return false;
+        return c!=null;
 
     }
 
@@ -87,8 +85,7 @@ public final class ClientDaoImpl extends PaginationDaoImpl<Client> implements Cl
     @Override
     public Long getPagesCount() {
         TypedQuery<Long> q = entityManager.createQuery("Select count(o) from Client o", Long.class);
-        Long c= q.getSingleResult();
-        return c;
+        return q.getSingleResult();
     }
 
 

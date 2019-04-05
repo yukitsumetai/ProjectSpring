@@ -14,9 +14,15 @@
 <html>
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
     <script src="${contextPath}/resource/dist/js/bootstrap.min.js"></script>
     <script src="../resource/js/Pagination2.js"></script>
 
@@ -47,9 +53,6 @@
     <%@ include file="elements/SideBar.jsp" %>
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
         <c:choose>
-            <c:when test="${table=='edit'}">
-                <h1 class="page-header">Options</h1>
-            </c:when>
             <c:when test="${table=='add'}">
                 <h1 class="page-header">New contract</h1>
             </c:when>
@@ -75,37 +78,19 @@
                     <div class="col-sm-5">
                         <div class="row right">
 
-                        <c:if test="${table=='edit'}">
-                            <div class="newtariff">
-                                <form action="/options/new">
-                                    <button type="submit" class="btn btn-success ">Add Option</button>
-                                </form>
-                            </div>
+                            <c:if test="${table=='edit'}">
+                                <div class="newtariff">
+                                    <form action="/options/new">
+                                        <button type="submit" class="btn btn-success ">Add Option</button>
+                                    </form>
+                                </div>
                             </c:if>
                         </div>
                     </div>
                 </div>
             </div>
 
-
             <c:choose>
-                <c:when test="${NEB=='yes'}">
-                    <form action="${urlPath}/client" method="post" command="contract">
-                        <%@ include file="tables/tableOptions.jsp" %>
-                        <br>
-
-                            <div class="col-sm-3 form-group">
-                                <button type="submit" class="btn btn-success newtariff" name="action" value="new">New Client <i
-                                        class="glyphicon glyphicon-plus"></i>
-                                </button>
-                            </div>
-                            <div class="form-group col-sm-3">
-                                <button type="submit" class="btn btn-success" name="action" value="existing">Existing
-                                    client <i class="glyphicon glyphicon-user"></i>
-                                </button>
-                            </div>
-                    </form>
-                </c:when>
                 <c:when test="${table=='edit'}">
                     <%@ include file="tables/tableOptions.jsp" %>
                 </c:when>
@@ -137,7 +122,7 @@
             </div>
             <div class="modal-body">
                 Are you sure that you want to delete an option?<br>
-               It would not be able to choose it for contracts.
+                It would not be able to choose it for contracts.
             </div>
             <div class="modal-footer">
                 <form>
@@ -178,14 +163,15 @@
 <script>
     $(document).ready(function () {
         var curr = document.getElementById('page').value;
-        if(curr==0){
-            var table=0;
+        if (curr == 0) {
+            var table = 0;
             <c:if test="${table=='edit'}">
-             table=1;
+            table = 1;
             </c:if>
-            var id="${id}";
-            var group="${group}";
-                return pagination(0, 1, table, id, null, "", group);}
+            var id = "${id}";
+            var group = "${group}";
+            return pagination(0, 1, table, id, null, "", group);
+        }
         document.getElementById('page').value = 1;
     });
 </script>
@@ -196,11 +182,11 @@
         for (var i = 0; i < checkboxes.length; i++) {
             if (checkboxes[i].checked) {
                 var value = checkboxes[i].value;
-                var flag=true;
+                var flag = true;
                 var existing = document.getElementsByClassName('opt2');
                 if (existing != null) {
                     for (var j = 0; j < existing.length; j++) {
-                        if (existing[j].value == checkboxes[i].value) flag=false;
+                        if (existing[j].value == checkboxes[i].value) flag = false;
                     }
                 }
                 if (flag) {

@@ -97,12 +97,12 @@
                         </c:if>
                     </c:forEach>
                     <div class="row">
-                        <div class="col-sm-1 form-group">
+                        <div class="form-group">
                             <button type="submit" class="btn btn-success" name="action" value="new">New Client <i
                                     class="glyphicon glyphicon-plus"></i>
                             </button>
                         </div>
-                        <div class="form-group col-sm-1">
+                        <div class="form-group newtariff">
                             <button type="submit" class="btn btn-success" name="action" value="existing">Existing
                                 client <i class="glyphicon glyphicon-user"></i>
                             </button>

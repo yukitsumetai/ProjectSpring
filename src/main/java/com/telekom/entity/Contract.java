@@ -1,13 +1,9 @@
 package com.telekom.entity;
 
-
-import org.hibernate.annotations.DynamicUpdate;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity

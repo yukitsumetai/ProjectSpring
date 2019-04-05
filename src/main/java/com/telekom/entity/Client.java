@@ -45,10 +45,6 @@ public class Client implements Serializable {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    public Client() {
-
-    }
-
     public User getUser() {
         return user;
     }

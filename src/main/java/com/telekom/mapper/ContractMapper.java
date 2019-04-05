@@ -7,10 +7,7 @@ import com.telekom.entityDTO.OptionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Component
@@ -54,7 +51,7 @@ public class ContractMapper {
         tmp.setPhoneNumber(c.getPhoneNumber().toString());
         tmp.setBlocked(c.isBlocked());
         tmp.setAgentBlock(c.isAgentBlock());
-        if (c.getOptions().size()> 0) {
+        if (!c.getOptions().isEmpty()) {
             Set<OptionDTO> options = new HashSet<>();
             for (Option o :
                     c.getOptions()) {

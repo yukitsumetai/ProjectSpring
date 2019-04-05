@@ -1,17 +1,12 @@
 package com.telekom.config;
 
-import com.telekom.TariffService;
 import com.telekom.dao.OptionDao;
 import com.telekom.dao.TariffDao;
-import com.telekom.dao.TariffDaoImpl2;
 import com.telekom.entity.Tariff;
-import com.telekom.entityDTO.TariffDTO;
 import com.telekom.mapper.TariffMapper;
 import com.telekom.service.TariffServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import javax.persistence.EntityManagerFactory;
 
 import static org.mockito.Mockito.mock;
 

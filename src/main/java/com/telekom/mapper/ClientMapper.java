@@ -6,11 +6,8 @@ import com.telekom.entity.Contract;
 import com.telekom.entityDTO.AddressDTO;
 import com.telekom.entityDTO.ClientDTO;
 import com.telekom.entityDTO.ContractDTO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +45,7 @@ public class ClientMapper {
 
     public AddressDTO EntityToDtoAddress(Address t){
         AddressDTO tmp=new AddressDTO();
-        tmp.setAddressID(t.getAddressID());
+        tmp.setAddressID(t.getId());
         tmp.setHouseNo(t.getHouseNo());
         tmp.setStreet(t.getStreet());
         tmp.setCity(t.getCity());
@@ -71,7 +68,7 @@ public class ClientMapper {
 
     public Address DtoToEntityAddress(AddressDTO t){
         Address tmp=new Address();
-        tmp.setAddressID(t.getAddressID());
+        tmp.setId(t.getAddressID());
         tmp.setHouseNo(t.getHouseNo());
         tmp.setStreet(t.getStreet());
         tmp.setCity(t.getCity());

@@ -12,7 +12,7 @@ import java.util.List;
 
 @Component
 @Repository
-public class PhoneNumberDaoImpl extends PaginationDaoImpl<PhoneNumber> implements PhoneNumberDao {
+public class PhoneNumberDaoImpl extends PaginationDaoImpl implements PhoneNumberDao {
     @PersistenceContext(unitName = "entityManagerFactory")
     private EntityManager entityManager;
 

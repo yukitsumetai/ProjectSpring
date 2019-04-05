@@ -12,7 +12,7 @@ import java.util.List;
 
 @Component
 @Repository
-public class TariffDaoImpl2 extends PaginationDaoImpl<Tariff> implements TariffDao {
+public class TariffDaoImpl2 extends PaginationDaoImpl implements TariffDao {
 
     @PersistenceContext(unitName = "entityManagerFactory")
     private EntityManager entityManager;
@@ -53,8 +53,7 @@ public class TariffDaoImpl2 extends PaginationDaoImpl<Tariff> implements TariffD
     @Override
     public Long getPagesCount() {
         TypedQuery<Long> q = entityManager.createQuery("Select count(o) from Tariff o", Long.class);
-        Long c= q.getSingleResult();
-        return c;
+        return q.getSingleResult();
     }
 
     @Override
@@ -67,8 +66,7 @@ public class TariffDaoImpl2 extends PaginationDaoImpl<Tariff> implements TariffD
     @Override
     public Long getPagesValidCount() {
         TypedQuery<Long> q = entityManager.createQuery("Select count(o) from Tariff o where o.isValid=true", Long.class);
-        Long c= q.getSingleResult();
-        return c;
+        return q.getSingleResult();
     }
 
 

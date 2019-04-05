@@ -21,7 +21,7 @@ public class OptionGroupController {
     @GetMapping("/new")
     public String newOptionGroup(Model model){
         OptionGroupDTO optionGroup=new  OptionGroupDTO();
-        model.addAttribute("optionGroup", optionGroup);
+        model.addAttribute(optionGroup);
         return "addOptionGroup";
     }
 

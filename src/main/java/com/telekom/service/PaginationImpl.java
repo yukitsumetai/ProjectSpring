@@ -4,13 +4,11 @@ import com.telekom.entityDTO.Page;
 
 import java.util.List;
 
-public class PaginationImpl<T>  {
+public class PaginationImpl<T> {
 
-    public Page<T> getPageDraft(List<T> data, Long total2, Integer page, Integer size) {
-        Long total=total2;
-        Double d = Math.ceil((double) total / (double) size);
-        Double lastPage=(total+size)-(d*size);
-        Page<T> page2 = new Page<T>(data,  page, d.intValue(), lastPage.intValue());
-        return page2;
+    Page<T> getPageDraft(List<T> data, Long total2, Integer page, Integer size) {
+        Double d = Math.ceil((double) total2 / (double) size);
+        Double lastPage = (total2 + size) - (d * size);
+        return new Page<T>(data, page, d.intValue(), lastPage.intValue());
     }
 }

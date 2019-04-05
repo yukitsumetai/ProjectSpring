@@ -14,15 +14,9 @@ public interface ContractService {
 
     ContractDTO getOne(String number);
 
-    void deleteOption(ContractDTO contract, Integer id);
+    boolean setOptions(ContractDTO contract, List<Integer> id, boolean existing);
 
-    void setOptions(ContractDTO contract, List<Integer> id);
-
-    void setTariff(ContractDTO contract, Integer id);
-
-    void setOptionsAndUpdate(ContractDTO contract, List<Integer> id);
-
-    Set<OptionDTO> getOptionsForAdd(ContractDTO contract);
+    boolean setTariff(ContractDTO contract, Integer id);
 
     List<TariffDTO> getTariffsForAdd(ContractDTO contract);
 
@@ -32,10 +26,14 @@ public interface ContractService {
 
     Set<OptionDTO> getOptions(ContractDTO contract);
 
-   Set<OptionDTO> getOptionsChildren(ContractDTO contract);
+    Set<OptionDTO> getOptionsChildren(ContractDTO contract);
 
     Set<OptionDTO> getParentsForExisting(ContractDTO contract);
+
     Set<OptionDTO> getChildrenForExisting(ContractDTO contract);
+
     void block(ContractDTO contract, boolean admin);
+
     void unblock(ContractDTO contract, boolean admin);
+
 }

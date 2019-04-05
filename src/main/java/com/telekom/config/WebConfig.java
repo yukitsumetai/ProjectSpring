@@ -10,19 +10,19 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 
-
 @Configuration
 @EnableWebMvc
 @ImportResource({"/WEB-INF/persistence-config.xml"})
 @ComponentScan("com.telekom")
-public class WebConfig  implements WebMvcConfigurer {
+public class WebConfig implements WebMvcConfigurer {
 
+    @Override
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resource/**").addResourceLocations("/WEB-INF/resource/");
     }
 
     @Bean
-    public InternalResourceViewResolver viewResolver(){
+    public InternalResourceViewResolver viewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
         viewResolver.setSuffix(".jsp");
         viewResolver.setPrefix("/WEB-INF/Views/");

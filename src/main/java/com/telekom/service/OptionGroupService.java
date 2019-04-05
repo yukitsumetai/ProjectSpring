@@ -1,7 +1,5 @@
 package com.telekom.service;
 
-import com.telekom.entity.OptionGroup;
-import com.telekom.entityDTO.OptionDTO;
 import com.telekom.entityDTO.OptionGroupDTO;
 import com.telekom.entityDTO.Page;
 

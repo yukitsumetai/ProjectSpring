@@ -44,9 +44,7 @@ public class TariffServiceImpl extends PaginationImpl<TariffDTO> implements Tari
     @Transactional
     public List<TariffDTO> getAll() {
 
-        List<TariffDTO> tariffsDTO = listEntityToDto(tariffDao.getAll());
-
-        return tariffsDTO;
+        return  listEntityToDto(tariffDao.getAll());
     }
 
 
