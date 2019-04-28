@@ -49,7 +49,7 @@
         <h1 class="page-header">Option administration</h1>
 
         <div id="option data">
-            <form id="optionForm" action="/options/edit" method="post">
+            <form id="optionForm" action="${contextPath}/options/edit" method="post">
                 <div class="table-title">
                     <h2>Edit option details</h2>
                 </div>

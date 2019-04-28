@@ -11,19 +11,14 @@
 <%@ include file="elements/TopNavBar.jsp" %>
 <%@ include file="elements/SideBar.jsp" %>
 <c:set var="urlPath" value="${requestScope['javax.servlet.forward.request_uri']}"/>
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../resource/assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="${contextPath}/resource/dist/js/bootstrap.min.js"></script>
-    <script src="${contextPath}/resource/js/pagination.js"></script>
     <script src="${contextPath}/resource/js/paginationAjax.js"></script>
     <script src="${contextPath}/resource/js/options.js"></script>
+    <script src="${contextPath}/resource/js/dropdownAjax.js"></script>
     <script src="${contextPath}/resource/js/clientAjax.js"></script>
-    <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
-
 
     <title>Current Clients</title>
 </head>
@@ -57,7 +52,7 @@
                 </div>
             </div>
 
-            <form action="/newContract/confirmExisting" method="post" command="contract">
+            <form action="${contextPath}/newContract/confirmExisting" method="post" command="contract">
 
                 <%@ include file="tables/tableClients.jsp" %>
                 <c:if test="${urlPath=='/newContract/client'}">

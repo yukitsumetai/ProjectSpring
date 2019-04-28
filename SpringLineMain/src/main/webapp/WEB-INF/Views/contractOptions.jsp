@@ -76,7 +76,7 @@
 
         <c:choose>
             <c:when test="${NEB=='yes'}">
-                <form action="/newContract/client" method="post" command="contract">
+                <form action="${contextPath}/newContract/client" method="post" command="contract">
                     <c:forEach items="${optionGroups}" var="og">
                         <%@ include file="elements/ComboBox element.jsp" %>
                         <br>

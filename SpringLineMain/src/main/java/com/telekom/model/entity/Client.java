@@ -1,8 +1,6 @@
 package com.telekom.model.entity;
 
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;

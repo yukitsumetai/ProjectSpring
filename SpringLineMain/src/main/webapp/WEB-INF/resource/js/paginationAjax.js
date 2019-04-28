@@ -1,12 +1,12 @@
 function pagination(entity, page, table1, id, parent, optionId, group) {
     var link;
     if (entity == 0) {
-        link = "/options/optionPages";
+        link = "/springLine/options/optionPages";
     } else if (entity == 1) {
-        link = "/tariffPages";
+        link = "/springLine/tariffs/tariffPages";
     }
     else if (entity == 2) {
-        link = "/clients/clientPages";
+        link = "/springLine/clients/clientPages";
     }
     $.ajax({
         url: link,
@@ -85,7 +85,7 @@ function addRowsOption(data, table) {
         var icon2 = ""
         var check = table;
         if (check == 1) {
-            icon = "<a href='/options/edit/" + val.id + "/' class='edit' title='Edit'><i class='material-icons'>&#xE254</i></a>"
+            icon = "<a href='/springLine/options/edit/" + val.id + "/' class='edit' title='Edit'><i class='material-icons'>&#xE254</i></a>"
             if (val.isValid == true) {
                 icon2 = "<a href='#deleteModal' class='delete' title='Delete' data-toggle='modal' data-target='#deleteModal' data-id=" + val.id + "><i class='material-icons'>&#xE872;</i></a>"
             }
@@ -124,7 +124,7 @@ function addRowsTariff(data, table) {
         var icon2 = ""
         var check = table;
         if (check == 1) {
-            icon = "<a href='/tariffs/edit/" + val.id + "/' class='edit' title='Edit'><i class='material-icons'>&#xE254</i></a>"
+            icon = "<a href='/springLine/tariffs/edit/" + val.id + "/' class='edit' title='Edit'><i class='material-icons'>&#xE254</i></a>"
             if (val.isValid == true) {
                 icon2 = "<a href='#deleteModal' class='delete' title='Delete' data-toggle='modal' data-target='#deleteModal' data-id=" + val.id + "><i class='material-icons'>&#xE872;</i></a>"
             }
@@ -155,7 +155,7 @@ function addRowsClient(data, table) {
         $.each(val.contracts, function (key, option) {
             var c = (option || {}).phoneNumber;
             c2 = (typeof (c) !== 'undefined' ? c : '');
-            icon = "<a href='/existingContract/"+c2+"' class='edit' title='Edit'><i class='material-icons'>&#xE254;</i></a>";
+            icon = "<a href='/springLine/existingContract/"+c2+"' class='edit' title='Edit'><i class='material-icons'>&#xE254;</i></a>";
             contracts.push(c2+icon + "<br>");
         })
         var icon;

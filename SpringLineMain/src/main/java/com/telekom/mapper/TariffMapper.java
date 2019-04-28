@@ -25,6 +25,7 @@ public class TariffMapper {
                 tmp2.setPriceOneTime(o.getPriceOneTime());
                 tmp2.setDescription(o.getDescription());
                 tmpOptions.add(tmp2);
+
             }
             tmp.setOptions(tmpOptions);
         }
@@ -38,6 +39,7 @@ public class TariffMapper {
         tmp.setName(t.getName());
         tmp.setPrice(t.getPrice());
         tmp.setIsValid(t.isIsValid());
+        tmp.setPromoted(t.isPromoted());
         return tmp;
     }
 
@@ -48,6 +50,7 @@ public class TariffMapper {
         tmp.setDescription(t.getDescription());
         tmp.setName(t.getName());
         tmp.setPrice(t.getPrice());
+        tmp.setPromoted(t.isPromoted());
         return tmp;
     }
 

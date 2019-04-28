@@ -3,7 +3,7 @@ function CheckClient() {
     var passport = document.getElementById('passport').value;
     if(email!="" && passport.length==8) {
         $.ajax({
-            url: "/newContract/client/check",
+            url: "/springLine/newContract/client/check",
             data: {
                 email: email,
                 passport: passport
@@ -24,7 +24,7 @@ function CheckClient() {
 function searchClient(table) {
     var number = document.getElementById('phoneNumber').value;
         $.ajax({
-            url: "/clients/search/",
+            url: "/springLine/clients/search/",
             data: {
                 phoneNumber: number
             },

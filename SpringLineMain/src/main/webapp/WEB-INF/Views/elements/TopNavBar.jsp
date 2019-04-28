@@ -10,9 +10,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<c:if test="${table=='add'}">
-    <%@ include file="shoppingCart.jsp" %>
-</c:if>
+
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,17 +19,14 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-
+    <link href="${contextPath}/resource/css/dashboard.css" rel="stylesheet">
     <!-- Bootstrap core CSS -->
     <link href="${contextPath}/resource/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../../resource/css/dashboard.css" rel="stylesheet">
-
-    <!-- Custom styles for this page -->
-    <link href="${contextPath}/resource/css/dashboard.css" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="${contextPath}/resource/dist/js/bootstrap.min.js"></script>
 </head>
 
 
@@ -41,14 +37,16 @@
         Spring Line</a>
 
     <div class="navbar-nav mr-auto">
-        <li class="nav-item"><a class="text-secondary" href="/logout">Logout</a></li>
+        <li class="nav-item"><a class="text-secondary" href="${contextPath}/logout">Logout  ${contextPath}</a></li>
     </div>
     <c:if test="${table=='add'}">
         <ul class=" my-2 my-lg-0">
             <li id="cd-cart-trigger" class="nav-item"/><a class="cd-img-replace" href="#0"></a></li>
         </ul>
     </c:if>
-
+    <c:if test="${table=='add'}">
+        <%@ include file="shoppingCart.jsp" %>
+    </c:if>
     <!--end navbar-right -->
 
 </nav>

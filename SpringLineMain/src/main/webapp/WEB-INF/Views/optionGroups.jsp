@@ -11,31 +11,19 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ include file="elements/TopNavBar.jsp" %>
 <%@ include file="elements/SideBar.jsp" %>
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 
 <html lang="en">
 <head>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link rel="icon" href="${contextPath}/resource/images/favicon1.png">
-    <!-- Bootstrap core CSS -->
-    <link href="${contextPath}/resource/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${contextPath}/resource/css/dashboard.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
-    <script src="${contextPath}/resource/dist/js/bootstrap.min.js"></script>
-
-
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
             $("#myInput").on("keyup", function () {
@@ -54,7 +42,7 @@
             //populate the textbox
             $(e.currentTarget).find('form[id="action"]').val(id);
             var $form = $('#action');
-            $form.attr('action', '/optionGroups/delete/' + id);
+            $form.attr('action', '${contextPath}/optionGroups/delete/' + id);
         });
     </script>
 </head>
@@ -66,8 +54,6 @@
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
 
         <h1 class="page-header">Option Groups</h1>
-
-
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
@@ -81,7 +67,7 @@
                                 <input type="text" class="form-control" id="myInput" placeholder="Search&hellip;">
                             </div>
                             <div class="newtariff ">
-                                <form action="/optionGroups/new">
+                                <form action="${contextPath}/optionGroups/new">
                                     <button type="submit" class="btn btn-success">Add Option Group</button>
                                 </form>
                             </div>
@@ -114,7 +100,7 @@
                         <td>${optionGroup.isValid}</td>
 
                         <td>
-                            <a href="/optionGroups/edit/${optionGroup.id}" class="edit" title="Edit"><i
+                            <a href="${contextPath}/optionGroups/edit/${optionGroup.id}" class="edit" title="Edit"><i
                                     class="material-icons">&#xE254;</i></a>
                             <c:if test="${optionGroup.isValid==true}">
                                 <a href="#deleteModal" class="delete" title="Delete" data-toggle="modal"

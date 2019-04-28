@@ -1,19 +1,15 @@
 package com.telekom.config;
 
-import java.util.Arrays;
 
-import org.apache.activemq.spring.ActiveMQConnectionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jca.cci.connection.SingleConnectionFactory;
 import org.springframework.jms.connection.CachingConnectionFactory;
 import org.springframework.jms.connection.UserCredentialsConnectionFactoryAdapter;
 import org.springframework.jms.core.JmsTemplate;
-import org.springframework.jms.support.destination.JndiDestinationResolver;
 import org.springframework.jndi.JndiObjectFactoryBean;
-
 import javax.jms.ConnectionFactory;
-import javax.jms.Destination;
+import java.util.Objects;
+
 
 @Configuration
 public class MessagingConfiguration {
@@ -35,7 +31,7 @@ public class MessagingConfiguration {
         UserCredentialsConnectionFactoryAdapter  adapter= new UserCredentialsConnectionFactoryAdapter();
         adapter.setPassword("ekakoc");
         adapter.setUsername("ekakoc2");
-        adapter.setTargetConnectionFactory( (ConnectionFactory) jndi.getObject());
+        adapter.setTargetConnectionFactory( (ConnectionFactory) Objects.requireNonNull(jndi.getObject()));
         return adapter;
     }
 

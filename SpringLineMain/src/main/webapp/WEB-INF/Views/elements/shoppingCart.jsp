@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
 <c:set var="urlPath" value="${requestScope['javax.servlet.forward.request_uri']}"/>
 <!doctype html>
 <html lang="en" class="no-js">
@@ -15,10 +15,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
-
     <script src="${contextPath}/resource/js/modern.js"></script>
     <link href="${contextPath}/resource/css/shoppingCart.css" rel="stylesheet">
     <link href="${contextPath}/resource/css/res.css" rel="stylesheet">
+    <script src="${contextPath}/resource/js/shoppingCart.js"></script> <!-- Gem jQuery -->
     <title>Side Cart</title>
 </head>
 <body class="foo">
@@ -71,23 +71,23 @@
     </ul> <!-- cd-cart-items -->
     <div class="cd-cart-total">
         <c:choose>
-            <c:when test="${urlPath=='/newContract/options'}">
+            <c:when test="${urlPath=='/springLine/newContract/options'}">
                 <p>Total Monthly Price:
                     <b id="totalMonthlyPrice" class="right"></b></p>
                 <p>Total One Time Price:
                     <b id="totalOneTimePrice" class="right"></b></p>
             </c:when>
-            <c:when test="${urlPath=='/existingContract/options'}">
+            <c:when test="${urlPath=='/springLine/existingContract/options'}">
                 <p>Total Monthly Price:
                     <b id="totalMonthlyPrice" class="right"></b></p>
                 <p>Total One Time Price:
                     <b id="totalOneTimePrice" class="right"></b></p>
             </c:when>
-            <c:when test="${urlPath=='/newContract/tariffs'}">
+            <c:when test="${urlPath=='/springLine/newContract/tariffs'}">
                 <p>Total Monthly Price:
                     <b id="totalMonthlyPrice" class="right"></b></p>
             </c:when>
-            <c:when test="${urlPath=='/existingContract/tariffs'}">
+            <c:when test="${urlPath=='/springLine/existingContract/tariffs'}">
                 <p>Total Monthly Price:
                     <b id="totalMonthlyPrice" class="right"></b></p>
             </c:when>
@@ -103,7 +103,7 @@
     </div> <!-- cd-cart-total -->
 
 </div> <!-- cd-cart -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script src="../../resource/js/shoppingCart.js"></script> <!-- Gem jQuery -->
+
+
 </body>
 </html>

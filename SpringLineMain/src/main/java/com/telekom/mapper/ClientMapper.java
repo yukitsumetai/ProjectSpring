@@ -43,7 +43,7 @@ public class ClientMapper {
 
 
 
-    public AddressDto entityToDtoAddress(Address t){
+    private AddressDto entityToDtoAddress(Address t){
         AddressDto tmp=new AddressDto();
         tmp.setAddressID(t.getId());
         tmp.setHouseNo(t.getHouseNo());
@@ -66,7 +66,7 @@ public class ClientMapper {
         return tmp;
     }
 
-    public Address dtoToEntityAddress(AddressDto t){
+    private Address dtoToEntityAddress(AddressDto t){
         Address tmp=new Address();
         tmp.setId(t.getAddressID());
         tmp.setHouseNo(t.getHouseNo());

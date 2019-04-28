@@ -43,7 +43,7 @@
         <h1 class="page-header">Option administration</h1>
         <h2 class="page-header text-danger">${error}</h2>
         <div id="personal data">
-            <form:form method="post" action="/options/new" modelAttribute="option">
+            <form method="post" action="${contextPath}/options/new" >
                 <div class="table-title">
                     <h2>Add option details</h2>
                 </div>
@@ -126,7 +126,7 @@
                     </button>
                 </div>
 
-            </form:form>
+            </form>
         </div>
     </main>
 

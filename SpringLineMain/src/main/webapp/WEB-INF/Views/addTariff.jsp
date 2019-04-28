@@ -36,7 +36,7 @@
         <h1 class="page-header">Tariff administration</h1>
         <h2 class="page-header text-danger">${error}</h2>
         <div id="option data">
-            <form id="simpleForm" action="/tariffs/new" method="post">
+            <form id="simpleForm" action="${contextPath}/tariffs/new" method="post">
                 <div class="table-title">
                     <h2>Add tariff details</h2>
                 </div>
@@ -65,6 +65,10 @@
                     <input type="checkbox" class="chk" name="isValid" id="isValid" value=true checked/>&nbsp;
                 </div>
 
+                <div class="form-group">
+                    <label class="control-label">Promotion: </label>
+                    <input type="checkbox" class="chk" name="isPromoted" id="isPromoted"/>&nbsp;
+                </div>
 
                 <div class="form-group comOptions" id="comOptions" style="display:block">
                     <label class="control-label">Set compatible options: </label>

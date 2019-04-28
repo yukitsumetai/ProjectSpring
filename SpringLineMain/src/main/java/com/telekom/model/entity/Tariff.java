@@ -16,6 +16,8 @@ public class Tariff implements Serializable {
     private double price;
     private String description;
     private boolean isValid;
+    private boolean isPromoted;
+
 
     @ManyToMany
     @JoinTable(name = "tariffs_options",
@@ -79,5 +81,11 @@ public class Tariff implements Serializable {
         this.description = description;
     }
 
+    public boolean isPromoted() {
+        return isPromoted;
+    }
 
+    public void setPromoted(boolean promoted) {
+        isPromoted = promoted;
+    }
 }

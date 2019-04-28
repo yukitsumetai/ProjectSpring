@@ -9,11 +9,17 @@ import java.util.List;
 @Service
 public interface TariffService {
 
-    List<TariffDto> getAll();
+    List<TariffDto> getAllPromoted();
 
     List<TariffDto> getAllValid();
 
     void add(TariffDto tariff);
+
+    void notify(TariffDto tariff);
+
+    void notify(TariffDto tariff, boolean state);
+
+    void notifyDeleted();
 
     TariffDto getOne(int id);
 

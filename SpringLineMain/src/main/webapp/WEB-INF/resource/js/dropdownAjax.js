@@ -1,7 +1,7 @@
 function Validate(optId) {
     var page = document.getElementById('page').value;
     $.ajax({
-        url: "/test",
+        url: "/springLine/test",
         data: {
             page: page
         },
@@ -24,7 +24,7 @@ function Validate(optId) {
 function phoneNumber() {
     var page = document.getElementById('page').value;
     $.ajax({
-        url: "/phoneNumbers",
+        url: "/springLine/phoneNumbers",
         data: {
             page: page
         },

@@ -20,17 +20,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <link rel="icon" href="../resource/images/favicon1.ico">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="${contextPath}/resource/dist/js/bootstrap.min.js"></script>
     <script src="${contextPath}/resource/js/pagination.js"></script>
     <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
     <title>Client details</title>
@@ -63,7 +52,7 @@
                         </form>
                     </div>
                     <div class="col-sm-1 form-group price">
-                        <form class="form-group" action="/welcome">
+                        <form class="form-group" action="${contextPath}/welcome">
                             <button type="submit" class="btn btn-danger">Cancel <i
                                     class="glyphicon glyphicon-ban-circle"></i></button>
                         </form>
@@ -76,7 +65,7 @@
 
                             <c:choose>
                                 <c:when test="${contractDto.blocked==true}">
-                                <form class="form-group" action="/existingContract/unblock" method="get">
+                                <form class="form-group" action="${contextPath}/existingContract/unblock" method="get">
                                     <button type="submit" class="btn btn-danger"
                                                 <c:if test="${contractDto.agentBlock==true}">
                                                     <security:authorize access="hasRole('ROLE_USER')">
@@ -92,7 +81,7 @@
                                 </form>
                                 </c:when>
                             <c:otherwise>
-                                <a type="button" href="/existingContract/block" class="btn btn-danger">Block Sim card</a>
+                                <a type="button" href="${contextPath}/existingContract/block" class="btn btn-danger">Block Sim card</a>
                             </c:otherwise>
                             </c:choose>
                     </div>
@@ -118,7 +107,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Return</button>
-                    <a href="/existingContract/tariffs" class="btn btn-success" role="button">Continue</a>
+                    <a href="${contextPath}/existingContract/tariffs" class="btn btn-success" role="button">Continue</a>
                 </div>
             </div>
         </div>

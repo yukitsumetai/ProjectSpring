@@ -13,16 +13,8 @@
 <html>
 <head>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <link rel="icon" href="../resource/images/favicon1.ico">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../resource/assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="${contextPath}/resource/dist/js/bootstrap.min.js"></script>
-    <script src="${contextPath}/resource/js/pagination.js"></script>
     <script src="${contextPath}/resource/js/clientAjax.js"></script>
-    <script src="${contextPath}/resource/js/options.js"></script>
+    <script src="${contextPath}/resource/js/dropdownAjax.js"></script>
     <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <title>Client details</title>
@@ -42,7 +34,7 @@
 
         <div id="personal data">
 
-            <form:form method="post" action="/newContract/confirm" modelAttribute="client">
+            <form:form method="post" action="${contextPath}/newContract/confirm" modelAttribute="client">
                 <div id="table-wrapper">
                     <div class="table-title">
                         <h2>Add personal data</h2>

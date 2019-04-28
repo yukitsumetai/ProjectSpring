@@ -11,8 +11,6 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <c:set var="urlPath" value="${requestScope['javax.servlet.forward.request_uri']}"/>
 
-
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <%@ include file="elements/TopNavBar.jsp" %>
 <%@ include file="elements/SideBar.jsp" %>
 
@@ -20,24 +18,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="${contextPath}/resource/js/Pagination2.js"></script>
     <script src="${contextPath}/resource/js/paginationAjax.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
-    <link href="${contextPath}/resource/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../resource/css/dashboard.css" rel="stylesheet">
     <title>Tariffs Overview</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
     <script src="${contextPath}/resource/js/pagination.js"></script>
-    <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
 
     <%-- Modal Script --%>
     <script>
@@ -48,7 +35,7 @@
             //populate the textbox
             $(e.currentTarget).find('form[id="action"]').val(id);
             var $form = $('#action');
-            $form.attr('action', '/tariffs/delete/' + id);
+            $form.attr('action', '${contextPath}/tariffs/delete/' + id);
         });
     </script>
     <!--initial pagination-->
@@ -108,7 +95,7 @@
                     </div>
                     <div class="col-sm-6 ">
                         <c:if test="${table=='edit'}">
-                            <form action="/tariffs/new">
+                            <form action="${contextPath}/tariffs/new">
                                 <button type="submit" class="btn btn-success right">Add Tariff</button>
                             </form>
                         </c:if>
@@ -118,7 +105,7 @@
             <c:choose>
 
                 <c:when test="${NEB=='no'}">
-                    <form action="/existingContract/tariffs" method="post">
+                    <form action="${contextPath}/existingContract/tariffs" method="post">
                         <%@ include file="tables/tableTariffs.jsp" %>
                         <div>
                             <br><br>
@@ -128,7 +115,7 @@
                     </form>
                 </c:when>
                 <c:when test="${table=='add'}">
-                    <form action="/newContract/options" method="post">
+                    <form action="${contextPath}/newContract/options" method="post">
                         <%@ include file="tables/tableTariffs.jsp" %>
                         <div>
                             <br><br>
@@ -138,7 +125,7 @@
                     </form>
                 </c:when>
                 <c:when test="${table=='option'}">
-                    <form action="/options/new/tariffs" method="post">
+                    <form action="${contextPath}/options/new/tariffs" method="post">
                         <%@ include file="tables/tableTariffs.jsp" %>
                         <div>
                             <br><br>
@@ -148,7 +135,7 @@
                     </form>
                 </c:when>
                 <c:when test="${table=='optionEdit'}">
-                    <form action="/options/edit/tariffs" method="post">
+                    <form action="${contextPath}/options/edit/tariffs" method="post">
                         <%@ include file="tables/tableTariffs.jsp" %>
                         <div>
                             <br><br>

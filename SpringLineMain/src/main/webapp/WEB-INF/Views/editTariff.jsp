@@ -20,7 +20,7 @@
     <link rel="icon" href="../resource/images/favicon1.ico">
 
     <!-- Bootstrap core CSS -->
-    <link href="${contextPath}/resource/dist/css/bootstrap.min.css"} rel="stylesheet">
+    <link href="${contextPath}/resource/dist/css/bootstrap.min.css" } rel="stylesheet">
     <link href="${contextPath}/resource/css/dashboard.css" rel="stylesheet">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -35,7 +35,7 @@
         <h1 class="page-header">Tariff administration</h1>
 
         <div id="option data">
-            <form:form method="post" action="/tariffs/edit" modelAttribute="tariff">
+            <form:form method="post" action="${contextPath}/tariffs/edit" modelAttribute="tariff">
                 <div class="table-title">
                     <h2>Edit tariff details</h2>
                 </div>
@@ -49,7 +49,8 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">$</span>
                         </div>
-                        <input id="price" type="number" step="0.01" name="price" value="${tariff.price}" class="form-control" disabled/>
+                        <input id="price" type="number" step="0.01" name="price" value="${tariff.price}"
+                               class="form-control" disabled/>
                     </div>
                 </div>
 
@@ -67,6 +68,22 @@
                             </c:if>/>&nbsp;
                 </div>
 
+                <div class="form-group">
+                    <label class="control-label">Promotion: </label>
+                    <input type="checkbox" class="chk" name="isPromoted" id="isPromoted"
+                            <c:if test="${tariff.promoted==true}">
+                                checked
+                            </c:if>&nbsp;
+                    <c:if test="${tariff.isValid==false}">
+                        disabled
+                    </c:if>
+                    />
+                </div>
+
+                <div class="form-group">
+                    <input type="hidden" name="initialState"
+                           value="${tariff.promoted}">
+                </div>
                 <div class="form-group">
                     <label class="control-label">Set/change compatible options: </label>
                     <input type="checkbox" class="chk" name="compatibleOptions" id="options" value=false/>&nbsp;

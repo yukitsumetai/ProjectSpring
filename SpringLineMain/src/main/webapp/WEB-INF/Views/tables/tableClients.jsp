@@ -11,17 +11,6 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 
 
-<head>
-
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../resource/assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="../../resource/dist/js/bootstrap.min.js"></script>
-    <script src="../../resource/js/pagination.js"></script>
-    <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
-
-</head>
-
 
 <div id="checked">
 </div>
@@ -51,20 +40,3 @@
     <input type="hidden" id="page" value=0>
 
 </div>
-
-
-<!--PaginationDao-->
-<script>
-    $(document).ready(function () {
-
-        $('#myTable').pageMe({pagerSelector: '#pagination', showPrevNext: true, hidePageNumbers: false, perPage: 4});
-
-    });
-</script>
-
-<!--Tooltips-->
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-    });
-</script>

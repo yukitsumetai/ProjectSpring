@@ -1,7 +1,7 @@
 package com.telekom.service.impl;
 
-import com.telekom.dao.OptionDao;
-import com.telekom.dao.OptionGroupDao;
+import com.telekom.dao.api.OptionDao;
+import com.telekom.dao.api.OptionGroupDao;
 import com.telekom.model.entity.Option;
 import com.telekom.model.dto.OptionDto;
 import com.telekom.model.dto.OptionGroupDto;
@@ -27,9 +27,6 @@ public class OptionGroupServiceImpl extends PaginationImpl<OptionGroupDto> imple
     private OptionDao optionDao;
     @Autowired
     private OptionGroupMapper optionGroupMapper;
-    @Autowired
-    private MessageProducerImpl messageProducer;
-
 
     private List<OptionGroupDto> listEntityToDto(List<OptionGroup> optionGroups) {
         List<OptionGroupDto> optionGroupsDTO = new ArrayList<>();
@@ -57,7 +54,6 @@ public class OptionGroupServiceImpl extends PaginationImpl<OptionGroupDto> imple
     @Override
     @Transactional
     public List<OptionGroupDto> getAll() {
-        messageProducer.sendMessage();
         List<OptionGroup> optionGroups = optionGroupDao.getAll();
         List<OptionGroupDto> optionGroupsDTO = new ArrayList<>();
         for (OptionGroup t : optionGroups) {
@@ -77,7 +73,7 @@ public class OptionGroupServiceImpl extends PaginationImpl<OptionGroupDto> imple
 
     @Override
     @Transactional
-    public Page<OptionGroupDto> getPage(Integer size, Integer page) {
+    public Page<OptionGroupDto> getOptions(Integer size, Integer page) {
         List<OptionGroupDto> pageGroups = listEntityToDto(optionGroupDao.getPages(size, page));
         Long total=optionGroupDao.getPagesCount();
         return getPageDraft(pageGroups, total, page, size);

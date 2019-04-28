@@ -22,6 +22,7 @@ public class TariffDto implements Serializable {
     private Set<OptionDto> options = new HashSet<>();
     private boolean isValid;
     private boolean existing;
+    private boolean promoted;
 
 
     public boolean isExisting() {
@@ -32,6 +33,14 @@ public class TariffDto implements Serializable {
         this.existing = existing;
     }
 
+
+    public boolean isPromoted() {
+        return promoted;
+    }
+
+    public void setPromoted(boolean promoted) {
+        this.promoted = promoted;
+    }
 
     public boolean isIsValid() {
         return isValid;

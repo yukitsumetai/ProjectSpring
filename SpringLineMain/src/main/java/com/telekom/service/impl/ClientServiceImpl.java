@@ -1,14 +1,12 @@
 package com.telekom.service.impl;
 
-import com.telekom.dao.ClientDAO;
+import com.telekom.dao.api.ClientDAO;
 import com.telekom.model.entity.Client;
 
 import com.telekom.model.dto.ClientDto;
-import com.telekom.model.dto.OptionGroupDto;
 import com.telekom.model.dto.Page;
 import com.telekom.mapper.ClientMapper;
 import com.telekom.service.api.ClientService;
-import com.telekom.service.api.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
@@ -19,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 
 @Service

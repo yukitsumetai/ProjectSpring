@@ -5,10 +5,8 @@ import com.telekom.model.entity.OptionGroup;
 import com.telekom.model.entity.Tariff;
 import com.telekom.model.dto.OptionDto;
 import com.telekom.model.dto.OptionGroupDto;
-import com.telekom.model.dto.TariffDto;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @Component

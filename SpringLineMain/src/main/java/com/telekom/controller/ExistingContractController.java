@@ -1,4 +1,4 @@
-package telekom.controller;
+package com.telekom.controller;
 
 import com.telekom.model.dto.ContractDto;
 import com.telekom.model.dto.OptionDto;

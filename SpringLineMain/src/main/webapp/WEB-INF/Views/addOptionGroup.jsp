@@ -36,7 +36,7 @@
         <h1 class="page-header">Option Groups administration</h1>
         <h2 class="page-header text-danger">${error}</h2>
         <div id="option data">
-            <form:form id="simpleForm" action="/optionGroups/new" method="post" modelAttribute="optionGroup">
+            <form id="simpleForm" action="${contextPath}/optionGroups/new" method="post">
                 <div class="table-title">
                     <h2>Add option group details</h2>
                 </div>
@@ -67,7 +67,7 @@
                     </button>
                 </div>
 
-            </form:form>
+            </form>
 
         </div>
     </main>

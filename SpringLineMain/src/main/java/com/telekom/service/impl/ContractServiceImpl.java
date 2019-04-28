@@ -2,7 +2,7 @@ package com.telekom.service.impl;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.telekom.dao.*;
+import com.telekom.dao.api.*;
 import com.telekom.model.dto.ContractDto;
 import com.telekom.model.dto.OptionDto;
 import com.telekom.model.dto.OptionGroupDto;
@@ -165,7 +165,7 @@ public class ContractServiceImpl implements ContractService {
         return optionService.findByTariff(contract.getTariff().getId());
     }
 
-    public boolean optionValidation(ContractDto contract) {
+    private boolean optionValidation(ContractDto contract) {
         if (basicOptionValidation(contract)) {
             if (childrenOptionValidation(contract)) return incompatibleOptionValidation(contract);
         }
@@ -277,7 +277,7 @@ public class ContractServiceImpl implements ContractService {
         }
         return tmp;
     }
-    public static final String DEST = "test.pdf";
+    private static final String DEST = "test.pdf";
 
     @Override
     @Transactional
@@ -307,7 +307,7 @@ public class ContractServiceImpl implements ContractService {
     }
 
 
-    public void createPdf() {
+    private void createPdf() {
         File file = new File(DEST);
 
         Document document = new Document();

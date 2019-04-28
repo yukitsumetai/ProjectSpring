@@ -8,27 +8,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
+<%@ include file="elements/TopNavBar.jsp" %>
+<%@ include file="elements/SideBar.jsp" %>
 <c:set var="urlPath" value="${requestScope['javax.servlet.forward.request_uri']}"/>
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
-    <script src="${contextPath}/resource/dist/js/bootstrap.min.js"></script>
     <script src="${contextPath}/resource/js/paginationAjax.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
 
         <title>Options Overview</title>
 
@@ -40,17 +30,14 @@
                 //populate the textbox
                 $(e.currentTarget).find('form[id="action"]').val(id);
                 var $form = $('#action');
-                $form.attr('action', '/options/delete/' + id);
+                $form.attr('action', '/springLine/options/delete/' + id);
             });
         </script>
-    </head>
+</head>
 
 <body>
-<%@ include file="elements/TopNavBar.jsp" %>
-
 
 <div class="container-fluid">
-    <%@ include file="elements/SideBar.jsp" %>
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
         <c:choose>
             <c:when test="${table=='add'}">
@@ -60,6 +47,7 @@
                 <h1 class="page-header">Options</h1>
             </c:otherwise>
         </c:choose>
+
 
 
         <div class="table-wrapper">
@@ -80,7 +68,7 @@
 
                             <c:if test="${table=='edit'}">
                                 <div class="newtariff">
-                                    <form action="/options/new">
+                                    <form action="${contextPath}/options/new">
                                         <button type="submit" class="btn btn-success ">Add Option</button>
                                     </form>
                                 </div>
@@ -96,6 +84,9 @@
                 </c:when>
                 <c:otherwise>
                     <form action="${urlPath}/options/" method="post" command="contract">
+                        <input type="hidden" name="initialState"
+                               value="${promoted}">
+
                         <%@ include file="tables/tableOptions.jsp" %>
                         <div class="row">
                             <button type="submit" class="btn btn-success" name="action" value="new">Next <i

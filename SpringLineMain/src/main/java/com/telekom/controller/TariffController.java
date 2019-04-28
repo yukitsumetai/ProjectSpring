@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping(value = "/tariffs")
 @Controller
 public class TariffController {
-    public final static String tariffPage="redirect:/tariffs";
+    private final static String tariffPage="redirect:/tariffs";
     @Autowired
     private TariffService tariffService;
 
@@ -28,16 +28,19 @@ public class TariffController {
 
     @PostMapping("/new")
     public String newTariffAdd(Model model, @Valid TariffDto tariff, BindingResult bindingResult, @RequestParam(name = "isValid", required = false) boolean validity,
+                               @RequestParam(name = "isPromoted", required = false) boolean promotion,
                                @RequestParam(name = "compatibleOptions", required = false) boolean options) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("error", "Tariff cannot be added because received data contains some errors");
             return "addTariff";
         } else {
             if (!validity) tariff.setIsValid(false);
+             tariff.setPromoted(promotion);
             if (options) {
                 return "options";
             }
             tariffService.add(tariff);
+            tariffService.notify(tariff);
             return tariffPage;
         }
     }
@@ -46,6 +49,7 @@ public class TariffController {
     public String newTariffOptions(TariffDto tariff, @RequestParam(name = "optionID2", required = false) List<Integer> id) {
         tariffService.setOptions(tariff, id);
         tariffService.add(tariff);
+        tariffService.notify(tariff);
         return tariffPage;
     }
 
@@ -58,26 +62,38 @@ public class TariffController {
 
 
     @PostMapping("/edit")
-    public String editProduct(Model model, @ModelAttribute(value = "tariff") TariffDto tariff, @RequestParam(name = "compatibleOptions", required = false) boolean options) {
+    public String editProduct(Model model, @ModelAttribute(value = "tariff") TariffDto tariff, @RequestParam(name = "compatibleOptions", required = false) boolean options,
+                              @RequestParam(name = "isPromoted", required = false) boolean promotion,  @RequestParam(name = "initialState") boolean initialState) {
+        tariff.setPromoted(promotion);
         if (options) {
             model.addAttribute("existing", tariff.getOptions());
             model.addAttribute("id", tariff.getId());
+            model.addAttribute("promoted",  initialState);
             return "options";
         }
         tariffService.editTariff(tariff);
+        tariffService.notify(tariff,  initialState);
         return tariffPage;
     }
 
     @PostMapping("/edit/options")
-    public String editTariffOptions(@ModelAttribute(value = "tariff") TariffDto tariff, @RequestParam(name = "optionID2", required = false) List<Integer> id) {
+    public String editTariffOptions(@ModelAttribute(value = "tariff") TariffDto tariff, @RequestParam(name = "optionID2", required = false) List<Integer> id,
+             @RequestParam(name = "initialState") boolean initialState) {
         tariffService.setOptions(tariff, id);
         tariffService.editTariff(tariff);
+        tariffService.notify(tariff,  initialState);
         return tariffPage;
     }
 
+    /**
+     * gfujcgjgv
+     * @param id
+     * @return
+     */
     @GetMapping("/delete/{id}")
     public String deleteTariff(@PathVariable(value = "id") Integer id) {
         tariffService.deleteTariff(id);
+        tariffService.notifyDeleted();
         return tariffPage;
     }
 

@@ -41,7 +41,7 @@
 <c:if test="${contractDto.blocked==false}">
     <div class="col-sm-4 form-group price" color=" #a5aebc">
         <c:if test="${table!='add'}">
-            <a href=" /existingContract/tariffChange" class="edit" data-toggle="modal"
+            <a href="#changeTariff" class="edit" data-toggle="modal"
                data-target="#changeTariff" id="editIcon" title="Change Tariff"><i
                     class="material-icons">&#xE254;</i></a>
         </c:if>
@@ -69,7 +69,7 @@
     <c:if test="${contractDto.blocked==false}">
     <div class="col-sm-4 form-group price" color=" #a5aebc">
         <c:if test="${table!='add'}">
-            <a href="/existingContract/options" class="add" id="editIcon" title="Edit Options" >
+            <a href="${contextPath}/existingContract/options" class="add" id="editIcon" title="Edit Options" >
                 <i class="material-icons">&#xE254;</i>
             </a>
         </c:if>

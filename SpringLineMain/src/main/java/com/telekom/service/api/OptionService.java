@@ -9,10 +9,6 @@ import java.util.Set;
 
 public interface OptionService extends Pagination {
 
-    List<OptionDto> getAll();
-
-    List<OptionDto> getAll(TariffDto tariff);
-
     Set<OptionDto> findByTariff(Integer tariffId);
 
     void add(OptionDto option);
@@ -31,20 +27,18 @@ public interface OptionService extends Pagination {
 
     void setParent(OptionDto option, Integer id);
 
-    List<OptionDto> getAllValid();
-
     void setOptionGroup(OptionDto option, Integer groupId);
 
     Set<OptionDto> findByTariffChildren(Integer id);
 
-    Page<OptionDto> getPage(Integer size, Integer page, Integer tariffId);
+    Page<OptionDto> getOptionsForTariff(Integer size, Integer page, Integer tariffId);
 
-    Page<OptionDto> getPageForNew(Integer size, Integer page, boolean parent);
+    Page<OptionDto> getOptionsForNewOption(Integer size, Integer page, boolean parent);
 
     Page<OptionDto> getPageForExisting(Integer size, Integer page, boolean parent, Integer optionId);
 
-    Page<OptionDto> getPageForGroup(Integer size, Integer page);
+    Page<OptionDto> getOpionsForOptionGroup(Integer size, Integer page);
 
-    Page<OptionDto> getPageForExistingGroup(Integer size, Integer page, Integer optionGroupId);
+    Page<OptionDto> getOptionsForExistingOptionGroup(Integer size, Integer page, Integer optionGroupId);
 }
 

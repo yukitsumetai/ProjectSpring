@@ -2,6 +2,7 @@ package com.telekom.controller;
 
 import com.telekom.model.entity.User;
 import com.telekom.service.api.ClientService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -15,19 +16,23 @@ public class AuthController {
     @Autowired
     ClientService clientService;
 
+    @Autowired
+    private Logger logger;
+
     @GetMapping("/login")
     public String login() {
         return "login";
-
     }
 
     @GetMapping("/welcome")
     public String defaultAfterLogin(HttpServletRequest request, @AuthenticationPrincipal User activeUser) {
+        Long id = activeUser.getId();
         if (request.isUserInRole("ADMIN")) {
+            logger.info("Admin" +id+" is logged");
             return "redirect:/tariffs";
         }
-        Long id = activeUser.getId();
         request.getSession().setAttribute("client", clientService.getOne(id));
+        logger.info("Client" +id+" is logged");
         return "welcome";
     }
 
