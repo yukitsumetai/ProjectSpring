@@ -1,0 +1,10 @@
+<html>
+<body>
+<span style="font-weight:bold">
+This is an error email<p/>  //This text should be in bold
+</span>
+<span style="color:red">
+${exceptionDetails} //This exception details should be in RED font.
+</span>
+</body>
+</html>

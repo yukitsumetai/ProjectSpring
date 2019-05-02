@@ -9,7 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ include file="elements/TopNavBar.jsp" %>
-<%@ include file="elements/SideBar.jsp" %>
+
 <c:set var="urlPath" value="${requestScope['javax.servlet.forward.request_uri']}"/>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
@@ -18,6 +18,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="${contextPath}/resource/js/paginationAjax.js"></script>
     <script src="${contextPath}/resource/js/ComboBox.js"></script>
+    <link href="${contextPath}/resource/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Choose related options</title>
 
     <!--Pagination initial-->
@@ -40,7 +41,7 @@
     </head>
 
 <body>
-
+<%@ include file="elements/SideBar.jsp" %>
 
 <main class="container-fluid">
 

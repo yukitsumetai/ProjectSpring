@@ -66,3 +66,72 @@ function addRowClient(val, table) {
     $("#Table > tbody").empty();
     $("<tbody/>", {html: items.join("")}).appendTo("#Table")
 }
+
+function configure(){
+    Webcam.set({
+        width: 1280,
+        height: 720,
+        image_format: 'jpeg',
+        jpeg_quality: 90,
+
+    });
+    Webcam.attach( '#my_camera' );
+    document.getElementById('my_camera').style.display = "block";
+    document.getElementById('cameraButtons').innerHTML =
+        ' <div class="row">\n' +
+        '                    <div class="col-sm-6 form-group">' +
+        '<button class="btn btn-success" onClick="take_snapshot()">Take Picture</button>'+
+        '</div>' +'<div class="col-sm-6 form-group">' +
+        '<button class="btn btn-success left" onClick="closeCamera()">Close Camera</button>'+
+        '</div>'+'</div>';
+}
+
+function take_snapshot() {
+    // take snapshot and get image data
+    Webcam.snap( function(data_uri) {
+        // display results in page
+        document.getElementById('my_camera').innerHTML =
+            '<img id="imageprev"  value="'+data_uri+'" src="'+data_uri+'"/>' +
+            '<span id="image" name="image" value="'+data_uri+'"/>';
+    } );
+    setTimeout( saveSnap(), 10000);
+
+    Webcam.attach( '#my_camera' );
+
+}
+
+function closeCamera(){
+    document.getElementById('cameraButtons').innerHTML =
+        '<button class="btn btn-success" onclick="configure()">Use Camera</button>';
+
+    Webcam.reset();
+    document.getElementById('my_camera').style.display = "none";
+}
+
+function saveSnap(){
+
+    var file = document.getElementById("imageprev").src;
+
+    var passdata= {"imageprev" : file}
+    $.ajax({
+        type: "POST",
+        url: "/springLine/captureImage",
+        data: {
+            imageprev: file,
+        },
+        dataType : 'json',
+        error: function (result)
+        {
+            alert("Something went wrong. Please try again")
+        },
+        success :function (data) {
+            if (data!=""){
+               if(data.name!="") document.getElementById("name").value = data.name;
+                if(data.surname!="") document.getElementById("surname").value = data.surname;
+                if(data.passport!="") document.getElementById("passport").value = data.passport;
+                if(data.birthday!="") document.getElementById("birthday").value = data.birthday;
+            } //addRowClient(data, table);//table for add
+            else  alert("Something went wrong. Please try again");
+        }
+    });
+}

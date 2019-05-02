@@ -8,6 +8,11 @@ import java.util.List;
 
 @Service
 public interface TariffService {
+    Page<TariffDto> getAllPaginated(Integer size, Integer page, Integer optionId);
+
+    Page<TariffDto> getAllPaginated(Integer size, Integer page);
+
+    Page<TariffDto> getValidPaginated(Integer size, Integer page);
 
     List<TariffDto> getAllPromoted();
 
@@ -27,12 +32,8 @@ public interface TariffService {
 
     void deleteTariff(Integer id);
 
-    void setOptions(TariffDto tariff, List<Integer> id);
+    void setOptionsDto(TariffDto tariff, List<Integer> id);
 
-    Page<TariffDto> getPage(Integer size, Integer page, Integer optionId);
 
-    Page<TariffDto> getPage(Integer size, Integer page);
-
-    Page<TariffDto> getPageValid(Integer size, Integer page);
 }
 

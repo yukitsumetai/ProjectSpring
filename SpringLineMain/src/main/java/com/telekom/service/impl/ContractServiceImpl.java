@@ -3,10 +3,7 @@ package com.telekom.service.impl;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.telekom.dao.api.*;
-import com.telekom.model.dto.ContractDto;
-import com.telekom.model.dto.OptionDto;
-import com.telekom.model.dto.OptionGroupDto;
-import com.telekom.model.dto.TariffDto;
+import com.telekom.model.dto.*;
 import com.telekom.mapper.ClientMapper;
 import com.telekom.mapper.ContractMapper;
 import com.telekom.model.entity.*;
@@ -14,6 +11,8 @@ import com.telekom.service.api.ContractService;
 import com.telekom.service.api.OptionGroupService;
 import com.telekom.service.api.OptionService;
 import com.telekom.service.api.TariffService;
+import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,24 +21,18 @@ import javax.transaction.Transactional;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.*;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class ContractServiceImpl implements ContractService {
+
     @Autowired
     private ContractMapper contractMapper;
     @Autowired
     private ClientMapper clientMapper;
-    @Autowired
-    private ContractDao contractDao;
-    @Autowired
-    private PhoneNumberDao phoneNumberDao;
-    @Autowired
-    private ClientDAO clientDao;
     @Autowired
     private OptionService optionService;
     @Autowired
@@ -54,21 +47,34 @@ public class ContractServiceImpl implements ContractService {
     private UserDao userDao;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private ContractDao contractDao;
+    @Autowired
+    private PhoneNumberDao phoneNumberDao;
+    @Autowired
+    private ClientDAO clientDao;
+    @Autowired
+    PdfCreatorImpl pdfCreator;
+
+    @Autowired
+    Logger logger;
 
     @Override
     @Transactional
     public void add(ContractDto contract) {
-
+        logger.info("Adding new contract");
         Contract tmp = contractMapper.dtoToEntity(contract);
         phoneNumberDao.deleteNumber(tmp.getPhoneNumber());
         Client c = clientDao.getOne(contract.getClient().getId());
         if (c == null) {
+            logger.info("Adding new client");
             c = clientMapper.dtoToEntity(contract.getClient());
             c.setContract(tmp);
             User user = new User(tmp, passwordEncoder.encode(contract.getClient().getPassword()));
             c.setUser(user);
             clientDao.add(c);
         } else {
+            logger.info("Adding contract to existing client " + c.getUser().getId());
             User user = userDao.getOne(c.getUser().getId());
             user.addContract(tmp);
         }
@@ -77,62 +83,42 @@ public class ContractServiceImpl implements ContractService {
     }
 
     @Override
-    public Set<OptionDto> getParentsForExisting(ContractDto contract) {
-        Set<OptionDto> options = getOptions(contract);
-        Set<OptionDto> existing = contract.getOptions();
-        for (OptionDto o : existing) {
-            if (o.getParent() == null) {
-                setExisting(options, o);
-            }
-        }
-        return options;
-    }
-
-
-    @Override
-    public Set<OptionDto> getChildrenForExisting(ContractDto contract) {
-        Set<OptionDto> existing = contract.getOptions();
-        Set<OptionDto> children = getOptionsChildren(contract);
-        for (OptionDto o : existing) {
-            if (o.getParent() != null) {
-                setExisting(children, o);
-            }
-        }
-        return children;
-    }
-
-
-    private void setExisting(Set<OptionDto> target, OptionDto existing) {
-        boolean flag = true;
-        for (OptionDto c : target) {
-            if (c.getId() == existing.getId()) {
-                flag = false;
-                c.setExisting(true);
-                c.setPriceOneTime(0.00);
-            }
-        }
-        if (flag) {
-            existing.setExisting(true);
-            existing.setPriceOneTime(0.00);
-            target.add(existing);
-        }
-
+    public void sendPdf(ContractDto contract){
+        pdfCreator.createPdf(contract);
     }
 
     @Override
-    public List<TariffDto> getTariffsForAdd(ContractDto contract) {
-        Integer id = contract.getTariff().getId();
-        List<TariffDto> tariffs = new ArrayList<>(tariffService.getAllValid());
-        tariffs.removeIf(st -> st.getId() == id);
-        return tariffs;
+    public boolean setTariff(ContractDto contract, Integer id) {
+        logger.info("Setting tariff "+id+" to contractDto ");
+        TariffDto tmp = tariffService.getOne(id);
+        if (!tmp.isIsValid()) return false;
+        contract.setTariff(tmp);
+        contract.setPrice(0.0);
+        contract.addPrice(tmp.getPrice());
+        return true;
     }
 
+    @Override
+    public Set<OptionGroupDto> getGroups(ContractDto contract) {
+        return optionGroupService.findByTariff(contract.getTariff().getId());
+    }
+
+    @Override
+    public Set<OptionDto> getOptionsParents(ContractDto contract) {
+        return optionService.findByTariff(contract.getTariff().getId());
+    }
+
+    @Override
+    public Set<OptionDto> getOptionsChildren(ContractDto contract) {
+        return optionService.findByTariffChildren(contract.getTariff().getId());
+    }
 
     @Override
     public boolean setOptions(ContractDto contract, List<Integer> id, boolean existing) {
         Set<OptionDto> temporary = new HashSet<>();
 
         if (id != null) {
+            logger.info("Adding options to contract");
             contract.setPriceOneTime(0.00);
             contract.setPrice(0.00);
             contract.addPrice(contract.getTariff().getPrice());
@@ -144,7 +130,7 @@ public class ContractServiceImpl implements ContractService {
                     if (contract.getOptions() != null) {
                         for (OptionDto op : contract.getOptions()
                         ) {
-                            if (op.getId() == tmp.getId()) tmp.setPriceOneTime(0.00); //if option already existed
+                            if (op.getId() == tmp.getId()) tmp.setPriceOneTime(0.00); //if option already existed OneTime price=0
                         }
                     }
                     contract.addPriceOneTime(tmp.getPriceOneTime());
@@ -153,7 +139,8 @@ public class ContractServiceImpl implements ContractService {
             contract.setOptions(temporary);
             if (!existing) return optionValidation(contract);
         } else {
-            contract.setOptions(new HashSet<>());
+            logger.info("Removing options from contract");
+            contract.setOptions(temporary);
             contract.setPrice(0.00);
             contract.addPrice(contract.getTariff().getPrice());
         }
@@ -161,8 +148,11 @@ public class ContractServiceImpl implements ContractService {
     }
 
     @Override
-    public Set<OptionDto> getOptions(ContractDto contract) {
-        return optionService.findByTariff(contract.getTariff().getId());
+    public List<TariffDto> getTariffsForAdd(ContractDto contract) {
+        List<TariffDto> tariffs = new ArrayList<>(tariffService.getAllValid());
+        Integer id = contract.getTariff().getId();
+        tariffs.removeIf(st -> st.getId() == id);
+        return tariffs;
     }
 
     private boolean optionValidation(ContractDto contract) {
@@ -185,7 +175,6 @@ public class ContractServiceImpl implements ContractService {
         }
         return true;
     }
-
 
     private boolean childrenOptionValidation(ContractDto contract) {
         for (OptionDto o : contract.getOptions()) {
@@ -223,35 +212,20 @@ public class ContractServiceImpl implements ContractService {
         return true;
     }
 
-    @Override
-    public Set<OptionDto> getOptionsChildren(ContractDto contract) {
-        return optionService.findByTariffChildren(contract.getTariff().getId());
-    }
-
-    @Override
-    public boolean setTariff(ContractDto contract, Integer id) {
-        TariffDto tmp = tariffService.getOne(id);
-        if (!tmp.isIsValid()) return false;
-        contract.setTariff(tmp);
-        contract.setPrice(0.0);
-        contract.addPrice(tmp.getPrice());
-        return true;
-    }
-
-    @Override
-    public Set<OptionGroupDto> getGroups(ContractDto contract) {
-        return optionGroupService.findByTariff(contract.getTariff().getId());
-    }
 
     @Override
     @Transactional
     public void update(ContractDto contractDto) {
+        logger.info("Updating contract "+ contractDto.getPhoneNumberInt());
         Contract contract = contractDao.getOne(contractDto.getPhoneNumberInt());
-        if (contract.getTariff().getId() != contractDto.getTariff().getId()) {
+        Integer tariffId=contractDto.getTariff().getId();
+        if (contract.getTariff().getId() != tariffId) {
+            logger.info("Updating tariff to "+ tariffId);
             contract.setOptions(null);
-            Tariff t = tariffDao.getOne(contractDto.getTariff().getId());
+            Tariff t = tariffDao.getOne(tariffId);
             contract.setTariff(t);
         } else {
+            logger.info("Updating options");
             contract.setOptions(new HashSet<>());
             if (!contractDto.getOptions().isEmpty()) {
                 for (OptionDto o : contractDto.getOptions()
@@ -268,32 +242,35 @@ public class ContractServiceImpl implements ContractService {
     @Override
     @Transactional
     public ContractDto getOne(String number) {
+        logger.info("Searching for contract"+number);
         BigInteger number2 = new BigInteger(number);
         ContractDto tmp;
         try {
             tmp = contractMapper.entityToDto(contractDao.getOne(number2));
         } catch (NullPointerException e) {
+            logger.info("Contract not found "+number2);
             tmp = null;
         }
         return tmp;
     }
-    private static final String DEST = "test.pdf";
+
+
 
     @Override
     @Transactional
     public void block(ContractDto contract, boolean admin) {
+        logger.info("Blocking contract"+contract.getPhoneNumberInt()+" by admin "+admin);
         Contract tmp = contractDao.getOne(contract.getPhoneNumberInt());
         tmp.setBlocked(true);
         if (admin) {
             tmp.setAgentBlock(true);
         }
-        createPdf();
-
     }
 
     @Override
     @Transactional
     public void unblock(ContractDto contract, boolean admin) {
+        logger.info("Unblocking contract"+contract.getPhoneNumberInt()+" by admin "+admin);
         Contract tmp = contractDao.getOne(contract.getPhoneNumberInt());
         if (tmp.isAgentBlock()) {
             if (admin) {
@@ -306,27 +283,53 @@ public class ContractServiceImpl implements ContractService {
         }
     }
 
-
-    private void createPdf() {
-        File file = new File(DEST);
-
-        Document document = new Document();
-        try {
-            PdfWriter.getInstance(document, new FileOutputStream(DEST));
-
-            document.open();
-            Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
-            Chunk chunk = new Chunk("Hello World", font);
-
-            document.add(chunk);
-            document.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found");
-        } catch (DocumentException e) {
-            System.out.println("Document exception");
+    @Override
+    public Set<OptionDto> getParentsForExistingContract(ContractDto contract) {
+        logger.info("Getting parents for existing contracts "+contract.getPhoneNumberInt());
+        Set<OptionDto> existing = contract.getOptions();
+        Set<OptionDto> parents = getOptionsParents(contract);
+        for (OptionDto o : existing) {
+            if (o.getParent() == null) {
+                setExisting(parents, o);
+            }
         }
-        System.out.println("Dhgj");
+        return parents;
     }
+
+
+    @Override
+    public Set<OptionDto> getChildrenForExistingContract(ContractDto contract) {
+        logger.info("Getting children for existing contracts "+contract.getPhoneNumberInt());
+        Set<OptionDto> existing = contract.getOptions();
+        Set<OptionDto> children = getOptionsChildren(contract);
+        for (OptionDto o : existing) {
+            if (o.getParent() != null) {
+                setExisting(children, o);
+            }
+        }
+        return children;
+    }
+
+
+    private void setExisting(Set<OptionDto> target, OptionDto existing) {
+        boolean notInList = true;
+        for (OptionDto c : target) {
+            if (c.getId() == existing.getId()) {
+                notInList = false;
+                c.setExisting(true);
+                c.setPriceOneTime(0.00);
+            }
+        }
+        if (notInList) {
+            existing.setExisting(true);
+            existing.setPriceOneTime(0.00);
+            target.add(existing);
+        }
+
+    }
+
+
+
 
 }
 

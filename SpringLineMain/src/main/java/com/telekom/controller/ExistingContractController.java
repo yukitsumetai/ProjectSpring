@@ -4,6 +4,7 @@ import com.telekom.model.dto.ContractDto;
 import com.telekom.model.dto.OptionDto;
 import com.telekom.service.api.ContractService;
 import com.telekom.service.api.OptionService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,18 +27,21 @@ public class ExistingContractController {
     @Autowired
     OptionService optionService;
 
+    @Autowired
+    Logger logger;
+
 
     @GetMapping("/{id}")
     public ModelAndView getEditForm(ContractDto contract, @PathVariable(value = "id") String id) {
-
-       contract = contractService.getOne(id);
-       //return not found!
+        logger.info("Getting contract "+ id);
+        contract = contractService.getOne(id);
         return new ModelAndView("contract", "contractDto", contract);
     }
 
 
     @GetMapping("/tariffs")
     public String tariffChoose(Model model, ContractDto contract) {
+        logger.info("Changing tariff, contract is blocked - "+ contract.isBlocked());
         if (!contract.isBlocked()) {
             model.addAttribute("tariffs", contractService.getTariffsForAdd(contract));
             model.addAttribute("table", "add");
@@ -72,14 +76,15 @@ public class ExistingContractController {
 
     @GetMapping("/options")
     public String addOptionsChoose(Model model, ContractDto contract) {
+        logger.info("Changing options, contract is blocked - "+ contract.isBlocked());
         if (!contract.isBlocked()) {
-            Set<OptionDto> options = contractService.getOptions(contract);
+            Set<OptionDto> options = contractService.getOptionsParents(contract);
             if (options.isEmpty()) {
                 model.addAttribute("message", "No options are available"); //add message
             } else {
-                model.addAttribute("options", contractService.getParentsForExisting(contract));
+                model.addAttribute("options", contractService.getParentsForExistingContract(contract));
                 model.addAttribute("optionGroups", contractService.getGroups(contract));
-                model.addAttribute("children", contractService.getChildrenForExisting(contract));
+                model.addAttribute("children", contractService.getChildrenForExistingContract(contract));
                 model.addAttribute("table", "add");
             }
             return "contractOptions";

@@ -8,35 +8,40 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ include file="elements/TopNavBar.jsp" %>
-<%@ include file="elements/SideBar.jsp" %>
 <c:set var="urlPath" value="${requestScope['javax.servlet.forward.request_uri']}"/>
+
+<%@ include file="elements/TopNavBar.jsp" %>
+
 <!DOCTYPE html>
 <html>
 <head>
     <script src="${contextPath}/resource/js/paginationAjax.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link href="${contextPath}/resource/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Options Overview</title>
+    <!--initial pagination-->
+    <script>
+        $(document).ready(function () {
+            var curr = document.getElementById('page').value;
+            if (curr == 0) {
+                var table = 0;
+                <c:if test="${table=='edit'}">
+                table = 1;
+                </c:if>
+                var id = "${id}";
+                var group = "${group}";
+                return pagination(0, 1, table, id, null, "", group);
+            }
+            document.getElementById('page').value = 1;
+        });
+    </script>
 
-
-        <title>Options Overview</title>
-
-        <%-- Modal Script --%>
-        <script>
-            $(document).on('shown.bs.modal', '#deleteModal', function (e) {
-                //get data-id attribute of the clicked element
-                var id = $(e.relatedTarget).data('id');
-                //populate the textbox
-                $(e.currentTarget).find('form[id="action"]').val(id);
-                var $form = $('#action');
-                $form.attr('action', '/springLine/options/delete/' + id);
-            });
-        </script>
 </head>
 
 <body>
-
+<%@ include file="elements/SideBar.jsp" %>
 <div class="container-fluid">
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
         <c:choose>
@@ -47,9 +52,6 @@
                 <h1 class="page-header">Options</h1>
             </c:otherwise>
         </c:choose>
-
-
-
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
@@ -150,22 +152,18 @@
         $form.attr('action', '/options/delete/' + id);
     });
 </script>
-<!--initial pagination-->
+<%-- Modal Script --%>
 <script>
-    $(document).ready(function () {
-        var curr = document.getElementById('page').value;
-        if (curr == 0) {
-            var table = 0;
-            <c:if test="${table=='edit'}">
-            table = 1;
-            </c:if>
-            var id = "${id}";
-            var group = "${group}";
-            return pagination(0, 1, table, id, null, "", group);
-        }
-        document.getElementById('page').value = 1;
+    $(document).on('shown.bs.modal', '#deleteModal', function (e) {
+        //get data-id attribute of the clicked element
+        var id = $(e.relatedTarget).data('id');
+        //populate the textbox
+        $(e.currentTarget).find('form[id="action"]').val(id);
+        var $form = $('#action');
+        $form.attr('action', '/springLine/options/delete/' + id);
     });
 </script>
+
 <!--checkboxes-->
 <script>
     $(document).on('click', '.chk', function () {

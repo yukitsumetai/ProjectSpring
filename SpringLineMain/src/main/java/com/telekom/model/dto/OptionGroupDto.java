@@ -5,15 +5,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-public class OptionGroupDto implements Serializable {
+public class OptionGroupDto extends SharedDto implements Serializable {
 
     private int id;
     private String name;
     private String description;
     private boolean isValid;
-    private Set<OptionDto> options=new HashSet<>();
 
-    public void addOption(OptionDto o){this.options.add(o);}
 
     public int getId() {
         return id;
@@ -47,11 +45,4 @@ public class OptionGroupDto implements Serializable {
         this.name = name;
     }
 
-    public Set<OptionDto> getOptions() {
-        return options;
-    }
-
-    public void setOptions(Set<OptionDto> options) {
-        this.options = options;
-    }
 }

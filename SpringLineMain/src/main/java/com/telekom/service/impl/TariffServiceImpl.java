@@ -15,14 +15,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+
+import java.util.*;
 import java.util.List;
-import java.util.Set;
 
 
 @Service
-public class TariffServiceImpl extends PaginationImpl<TariffDto> implements TariffService {
+public class TariffServiceImpl extends SharedFunctions<TariffDto> implements TariffService {
 
 
     @Autowired
@@ -34,10 +33,14 @@ public class TariffServiceImpl extends PaginationImpl<TariffDto> implements Tari
     @Autowired
     private MessageProducer messageProducer;
     @Autowired
+    private MailSender mailSender;
+    @Autowired
+    private ImageRecognitionImpl imageRecognition;
+    @Autowired
     private Logger logger;
 
 
-    private List<TariffDto> listEntityToDto(List<Tariff> tariffs){
+    private List<TariffDto> listEntityToDto(List<Tariff> tariffs) {
         List<TariffDto> tariffsDTO = new ArrayList<>();
         for (Tariff t : tariffs) {
 
@@ -48,9 +51,52 @@ public class TariffServiceImpl extends PaginationImpl<TariffDto> implements Tari
 
     @Override
     @Transactional
+    public Page<TariffDto> getAllPaginated(Integer size, Integer page) {
+        logger.info("Geting tariffs");
+
+        List<TariffDto> pageGroups = listEntityToDto(tariffDao.getPages(size, page));
+        Long total = tariffDao.getPagesCount();
+        /*
+        try {
+           mailSender.sendMessageWithAttachment("rfr", "Welcome to Spring Line", "", "");
+        } catch (MessagingException e) {
+            logger.info("Exception", e);
+        }
+*/
+       // imageRecognition.doOCR("");
+        return getPageDraft(pageGroups, total, page, size);
+    }
+
+    @Override
+    @Transactional
+    public Page<TariffDto> getValidPaginated(Integer size, Integer page) {
+        logger.info("Geting valid tariffs");
+        List<TariffDto> pageGroups = listEntityToDto(tariffDao.getPagesValid(size, page));
+        Long total = tariffDao.getPagesValidCount();
+        return getPageDraft(pageGroups, total, page, size);
+    }
+
+    @Override
+    @Transactional
+    public Page<TariffDto> getAllPaginated(Integer size, Integer page, Integer optionId) {
+        logger.info("Geting tariffs for option");
+        List<TariffDto> pageGroups = listEntityToDto(tariffDao.getPages(size, page));
+        Set<Tariff> existing = optionDao.getOne(optionId).getCompatibleTariffs();
+        for (Tariff i : existing) {
+            for (TariffDto o : pageGroups
+            ) {
+                if (o.getId() == i.getId()) o.setExisting(true);
+            }
+        }
+        Long total = tariffDao.getPagesCount();
+        return getPageDraft(pageGroups, total, page, size);
+    }
+
+    @Override
+    @Transactional
     public List<TariffDto> getAllPromoted() {
 
-        return  listEntityToDto(tariffDao.getAllPromoted());
+        return listEntityToDto(tariffDao.getAllPromoted());
     }
 
 
@@ -58,28 +104,18 @@ public class TariffServiceImpl extends PaginationImpl<TariffDto> implements Tari
     @Transactional
     public List<TariffDto> getAllValid() {
         List<Tariff> tariffs = tariffDao.getAllValid();
-        return listEntityToDto( tariffs);
+        return listEntityToDto(tariffs);
     }
 
     @Override
-    public void setOptions(TariffDto tariff, List<Integer> id) {
-        Set<OptionDto> options = new HashSet<>();
-        if (id != null) {
-            logger.info("Setting options");
-            for (Integer i : id) {
-                OptionDto t = new OptionDto();
-                t.setId(i);
-                options.add(t);
-            }
-            tariff.setOptions(options);
-        }
-        else tariff.setOptions(new HashSet<>());
+    public void setOptionsDto(TariffDto tariff, List<Integer> id) {
+        setOptions(tariff, id);
     }
 
     @Override
     @Transactional
     public TariffDto getOne(int id) {
-        logger.info("Searching tariff "+id);
+        logger.info("Searching tariff " + id);
         Tariff t = tariffDao.getOne(id);
         return tariffMapper.entityToDto(t);
     }
@@ -107,19 +143,19 @@ public class TariffServiceImpl extends PaginationImpl<TariffDto> implements Tari
 
     @Override
     public void notifyDeleted() {
-            messageProducer.sendMessage();
+        messageProducer.sendMessage();
     }
 
     @Override
     public void notify(TariffDto tariff, boolean state) {
-        if(state!=tariff.isPromoted()){
+        if (state != tariff.isPromoted()) {
             messageProducer.sendMessage();
         }
     }
 
     @Override
     public void notify(TariffDto tariff) {
-        if(tariff.isPromoted()){
+        if (tariff.isPromoted()) {
             messageProducer.sendMessage();
         }
     }
@@ -127,7 +163,7 @@ public class TariffServiceImpl extends PaginationImpl<TariffDto> implements Tari
     @Override
     @Transactional
     public void editTariff(TariffDto t) {
-        logger.info("Edditing tariff "+t.getId());
+        logger.info("Edditing tariff " + t.getId());
         Tariff tariff = tariffDao.getOne(t.getId());
         tariff.setIsValid(t.isIsValid());
         tariff.setPromoted(t.isPromoted());
@@ -139,45 +175,14 @@ public class TariffServiceImpl extends PaginationImpl<TariffDto> implements Tari
     @Override
     @Transactional
     public void deleteTariff(Integer id) {
-        logger.info("Deleting tariff "+id);
+        logger.info("Deleting tariff " + id);
         Tariff tariff = tariffDao.getOne(id);
         tariff.setIsValid(false);
         tariff.setPromoted(false);
     }
 
-    @Override
-    @Transactional
-    public Page<TariffDto> getPage(Integer size, Integer page) {
-        logger.info("Geting tariffs");
-        List<TariffDto> pageGroups =listEntityToDto(tariffDao.getPages(size, page));
-        Long total=tariffDao.getPagesCount();
-        return getPageDraft(pageGroups, total, page, size);
-    }
 
-    @Override
-    @Transactional
-    public Page<TariffDto> getPageValid(Integer size, Integer page) {
-        logger.info("Geting valid tariffs");
-        List<TariffDto> pageGroups =listEntityToDto(tariffDao.getPagesValid(size, page));
-        Long total=tariffDao.getPagesValidCount();
-        return getPageDraft(pageGroups, total, page, size);
-    }
 
-    @Override
-    @Transactional
-    public Page<TariffDto> getPage(Integer size, Integer page, Integer optionId) {
-        logger.info("Geting tariffs for option");
-        List<TariffDto> pageGroups =listEntityToDto(tariffDao.getPages(size, page));
-        Set<Tariff> existing =optionDao.getOne(optionId).getCompatibleTariffs();
-        for (Tariff i:existing) {
-            for (TariffDto o:pageGroups
-            ) {
-                if(o.getId()==i.getId()) o.setExisting(true);
-            }
-        }
-        Long total=tariffDao.getPagesCount();
-        return getPageDraft(pageGroups, total, page, size);
-    }
 
 
 }

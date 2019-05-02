@@ -46,7 +46,7 @@ public class OptionGroupController {
     }
     @PostMapping("/new/options")
     public String newTariffOptions(OptionGroupDto optionGroup, @RequestParam(name = "optionID2", required = false) List<Integer> id) {
-        optionGroupService.setOptions(optionGroup, id);
+        optionGroupService.setOptionsDto(optionGroup, id);
         optionGroupService.add(optionGroup);
         return optionGroupPage;
     }
@@ -73,7 +73,7 @@ public class OptionGroupController {
 
     @PostMapping("/edit/options")
     public String editOptionGroupOptions(@ModelAttribute(value = "optionGroup") OptionGroupDto optionGroup, @RequestParam(name = "optionID2", required = false) List<Integer> id) {
-        optionGroupService.setOptions(optionGroup, id);
+        optionGroupService.setOptionsDto(optionGroup, id);
         optionGroupService.editOptionGroup(optionGroup);
         return optionGroupPage;
     }

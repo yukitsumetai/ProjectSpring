@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-public class TariffDto implements Serializable {
+public class TariffDto extends SharedDto implements Serializable {
 
     private int id;
 
@@ -19,11 +19,9 @@ public class TariffDto implements Serializable {
 
     @Size(max = 200)
     private String description;
-    private Set<OptionDto> options = new HashSet<>();
     private boolean isValid;
     private boolean existing;
     private boolean promoted;
-
 
     public boolean isExisting() {
         return existing;
@@ -32,7 +30,6 @@ public class TariffDto implements Serializable {
     public void setExisting(boolean existing) {
         this.existing = existing;
     }
-
 
     public boolean isPromoted() {
         return promoted;
@@ -48,14 +45,6 @@ public class TariffDto implements Serializable {
 
     public void setIsValid(boolean valid) {
         isValid = valid;
-    }
-
-    public Set<OptionDto> getOptions() {
-        return options;
-    }
-
-    public void setOptions(Set<OptionDto> options) {
-        this.options = options;
     }
 
     public String getName() {

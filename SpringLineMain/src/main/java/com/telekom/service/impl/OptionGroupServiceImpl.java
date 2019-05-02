@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class OptionGroupServiceImpl extends PaginationImpl<OptionGroupDto> implements OptionGroupService {
+public class OptionGroupServiceImpl extends SharedFunctions<OptionGroupDto> implements OptionGroupService {
 
     @Autowired
     private OptionGroupDao optionGroupDao;
@@ -27,6 +27,7 @@ public class OptionGroupServiceImpl extends PaginationImpl<OptionGroupDto> imple
     private OptionDao optionDao;
     @Autowired
     private OptionGroupMapper optionGroupMapper;
+
 
     private List<OptionGroupDto> listEntityToDto(List<OptionGroup> optionGroups) {
         List<OptionGroupDto> optionGroupsDTO = new ArrayList<>();
@@ -38,17 +39,8 @@ public class OptionGroupServiceImpl extends PaginationImpl<OptionGroupDto> imple
     }
 
     @Override
-    public void setOptions(OptionGroupDto optionGroup, List<Integer> id) {
-        Set<OptionDto> options = new HashSet<>();
-        if (id != null) {
-            for (Integer i : id) {
-                OptionDto t = new OptionDto();
-                t.setId(i);
-                options.add(t);
-            }
-            optionGroup.setOptions(options);
-        } else optionGroup.setOptions(new HashSet<>());
-
+    public void setOptionsDto(OptionGroupDto optionGroup, List<Integer> id) {
+        setOptions(optionGroup,  id);
     }
 
     @Override

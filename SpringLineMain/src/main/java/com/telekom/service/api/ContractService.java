@@ -1,9 +1,6 @@
 package com.telekom.service.api;
 
-import com.telekom.model.dto.ContractDto;
-import com.telekom.model.dto.OptionDto;
-import com.telekom.model.dto.OptionGroupDto;
-import com.telekom.model.dto.TariffDto;
+import com.telekom.model.dto.*;
 
 import java.util.List;
 import java.util.Set;
@@ -24,16 +21,18 @@ public interface ContractService {
 
     Set<OptionGroupDto> getGroups(ContractDto contract);
 
-    Set<OptionDto> getOptions(ContractDto contract);
+    Set<OptionDto> getOptionsParents(ContractDto contract);
 
     Set<OptionDto> getOptionsChildren(ContractDto contract);
 
-    Set<OptionDto> getParentsForExisting(ContractDto contract);
+    Set<OptionDto> getParentsForExistingContract(ContractDto contract);
 
-    Set<OptionDto> getChildrenForExisting(ContractDto contract);
+    Set<OptionDto> getChildrenForExistingContract(ContractDto contract);
 
     void block(ContractDto contract, boolean admin);
 
     void unblock(ContractDto contract, boolean admin);
+
+    void sendPdf(ContractDto contract);
 
 }

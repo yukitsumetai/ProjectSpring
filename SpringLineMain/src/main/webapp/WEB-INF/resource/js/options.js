@@ -1,4 +1,4 @@
-function radiobutton(state) {
+function radiobutton() {
     var radios = document.getElementsByName('options');
     var group = document.getElementById('selectForm');
     var select = document.getElementById('select1');

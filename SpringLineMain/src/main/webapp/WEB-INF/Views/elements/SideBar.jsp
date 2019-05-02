@@ -40,7 +40,7 @@
                 <span>CONTRACT DETAILS</span>
             </h6>
             <c:forEach items="${client.contracts}" var="c">
-                <li class="nav-item"><a href="../existingContract/${c.phoneNumber}">${c.phoneNumber}</a></li>
+                <li class="nav-item"><a href="${contextPath}/existingContract/${c.phoneNumber}">${c.phoneNumber}</a></li>
             </c:forEach>
         </security:authorize>
     </div>

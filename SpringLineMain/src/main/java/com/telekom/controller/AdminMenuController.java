@@ -41,6 +41,10 @@ public class AdminMenuController {
         return "clients";
     }
 
+    @GetMapping("/client")
+    public String Test(Model model)  {
+        return "newClient";
+    }
 }
 
 

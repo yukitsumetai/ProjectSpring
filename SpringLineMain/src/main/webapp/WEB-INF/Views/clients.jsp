@@ -55,7 +55,7 @@
             <form action="${contextPath}/newContract/confirmExisting" method="post" command="contract">
 
                 <%@ include file="tables/tableClients.jsp" %>
-                <c:if test="${urlPath=='/newContract/client'}">
+                <c:if test="${urlPath=='/springLine/newContract/client'}">
                 <br><br>
                 <div>
                     <div class="form-group">

@@ -12,7 +12,6 @@
 <c:set var="urlPath" value="${requestScope['javax.servlet.forward.request_uri']}"/>
 
 <%@ include file="elements/TopNavBar.jsp" %>
-<%@ include file="elements/SideBar.jsp" %>
 
 <html lang="en">
 <head>
@@ -20,11 +19,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="${contextPath}/resource/js/paginationAjax.js"></script>
     <title>Tariffs Overview</title>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-    <script src="${contextPath}/resource/js/pagination.js"></script>
+    <link href="${contextPath}/resource/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <%-- Modal Script --%>
     <script>
@@ -64,6 +60,7 @@
 <body>
 
 <div class="container-fluid">
+    <%@ include file="elements/SideBar.jsp" %>
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
         <input type="hidden" id="page" value=0>
@@ -262,6 +259,7 @@
         if (flag) document.getElementById('options').disabled = true;
     });
 </script>
+
 
 </body>
 </html>
