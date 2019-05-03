@@ -33,7 +33,7 @@ public class TariffServiceImpl extends SharedFunctions<TariffDto> implements Tar
     @Autowired
     private MessageProducer messageProducer;
     @Autowired
-    private MailSender mailSender;
+    private MailSenderImpl mailSenderImpl;
     @Autowired
     private ImageRecognitionImpl imageRecognition;
     @Autowired
@@ -56,14 +56,6 @@ public class TariffServiceImpl extends SharedFunctions<TariffDto> implements Tar
 
         List<TariffDto> pageGroups = listEntityToDto(tariffDao.getPages(size, page));
         Long total = tariffDao.getPagesCount();
-        /*
-        try {
-           mailSender.sendMessageWithAttachment("rfr", "Welcome to Spring Line", "", "");
-        } catch (MessagingException e) {
-            logger.info("Exception", e);
-        }
-*/
-       // imageRecognition.doOCR("");
         return getPageDraft(pageGroups, total, page, size);
     }
 

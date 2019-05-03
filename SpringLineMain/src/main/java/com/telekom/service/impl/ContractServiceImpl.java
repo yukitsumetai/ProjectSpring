@@ -7,16 +7,15 @@ import com.telekom.model.dto.*;
 import com.telekom.mapper.ClientMapper;
 import com.telekom.mapper.ContractMapper;
 import com.telekom.model.entity.*;
-import com.telekom.service.api.ContractService;
-import com.telekom.service.api.OptionGroupService;
-import com.telekom.service.api.OptionService;
-import com.telekom.service.api.TariffService;
+import com.telekom.service.api.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -55,6 +54,8 @@ public class ContractServiceImpl implements ContractService {
     private ClientDAO clientDao;
     @Autowired
     PdfCreatorImpl pdfCreator;
+    @Autowired
+    MailService mailSender;
 
     @Autowired
     Logger logger;
@@ -83,9 +84,23 @@ public class ContractServiceImpl implements ContractService {
     }
 
     @Override
-    public void sendPdf(ContractDto contract){
-        pdfCreator.createPdf(contract);
+    public boolean sendPdf(Boolean newClient, ContractDto contract){
+        String subject="";
+        if(newClient){
+            subject="Welcome to Spring Line";
+        }
+        else{
+            subject="Spring Line Update";
+        }
+        try {
+            mailSender.sendMessageWithAttachment(subject, "",  contract);
+        } catch (MessagingException e) {
+            logger.info("Exception", e);
+            return false;
+        }
+        return true;
     }
+
 
     @Override
     public boolean setTariff(ContractDto contract, Integer id) {

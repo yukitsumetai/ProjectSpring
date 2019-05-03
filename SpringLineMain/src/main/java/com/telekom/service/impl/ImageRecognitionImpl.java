@@ -26,7 +26,7 @@ public class ImageRecognitionImpl {
             logger.info("PerformingOCR");
             tesseract.setDatapath("C:/Users/ekochuro/IdeaProjects/ProjectSpring/SpringLineMain/src/main/resources/tessTrainData");
             tesseract.setLanguage("eng");
-            text = tesseract.doOCR(new File("C:/Users/ekochuro/IdeaProjects/ProjectSpring/SpringLineMain/src/main/resources/tess2/pass4.jpg"));
+            text = tesseract.doOCR(new File("C:/Users/ekochuro/IdeaProjects/ProjectSpring/SpringLineMain/src/main/resources/tess2/pass7.jpg"));
         } catch (TesseractException e) {
             e.printStackTrace();
         }

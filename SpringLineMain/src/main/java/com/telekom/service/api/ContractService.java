@@ -33,6 +33,6 @@ public interface ContractService {
 
     void unblock(ContractDto contract, boolean admin);
 
-    void sendPdf(ContractDto contract);
+    boolean sendPdf(Boolean newClient, ContractDto contract);
 
 }

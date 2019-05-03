@@ -79,10 +79,10 @@ function configure(){
     document.getElementById('my_camera').style.display = "block";
     document.getElementById('cameraButtons').innerHTML =
         ' <div class="row">\n' +
-        '                    <div class="col-sm-6 form-group">' +
-        '<button class="btn btn-success" onClick="take_snapshot()">Take Picture</button>'+
-        '</div>' +'<div class="col-sm-6 form-group">' +
-        '<button class="btn btn-success left" onClick="closeCamera()">Close Camera</button>'+
+        '                    <div class="col-sm-2 form-group">' +
+        '<button class="btn btn-success" onClick="take_snapshot()">Take Picture <i class="fas fa-camera"></i></button>'+
+        '</div>' +'<div class="col-sm-2 form-group">' +
+        '<button class="btn btn-success left" onClick="closeCamera()">Close Camera <i class="fas fa-times"></i></button>'+
         '</div>'+'</div>';
 }
 

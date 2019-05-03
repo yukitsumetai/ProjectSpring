@@ -21,9 +21,6 @@ import java.util.List;
 public class ContractController {
 
     @Autowired
-    private TariffService tariffService;
-
-    @Autowired
     private ClientService clientService;
 
     @Autowired
@@ -102,16 +99,19 @@ public class ContractController {
     }
 
     @PostMapping("/confirm/true")
-    public String confirmation(ContractDto contract) {
+    public String confirmation(ContractDto contract, @RequestParam(required=false) Boolean email) {
         contractService.add(contract);
-        contractService.sendPdf(contract);
+        if (email) contractService.sendPdf(true, contract);
         return "redirect:/existingContract/" + contract.getPhoneNumber();
     }
 
     @PostMapping("/confirmExisting/true")
-    public String confirmationExisting(ContractDto contract) {
+    public String confirmationExisting(Model model, ContractDto contract) {
         contractService.add(contract);
-        contractService.sendPdf(contract);
+        if(!contractService.sendPdf(false, contract)){
+            model.addAttribute("message", "Email was not sent");
+            return "error";
+        }
         return "redirect:/existingContract/" + contract.getPhoneNumber();
     }
 

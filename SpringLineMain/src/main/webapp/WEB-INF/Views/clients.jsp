@@ -9,7 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ include file="elements/TopNavBar.jsp" %>
-<%@ include file="elements/SideBar.jsp" %>
+
 <c:set var="urlPath" value="${requestScope['javax.servlet.forward.request_uri']}"/>
 
 <!DOCTYPE html>
@@ -19,12 +19,12 @@
     <script src="${contextPath}/resource/js/options.js"></script>
     <script src="${contextPath}/resource/js/dropdownAjax.js"></script>
     <script src="${contextPath}/resource/js/clientAjax.js"></script>
-
+    <link href="${contextPath}/resource/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Current Clients</title>
 </head>
 
 <body>
-
+<%@ include file="elements/SideBar.jsp" %>
 <div class="container-fluid">
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">

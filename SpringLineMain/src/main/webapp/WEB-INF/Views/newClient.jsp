@@ -41,12 +41,13 @@
             </div>
             <div>
                 <div id="my_camera"></div>
-                <br><br>
+                <br>
                 <div id="cameraButtons">
-                    <button class="btn btn-success" onclick="configure()">Use Camera</button>
+                    <button class="btn btn-success" onclick="configure()">Use Camera <i class="fas fa-camera"></i></button>
                 </div>
                 <div id="results"></div>
             </div>
+            <br>
             <form:form method="post" action="${contextPath}/newContract/confirm" modelAttribute="client">
                 <div class="row">
                     <div class="col-sm-6 form-group">
@@ -143,7 +144,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-success" onclick="CheckClient()">Next</button>
+                    <button class="btn btn-success" onclick="CheckClient()">Next <i class="fas fa-arrow-right"></i></button>
                 </div>
 
             </form:form>
