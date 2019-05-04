@@ -38,8 +38,8 @@ public class MailSenderImpl implements MailService {
     public void send(String emailTo, String subject, String message) {
         logger.info("Sending email");
         SimpleMailMessage mail = new SimpleMailMessage();
-        mail.setTo("ekaterina.kochurova@t-systems.com");
-        mail.setSubject("Welcome to Spring Line");
+        mail.setTo("kate.kochurova@gmail.com");
+        mail.setSubject(subject);
         mail.setText("Test");
         mailSender.send(mail);
         logger.info("Email sent");
@@ -51,7 +51,7 @@ public class MailSenderImpl implements MailService {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
         contract.getClient().getEmail();
-        helper.setTo("ekaterina.kochurova@t-systems.com");
+        helper.setTo("kate.kochurova@gmail.com");
         helper.setSubject(subject);
 
         VelocityEngine ve = new VelocityEngine();

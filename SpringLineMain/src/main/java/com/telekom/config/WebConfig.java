@@ -3,10 +3,8 @@ package com.telekom.config;
 import org.apache.log4j.Logger;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.InjectionPoint;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.*;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -20,6 +18,7 @@ import java.util.Properties;
 @Configuration
 @EnableWebMvc
 @ComponentScan("com.telekom")
+@PropertySource("classpath:persistence.properties")
 public class WebConfig implements WebMvcConfigurer {
 
     @Override
@@ -43,26 +42,21 @@ public class WebConfig implements WebMvcConfigurer {
         return Logger.getLogger(injectionPoint.getMember().getDeclaringClass());
     }
 
-    @Bean
-    public JavaMailSender getJavaMailSender() {
-        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost("relay.t-systems.ru");
-        mailSender.setPort(25);
 
-        mailSender.setUsername("springlineproject@gmail.com");
-        mailSender.setPassword("2207!sun");
+    @Bean
+    public JavaMailSender getJavaMailSender(@Value("${mail}")String mail,
+                                            @Value("${passwordMail}")String password) {
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setHost("smtp.gmail.com");
+        mailSender.setPort(587);
+
+        mailSender.setUsername(mail);
+        mailSender.setPassword(password);
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
         props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        /*
-       props.put("mail.smtp.proxy.host", "proxy.t-systems.ru");
-        props.put("mail.smtp.proxy.port", "3128");
-        props.put("mail.smtp.proxy.user", "ekochuro");
-        props.put("mail.smtp.proxy.password", "moon19933");
-       props.put("proxySet", "true");
-*/
+
         props.put("mail.debug", "true");
         return mailSender;
     }
@@ -73,7 +67,6 @@ public class WebConfig implements WebMvcConfigurer {
         Properties props = new Properties();
         props.put("resource.loader", "class");
         props.put("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
-        //props.put("resource.loader.path", "/WEB-INF/resource/email/");
         return velocityEngine;
     }
 

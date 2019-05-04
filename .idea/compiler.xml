@@ -12,7 +12,6 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="ProjectSpring" target="1.5" />
-      <module name="ProjectSpring (1) (co.kochurova)" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
