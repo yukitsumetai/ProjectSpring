@@ -56,7 +56,7 @@
 
                 <div class="form-group">
                     <label class="control-label">Description</label>
-                    <textarea rows="4" id="Description" type="text" maxlength="200" name="Description"
+                    <textarea rows="4" id="Description" type="text" maxlength="180" name="Description"
                               class="form-control">${tariff.description}</textarea>
                 </div>
                 <div class="form-group">

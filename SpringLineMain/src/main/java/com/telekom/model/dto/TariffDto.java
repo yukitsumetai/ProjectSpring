@@ -17,7 +17,7 @@ public class TariffDto extends SharedDto implements Serializable {
     @Min(0)
     private double price;
 
-    @Size(max = 200)
+    @Size(max = 180)
     private String description;
     private boolean isValid;
     private boolean existing;

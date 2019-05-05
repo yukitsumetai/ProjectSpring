@@ -16,7 +16,7 @@ public class OptionDto implements Serializable {
     @NotEmpty
     private String name;
 
-    @Size(max = 200)
+    @Size(max = 180)
     private String description;
 
     @Min(0)

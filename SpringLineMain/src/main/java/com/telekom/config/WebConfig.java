@@ -49,13 +49,14 @@ public class WebConfig implements WebMvcConfigurer {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
-
+mailSender.setProtocol("smtp");
         mailSender.setUsername(mail);
         mailSender.setPassword(password);
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
         props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
 
         props.put("mail.debug", "true");
         return mailSender;
@@ -67,6 +68,7 @@ public class WebConfig implements WebMvcConfigurer {
         Properties props = new Properties();
         props.put("resource.loader", "class");
         props.put("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+        //props.put("resource.loader.path", "/WEB-INF/resource/email/");
         return velocityEngine;
     }
 

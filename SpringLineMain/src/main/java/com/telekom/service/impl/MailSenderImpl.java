@@ -50,7 +50,7 @@ public class MailSenderImpl implements MailService {
         logger.info("Sending email with invoice");
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
-        contract.getClient().getEmail();
+       String email= contract.getClient().getEmail();
         helper.setTo("kate.kochurova@gmail.com");
         helper.setSubject(subject);
 
@@ -67,14 +67,21 @@ public class MailSenderImpl implements MailService {
 
         StringWriter stringWriter = new StringWriter();
         template.merge(velocityContext, stringWriter);
-        helper.setText(stringWriter.toString());
+        helper.setText(stringWriter.toString(), true);
 
 
         String path = pdfCreator.createPdf(contract);
         FileSystemResource file = new FileSystemResource(new File(path));
-        helper.addAttachment(".pdf", file);
-        mailSender.send(message);
-
+        helper.addAttachment("Invoice.pdf", file);
+        try {
+            mailSender.send(message);
+        }
+        catch (Exception e){
+            logger.info("Email was not send to"+email);
+        }
+        finally {
+            //delete file
+        }
     }
 
 

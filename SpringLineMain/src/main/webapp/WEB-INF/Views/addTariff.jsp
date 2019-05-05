@@ -57,7 +57,7 @@
 
                 <div class="form-group">
                     <label class="control-label">Description</label>
-                    <textarea row="'4" id="Description" type="text" name="Description" maxlength="200"
+                    <textarea row="'4" id="Description" type="text" name="Description" maxlength="180"
                               class="form-control"></textarea>
                 </div>
                 <div class="form-group">
