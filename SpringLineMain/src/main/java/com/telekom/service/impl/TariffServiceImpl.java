@@ -8,7 +8,7 @@ import com.telekom.model.dto.OptionDto;
 import com.telekom.model.dto.Page;
 import com.telekom.model.dto.TariffDto;
 import com.telekom.mapper.TariffMapper;
-import com.telekom.service.api.MessageProducer;
+import com.telekom.service.api.JmsService;
 import com.telekom.service.api.TariffService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +31,7 @@ public class TariffServiceImpl extends SharedFunctions<TariffDto> implements Tar
     @Autowired
     private TariffMapper tariffMapper;
     @Autowired
-    private MessageProducer messageProducer;
-    @Autowired
-    private MailSenderImpl mailSenderImpl;
-    @Autowired
-    private ImageRecognitionImpl imageRecognition;
+    private JmsService jmsService;
     @Autowired
     private Logger logger;
 
@@ -52,7 +48,7 @@ public class TariffServiceImpl extends SharedFunctions<TariffDto> implements Tar
     @Override
     @Transactional
     public Page<TariffDto> getAllPaginated(Integer size, Integer page) {
-        logger.info("Geting tariffs");
+        logger.info("Getting tariffs");
 
         List<TariffDto> pageGroups = listEntityToDto(tariffDao.getPages(size, page));
         Long total = tariffDao.getPagesCount();
@@ -62,7 +58,7 @@ public class TariffServiceImpl extends SharedFunctions<TariffDto> implements Tar
     @Override
     @Transactional
     public Page<TariffDto> getValidPaginated(Integer size, Integer page) {
-        logger.info("Geting valid tariffs");
+        logger.info("Getting valid tariffs");
         List<TariffDto> pageGroups = listEntityToDto(tariffDao.getPagesValid(size, page));
         Long total = tariffDao.getPagesValidCount();
         return getPageDraft(pageGroups, total, page, size);
@@ -71,7 +67,7 @@ public class TariffServiceImpl extends SharedFunctions<TariffDto> implements Tar
     @Override
     @Transactional
     public Page<TariffDto> getAllPaginated(Integer size, Integer page, Integer optionId) {
-        logger.info("Geting tariffs for option");
+        logger.info("Getting tariffs for option");
         List<TariffDto> pageGroups = listEntityToDto(tariffDao.getPages(size, page));
         Set<Tariff> existing = optionDao.getOne(optionId).getCompatibleTariffs();
         for (Tariff i : existing) {
@@ -135,27 +131,27 @@ public class TariffServiceImpl extends SharedFunctions<TariffDto> implements Tar
 
     @Override
     public void notifyDeleted() {
-        messageProducer.sendMessage();
+        jmsService.sendMessage();
     }
 
     @Override
     public void notify(TariffDto tariff, boolean state) {
         if (state != tariff.isPromoted()) {
-            messageProducer.sendMessage();
+            jmsService.sendMessage();
         }
     }
 
     @Override
     public void notify(TariffDto tariff) {
         if (tariff.isPromoted()) {
-            messageProducer.sendMessage();
+            jmsService.sendMessage();
         }
     }
 
     @Override
     @Transactional
     public void editTariff(TariffDto t) {
-        logger.info("Edditing tariff " + t.getId());
+        logger.info("Editing tariff " + t.getId());
         Tariff tariff = tariffDao.getOne(t.getId());
         tariff.setIsValid(t.isIsValid());
         tariff.setPromoted(t.isPromoted());
@@ -172,10 +168,6 @@ public class TariffServiceImpl extends SharedFunctions<TariffDto> implements Tar
         tariff.setIsValid(false);
         tariff.setPromoted(false);
     }
-
-
-
-
 
 }
 

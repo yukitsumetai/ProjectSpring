@@ -47,7 +47,7 @@
                         </div>
                         <!-- Login Form -->
                         <form action="${urlPath}/process" method="post">
-                            <input type="text" id="login" class="<c:if test="${param.error !=true}">fadeIn second </c:if>" name="login" placeholder="login">
+                            <input type="text" id="login" class="<c:if test="${param.error !=true}">fadeIn second </c:if>" name="login" placeholder="login" value="${login}">
                             <input type="text" id="password" class="<c:if test="${param.error !=true}">fadeIn third </c:if>" name="password" placeholder="password">
                             <input type="submit" class="btn-success <c:if test="${param.error !=true}">fadeIn fourth </c:if>" value="Log In">
                         </form>

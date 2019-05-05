@@ -85,15 +85,8 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public boolean sendPdf(Boolean newClient, ContractDto contract){
-        String subject="";
-        if(newClient){
-            subject="Welcome to Spring Line";
-        }
-        else{
-            subject="Spring Line Update";
-        }
         try {
-            mailSender.sendMessageWithAttachment(subject, "",  contract);
+            mailSender.sendMessageWithAttachment(newClient,  contract);
         } catch (MessagingException e) {
             logger.info("Exception", e);
             return false;

@@ -1,5 +1,5 @@
 package com.telekom.service.api;
 
-public interface MessageProducer {
+public interface JmsService {
     void sendMessage();
 }

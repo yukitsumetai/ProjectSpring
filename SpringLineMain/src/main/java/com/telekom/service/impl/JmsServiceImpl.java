@@ -1,10 +1,7 @@
 package com.telekom.service.impl;
 
 
-import com.telekom.model.dto.TariffDto;
-import com.telekom.model.entity.Tariff;
-import com.telekom.service.api.MessageProducer;
-import com.telekom.service.api.TariffService;
+import com.telekom.service.api.JmsService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
@@ -13,11 +10,10 @@ import org.springframework.stereotype.Component;
 
 
 import javax.jms.*;
-import java.util.List;
 
 
 @Component
-public class MessageProducerImpl implements MessageProducer {
+public class JmsServiceImpl implements JmsService {
 
     @Autowired
     JmsTemplate jmsTemplate;
@@ -30,7 +26,7 @@ public class MessageProducerImpl implements MessageProducer {
         jmsTemplate.send( new MessageCreator() {
             @Override
             public Message createMessage(Session session) throws JMSException {
-                logger.info("SpringLine sends message");
+                logger.info("SpringLine sends message about promoted tariff update");
                 TextMessage textMessage = session.createTextMessage("update");
                 return textMessage;
             }

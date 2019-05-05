@@ -164,7 +164,7 @@ public class PdfCreatorImpl implements PdfCreator {
             createHeadings(cb, 502, 633, "One time Price, $");
 
             //add the images
-            Image companyLogo = Image.getInstance("C:\\Users\\ekochuro\\IdeaProjects\\ProjectSpring\\conHp.png");
+            Image companyLogo = Image.getInstance("C:\\Users\\ekochuro\\IdeaProjects\\ProjectSpring\\SpringLineMain\\src\\main\\resources\\email\\logo.png");
             companyLogo.setAbsolutePosition(25, 700);
             companyLogo.scalePercent(25);
             doc.add(companyLogo);
@@ -193,7 +193,6 @@ public class PdfCreatorImpl implements PdfCreator {
             logger.info("Exception ", ex);
         }
     }
-
 
     private void generateDetail(Document doc, PdfContentByte cb, int index, int y, String name, String description, double priceMonthly, double priceOneTime) {
         DecimalFormat df = new DecimalFormat("0.00");

@@ -6,7 +6,9 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,6 +20,12 @@ public class AuthController {
 
     @Autowired
     private Logger logger;
+
+    @GetMapping("/login/{phone}")
+    public String login(Model model, @PathVariable(value = "phone", required=false) String phone) {
+        model.addAttribute("login", phone);
+        return "login";
+    }
 
     @GetMapping("/login")
     public String login() {

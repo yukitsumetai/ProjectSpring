@@ -10,7 +10,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ include file="elements/TopNavBar.jsp" %>
-<%@ include file="elements/SideBar.jsp" %>
+
 
 
 <html lang="en">
@@ -43,7 +43,7 @@
 </head>
 
 <body>
-
+<%@ include file="elements/SideBar.jsp" %>
 <div class="container-fluid">
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">

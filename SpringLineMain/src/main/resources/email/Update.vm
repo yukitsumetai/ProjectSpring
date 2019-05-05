@@ -8,22 +8,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="telephone=no" name="format-detection">
     <title></title>
-    <!--[if (mso 16)]>
-    <style type="text/css">
-        a {text-decoration: none;}
-    </style>
-    <![endif]-->
-    <!--[if gte mso 9]><style>sup { font-size: 100% !important; }</style><![endif]-->
 </head>
 
 <body>
 <div class="es-wrapper-color">
-    <!--[if gte mso 9]>
-    <v:background xmlns:v="urn:schemas-microsoft-com:vml" fill="t">
-        <v:fill type="tile" src="https://demo.stripocdn.email/content/guids/videoImgGuid/images/83821557068906408.png" color="#223748" origin="0.5, 0" position="0.5,0"></v:fill>
-    </v:background>
-    <![endif]-->
-    <table class="es-wrapper" width="100%" cellspacing="0" cellpadding="0" style="background-position: center top;" background="https://demo.stripocdn.email/content/guids/videoImgGuid/images/83821557068906408.png">
+    <table class="es-wrapper" width="100%" cellspacing="0" cellpadding="0" style="background-position: center top;" background="https://tlr.stripocdn.email/content/guids/CABINET_6ebdc9f620b6c98ec92e579217982603/images/99301524564595313.png">
         <tbody>
         <tr>
             <td class="esd-email-paddings" valign="top">
@@ -41,16 +30,6 @@
                                                 <td class="esd-container-frame" width="570" valign="top" align="center">
                                                     <table width="100%" cellspacing="0" cellpadding="0">
                                                         <tbody>
-                                                        <tr>
-                                                            <td class="esd-block-text es-p30t es-p5b" align="center">
-                                                                <h2 style="color: #ffffff; font-size: 57px; font-family: georgia, times, 'times new roman', serif; line-height: 100%; text-align: center;">Welcome</h2>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="esd-block-image" align="center">
-                                                                <a target="_blank"> <img src="https://tlr.stripocdn.email/content/guids/CABINET_6ebdc9f620b6c98ec92e579217982603/images/43981525778959712.png" alt="to" style="display: block;" title="to" width="42"> </a>
-                                                            </td>
-                                                        </tr>
                                                         <tr>
                                                             <td class="esd-block-text es-p15b" align="center">
                                                                 <h1 style="color: #fbfefa; font-size: 69px; font-family: georgia, times, 'times new roman', serif; line-height: 100%;">Spring Line</h1>
@@ -101,7 +80,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td class="esd-block-text es-p15t" align="left">
-                                                                <p style="color: #38761d;"><span class="product-description">We are glad that you became a client of Spring Line. As a customer of our company you can use a private office to change a tariff or options. You can also block a simcard if you lost it. Please contact shop agents if you have any troubles with our services</span></p>
+                                                                <p style="color: #38761d;"><span class="product-description">Please find update about your contract attached. As a customer of our company you can use a private office to change a tariff or options. You can also block a simcard if you lost it. Please contact shop agents if you have any troubles with our services</span></p>
                                                             </td>
                                                         </tr>
                                                         <tr>

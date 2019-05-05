@@ -12,12 +12,14 @@ import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.MimeMessage;
 import java.io.*;
 
@@ -35,35 +37,33 @@ public class MailSenderImpl implements MailService {
     @Autowired
     VelocityEngine velocityEngine;
 
-    public void send(String emailTo, String subject, String message) {
-        logger.info("Sending email");
-        SimpleMailMessage mail = new SimpleMailMessage();
-        mail.setTo("kate.kochurova@gmail.com");
-        mail.setSubject(subject);
-        mail.setText("Test");
-        mailSender.send(mail);
-        logger.info("Email sent");
-    }
 
     @Override
-    public void sendMessageWithAttachment(String subject, String text, ContractDto contract) throws MessagingException {
+    public void sendMessageWithAttachment(Boolean newClient, ContractDto contract) throws MessagingException {
         logger.info("Sending email with invoice");
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
-       String email= contract.getClient().getEmail();
-        helper.setTo("kate.kochurova@gmail.com");
+
+        String email = contract.getClient().getEmail();
+        helper.setTo("yukitsumetai@yandex.ru");
+
+        String subject;
+        if(newClient) subject = "Welcome to Spring Line";
+        else  subject = "Update from Spring Line";
         helper.setSubject(subject);
 
         VelocityEngine ve = new VelocityEngine();
         ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
         ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
         ve.init();
-        Template template = ve.getTemplate("/email/Welcome.vm");
+
+        Template template;
+        if(newClient) template = ve.getTemplate("/email/Welcome.vm");
+        else template = ve.getTemplate("/email/Update.vm");
 
         VelocityContext velocityContext = new VelocityContext();
-        velocityContext.put("firstName", "Yashwant");
-        velocityContext.put("lastName", "Chavan");
-        velocityContext.put("location", "Pune");
+        velocityContext.put("name", contract.getClient().getName() + " " + contract.getClient().getSurname());
+        velocityContext.put("phone", contract.getPhoneNumber());
 
         StringWriter stringWriter = new StringWriter();
         template.merge(velocityContext, stringWriter);
@@ -71,17 +71,11 @@ public class MailSenderImpl implements MailService {
 
 
         String path = pdfCreator.createPdf(contract);
-        FileSystemResource file = new FileSystemResource(new File(path));
+        File file = new File(path);
         helper.addAttachment("Invoice.pdf", file);
-        try {
-            mailSender.send(message);
-        }
-        catch (Exception e){
-            logger.info("Email was not send to"+email);
-        }
-        finally {
-            //delete file
-        }
+
+        mailSender.send(message);
+        file.delete();
     }
 
 
