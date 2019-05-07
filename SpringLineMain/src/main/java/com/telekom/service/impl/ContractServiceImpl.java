@@ -1,26 +1,18 @@
 package com.telekom.service.impl;
 
-import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.PdfWriter;
 import com.telekom.dao.api.*;
 import com.telekom.model.dto.*;
 import com.telekom.mapper.ClientMapper;
 import com.telekom.mapper.ContractMapper;
 import com.telekom.model.entity.*;
 import com.telekom.service.api.*;
-import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.transaction.Transactional;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.math.BigInteger;
 import java.util.*;
 import java.util.List;
@@ -98,7 +90,7 @@ public class ContractServiceImpl implements ContractService {
     @Override
     public boolean setTariff(ContractDto contract, Integer id) {
         logger.info("Setting tariff "+id+" to contractDto ");
-        TariffDto tmp = tariffService.getOne(id);
+        TariffDto tmp = tariffService.getTariff(id);
         if (!tmp.isIsValid()) return false;
         contract.setTariff(tmp);
         contract.setPrice(0.0);

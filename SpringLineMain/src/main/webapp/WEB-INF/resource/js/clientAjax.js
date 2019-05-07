@@ -69,10 +69,10 @@ function addRowClient(val, table) {
 
 function configure(){
     Webcam.set({
-        width: 1280,
-        height: 720,
+        width: 640,
+        height: 360,
         image_format: 'jpeg',
-        jpeg_quality: 90,
+        jpeg_quality: 100,
 
     });
     Webcam.attach( '#my_camera' );
@@ -103,7 +103,6 @@ function take_snapshot() {
 function closeCamera(){
     document.getElementById('cameraButtons').innerHTML =
         '<button class="btn btn-success" onclick="configure()">Use Camera</button>';
-
     Webcam.reset();
     document.getElementById('my_camera').style.display = "none";
 }
@@ -111,13 +110,14 @@ function closeCamera(){
 function saveSnap(){
 
     var file = document.getElementById("imageprev").src;
-
+    var id = document.getElementById('contract').value;
     var passdata= {"imageprev" : file}
     $.ajax({
         type: "POST",
         url: "/springLine/captureImage",
         data: {
             imageprev: file,
+            contract: id
         },
         dataType : 'json',
         error: function (result)
@@ -130,7 +130,7 @@ function saveSnap(){
                 if(data.surname!="") document.getElementById("surname").value = data.surname;
                 if(data.passport!="") document.getElementById("passport").value = data.passport;
                 if(data.birthday!="") document.getElementById("birthday").value = data.birthday;
-            } //addRowClient(data, table);//table for add
+            }
             else  alert("Something went wrong. Please try again");
         }
     });

@@ -110,8 +110,9 @@ public class SharedRestController {
     }
 
     @PostMapping("/captureImage")
-    public ClientDto performOCR(@RequestParam(name = "imageprev") String image) {
-        ClientDto client = clientService.performOcr(image);
+    public ClientDto performOCR(@RequestParam(name = "imageprev") String image, @RequestParam(name = "contract") String id) {
+        id = id.substring(id.lastIndexOf("@") + 1);
+        ClientDto client = clientService.performOcr(image, id);
         return client;
     }
 }

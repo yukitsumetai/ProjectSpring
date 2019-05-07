@@ -8,11 +8,13 @@ import com.telekom.model.dto.ContractDto;
 import com.telekom.model.dto.OptionDto;
 import com.telekom.model.dto.TariffDto;
 import com.telekom.service.api.PdfCreator;
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.davidmoten.text.utils.WordWrap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -20,6 +22,7 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Properties;
 import java.util.Set;
 
 @Service
@@ -37,7 +40,8 @@ public class PdfCreatorImpl implements PdfCreator {
         String pdfName = null;
         try {
             logger.info("Creating pdf");
-            pdfName = "C:\\Users\\ekochuro\\IdeaProjects\\ProjectSpring\\Invoice " + contract.getPhoneNumber() + ".pdf";
+            Properties props = System.getProperties();
+            pdfName = props.getProperty("jboss.server.deploy.dir")+"\\invoices\\"+ contract.getPhoneNumber() + ".pdf";
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(pdfName));
             initializeFonts();
 
@@ -50,7 +54,6 @@ public class PdfCreatorImpl implements PdfCreator {
             document.open();
 
             PdfContentByte cb = writer.getDirectContent();
-            // boolean beginPage = true;
             logger.info("Creating page");
 
             Set<OptionDto> options = contract.getOptions();

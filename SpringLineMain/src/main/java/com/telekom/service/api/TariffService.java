@@ -26,7 +26,7 @@ public interface TariffService {
 
     void notifyDeleted();
 
-    TariffDto getOne(int id);
+    TariffDto getTariff(int id);
 
     void editTariff(TariffDto tariffDto);
 

@@ -10,6 +10,6 @@ public interface ClientService {
     ClientDto getOne(Integer number);//get by ClientId
     ClientDto getOne(Long id);
     Page<ClientDto> getPage(Integer size, Integer page);
-    ClientDto performOcr(String image);
+    ClientDto performOcr(String image, String id);
 }
 

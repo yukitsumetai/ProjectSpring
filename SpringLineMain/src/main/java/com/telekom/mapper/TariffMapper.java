@@ -7,7 +7,9 @@ import com.telekom.model.dto.OptionDto;
 import com.telekom.model.dto.TariffDto;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Component
@@ -53,6 +55,18 @@ public class TariffMapper {
         tmp.setPromoted(t.isPromoted());
         return tmp;
     }
+
+
+
+    public List<TariffDto> listEntityToDto(List<Tariff> tariffs) {
+        List<TariffDto> tariffsDTO = new ArrayList<>();
+        for (Tariff t : tariffs) {
+
+            tariffsDTO.add(entityToDto(t));
+        }
+        return tariffsDTO;
+    }
+
 
 
 }

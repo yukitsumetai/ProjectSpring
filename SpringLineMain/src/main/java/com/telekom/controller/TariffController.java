@@ -55,7 +55,7 @@ public class TariffController {
 
     @GetMapping("/edit/{id}")
     public String getEditForm(Model model, @PathVariable(value = "id") Integer id) {
-        TariffDto tariff = tariffService.getOne(id);
+        TariffDto tariff = tariffService.getTariff(id);
         model.addAttribute("tariff", tariff);
         return "editTariff";
     }

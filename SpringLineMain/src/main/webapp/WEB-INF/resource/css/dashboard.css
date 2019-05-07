@@ -8,8 +8,6 @@
  * Global add-ons
  */
 #my_camera{
-    transform: scaleX(-1);
-    -webkit-transform: scaleX(-1);
     border: 1px solid darkgreen;
     display: none;
 }

@@ -38,7 +38,7 @@ public class ContractController {
         ContractDto contract = new ContractDto();
         model.addAttribute(contract);
         model.addAttribute("table", "add");
-        contractService.sendPdf(false, contractService.getOne("4917620093100"));
+        //contractService.sendPdf(false, contractService.getTariff("4917620093100"));
         return "tariffs";
     }
 

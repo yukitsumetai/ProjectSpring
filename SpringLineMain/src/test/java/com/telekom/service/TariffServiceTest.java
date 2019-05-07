@@ -1,9 +1,18 @@
 package com.telekom.service;
-import com.telekom.config.TestConfig;
+
+import com.telekom.config.TariffServiceConfig;
+import com.telekom.dao.api.OptionDao;
 import com.telekom.dao.api.TariffDao;
+import com.telekom.model.dto.OptionDto;
+import com.telekom.model.dto.Page;
 import com.telekom.model.dto.TariffDto;
 import com.telekom.mapper.TariffMapper;
+import com.telekom.model.entity.Option;
+import com.telekom.model.entity.Tariff;
+import com.telekom.service.api.JmsService;
 import com.telekom.service.impl.TariffServiceImpl;
+import org.apache.log4j.Logger;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,43 +20,366 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = TestConfig.class, loader = AnnotationConfigContextLoader.class)
+@ContextConfiguration(classes = TariffServiceConfig.class, loader = AnnotationConfigContextLoader.class)
 class TariffServiceTest {
     @Autowired
     TariffServiceImpl tariffService;
     @Autowired
     TariffDao tariffDao;
-
+    @Autowired
+    OptionDao optionDao;
     @Autowired
     TariffMapper tariffMapper;
+    @Autowired
+    private JmsService jmsService;
+    @Autowired
+    private Logger logger;
 
     private static final Integer id = 110004;
-    private static TariffDto tariff;
+    private static Tariff tariff;
+    private static TariffDto tariffDto;
+    private static TariffDto tariff5Dto;
+    private static Tariff tariff5;
+    private Page page;
+    private static List<Tariff> tariffs;
+    private static List<Tariff> tariffs5;
+    private static List<TariffDto> tariffsDto;
+    private static List<TariffDto> tariffs5Dto;
+    private static Option option;
+
+    @BeforeAll
+    public static void setup() {
+        tariff = new Tariff();
+        tariff.setId(0);
+        tariff.setIsValid(true);
+        tariff.setPromoted(true);
+
+        tariff5 = new Tariff();
+        tariff5.setId(5);
+        tariff5.setIsValid(false);
+
+        tariffDto = new TariffDto();
+        tariffDto.setId(0);
+        tariffDto.setIsValid(true);
+        tariffDto.setPromoted(true);
+
+        tariff5Dto = new TariffDto();
+        tariff5Dto.setId(5);
+        tariff5Dto.setIsValid(false);
+
+        tariffs = new ArrayList<>();
+        tariffs.add(tariff);
+        tariffs5 = new ArrayList<>();
+        tariffs5.add(tariff5);
+
+        tariffsDto = new ArrayList<>();
+        tariffsDto.add(tariffDto);
+        tariffs5Dto = new ArrayList<>();
+        tariffs5Dto.add(tariff5Dto);
+    }
 
     @Test
-    public void returnTariffById() {
-       tariffService.getOne(id);
-        verify(tariffDao).getOne(id);
+    public void getTariffReturnsTariffById() {
+        when(tariffMapper.entityToDto(tariff)).thenReturn(tariffDto);
+        when(tariffDao.getOne(0)).thenReturn(tariff);
+        assertEquals(tariffDto, tariffService.getTariff(0));
     }
 
 
     @Test
-    public void returnAllValidTariffs() {
-        tariffService.getAllValid();
-        verify(tariffDao).getAllValid();
+    public void getAllValidReturnsAllValidTatiffs() {
+        when(tariffDao.getAllValid()).thenReturn(tariffs);
+        when(tariffMapper.entityToDto(tariff)).thenReturn(tariffDto);
+
+        assertEquals(tariffsDto, tariffService.getAllValid());
+        assertNotEquals(tariffs5Dto, tariffService.getAllValid());
+        assertEquals(true, tariffService.getAllValid().get(0).isIsValid());
     }
 
 
     @Test
-    public void tariffDeleted(){
-       // tariffService.deleteTariff(id);
-        TariffDto t2 =  tariffService.getOne(id);
-        //assertEquals(t2.isIsValid(), false);
+    public void getAllPromotedReturnsAllValidTatiffs() {
+        when(tariffDao.getAllPromoted()).thenReturn(tariffs);
+        when(tariffMapper.entityToDto(tariff)).thenReturn(tariffDto);
+        assertNotEquals(tariffs5Dto, tariffService.getAllValid());
+        assertEquals(tariffsDto, tariffService.getAllPromoted());
+        assertEquals(true, tariffService.getAllPromoted().get(0).isPromoted());
     }
 
+    @Test
+    public void getPageReturnsPage() {
+        page = tariffService.getPageDraft(tariffsDto, (long) 5, 1, 1);
+        assertEquals(tariffsDto, page.getData());
+        assertEquals(1, page.getCurrentPage());
+        assertEquals(5, page.getTotalPages());
+        assertEquals(1, page.getLastPage());
+    }
+
+    @Test
+    public void getAllPaginatedReturnsAllTatiffsByPage() {
+        when(tariffMapper.entityToDto(tariff)).thenReturn(tariffDto);
+        when(tariffMapper.entityToDto(tariff5)).thenReturn(tariff5Dto);
+        when(tariffDao.getPages(1, 1)).thenReturn(tariffs);
+        when(tariffDao.getPages(1, 5)).thenReturn(tariffs5);
+        when(tariffDao.getPages(1, 7)).thenReturn(null);
+        when(tariffDao.getPagesCount()).thenReturn((long) 6);
+
+        page = tariffService.getAllPaginated(1, 1);
+        assertEquals(tariffsDto, page.getData());
+        assertEquals(1, page.getCurrentPage());
+        assertEquals(6, page.getTotalPages());
+        assertEquals(1, page.getLastPage());
+
+        page = tariffService.getAllPaginated(1, 5);
+        assertEquals(tariffs5Dto, page.getData());
+        assertEquals(5, page.getCurrentPage());
+
+         page = tariffService.getAllPaginated(1, 7);
+         //assertEquals(true, page.getData().isEmpty());
+         assertEquals(7, page.getCurrentPage());
+    }
+
+    @Test
+    public void getValidPaginatedValidReturnsValidTatiffsByPage() {
+        when(tariffMapper.entityToDto(tariff)).thenReturn(tariffDto);
+        when(tariffMapper.entityToDto(tariff5)).thenReturn(tariff5Dto);
+        when(tariffDao.getPagesValid(1, 1)).thenReturn(tariffs);
+        when(tariffDao.getPagesValid(1, 5)).thenReturn(null);
+        when(tariffDao.getPagesValidCount()).thenReturn((long) 6);
+
+        page = tariffService.getValidPaginated(1, 1);
+        assertEquals(tariffsDto, page.getData());
+        assertEquals(1, page.getCurrentPage());
+        assertEquals(6, page.getTotalPages());
+        assertEquals(1, page.getLastPage());
+
+        page = tariffService.getValidPaginated(1, 5);
+        assertEquals(true, page.getData().isEmpty());
+        assertEquals(5, page.getCurrentPage());
+    }
+
+    @Test
+    public void getAllPaginatedByOptionValidReturnsValidTatiffsByPageAndOption() {
+        when(tariffMapper.entityToDto(tariff)).thenReturn(tariffDto);
+
+
+        option = new Option();
+        option.setId(0);
+        Set<Tariff> tariffsSet = new HashSet<>();
+        tariffsSet.add(tariff);
+        option.setCompatibleTariffs(tariffsSet);
+
+
+        when(tariffDao.getPages(1, 1)).thenReturn(tariffs);
+        when(optionDao.getOne(0)).thenReturn(option);
+        when(tariffDao.getPagesCount()).thenReturn((long) 6);
+        page = tariffService.getAllPaginated(1, 1, 0);
+        TariffDto tmp = (TariffDto) page.getData().get(0);
+
+        assertEquals(tariffsDto, page.getData());
+        assertEquals(1, page.getCurrentPage());
+        assertEquals(6, page.getTotalPages());
+        assertEquals(1, page.getLastPage());
+        assertEquals(true, tmp.isExisting());
+    }
+
+    @Test
+    public void getAllPaginatedByOptionCheckExisting() {
+        when(tariffMapper.entityToDto(tariff)).thenReturn(tariffDto);
+        when(tariffMapper.entityToDto(tariff5)).thenReturn(tariff5Dto);
+
+        option = new Option();
+        option.setId(0);
+        Set<Tariff> tariffsSet = new HashSet<>();
+        tariffsSet.add(tariff);
+        option.setCompatibleTariffs(tariffsSet);
+
+
+        when(tariffDao.getPages(1, 1)).thenReturn(tariffs);
+        when(optionDao.getOne(0)).thenReturn(option);
+        when(tariffDao.getPagesCount()).thenReturn((long) 6);
+        page = tariffService.getAllPaginated(1, 1, 0);
+        TariffDto tmp = (TariffDto) page.getData().get(0);
+
+        assertEquals(tariffsDto, page.getData());
+        assertEquals(true, tmp.isExisting());
+    }
+
+    @Test
+    public void getAllPaginatedByOptionCheckNotExisting() {
+        when(tariffMapper.entityToDto(tariff5)).thenReturn(tariff5Dto);
+
+        option = new Option();
+        option.setId(0);
+        option.setCompatibleTariffs(new HashSet<>());
+
+        when(tariffDao.getPages(1, 5)).thenReturn(tariffs5);
+        when(optionDao.getOne(0)).thenReturn(option);
+        when(tariffDao.getPagesCount()).thenReturn((long) 6);
+        page = tariffService.getAllPaginated(1, 5, 0);
+
+        assertEquals(tariffs5Dto, page.getData());
+
+        TariffDto tmp = (TariffDto) page.getData().get(0);
+        assertEquals(false, tmp.isExisting());
+    }
+
+    @Test
+    public void setOptionsDtoSetsOptionsIfExist() {
+        option = new Option();
+        option.setId(0);
+        option.setCompatibleTariffs(new HashSet<>());
+        List<Integer> id = new ArrayList<>();
+        id.add(0);
+
+        tariffService.setOptionsDto(tariffDto, id);
+        Set<OptionDto> tmp = tariffDto.getOptions();
+        for (OptionDto o : tmp) {
+            assertEquals(0, o.getId());
+            assertNotEquals(1, o.getId());
+        }
+
+    }
+
+    @Test
+    public void setOptionsDtoDoNotSetOptionsForNull() {
+        option = new Option();
+        option.setId(0);
+        option.setCompatibleTariffs(new HashSet<>());
+        List<Integer> id = new ArrayList<>();
+        id.add(0);
+
+        tariffService.setOptionsDto(tariffDto, null);
+        assertNotEquals(null, tariffDto.getOptions());
+
+    }
+
+    @Test
+    public void getTariffReturnsTariff() {
+        when(tariffDao.getOne(5)).thenReturn(tariff5);
+        when(tariffDao.getOne(7)).thenReturn(null);
+        when(tariffMapper.entityToDto(tariff5)).thenReturn(tariff5Dto);
+
+        assertEquals(tariff5Dto, tariffService.getTariff(5));
+        assertEquals(null, tariffService.getTariff(7));
+    }
+
+
+    @Test
+    public void addTariffAddsTariffIfOptionsExist() {
+        tariff.setOptions(new HashSet<>());
+        Set<Option> tmp2 = tariff.getOptions();
+        for (Option o : tmp2) {
+            assertNotEquals(0, o.getId());
+            assertNotEquals(1, o.getId());
+        }
+        tariffDto.setOptions(new HashSet<>());
+        Set<OptionDto> tmp3 = tariffDto.getOptions();
+        for (OptionDto o : tmp3) {
+            assertNotEquals(0, o.getId());
+            assertNotEquals(1, o.getId());
+        }
+        when(tariffMapper.dtoToEntity(tariffDto)).thenReturn(tariff);
+        when(optionDao.getOne(0)).thenReturn(option);
+
+        OptionDto optionDto = new OptionDto();
+        optionDto.setId(0);
+        Set<OptionDto> optionsSet = new HashSet<>();
+        optionsSet.add(optionDto);
+        tariffDto.setOptions(optionsSet);
+        tariffService.add(tariffDto);
+        tmp2 = tariff.getOptions();
+        for (Option o : tmp2) {
+            assertEquals(0, o.getId());
+            assertNotEquals(1, o.getId());
+        }
+
+
+    }
+
+    @Test
+    public void addTariffAddsTariffNoOptions() {
+        tariff.setOptions(new HashSet<>());
+        Set<Option> tmp2 = tariff.getOptions();
+        for (Option o : tmp2) {
+            assertNotEquals(0, o.getId());
+            assertNotEquals(1, o.getId());
+        }
+        tariffDto.setOptions(new HashSet<>());
+        Set<OptionDto> tmp3 = tariffDto.getOptions();
+        for (OptionDto o : tmp3) {
+            assertNotEquals(0, o.getId());
+            assertNotEquals(1, o.getId());
+        }
+        when(tariffMapper.dtoToEntity(tariffDto)).thenReturn(tariff);
+        when(optionDao.getOne(0)).thenReturn(option);
+
+
+        tariffService.add(tariffDto);
+        tmp2 = tariff.getOptions();
+        for (Option o : tmp2) {
+            assertNotEquals(0, o.getId());
+            assertNotEquals(1, o.getId());
+        }
+
+
+    }
+
+
+    @Test
+    public void notifyNotNotifiesPromotedNoChanges() {
+
+        tariffService.notify(tariffDto, true);
+        tariffService.notify(tariff5Dto, false);
+        verify(jmsService, never()).sendMessage();
+    }
+
+
+    @Test
+    public void notifyNotNotifiesNotPromoted() {
+        assertEquals(false, tariff5Dto.isPromoted());
+        tariffService.notify(tariff5Dto);
+        verify(jmsService, never()).sendMessage();
+    }
+
+    @Test
+    public void notifyNotifiesPromotedChangedState() {
+
+        tariffService.notify(tariffDto, false);
+        tariffService.notify(tariff5Dto, true);
+        tariffService.notifyDeleted();
+        tariffService.notify(tariffDto);
+        verify(jmsService, times(4)).sendMessage();
+    }
+
+
+
+    @Test
+    public void editTariffEdits() {
+        when(tariffDao.getOne(tariffDto.getId())).thenReturn(tariff);
+        tariffService.editTariff(tariffDto);
+        assertEquals(tariffDto.isIsValid(), tariff.isIsValid());
+        assertEquals(tariffDto.isPromoted(), tariff.isPromoted());
+        assertEquals(tariffDto.getDescription(), tariff.getDescription());
+    }
+
+    @Test
+    public void tariffDeletedChangesState() {
+        when(tariffDao.getOne(0)).thenReturn(tariff);
+        tariffService.deleteTariff(0);
+        assertEquals(false, tariff.isIsValid());
+        assertEquals(false, tariff.isPromoted());
+    }
 
 
 }

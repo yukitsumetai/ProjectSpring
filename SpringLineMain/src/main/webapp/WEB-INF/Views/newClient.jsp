@@ -49,6 +49,7 @@
             </div>
             <br>
             <form:form method="post" action="${contextPath}/newContract/confirm" modelAttribute="client">
+               <input type="hidden" id="contract" value="${contractDto}"></input>
                 <div class="row">
                     <div class="col-sm-6 form-group">
                         <form:label path="name">Name</form:label>
