@@ -40,7 +40,9 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
     private Logger logger;
 
     private List<OptionDto> listEntityToDto(List<Option> options) {
+
         List<OptionDto> optionsDto = new ArrayList<>();
+        if (options == null) return optionsDto;
         for (Option t : options) {
             optionsDto.add(optionMapper.entityToDto(t));
         }
@@ -51,7 +53,7 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
     @Override
     @Transactional
     public Page<OptionDto> getOptions(Integer size, Integer page) {
-        logger.info("Getting options, page "+page);
+        logger.info("Getting options, page " + page);
         List<OptionDto> pageGroups = listEntityToDto(optionDao.getPages(size, page));
         Long total = optionDao.getPagesCount();
         return getPageDraft(pageGroups, total, page, size);
@@ -60,7 +62,7 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
     @Override
     @Transactional
     public Page<OptionDto> getOptionsForTariff(Integer size, Integer page, Integer tariffId) {
-        logger.info("Getting options for tariff, page "+page+", tariff id "+tariffId);
+        logger.info("Getting options for tariff, page " + page + ", tariff id " + tariffId);
         List<OptionDto> pageGroups = listEntityToDto(optionDao.getPages(size, page));
         Set<Option> existing = tariffDao.getOne(tariffId).getOptions();
         for (Option i : existing
@@ -76,7 +78,7 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
 
     @Override
     public Page<OptionDto> getOptionsForNewOption(Integer size, Integer page, boolean parent) {
-        logger.info("Getting options for new option, page "+page+", look for parent: "+parent);
+        logger.info("Getting options for new option, page " + page + ", look for parent: " + parent);
         List<OptionDto> pageGroups;
         Long total;
         if (parent) {
@@ -91,22 +93,22 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
 
     @Override
     public Page<OptionDto> getPageForExisting(Integer size, Integer page, boolean parent, Integer optionId) {
-        logger.info("Getting options for existing option, page "+page+", option id"+optionId+", look for parent: "+parent);
+        logger.info("Getting options for existing option, page " + page + ", option id" + optionId + ", look for parent: " + parent);
         List<OptionDto> optionPage;
         Option optionExisting = optionDao.getOne(optionId);
         Long total;
         if (parent) {
-            optionPage= getParentForExisting(size, page, optionExisting);
+            optionPage = getParentForExisting(size, page, optionExisting);
             total = optionDao.getPagesCountNoParent();
         } else {
-            optionPage= getChildrenForExisting(size, page, optionExisting);
+            optionPage = getChildrenForExisting(size, page, optionExisting);
             total = optionDao.getPagesNoChildrenAndParentExisting(optionId);
         }
         optionPage.removeIf(st -> st.getId() == optionExisting.getId());
         return getPageDraft(optionPage, total, page, size);
     }
 
-    private List<OptionDto> getParentForExisting(Integer size, Integer page, Option o){
+    private List<OptionDto> getParentForExisting(Integer size, Integer page, Option o) {
         logger.info("Looking for parent");
         List<OptionDto> optionPage = listEntityToDto(optionDao.getAllNoParent(size, page));
         Option parent2 = o.getParent();
@@ -121,7 +123,7 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
     }
 
 
-    private List<OptionDto> getChildrenForExisting(Integer size, Integer page, Option o){
+    private List<OptionDto> getChildrenForExisting(Integer size, Integer page, Option o) {
         logger.info("Looking for children");
         List<OptionDto> optionPage = listEntityToDto(optionDao.getAllNoChildrenAndParentExisting(size, page, o.getId()));
         for (OptionDto o2 : optionPage) {
@@ -137,7 +139,7 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
     @Override
     @Transactional
     public Page<OptionDto> getOpionsForOptionGroup(Integer size, Integer page) {
-        logger.info("Getting options for new option group, page "+page);
+        logger.info("Getting options for new option group, page " + page);
         List<OptionDto> pageGroups = listEntityToDto(optionDao.getAllNoParentNoGroup(size, page));
         Long total = optionDao.getPagesCountNoParentNoGroup();
         return getPageDraft(pageGroups, total, page, size);
@@ -146,9 +148,9 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
     @Override
     @Transactional
     public Page<OptionDto> getOptionsForExistingOptionGroup(Integer size, Integer page, Integer optionGroupId) {
-        logger.info("Getting options for existing option group, page "+page);
+        logger.info("Getting options for existing option group, page " + page);
         OptionGroup og = optionGroupDao.getOne(optionGroupId);
-        List<OptionDto>pageGroups = listEntityToDto(optionDao.getAllNoParentNoGroupExisting(size, page, optionGroupId));
+        List<OptionDto> pageGroups = listEntityToDto(optionDao.getAllNoParentNoGroupExisting(size, page, optionGroupId));
         for (OptionDto o2 : pageGroups) {
             for (Option o : og.getOptions()) {
                 if (o.getId() == o2.getId()) {
@@ -162,7 +164,7 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
 
     @Override
     public void setCompatibleTariffs(OptionDto option, List<Integer> id) {
-        logger.info("Setting compatible tariffs for option "+option);
+        logger.info("Setting compatible tariffs for option " + option);
         Set<TariffDto> tariffs = new HashSet<>();
         if (id != null) {
             for (Integer i : id) {
@@ -176,7 +178,7 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
 
     @Override
     public void setChildren(OptionDto option, List<Integer> id) {
-        logger.info("Setting children for option "+option);
+        logger.info("Setting children for option " + option);
         if (id != null) {
             Set<OptionDto> children = new HashSet<>();
             for (Integer i : id) {
@@ -190,7 +192,7 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
 
     @Override
     public void setOptionGroup(OptionDto option, Integer groupId) {
-        logger.info("Setting option group for option "+option);
+        logger.info("Setting option group for option " + option);
         if (groupId != null) {
             if (groupId > 0) {
                 OptionGroupDto og = new OptionGroupDto();
@@ -202,7 +204,7 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
 
     @Override
     public void setParent(OptionDto option, Integer id) {
-        logger.info("Setting parent for option "+option);
+        logger.info("Setting parent for option " + option);
         if (id != null) {
             OptionDto o = new OptionDto();
             o.setId(id);
@@ -212,7 +214,7 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
 
     @Override
     public Set<OptionDto> findByTariff(Integer id) {
-        logger.info("Searching for options by tariff id "+id);
+        logger.info("Searching for options by tariff id " + id);
         List<Option> options = optionDao.findByTariffParents(id); //valid only
         Set<OptionDto> optionsDto = new HashSet<>();
         for (Option t : options) {
@@ -223,7 +225,7 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
 
     @Override
     public Set<OptionDto> findByTariffChildren(Integer id) {
-        logger.info("Searching for children options by tariff id "+id);
+        logger.info("Searching for children options by tariff id " + id);
         List<Option> options = optionDao.findByTariffChildren(id);
         Set<OptionDto> optionsDto = new HashSet<>();
         for (Option t : options) {
@@ -254,7 +256,7 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
         }
     }
 
-    private void updateTariffs (OptionDto optionDto, Option option) {
+    private void updateTariffs(OptionDto optionDto, Option option) {
 
         if (!option.getChildren().isEmpty()) {
             logger.info("Removing current children");
@@ -329,7 +331,7 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
     @Override
     @Transactional
     public void editOption(OptionDto option) {
-        logger.info("Editing option "+ option.getId());
+        logger.info("Editing option " + option.getId());
         Option o = optionDao.getOne(option.getId());
         o.setValid(option.isIsValid());
         updateOptionParent(option, o);
@@ -343,7 +345,7 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
 
     @Override
     public void removeRelations(OptionDto option) {
-        logger.info("Removing relations "+ option.getId());
+        logger.info("Removing relations " + option.getId());
         option.setParent(null);
         option.setChildren(new HashSet<>());
     }
@@ -351,7 +353,7 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
     @Override
     @Transactional
     public void deleteOption(Integer id) {
-        logger.info("Deleting options "+ id);
+        logger.info("Deleting options " + id);
         Option option = optionDao.getOne(id);
         option.setValid(false);
     }

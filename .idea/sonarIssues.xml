@@ -18,6 +18,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/pom.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/SpringLineMain/src/main/java/com/telekom/controller/ContractController.java">
           <value>
             <set />
@@ -59,6 +64,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/SpringLineMain/src/main/java/com/telekom/service/impl/MailSenderImpl.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/java/com/telekom/service/impl/OptionServiceImpl.java">
           <value>
             <set />
           </value>
@@ -108,7 +118,17 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/test/java/com/telekom/config/OptionServiceConfig.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/SpringLineMain/src/test/java/com/telekom/config/TariffServiceConfig.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/test/java/com/telekom/service/OptionServiceTest.java">
           <value>
             <set />
           </value>
