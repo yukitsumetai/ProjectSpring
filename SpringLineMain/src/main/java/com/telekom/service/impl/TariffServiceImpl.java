@@ -48,7 +48,7 @@ public class TariffServiceImpl extends SharedFunctions<TariffDto> implements Tar
 
     @Override
     @Transactional
-    public Page<TariffDto> getAllPaginated(Integer size, Integer page) {
+    public Page<TariffDto> getPage(Integer size, Integer page) {
         logger.info("Getting tariffs");
 
         List<TariffDto> pageGroups = listEntityToDto(tariffDao.getPages(size, page));
@@ -67,7 +67,7 @@ public class TariffServiceImpl extends SharedFunctions<TariffDto> implements Tar
 
     @Override
     @Transactional
-    public Page<TariffDto> getAllPaginated(Integer size, Integer page, Integer optionId) {
+    public Page<TariffDto> getPage(Integer size, Integer page, Integer optionId) {
         logger.info("Getting tariffs for option");
         List<TariffDto> pageGroups = listEntityToDto(tariffDao.getPages(size, page));
         Set<Tariff> existing = optionDao.getOne(optionId).getCompatibleTariffs();

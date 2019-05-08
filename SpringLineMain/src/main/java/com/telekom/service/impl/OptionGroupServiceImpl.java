@@ -47,25 +47,19 @@ public class OptionGroupServiceImpl extends SharedFunctions<OptionGroupDto> impl
     @Transactional
     public List<OptionGroupDto> getAll() {
         List<OptionGroup> optionGroups = optionGroupDao.getAll();
-        List<OptionGroupDto> optionGroupsDTO = new ArrayList<>();
-        for (OptionGroup t : optionGroups) {
-
-            optionGroupsDTO.add(optionGroupMapper.entityToDto(t));
-        }
         return listEntityToDto(optionGroups);
     }
 
     @Override
     @Transactional
     public List<OptionGroupDto> getAllValid() {
-
         List<OptionGroup> optionGroups = optionGroupDao.getAllValid();
         return listEntityToDto(optionGroups);
     }
 
     @Override
     @Transactional
-    public Page<OptionGroupDto> getOptions(Integer size, Integer page) {
+    public Page<OptionGroupDto> getPage(Integer size, Integer page) {
         List<OptionGroupDto> pageGroups = listEntityToDto(optionGroupDao.getPages(size, page));
         Long total=optionGroupDao.getPagesCount();
         return getPageDraft(pageGroups, total, page, size);

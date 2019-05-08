@@ -7,10 +7,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public interface TariffService {
-    Page<TariffDto> getAllPaginated(Integer size, Integer page, Integer optionId);
-
-    Page<TariffDto> getAllPaginated(Integer size, Integer page);
+public interface TariffService extends Pagination  {
+    Page<TariffDto> getPage(Integer size, Integer page, Integer optionId);
 
     Page<TariffDto> getValidPaginated(Integer size, Integer page);
 

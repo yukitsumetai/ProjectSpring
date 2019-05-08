@@ -14,7 +14,6 @@ public interface OptionGroupService extends Pagination {
     List<OptionGroupDto> getAll();
     List<OptionGroupDto> getAllValid();
     void setOptionsDto(OptionGroupDto optionGroup, List<Integer> id);
-    Page<OptionGroupDto> getOptions(Integer size, Integer page);
     List<OptionGroupDto> getByName(String name);
     Set<OptionGroupDto> findByTariff(Integer id);
 

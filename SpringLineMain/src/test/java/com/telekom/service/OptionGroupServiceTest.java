@@ -1,19 +1,19 @@
 package com.telekom.service;
 
-import com.telekom.config.TariffServiceConfig;
+
+import com.telekom.config.OptionGroupServiceConfig;
 import com.telekom.dao.api.OptionDao;
-import com.telekom.dao.api.TariffDao;
+import com.telekom.dao.api.OptionGroupDao;
+import com.telekom.mapper.OptionGroupMapper;
 import com.telekom.model.dto.OptionDto;
+import com.telekom.model.dto.OptionGroupDto;
 import com.telekom.model.dto.Page;
 import com.telekom.model.dto.TariffDto;
-import com.telekom.mapper.TariffMapper;
 import com.telekom.model.entity.Option;
+import com.telekom.model.entity.OptionGroup;
 import com.telekom.model.entity.Tariff;
-import com.telekom.service.api.JmsService;
-import com.telekom.service.impl.TariffServiceImpl;
-import org.apache.log4j.Logger;
-
-import org.junit.jupiter.api.BeforeAll;
+import com.telekom.service.impl.OptionGroupServiceImpl;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,83 +32,114 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = TariffServiceConfig.class, loader = AnnotationConfigContextLoader.class)
+@ContextConfiguration(classes = OptionGroupServiceConfig.class, loader = AnnotationConfigContextLoader.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class TariffServiceTest {
+class OptionGroupServiceTest {
     @Autowired
-    TariffServiceImpl tariffService;
+    private OptionGroupServiceImpl optionGroupService;
     @Autowired
-    private TariffDao tariffDao;
+    private OptionGroupDao optionGroupDao;
     @Autowired
-    OptionDao optionDao;
+    private OptionDao optionDao;
     @Autowired
-    private TariffMapper tariffMapper;
-    @Autowired
-    private JmsService jmsService;
-    @Autowired
-    private Logger logger;
+    private OptionGroupMapper optionGroupMapper;
 
-    private static Tariff tariff;
-    private static TariffDto tariffDto;
-    private static TariffDto tariff5Dto;
-    private static Tariff tariff5;
-    private Page page;
-    private static List<Tariff> tariffs;
-    private static List<Tariff> tariffs5;
-    private static List<TariffDto> tariffsDto;
-    private static List<TariffDto> tariffs5Dto;
+
     private static Option option;
+    private static OptionDto optionDto;
+    private static Option option5;
+    private static OptionDto option5Dto;
 
-    @BeforeAll
+    private static List<Option> options;
+    private static List<Option> options5;
+
+    private static List<OptionDto> optionsDto;
+    private static List<OptionDto> options5Dto;
+
+    private static OptionGroup og;
+    private static OptionGroupDto ogDto;
+    private static List<OptionGroup> ogs;
+    private static List<OptionGroupDto> ogsDto;
+
+    @BeforeEach
     public void setup() {
-        tariff = new Tariff();
-        tariff.setId(0);
-        tariff.setIsValid(true);
-        tariff.setPromoted(true);
-
-        tariff5 = new Tariff();
-        tariff5.setId(5);
-        tariff5.setIsValid(false);
-
-        tariffDto = new TariffDto();
-        tariffDto.setId(0);
-        tariffDto.setIsValid(true);
-        tariffDto.setPromoted(true);
-
-        tariff5Dto = new TariffDto();
-        tariff5Dto.setId(5);
-        tariff5Dto.setIsValid(false);
-
-        tariffs = new ArrayList<>();
-        tariffs.add(tariff);
-        tariffs5 = new ArrayList<>();
-        tariffs5.add(tariff5);
-
-        tariffsDto = new ArrayList<>();
-        tariffsDto.add(tariffDto);
-        tariffs5Dto = new ArrayList<>();
-        tariffs5Dto.add(tariff5Dto);
-
         option = new Option();
         option.setId(0);
+        option.setValid(true);
+        option.setCompatibleTariffs(new HashSet<>());
+        Set children = new HashSet();
 
-        when(tariffDao.getAllPromoted()).thenReturn(tariffs);
-        when(tariffDao.getAllValid()).thenReturn(tariffs);
-        when(tariffMapper.entityToDto(tariff)).thenReturn(tariffDto);
-        when(tariffMapper.entityToDto(tariff5)).thenReturn(tariff5Dto);
-        when(tariffDao.getPagesCount()).thenReturn((long) 6);
-        when(tariffDao.getPagesValidCount()).thenReturn((long) 6);
+
+        option5 = new Option();
+        option5.setId(5);
+        option5.setValid(false);
+        option5.setParent(option);
+        option5.setCompatibleTariffs(new HashSet<>());
+        children.add(option5);
+        option.setChildren(children);
+
+        optionDto = new OptionDto();
+        optionDto.setId(0);
+        optionDto.setIsValid(true);
+        optionDto.setCompatibleTariffs(new HashSet<>());
+        Set childrenDto = new HashSet();
+
+
+        option5Dto = new OptionDto();
+        option5Dto.setId(0);
+        option5Dto.setIsValid(false);
+        option5Dto.setParent(optionDto);
+        option5Dto.setCompatibleTariffs(new HashSet<>());
+
+        childrenDto.add(option5Dto);
+
+
+        options = new ArrayList<>();
+        options.add(option);
+        options5 = new ArrayList<>();
+        options5.add(option5);
+
+        optionsDto = new ArrayList<>();
+        optionsDto.add(optionDto);
+        options5Dto = new ArrayList<>();
+        options5Dto.add(option5Dto);
+        optionDto.setChildren(childrenDto);
+
+        og = new OptionGroup();
+        og.setId(1);
+        og.setValid(true);
+        ogDto = new OptionGroupDto();
+        ogDto.setId(1);
+        ogDto.setIsValid(true);
+        ogs = new ArrayList<>();
+        ogs.add(og);
+        ogsDto = new ArrayList<>();
+        ogsDto.add(ogDto);
+
+        when(optionGroupDao.getOne(1)).thenReturn(og);
+
+        when(optionGroupMapper.entityToDto(og)).thenReturn(ogDto);
 
 
         when(optionDao.getOne(0)).thenReturn(option);
+        when(optionDao.getOne(5)).thenReturn(option5);
+
     }
 
     @Test
-    public void getAllValidReturnsAllValidTatiffs() {
-        assertEquals(tariffsDto, tariffService.getAllValid());
-        assertNotEquals(tariffs5Dto, tariffService.getAllValid());
-        assertEquals(true, tariffService.getAllValid().get(0).isIsValid());
+    public void getAllReturnsAllOptionGroups() {
+        when(optionGroupDao.getAll()).thenReturn(ogs);
+        assertEquals(ogsDto, optionGroupService.getAll());
     }
+
+    @Test
+    public void getAllValidReturnsAllValidOptionGroups() {
+        when(optionGroupDao.getAllValid()).thenReturn(ogs);
+        assertEquals(ogsDto, optionGroupService.getAllValid());
+        assertEquals(true, optionGroupService.getAllValid().get(0).isIsValid());
+    }
+    /*
+
 
 
     @Test
@@ -330,5 +361,5 @@ class TariffServiceTest {
         assertEquals(false, tariff.isPromoted());
     }
 
-
+*/
 }
