@@ -252,7 +252,7 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
             for (TariffDto t : tariffs
             ) {
                 Tariff tmp = tariffDao.getOne(t.getId());
-                tmp.addOption(option);
+               tmp.addOption(option);
             }
         }
     }
@@ -287,6 +287,7 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
     }
 
     public void updateOptionParent(OptionDto option, Option o) {
+        /*
         OptionDto p = option.getParent();
         if (p != null) {
             logger.info("Setting parent");
@@ -294,7 +295,7 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
             if (o != tmp && tmp.getParent() == null) {
                 o.setParent(tmp);
             }
-        } else o.setParent(null);
+        } else o.setParent(null);*/
     }
 
     public void updateOptionGroup(OptionDto option, Option o) {
@@ -339,7 +340,7 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
         o.setValid(option.isIsValid());
         updateOptionParent(option, o);
         updateOptionGroup(option, o);
-        option.setDescription(o.getDescription());
+       o.setDescription(option.getDescription());
         updateTariff(option, o);
         updateChildren(option, o);
     }
@@ -356,6 +357,8 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
     public void deleteOption(Integer id) {
         logger.info("Deleting options " + id);
         Option option = optionDao.getOne(id);
-        option.setValid(false);
+        if(option!=null) {
+            option.setValid(false);
+        }
     }
 }

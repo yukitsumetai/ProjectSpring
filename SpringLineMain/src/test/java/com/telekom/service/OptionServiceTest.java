@@ -14,7 +14,7 @@ import com.telekom.model.entity.OptionGroup;
 import com.telekom.model.entity.Tariff;
 import com.telekom.service.impl.OptionServiceImpl;
 import org.apache.log4j.Logger;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,8 +28,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
@@ -46,8 +45,7 @@ class OptionServiceTest {
     private TariffDao tariffDao;
     @Autowired
     private OptionMapper optionMapper;
-    @Autowired
-    private Logger logger;
+
 
     private static Option option;
     private static OptionDto optionDto;
@@ -69,7 +67,7 @@ class OptionServiceTest {
     private static OptionGroup og;
     private static OptionGroupDto ogDto;
 
-    @BeforeAll
+    @BeforeEach
     public void setup() {
         option = new Option();
         option.setId(0);
@@ -124,7 +122,7 @@ class OptionServiceTest {
         option7Dto.setCompatibleTariffs(new HashSet<>());
         options7Dto = new ArrayList<>();
         options7Dto.add(option7Dto);
-        childrenDto.add(option7Dto);
+
         optionDto.setChildren(childrenDto);
 
         tariff = new Tariff();
@@ -132,7 +130,7 @@ class OptionServiceTest {
         tariff.setOptions(new HashSet<>());
 
 
-        TariffDto tariffDto = new TariffDto();
+        tariffDto = new TariffDto();
         tariffDto.setId(0);
         tariffDto.setOptions(new HashSet<>());
 
@@ -148,13 +146,7 @@ class OptionServiceTest {
         when(optionMapper.entityToDto(option5)).thenReturn(option5Dto);
         when(optionMapper.entityToDto(option7)).thenReturn(option7Dto);
 
-        // when(optionDao.getAllPromoted()).thenReturn(options);
-        //when(tariffDao.getAllValid()).thenReturn(tariffs);
-
         when(optionDao.getPagesCount()).thenReturn((long) 6);
-        // when(tariffDao.getPagesValidCount()).thenReturn((long) 6);
-
-
         when(tariffDao.getOne(0)).thenReturn(tariff);
 
         when(optionDao.getOne(0)).thenReturn(option);
@@ -226,15 +218,15 @@ class OptionServiceTest {
     public void getOptionsForNewOptionChildrenReturnsOptionsByPageAndOption() {
         when(optionMapper.entityToDto(option7)).thenReturn(option7Dto);
 
-        when(optionDao.getAllNoChildrenAndParent(1, 1)).thenReturn(options7);
+        when(optionDao.getAllNoChildrenAndParent(1, 7)).thenReturn(options7);
         when(optionDao.getPagesCountNoParentNoChildren()).thenReturn((long) 3);
 
-        page = optionService.getOptionsForNewOption(1, 1, false);
+        page = optionService.getOptionsForNewOption(1, 7, false);
         OptionDto tmp = (OptionDto) page.getData().get(0);
         assertEquals(options7Dto, page.getData());
         assertEquals(3, page.getTotalPages());
         assertEquals(null, tmp.getParent());
-        assertEquals(null, tmp.getChildren());
+        assertEquals(true, tmp.getChildren().isEmpty());
     }
 
     @Test
@@ -253,10 +245,9 @@ class OptionServiceTest {
     @Test
     public void getOptionsForExistingOptionParentReturnsOptionsByPageAndOptionNoExisting() {
 
-
-        when(optionDao.getAllNoParent(1, 1)).thenReturn(options7);
+        when(optionDao.getAllNoParent(1, 7)).thenReturn(options7);
         when(optionDao.getPagesCountNoParent()).thenReturn((long) 5);
-        page = optionService.getPageForExisting(1, 1, true, 0);
+        page = optionService.getPageForExisting(1, 7, true, 0);
         OptionDto tmp = (OptionDto) page.getData().get(0);
 
         assertEquals(options7Dto, page.getData());
@@ -268,13 +259,13 @@ class OptionServiceTest {
     @Test
     public void getOptionsForExistingOptionChildrenReturnsOptionsByPageAndOption() {
 
-        when(optionDao.getAllNoChildrenAndParentExisting(1, 1, 0)).thenReturn(options5);
-        when(optionDao.getPagesNoChildrenAndParentExisting(0)).thenReturn((long) 3);
+        when(optionDao.getAllNoChildrenAndParentExisting(1, 5, 0)).thenReturn(options5);
+        when(optionDao.getPagesNoChildrenAndParentExisting(5)).thenReturn((long) 3);
 
-        page = optionService.getPageForExisting(1, 1, false, 0);
+        page = optionService.getPageForExisting(1, 5, false, 0);
         OptionDto tmp = (OptionDto) page.getData().get(0);
 
-        assertEquals(optionsDto, page.getData());
+        assertEquals(options5Dto, page.getData());
         assertEquals(3, page.getTotalPages());
         assertEquals(true, tmp.isExisting());
     }
@@ -368,7 +359,7 @@ class OptionServiceTest {
     public void setChildrenSetsChildren() {
         List<Integer> id = new ArrayList<>();
         id.add(7);
-        optionService.setCompatibleTariffs(optionDto, id);
+        optionService.setChildren(optionDto, id);
         Set<OptionDto> tmp = optionDto.getChildren();
         for (OptionDto o : tmp) {
             assertEquals(7, o.getId());
@@ -380,7 +371,9 @@ class OptionServiceTest {
     @Test
     public void setChildrenNoChildrenWithNull() {
         optionService.setChildren(optionDto, null);
-        assertEquals(true, optionDto.getChildren().isEmpty());
+        assertEquals(false, optionDto.getChildren().isEmpty());
+        optionService.setChildren(option7Dto, null);
+        assertEquals(true, option7Dto.getChildren().isEmpty());
     }
 
 
@@ -417,14 +410,14 @@ class OptionServiceTest {
     @Test
     public void findByTariffReturnsParentOptionsByTariff() {
         when(optionDao.findByTariffParents(0)).thenReturn(options7);
-        assertEquals(options7Dto, optionService.findByTariff(0));
+        assertIterableEquals(options7Dto, optionService.findByTariff(0));
         assertNotEquals(null, optionService.findByTariff(0));
     }
 
     @Test
     public void findByTariffChildrenReturnsChildrenOptionsByTariff() {
         when(optionDao.findByTariffChildren(0)).thenReturn(options5);
-        assertEquals(options5Dto, optionService.findByTariff(0));
+        assertIterableEquals(options5Dto, optionService.findByTariffChildren(0));
         assertNotEquals(null, optionService.findByTariff(0));
     }
 
@@ -581,7 +574,7 @@ class OptionServiceTest {
         assertEquals(option, option5.getParent());
         option5Dto.setParent(option7Dto);
         optionService.updateOptionParent(option5Dto, option5);
-        assertEquals(option7, option5.getParent());
+        assertIterableEquals(options5, option.getChildren());
         assertNotEquals(option, option5.getParent());
     }
 
@@ -605,206 +598,79 @@ class OptionServiceTest {
 
     @Test
     public void addAddsOption() {
-        assertEquals(option, option5.getParent());
-        option5Dto.setParent(option7Dto);
-        optionService.updateOptionParent(option5Dto, option5);
-        assertEquals(option7, option5.getParent());
-        assertNotEquals(option, option5.getParent());
+        when(optionMapper.dtoToEntity(optionDto)).thenReturn(option);
+        optionService.add(optionDto);
+        verify(optionDao).add(option);
+    }
+
+    @Test
+    public void getOneReturnsOption() {
+        assertEquals(optionDto, optionService.getOne(0));
+        assertEquals(option5Dto, optionService.getOne(5));
+    }
+
+    @Test
+    public void getOneReturnsNullForNotFound() {
+        when(optionDao.getOne(12)).thenReturn(null);
+        assertEquals(null, optionService.getOne(12));
+    }
+
+
+    @Test
+    public void editOptionEditsOption() {
+        when(optionMapper.dtoToEntity(optionDto)).thenReturn(option);
+        optionDto.setIsValid(false);
+        optionDto.setOptionGroup(ogDto);
+        optionDto.setDescription("test");
+        optionDto.setChildren(new HashSet<>());
+        optionDto.setParent(option5Dto);
+        Set<TariffDto> tds = new HashSet<>();
+        tds.add(tariffDto);
+        optionDto.setCompatibleTariffs(tds);
+
+        optionService.editOption(optionDto);
+        assertEquals(false, option.isValid());
+        assertEquals("test", option.getDescription());
+        assertEquals(og, option.getGroup());
+        Set<Option> tmp = option5.getChildren();
+        for (Option o : tmp) {
+            assertEquals(0, o.getId());
+        }
+        assertEquals(null, option5.getParent());
+        Set<Tariff> tmp2 = option.getCompatibleTariffs();
+        for (Tariff o : tmp2) {
+            assertEquals(0, o.getId());
+        }
+
+    }
+
+    @Test
+    public void removeRelationsRemovesChildren() {
+        assertNotEquals(true, optionDto.getChildren().isEmpty());
+        optionService.removeRelations(optionDto);
+        assertEquals(true, optionDto.getChildren().isEmpty());
+    }
+
+    @Test
+    public void removeRelationsRemovesParent() {
+        assertNotEquals(null, option5Dto.getParent());
+        optionService.removeRelations(optionDto);
+        assertEquals(true, optionDto.getChildren().isEmpty());
+    }
+
+    @Test
+    public void deleteOptionDeletesOption() {
+        assertNotEquals(false, optionDto.isIsValid());
+        optionService.deleteOption(0);
+        assertEquals(false, option.isValid());
+    }
+
+
+    @Test
+    public void deleteOptionNull() {
+        when(optionDao.getOne(12)).thenReturn(null);
+        optionService.deleteOption(12);
     }
 }
-/*
-    @Test
-    public void getAllValidReturnsAllValidTatiffs() {
-        assertEquals(tariffsDto, tariffService.getAllValid());
-        assertNotEquals(tariffs5Dto, tariffService.getAllValid());
-        assertEquals(true, tariffService.getAllValid().get(0).isIsValid());
-    }
 
-
-    @Test
-    public void getAllPromotedReturnsAllValidTatiffs() {
-        assertNotEquals(tariffs5Dto, tariffService.getAllValid());
-        assertEquals(tariffsDto, tariffService.getAllPromoted());
-        assertEquals(true, tariffService.getAllPromoted().get(0).isPromoted());
-    }
-
-
-
-
-    @Test
-    public void getValidPaginatedValidReturnsValidTatiffsByPage() {
-        when(tariffDao.getPagesValid(1, 1)).thenReturn(tariffs);
-        when(tariffDao.getPagesValid(1, 5)).thenReturn(null);
-
-        page = tariffService.getValidPaginated(1, 1);
-        assertEquals(tariffsDto, page.getData());
-        assertEquals(1, page.getCurrentPage());
-        assertEquals(6, page.getTotalPages());
-        assertEquals(1, page.getLastPage());
-
-        page = tariffService.getValidPaginated(1, 5);
-        assertEquals(true, page.getData().isEmpty());
-        assertEquals(5, page.getCurrentPage());
-    }
-
-
-    @Test
-    public void getAllPaginatedByOptionCheckExisting() {
-        Set<Tariff> tariffsSet = new HashSet<>();
-        tariffsSet.add(tariff);
-        option.setCompatibleTariffs(tariffsSet);
-        when(tariffDao.getPages(1, 1)).thenReturn(tariffs);
-
-        page = tariffService.getAllPaginated(1, 1, 0);
-        TariffDto tmp = (TariffDto) page.getData().get(0);
-
-        assertEquals(tariffsDto, page.getData());
-        assertEquals(true, tmp.isExisting());
-    }
-
-    @Test
-    public void getAllPaginatedByOptionCheckNotExisting() {
-        when(tariffMapper.entityToDto(tariff5)).thenReturn(tariff5Dto);
-        option.setCompatibleTariffs(new HashSet<>());
-
-        when(tariffDao.getPages(1, 5)).thenReturn(tariffs5);
-
-        page = tariffService.getAllPaginated(1, 5, 0);
-        assertEquals(tariffs5Dto, page.getData());
-        TariffDto tmp = (TariffDto) page.getData().get(0);
-        assertEquals(false, tmp.isExisting());
-    }
-
-    @Test
-    public void setOptionsDtoSetsOptionsIfExist() {
-        option.setCompatibleTariffs(new HashSet<>());
-        List<Integer> id = new ArrayList<>();
-        id.add(0);
-
-        tariffService.setOptionsDto(tariffDto, id);
-        Set<OptionDto> tmp = tariffDto.getOptions();
-        for (OptionDto o : tmp) {
-            assertEquals(0, o.getId());
-            assertNotEquals(1, o.getId());
-        }
-
-    }
-
-    @Test
-    public void setOptionsDtoDoNotSetOptionsForNull() {
-        option.setCompatibleTariffs(new HashSet<>());
-        List<Integer> id = new ArrayList<>();
-        id.add(0);
-
-        tariffService.setOptionsDto(tariffDto, null);
-        assertNotEquals(null, tariffDto.getOptions());
-
-    }
-
-    @Test
-    public void getTariffReturnsTariff() {
-        when(tariffDao.getOne(5)).thenReturn(tariff5);
-        when(tariffDao.getOne(7)).thenReturn(null);
-
-        assertEquals(tariff5Dto, tariffService.getTariff(5));
-        assertEquals(null, tariffService.getTariff(7));
-    }
-
-
-    @Test
-    public void addTariffAddsTariffIfOptionsExist() {
-        tariff.setOptions(new HashSet<>());
-        Set<Option> tmp2 = tariff.getOptions();
-        for (Option o : tmp2) {
-            assertNotEquals(0, o.getId());
-            assertNotEquals(1, o.getId());
-        }
-        tariffDto.setOptions(new HashSet<>());
-        Set<OptionDto> tmp3 = tariffDto.getOptions();
-        for (OptionDto o : tmp3) {
-            assertNotEquals(0, o.getId());
-            assertNotEquals(1, o.getId());
-        }
-
-        when(tariffMapper.dtoToEntity(tariffDto)).thenReturn(tariff);
-
-        OptionDto optionDto = new OptionDto();
-        optionDto.setId(0);
-        Set<OptionDto> optionsSet = new HashSet<>();
-        optionsSet.add(optionDto);
-        tariffDto.setOptions(optionsSet);
-        tariffService.add(tariffDto);
-        tmp2 = tariff.getOptions();
-        for (Option o : tmp2) {
-            assertEquals(0, o.getId());
-            assertNotEquals(1, o.getId());
-        }
-    }
-
-    @Test
-    public void addTariffAddsTariffNoOptions() {
-        tariff.setOptions(new HashSet<>());
-        Set<Option> tmp2 = tariff.getOptions();
-        for (Option o : tmp2) {
-            assertNotEquals(0, o.getId());
-            assertNotEquals(1, o.getId());
-        }
-        tariffDto.setOptions(new HashSet<>());
-        Set<OptionDto> tmp3 = tariffDto.getOptions();
-        for (OptionDto o : tmp3) {
-            assertNotEquals(0, o.getId());
-            assertNotEquals(1, o.getId());
-        }
-
-        tariffService.add(tariffDto);
-        tmp2 = tariff.getOptions();
-        for (Option o : tmp2) {
-            assertNotEquals(0, o.getId());
-            assertNotEquals(1, o.getId());
-        }
-    }
-
-
-    @Test
-    public void notifyNotNotifiesPromotedNoChanges() {
-        tariffService.notify(tariffDto, true);
-        tariffService.notify(tariff5Dto, false);
-        verify(jmsService, never()).sendMessage();
-    }
-
-
-    @Test
-    public void notifyNotNotifiesNotPromoted() {
-        assertEquals(false, tariff5Dto.isPromoted());
-        tariffService.notify(tariff5Dto);
-        verify(jmsService, never()).sendMessage();
-    }
-
-    @Test
-    public void notifyNotifiesPromotedChangedState() {
-        tariffService.notify(tariffDto, false);
-        tariffService.notify(tariff5Dto, true);
-        tariffService.notifyDeleted();
-        tariffService.notify(tariffDto);
-        verify(jmsService, times(4)).sendMessage();
-    }
-
-
-    @Test
-    public void editTariffEdits() {
-        when(tariffDao.getOne(tariffDto.getId())).thenReturn(tariff);
-        tariffService.editTariff(tariffDto);
-        assertEquals(tariffDto.isIsValid(), tariff.isIsValid());
-        assertEquals(tariffDto.isPromoted(), tariff.isPromoted());
-        assertEquals(tariffDto.getDescription(), tariff.getDescription());
-    }
-
-    @Test
-    public void tariffDeletedChangesState() {
-        tariffService.deleteTariff(0);
-        assertEquals(false, tariff.isIsValid());
-        assertEquals(false, tariff.isPromoted());
-    }
-
-*/
 
