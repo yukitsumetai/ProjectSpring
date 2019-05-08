@@ -234,7 +234,7 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
         return optionsDto;
     }
 
-    private void updateChildren(OptionDto optionDto, Option option) {
+    public void updateTariff(OptionDto optionDto, Option option) {
         if (!option.getCompatibleTariffs().isEmpty()) {
             logger.info("Removing current tariffs");
             Set<Tariff> tariffs = option.getCompatibleTariffs();
@@ -245,6 +245,7 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
             }
         }
 //Add tariffs if exist
+
         if (!optionDto.getCompatibleTariffs().isEmpty()) {
             logger.info("Adding tariffs");
             Set<TariffDto> tariffs = optionDto.getCompatibleTariffs();
@@ -256,7 +257,7 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
         }
     }
 
-    private void updateTariffs(OptionDto optionDto, Option option) {
+    public void updateChildren(OptionDto optionDto, Option option) {
 
         if (!option.getChildren().isEmpty()) {
             logger.info("Removing current children");
@@ -268,22 +269,24 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
                 tmp.setGroup(null);
             }
         }
-
         //Add children if exist
-        if (!optionDto.getChildren().isEmpty()) {
-            logger.info("Adding children");
-            Set<OptionDto> children = optionDto.getChildren();
-            for (OptionDto child : children
-            ) {
-                Option tmp = optionDao.getOne(child.getId());
-                if (option != tmp && tmp.getParent() == null && tmp.getChildren().isEmpty()) {
-                    tmp.setParent(option);
+        if (option.getParent() == null) {
+            if (!optionDto.getChildren().isEmpty()) {
+                logger.info("Adding children");
+                Set<OptionDto> children = optionDto.getChildren();
+                for (OptionDto child : children
+                ) {
+                    Option tmp = optionDao.getOne(child.getId());
+                    if (option != tmp && tmp.getParent() == null && tmp.getChildren().isEmpty()) {
+                        tmp.setParent(option);
+                        tmp.setGroup(null);
+                    }
                 }
             }
         }
     }
 
-    private void updateOptionParent(OptionDto option, Option o) {
+    public void updateOptionParent(OptionDto option, Option o) {
         OptionDto p = option.getParent();
         if (p != null) {
             logger.info("Setting parent");
@@ -294,14 +297,16 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
         } else o.setParent(null);
     }
 
-    private void updateOptionGroup(OptionDto option, Option o) {
-        logger.info("Updating option group");
-        OptionGroupDto p = option.getOptionGroup();
-        if (p != null) {
-            OptionGroup tmp = optionGroupDao.getOne(p.getId());
-            if (tmp != null) { //dummy group - 0
-                o.setGroup(tmp);
-            }
+    public void updateOptionGroup(OptionDto option, Option o) {
+        if (o.getParent() == null) {
+            logger.info("Updating option group");
+            OptionGroupDto p = option.getOptionGroup();
+            if (p != null) {
+                OptionGroup tmp = optionGroupDao.getOne(p.getId());
+                if (tmp != null) { //dummy group - 0
+                    o.setGroup(tmp);
+                }
+            } else o.setGroup(null);
         } else o.setGroup(null);
     }
 
@@ -310,13 +315,11 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
     public void add(OptionDto option) {
         Option o = optionMapper.dtoToEntity(option);
         updateOptionParent(option, o);
-        if (o.getParent() == null) {
-            updateOptionGroup(option, o);
-        }
+        updateOptionGroup(option, o);
         logger.info("Adding option to DB");
         optionDao.add(o);
+        updateTariff(option, o);
         updateChildren(option, o);
-        updateTariffs(option, o);
     }
 
 
@@ -335,12 +338,10 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
         Option o = optionDao.getOne(option.getId());
         o.setValid(option.isIsValid());
         updateOptionParent(option, o);
-        if (o.getParent() == null) {
-            updateOptionGroup(option, o);
-        } else o.setGroup(null);
+        updateOptionGroup(option, o);
         option.setDescription(o.getDescription());
+        updateTariff(option, o);
         updateChildren(option, o);
-        updateTariffs(option, o);
     }
 
     @Override

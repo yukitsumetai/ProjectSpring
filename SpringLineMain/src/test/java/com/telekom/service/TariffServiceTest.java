@@ -282,19 +282,10 @@ class TariffServiceTest {
             assertNotEquals(0, o.getId());
             assertNotEquals(1, o.getId());
         }
-        tariffDto.setOptions(new HashSet<>());
-        Set<OptionDto> tmp3 = tariffDto.getOptions();
-        for (OptionDto o : tmp3) {
-            assertNotEquals(0, o.getId());
-            assertNotEquals(1, o.getId());
-        }
 
+        assertNotEquals(null, tariffDto.getOptions());
         tariffService.add(tariffDto);
-        tmp2 = tariff.getOptions();
-        for (Option o : tmp2) {
-            assertNotEquals(0, o.getId());
-            assertNotEquals(1, o.getId());
-        }
+        assertNotEquals(null,  tariff.getOptions());
     }
 
 
