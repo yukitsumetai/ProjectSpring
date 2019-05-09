@@ -27,7 +27,7 @@ public class PhoneNumberServiceImpl extends PaginationImpl<PhoneNumber> implemen
 
     @Override
     @Transactional
-    public Page<PhoneNumber> getOptions(Integer size, Integer page) {
+    public Page<PhoneNumber> getPage(Integer size, Integer page) {
         logger.info("Getting phone number, page "+page);
         List<PhoneNumber> pageGroups =phoneNumberDao.getPages(size, page);
         Long total=phoneNumberDao.getPagesCount();

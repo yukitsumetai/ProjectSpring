@@ -3,6 +3,7 @@ package com.telekom.config;
 import com.telekom.dao.api.OptionDao;
 import com.telekom.dao.api.OptionGroupDao;
 import com.telekom.mapper.OptionGroupMapper;
+import com.telekom.model.dto.Page;
 import com.telekom.service.impl.OptionGroupServiceImpl;
 import org.springframework.context.annotation.Bean;
 
@@ -29,5 +30,9 @@ public class OptionGroupServiceConfig {
         return mock(OptionGroupMapper.class);
     }
 
+    @Bean
+    public Page page() {
+        return mock(Page.class);
+    }
 
 }

@@ -73,7 +73,7 @@ public class SharedRestController {
         else resultPage = tariffService.getPage(GROUPS_PER_PAGE, page);
         return resultPage;
     }
-    @GetMapping(value = "/tariffs/promoted")
+    @GetMapping(value = "/promotedTariffs")
     public List<TariffDto> tariffsPromoted() {
         List<TariffDto> resultPage = tariffService.getAllPromoted();
         return resultPage;

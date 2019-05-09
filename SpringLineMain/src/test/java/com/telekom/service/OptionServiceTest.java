@@ -13,7 +13,6 @@ import com.telekom.model.entity.Option;
 import com.telekom.model.entity.OptionGroup;
 import com.telekom.model.entity.Tariff;
 import com.telekom.service.impl.OptionServiceImpl;
-import org.apache.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -160,17 +159,17 @@ class OptionServiceTest {
         when(optionDao.getPages(1, 5)).thenReturn(options5);
         when(optionDao.getPages(1, 7)).thenReturn(null);
 
-        page = optionService.getOptions(1, 1);
+        page = optionService.getPage(1, 1);
         assertEquals(optionsDto, page.getData());
         assertEquals(1, page.getCurrentPage());
         assertEquals(6, page.getTotalPages());
         assertEquals(1, page.getLastPage());
 
-        page = optionService.getOptions(1, 5);
+        page = optionService.getPage(1, 5);
         assertEquals(options5Dto, page.getData());
         assertEquals(5, page.getCurrentPage());
 
-        page = optionService.getOptions(1, 7);
+        page = optionService.getPage(1, 7);
         assertEquals(true, page.getData().isEmpty());
         assertEquals(7, page.getCurrentPage());
     }

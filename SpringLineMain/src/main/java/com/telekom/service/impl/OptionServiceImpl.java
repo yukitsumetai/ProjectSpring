@@ -52,7 +52,7 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
 
     @Override
     @Transactional
-    public Page<OptionDto> getOptions(Integer size, Integer page) {
+    public Page<OptionDto> getPage(Integer size, Integer page) {
         logger.info("Getting options, page " + page);
         List<OptionDto> pageGroups = listEntityToDto(optionDao.getPages(size, page));
         Long total = optionDao.getPagesCount();
@@ -291,7 +291,7 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
         OptionDto p = option.getParent();
         if (p != null) {
             logger.info("Setting parent");
-            Option tmp = optionDao.getOne(p.getId());
+            Option tmp = optionDao.getOptionGroup(p.getId());
             if (o != tmp && tmp.getParent() == null) {
                 o.setParent(tmp);
             }

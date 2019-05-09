@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 public interface OptionGroupService extends Pagination {
-    OptionGroupDto getOne(int id);
+    OptionGroupDto getOptionGroup(int id);
     void add(OptionGroupDto optionGroup);
     void editOptionGroup(OptionGroupDto t);
     void deleteOptionGroup(Integer id);

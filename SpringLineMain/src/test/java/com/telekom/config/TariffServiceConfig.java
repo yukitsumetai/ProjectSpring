@@ -28,11 +28,6 @@ public class TariffServiceConfig {
     }
 
     @Bean
-    public Logger logger() {
-        return mock(Logger.class);
-    }
-
-    @Bean
     public JmsService jmsService() {
         return mock(JmsService.class);
     }

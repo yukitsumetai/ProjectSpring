@@ -2,6 +2,7 @@ package com.telekom.security;
 
 import com.telekom.dao.api.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -11,6 +12,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import com.telekom.model.entity.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -22,8 +24,6 @@ import java.util.List;
 public class AuthProvider implements AuthenticationProvider {
     @Autowired
     private UserDao userDao;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     public AuthProvider() {
         super();
@@ -42,7 +42,7 @@ public class AuthProvider implements AuthenticationProvider {
             throw new UsernameNotFoundException("Bad credentials");
         }
         String password = authentication.getCredentials().toString();
-        if (!passwordEncoder.matches(password, user.getPassword())) {
+        if (!passwordEncoder().matches(password, user.getPassword())) {
             throw new BadCredentialsException("Bad credentials");
         }
         List<GrantedAuthority> authorities = new ArrayList<>();
@@ -53,5 +53,10 @@ public class AuthProvider implements AuthenticationProvider {
     @Override
     public boolean supports(Class<?> aClass) {
         return aClass.equals(UsernamePasswordAuthenticationToken.class);
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
     }
 }

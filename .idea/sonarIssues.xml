@@ -58,6 +58,16 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/java/com/telekom/service/api/PdfCreator.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/java/com/telekom/service/api/PhoneNumberService.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/SpringLineMain/src/main/java/com/telekom/service/api/TariffService.java">
           <value>
             <set />
@@ -99,6 +109,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/SpringLineMain/src/main/java/com/telekom/service/impl/PdfCreatorImpl.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/java/com/telekom/service/impl/PhoneNumberServiceImpl.java">
           <value>
             <set />
           </value>
@@ -153,6 +168,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/test/java/com/telekom/config/PhoneNumberServiceConfig.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/SpringLineMain/src/test/java/com/telekom/config/TariffServiceConfig.java">
           <value>
             <set />
@@ -168,7 +188,17 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/test/java/com/telekom/service/PhoneNumberServiceTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/SpringLineMain/src/test/java/com/telekom/service/TariffServiceTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMarketing/src/main/java/com/telekom/TariffsConsumer.java">
           <value>
             <set />
           </value>

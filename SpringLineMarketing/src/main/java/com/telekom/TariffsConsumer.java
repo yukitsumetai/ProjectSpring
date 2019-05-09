@@ -34,30 +34,16 @@ public class TariffsConsumer {
 
     void getTariffs() {
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("http://localhost:8080/springLine/test2");
+        WebTarget target = client.target("http://localhost:8080/springLine/promotedTariffs");
         JsonArray response = target.request(MediaType.APPLICATION_JSON).get(JsonArray.class);
         tariffsList.clear();
         for (JsonValue t : response) {
             JsonObject tmp = t.asJsonObject();
             tariffsList.add(new TariffPromoted(tmp.getString("name"), tmp.getJsonNumber("price").doubleValue(), tmp.getString("description")));
-            }
         }
+    }
 
     public ArrayList<TariffPromoted> getTariffsList() {
         return tariffsList;
-    }
-
-
-    public String process() {
-
-        // logs debug
-        if (logger.isDebugEnabled()) {
-            logger.debug("PageController.process()");
-        }
-
-        // logs exception
-        logger.error("This is Error message", new Exception("Testing"));
-
-        return "success";
     }
 }

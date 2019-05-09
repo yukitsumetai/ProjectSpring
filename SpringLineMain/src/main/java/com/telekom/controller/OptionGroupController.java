@@ -53,7 +53,7 @@ public class OptionGroupController {
 
     @GetMapping("/edit/{id}")
     public String getEditForm(Model model, @PathVariable(value = "id") Integer id) {
-        OptionGroupDto optionGroup = optionGroupService.getOne(id);
+        OptionGroupDto optionGroup = optionGroupService.getOptionGroup(id);
         model.addAttribute("optionGroup", optionGroup);
         return "editOptionGroup";
     }

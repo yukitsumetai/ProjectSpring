@@ -31,9 +31,11 @@ public class OptionGroupServiceImpl extends SharedFunctions<OptionGroupDto> impl
 
     private List<OptionGroupDto> listEntityToDto(List<OptionGroup> optionGroups) {
         List<OptionGroupDto> optionGroupsDTO = new ArrayList<>();
-        for (OptionGroup t : optionGroups) {
+        if(optionGroups!=null) {
+            for (OptionGroup t : optionGroups) {
 
-            optionGroupsDTO.add(optionGroupMapper.entityToDto(t));
+                optionGroupsDTO.add(optionGroupMapper.entityToDto(t));
+            }
         }
         return optionGroupsDTO;
     }
@@ -67,14 +69,14 @@ public class OptionGroupServiceImpl extends SharedFunctions<OptionGroupDto> impl
 
     @Override
     @Transactional
-    public OptionGroupDto getOne(int id) {
+    public OptionGroupDto getOptionGroup(int id) {
 
         OptionGroup t = optionGroupDao.getOne(id);
         return optionGroupMapper.entityToDto(t);
 
     }
 
-    private void addOptions(OptionGroupDto optionGroup, OptionGroup t) {
+   public void addOptions(OptionGroupDto optionGroup, OptionGroup t) {
         if (!optionGroup.getOptions().isEmpty()) {
             Set<OptionDto> options = optionGroup.getOptions();
             for (OptionDto o : options
@@ -98,7 +100,7 @@ public class OptionGroupServiceImpl extends SharedFunctions<OptionGroupDto> impl
     }
 
 
-    private void deleteOptions(OptionGroup t) {
+   public void deleteOptions(OptionGroup t) {
         if (!t.getOptions().isEmpty()) {
             Set<Option> options = t.getOptions();
             for (Option o : options
