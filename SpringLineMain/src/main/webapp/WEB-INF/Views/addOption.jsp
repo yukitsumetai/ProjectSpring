@@ -14,7 +14,7 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-
+    <script src="${contextPath}/resource/js/validation.js"></script>
     <script src="${contextPath}/resource/js/dropdownAjax.js"></script>
     <script src="${contextPath}/resource/js/options.js"></script>
     <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
@@ -42,7 +42,7 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">Option Name*</label>
-                    <input id="name" type="text" name="name" placeholder="Maximum 60 characters..." maxlength="60" class="form-control" required/>
+                    <input id="name" type="text" name="name" placeholder="Maximum 60 characters..." maxlength="60" onblur="requiredField(this)" class="form-control" required/>
                 </div>
                 <div class="form-group">
                     <label class="control-label">One Time Price*</label>
@@ -50,7 +50,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">$</span>
                         </div>
-                        <input id="price" type="number" min="0" step="0.01" name="priceOneTime" class="form-control" required/>
+                        <input id="price" type="number" min="0" step="0.01" name="priceOneTime" class="form-control" onblur="requiredField(this)" required/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -59,12 +59,12 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">$</span>
                         </div>
-                        <input id="priceOneTime" type="number" step="0.01" min="0" name="priceMonthly" class="form-control" required/>
+                        <input id="priceOneTime" type="number" step="0.01" min="0" name="priceMonthly" class="form-control"  onblur="requiredField(this)" required/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Description</label>
-                    <textarea row="4" id="Description" type="text" name="Description" maxlength="180"
+                    <textarea row="4" id="Description" type="text" name="Description" maxlength="180" onblur="requiredField(this)"
                               class="form-control"></textarea>
                 </div>
                 <div class="form-group">

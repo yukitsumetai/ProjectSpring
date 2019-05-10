@@ -22,7 +22,7 @@
     <!-- Bootstrap core CSS -->
     <link href="${contextPath}/resource/dist/css/bootstrap.min.css"} rel="stylesheet">
     <link href="${contextPath}/resource/css/dashboard.css" rel="stylesheet">
-
+    <script src="${contextPath}/resource/js/validation.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../resource/assets/js/vendor/jquery.min.js"><\/script>')</script>
@@ -42,7 +42,7 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">Tariff Name*</label>
-                    <input id="name" type="text" name="name" placeholder="Maximum 60 characters..." class="form-control"
+                    <input id="name" type="text" name="name" placeholder="Maximum 60 characters..." class="form-control" onblur="requiredField(this)"
                            maxlength="60" required/>
                 </div>
                 <div class="form-group">
@@ -51,13 +51,13 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">$</span>
                         </div>
-                        <input id="price" type="number" step="0.01" min="0" name="price" class="form-control" required/>
+                        <input id="price" type="number" step="0.01" min="0" name="price" class="form-control" onblur="requiredField(this)"required/>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label">Description</label>
-                    <textarea row="'4" id="Description" type="text" name="Description" maxlength="180"
+                    <textarea row="'4" id="Description" type="text" name="Description" maxlength="180" onblur="requiredField(this)"
                               class="form-control"></textarea>
                 </div>
                 <div class="form-group">

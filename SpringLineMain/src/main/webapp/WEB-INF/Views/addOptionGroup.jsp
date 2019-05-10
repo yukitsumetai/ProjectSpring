@@ -22,7 +22,7 @@
     <!-- Bootstrap core CSS -->
     <link href="${contextPath}/resource/dist/css/bootstrap.min.css"} rel="stylesheet">
     <link href="${contextPath}/resource/css/dashboard.css" rel="stylesheet">
-
+    <script src="${contextPath}/resource/js/validation.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../resource/assets/js/vendor/jquery.min.js"><\/script>')</script>
@@ -42,11 +42,11 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">Option Group Name*</label>
-                    <input id="name" type="text" name="name" class="form-control" maxlength="60" required/>
+                    <input id="name" type="text" name="name" class="form-control" maxlength="60" onblur="requiredField(this)" required/>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Description</label>
-                    <textarea row="'4" id="Description" type="text" name="Description" maxlength="200" class="form-control"></textarea>
+                    <textarea row="'4" id="Description" type="text" name="Description" maxlength="200" onblur="requiredField(this)" class="form-control"></textarea>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Validity: </label>

@@ -20,6 +20,7 @@
     <link rel="icon" href="../resource/images/favicon1.ico">
     <script src="${contextPath}/resource/js/dropdownAjax.js"></script>
     <script src="${contextPath}/resource/js/options.js"></script>
+    <script src="${contextPath}/resource/js/validation.js"></script>
     <title>Client details</title>
     <script>
         $(document).ready(function () {
@@ -56,7 +57,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">$</span>
                         </div>
-                        <input id="priceOneTime" type="number" value="${option.priceOneTime}" step="0.01" name="priceOneTime" class="form-control" disabled/>
+                        <input id="priceOneTime" type="number" value="${option.priceOneTime}" step="0.01" name="priceOneTime"  class="form-control" disabled/>
                     </div>
 
                 </div>
@@ -71,7 +72,7 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">Description</label>
-                    <textarea row="4" id="Description" type="text" name="Description" maxlength="180"
+                    <textarea row="4" id="Description" type="text" name="Description" maxlength="180" onblur="requiredField(this)"
                               class="form-control">${option.description}</textarea>
                 </div>
                 <div class="form-group">

@@ -12,7 +12,7 @@
 
 <html>
 <head>
-
+    <script src="${contextPath}/resource/js/validation.js"></script>
     <script src="${contextPath}/resource/js/clientAjax.js"></script>
     <script src="${contextPath}/resource/js/dropdownAjax.js"></script>
     <script type="text/javascript" src="${contextPath}/resource/js/myWebcam.js"></script>
@@ -48,6 +48,7 @@
                 <div id="results"></div>
             </div>
             <br>
+            <ul class="errorMessages"></ul>
             <form:form method="post" action="${contextPath}/newContract/confirm" modelAttribute="client">
                <input type="hidden" id="contract" value="${contractDto}"></input>
                 <div class="row">
@@ -55,13 +56,13 @@
                         <form:label path="name">Name</form:label>
                         <form:input type="text" placeholder="Enter first name.." pattern="[A-Za-z\s-]{2,20}"
                                     title="Only letters, space and hyphen are allowed. Min 2 max 20 characters"
-                                    path="name" class="form-control" required="true" id="name"/>
+                                    path="name" class="form-control" required="true" id="name" onblur="requiredField(this)"/>
                     </div>
                     <div class="col-sm-6 form-group">
                         <form:label path="surname">Surname</form:label>
                         <form:input type="text" placeholder="Enter surname.." pattern="[A-Za-z\s-]{2,20}"
                                     title="Only letters, space and hyphen are allowed are allowed. Min 2 max 20 characters"
-                                    path="surname" class="form-control" name="surname" required="true" id="surname"/>
+                                    path="surname" class="form-control" name="surname" required="true" id="surname" onblur="requiredField(this)"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -70,14 +71,14 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                         </div>
-                        <form:input path="birthday" type='date' class="form-control" min="{{date}}-100"
-                                    max="{{date}}-18" id="birthday" required="true"/>
+                        <form:input path="birthday" type='date' class="form-control" min="${now}-100"    title="Date should be valid. Customer should be older than 18 years old"
+                                    max="${now}-18" id="birthday" required="true" onblur="requiredField(this)"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label>Passport</label>
                     <form:input path="passport" type="text" name="passport" id="passport" class="form-control required"
-                                pattern="[0-9]{9}" title="Passport should consist of 8 digits" required="true"/>
+                                pattern="[0-9]{9}" title="Passport should consist of 8 digits" required="true" onblur="requiredField(this)"/>
                 </div>
                 <div class="form-group">
                     <form:label path="email">E-mail</form:label>
@@ -86,7 +87,7 @@
                             <span class="input-group-text" id="basic-addon1">@</span>
                         </div>
                         <form:input path="email" type="email" id="email" name="email" class="form-control"
-                                    required="true"/>
+                                    required="true" onblur="requiredField(this)"/>
                     </div>
                 </div>
                 <div class="table-title">
@@ -97,13 +98,13 @@
                         <form:label path="address.street">Street</form:label>
                         <form:input type="text" placeholder="Enter street.." required="true"
                                     path="address.street" class="form-control required" pattern="[A-Za-z\s-]{0,20}"
-                                    title="Only letters, space and hyphen are allowed. Min 2 max 20 characters"/>
+                                    title="Only letters, space and hyphen are allowed. Min 2 max 20 characters" onblur="requiredField(this)"/>
                     </div>
                     <div class="col-sm-6 form-group">
                         <form:label path="address.houseNo">House№</form:label>
                         <form:input type="text" placeholder="Enter house number.." pattern="[0-9]{0,4}"
                                     title="Only digits are allowed. Max 4 symbols." required="true"
-                                    path="address.houseNo" class="form-control required"/>
+                                    path="address.houseNo" class="form-control required" onblur="requiredField(this)"/>
                     </div>
                 </div>
                 <div class="row">
@@ -111,19 +112,19 @@
                         <form:label path="address.city">City</form:label>
                         <form:input type="text" placeholder="Enter city.." required="true"
                                     path="address.city" class="form-control required" pattern="[A-Za-z\s-]{0,20}"
-                                    title="Only letters and hyphen are allowed. Min 2 max 20 characters"/>
+                                    title="Only letters and hyphen are allowed. Min 2 max 20 characters" onblur="requiredField(this)"/>
                     </div>
                     <div class="col-sm-6 form-group">
                         <form:label path="address.zip">Zipcode</form:label>
                         <form:input type="text" placeholder="Enter Zipcode.." required="true"
                                     path="address.zip" class="form-control required" pattern="[0-9]{5}"
-                                    title="ZIP should consist of 5 digits"/>
+                                    title="ZIP should consist of 5 digits" onblur="requiredField(this)"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <form:label path="address.country">Country</form:label>
                     <form:input type="text" placeholder="Enter country.." value="Germany" required="true"
-                                path="address.country" class="form-control" pattern="[A-Za-z\s-]{0,20}"/>
+                                path="address.country" class="form-control" pattern="[A-Za-z\s-]{0,20}" onblur="requiredField(this)"/>
                 </div>
                 <div class="table-title">
                     <h2>Add Contract Details</h2>
@@ -141,7 +142,7 @@
                     <div class="form-group col-sm-6">
                         <form:label path="password">Password</form:label>
                         <form:input path="password" type="text" name="password" class="form-control required "
-                                    maxlength="200" required="true"/>
+                                    maxlength="200" required="true" onblur="requiredField(this)"/>
                     </div>
                 </div>
                 <div class="form-group">

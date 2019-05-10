@@ -45,46 +45,12 @@ public class ContractServiceImpl implements ContractService {
     @Autowired
     private ClientDao clientDao;
     @Autowired
-    PdfCreatorImpl pdfCreator;
+    PdfCreator pdfCreator;
     @Autowired
     MailService mailSender;
 
     @Autowired
     Logger logger;
-
-    @Override
-    @Transactional
-    public void add(ContractDto contract) {
-        logger.info("Adding new contract");
-        Contract tmp = contractMapper.dtoToEntity(contract);
-        phoneNumberDao.deleteNumber(tmp.getPhoneNumber());
-        Client c = clientDao.getOne(contract.getClient().getId());
-        if (c == null) {
-            logger.info("Adding new client");
-            c = clientMapper.dtoToEntity(contract.getClient());
-            c.setContract(tmp);
-            User user = new User(tmp, passwordEncoder.encode(contract.getClient().getPassword()));
-            c.setUser(user);
-            clientDao.add(c);
-        } else {
-            logger.info("Adding contract to existing client " + c.getUser().getId());
-            User user = userDao.getOne(c.getUser().getId());
-            user.addContract(tmp);
-        }
-        contractDao.add(tmp);
-        tmp.setClient(c);
-    }
-
-    @Override
-    public boolean sendPdf(Boolean newClient, ContractDto contract){
-        try {
-            mailSender.sendMessageWithAttachment(newClient,  contract);
-        } catch (MessagingException e) {
-            logger.info("Exception", e);
-            return false;
-        }
-        return true;
-    }
 
 
     @Override
@@ -328,7 +294,39 @@ public class ContractServiceImpl implements ContractService {
 
     }
 
+    @Override
+    @Transactional
+    public void add(ContractDto contract) {
+        logger.info("Adding new contract");
+        Contract tmp = contractMapper.dtoToEntity(contract);
+        phoneNumberDao.deleteNumber(tmp.getPhoneNumber());
+        Client c = clientDao.getOne(contract.getClient().getId());
+        if (c == null) {
+            logger.info("Adding new client");
+            c = clientMapper.dtoToEntity(contract.getClient());
+            c.setContract(tmp);
+            User user = new User(tmp, passwordEncoder.encode(contract.getClient().getPassword()));
+            c.setUser(user);
+            clientDao.add(c);
+        } else {
+            logger.info("Adding contract to existing client " + c.getUser().getId());
+            User user = userDao.getOne(c.getUser().getId());
+            user.addContract(tmp);
+        }
+        contractDao.add(tmp);
+        tmp.setClient(c);
+    }
 
+    @Override
+    public boolean sendPdf(Boolean newClient, ContractDto contract){
+        try {
+            mailSender.sendMessageWithAttachment(newClient,  contract);
+        } catch (MessagingException e) {
+            logger.info("Exception", e);
+            return false;
+        }
+        return true;
+    }
 
 
 }
