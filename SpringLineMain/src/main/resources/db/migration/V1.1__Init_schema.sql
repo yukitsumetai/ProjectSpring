@@ -66,7 +66,7 @@ CREATE TABLE `options_options`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_0900_ai_ci;
 
-CREATE TABLE `options_optiongroups`
+CREATE TABLE `options_optionGroups`
 (
     `group_id`  int(11) DEFAULT NULL,
     `option_id` int(11) NOT NULL,

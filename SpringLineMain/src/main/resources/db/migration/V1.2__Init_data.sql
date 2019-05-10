@@ -376,10 +376,10 @@ VALUES (220003, 220004),
     ENABLE KEYS */;
 UNLOCK TABLES;
 
-LOCK TABLES `options_optiongroups` WRITE;
-/*!40000 ALTER TABLE `options_optiongroups`
+LOCK TABLES `options_optionGroups` WRITE;
+/*!40000 ALTER TABLE `options_optionGroups`
     DISABLE KEYS */;
-INSERT INTO `options_optiongroups`
+INSERT INTO `options_optionGroups`
 VALUES (330001, 220001),
        (330001, 220002),
        (330001, 220003),
@@ -400,7 +400,7 @@ VALUES (330001, 220001),
        (330007, 220037),
        (330007, 220038),
        (330007, 220039);
-/*!40000 ALTER TABLE `options_optiongroups`
+/*!40000 ALTER TABLE `options_optionGroups`
        ENABLE KEYS */;
 UNLOCK TABLES;
 

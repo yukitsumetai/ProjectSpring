@@ -24,9 +24,10 @@ public class ImageRecognitionImpl {
         try {
             logger.info("PerformingOCR");
             String path2 = this.getClass().getClassLoader().getResource("tessTrainData").toString().substring(5);
-            tesseract.setDatapath(path2);
+            tesseract.setDatapath("C:\\Users\\ekochuro\\IdeaProjects\\ProjectSpring\\SpringLineMain\\src\\main\\resources\\tessTrainData\\");
             tesseract.setLanguage("eng");
-            text = tesseract.doOCR(new File("C:\\Users\\ekochuro\\IdeaProjects\\ProjectSpring\\pass5.jpeg"));
+            text = tesseract.doOCR(new File(path));
+            logger.info("Parsed Text "+text);
         } catch (TesseractException e) {
             e.printStackTrace();
         }

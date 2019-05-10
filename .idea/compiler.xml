@@ -6,8 +6,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="SpringLineMain" />
         <module name="SpringLineMarketing" />
+        <module name="ProjectSpring (1) (co.kochurova)" />
+        <module name="SpringLineMain" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

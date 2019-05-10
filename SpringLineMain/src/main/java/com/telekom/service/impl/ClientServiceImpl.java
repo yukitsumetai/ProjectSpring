@@ -109,8 +109,15 @@ public class ClientServiceImpl extends PaginationImpl<ClientDto> implements Clie
 
         logger.info("Performing OCR");
         ClientDto client = new ClientDto();
-        imageRecognition.doOCR(client, pathName);
-        file.delete();
+        try {
+            imageRecognition.doOCR(client, pathName);
+        }
+        catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
+        }
+       finally{
+            file.delete();
+        }
         return client;
     }
 

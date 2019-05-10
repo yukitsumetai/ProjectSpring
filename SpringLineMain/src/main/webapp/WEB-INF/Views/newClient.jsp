@@ -77,7 +77,7 @@
                 <div class="form-group">
                     <label>Passport</label>
                     <form:input path="passport" type="text" name="passport" id="passport" class="form-control required"
-                                pattern="[0-9]{8}" title="Passport should consist of 8 digits" required="true"/>
+                                pattern="[0-9]{9}" title="Passport should consist of 8 digits" required="true"/>
                 </div>
                 <div class="form-group">
                     <form:label path="email">E-mail</form:label>

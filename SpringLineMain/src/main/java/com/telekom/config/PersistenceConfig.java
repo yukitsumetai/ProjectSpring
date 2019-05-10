@@ -64,7 +64,7 @@ public class PersistenceConfig {
     @DependsOn({"flyway"})
     public EntityManagerFactory entityManagerFactory(DataSource dataSource) {
         HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
-        jpaVendorAdapter.setGenerateDdl(false);
+        jpaVendorAdapter.setGenerateDdl(true);
         jpaVendorAdapter.setShowSql(true);
 
         LocalContainerEntityManagerFactoryBean entityManagerFactory =
