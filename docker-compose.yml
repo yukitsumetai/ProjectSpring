@@ -1,0 +1,27 @@
+version: "3.7"
+services:
+  webapp:
+    container_name: webapp
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+      - "9990:9990"
+    depends_on:
+      - db
+    environment:
+      DB_USER: ekochuro
+      DB_PASSWORD: moon2207
+
+  db:
+    container_name: db
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpasswd
+      MYSQL_DATABASE: projectspring
+      MYSQL_USER: ekochuro
+      MYSQL_PASSWORD: moon2207
+    ports:
+      - "33060:33060"
+      - "3306:3306"
