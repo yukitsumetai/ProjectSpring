@@ -43,7 +43,6 @@ public class OptionServiceConfig {
         return mock(Logger.class);
     }
 
-
     @Bean
     public Page page() {
         return mock(Page.class);

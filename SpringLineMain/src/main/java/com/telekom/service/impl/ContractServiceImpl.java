@@ -55,7 +55,7 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public boolean setTariff(ContractDto contract, Integer id) {
-        logger.info("Setting tariff "+id+" to contractDto ");
+        logger.info("Setting tariff " + id + " to contractDto ");
         TariffDto tmp = tariffService.getTariff(id);
         if (!tmp.isIsValid()) return false;
         contract.setTariff(tmp);
@@ -81,36 +81,35 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public boolean setOptions(ContractDto contract, List<Integer> id, boolean existing) {
+        logger.info("Setting options");
         Set<OptionDto> temporary = new HashSet<>();
-
+        contract.setPrice(0.00);
+        contract.addPrice(contract.getTariff().getPrice());
         if (id != null) {
             logger.info("Adding options to contract");
             contract.setPriceOneTime(0.00);
-            contract.setPrice(0.00);
-            contract.addPrice(contract.getTariff().getPrice());
             for (Integer i : id) {
                 OptionDto tmp = optionService.getOne(i);
-                if (tmp != null) { //0 exist
+                if (tmp != null) {
                     temporary.add(tmp);
                     contract.addPrice(tmp.getPriceMonthly());
-                    if (contract.getOptions() != null) {
-                        for (OptionDto op : contract.getOptions()
-                        ) {
-                            if (op.getId() == tmp.getId()) tmp.setPriceOneTime(0.00); //if option already existed OneTime price=0
-                        }
-                    }
+                    existingOptionsRemoveOneTimePrice(contract, tmp);
                     contract.addPriceOneTime(tmp.getPriceOneTime());
                 }
             }
-            contract.setOptions(temporary);
-            if (!existing) return optionValidation(contract);
-        } else {
-            logger.info("Removing options from contract");
-            contract.setOptions(temporary);
-            contract.setPrice(0.00);
-            contract.addPrice(contract.getTariff().getPrice());
         }
+        contract.setOptions(temporary);
+        if (!existing) return optionValidation(contract);
         return true;
+    }
+
+    public void existingOptionsRemoveOneTimePrice(ContractDto contract, OptionDto tmp) {
+        if (contract.getOptions() != null) {
+            for (OptionDto op : contract.getOptions()
+            ) {
+                if (op.getId() == tmp.getId()) tmp.setPriceOneTime(0.00); //if option already existed OneTime price=0
+            }
+        }
     }
 
     @Override
@@ -181,51 +180,22 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     @Transactional
-    public void update(ContractDto contractDto) {
-        logger.info("Updating contract "+ contractDto.getPhoneNumberInt());
-        Contract contract = contractDao.getOne(contractDto.getPhoneNumberInt());
-        Integer tariffId=contractDto.getTariff().getId();
-        if (contract.getTariff().getId() != tariffId) {
-            logger.info("Updating tariff to "+ tariffId);
-            contract.setOptions(null);
-            Tariff t = tariffDao.getOne(tariffId);
-            contract.setTariff(t);
-        } else {
-            logger.info("Updating options");
-            contract.setOptions(new HashSet<>());
-            if (!contractDto.getOptions().isEmpty()) {
-                for (OptionDto o : contractDto.getOptions()
-                ) {
-                    Option tmp2 = optionDao.getOne(o.getId());
-                    contract.addOption(tmp2);
-                }
-            }
-        }
-        contract.setPrice(0.0);
-        contract.setPrice(contractDto.getPrice());
-    }
-
-    @Override
-    @Transactional
     public ContractDto getOne(String number) {
-        logger.info("Searching for contract"+number);
+        logger.info("Searching for contract" + number);
         BigInteger number2 = new BigInteger(number);
-        ContractDto tmp;
-        try {
-            tmp = contractMapper.entityToDto(contractDao.getOne(number2));
-        } catch (NullPointerException e) {
-            logger.info("Contract not found "+number2);
-            tmp = null;
+        Contract contract=contractDao.getOne(number2);
+        if (contract!=null){
+            return contractMapper.entityToDto(contract);
         }
-        return tmp;
+        else logger.info("Contract not found " + number2);
+        return null;
     }
-
 
 
     @Override
     @Transactional
     public void block(ContractDto contract, boolean admin) {
-        logger.info("Blocking contract"+contract.getPhoneNumberInt()+" by admin "+admin);
+        logger.info("Blocking contract" + contract.getPhoneNumberInt() + " by admin " + admin);
         Contract tmp = contractDao.getOne(contract.getPhoneNumberInt());
         tmp.setBlocked(true);
         if (admin) {
@@ -236,7 +206,7 @@ public class ContractServiceImpl implements ContractService {
     @Override
     @Transactional
     public void unblock(ContractDto contract, boolean admin) {
-        logger.info("Unblocking contract"+contract.getPhoneNumberInt()+" by admin "+admin);
+        logger.info("Unblocking contract" + contract.getPhoneNumberInt() + " by admin " + admin);
         Contract tmp = contractDao.getOne(contract.getPhoneNumberInt());
         if (tmp.isAgentBlock()) {
             if (admin) {
@@ -251,8 +221,8 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public Set<OptionDto> getParentsForExistingContract(ContractDto contract) {
-        logger.info("Getting parents for existing contracts "+contract.getPhoneNumberInt());
-        Set<OptionDto> existing = contract.getOptions();
+        logger.info("Getting parents for existing contracts " + contract.getPhoneNumberInt());
+       Set<OptionDto> existing = contract.getOptions();
         Set<OptionDto> parents = getOptionsParents(contract);
         for (OptionDto o : existing) {
             if (o.getParent() == null) {
@@ -265,7 +235,7 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public Set<OptionDto> getChildrenForExistingContract(ContractDto contract) {
-        logger.info("Getting children for existing contracts "+contract.getPhoneNumberInt());
+        logger.info("Getting children for existing contracts " + contract.getPhoneNumberInt());
         Set<OptionDto> existing = contract.getOptions();
         Set<OptionDto> children = getOptionsChildren(contract);
         for (OptionDto o : existing) {
@@ -318,9 +288,36 @@ public class ContractServiceImpl implements ContractService {
     }
 
     @Override
-    public boolean sendPdf(Boolean newClient, ContractDto contract){
+    @Transactional
+    public void update(ContractDto contractDto) {
+        logger.info("Updating contract " + contractDto.getPhoneNumberInt());
+        Contract contract = contractDao.getOne(contractDto.getPhoneNumberInt());
+        Integer tariffId = contractDto.getTariff().getId();
+        if (contract.getTariff().getId() != tariffId) {
+            logger.info("Updating tariff to " + tariffId);
+            contract.setOptions(null);
+            Tariff t = tariffDao.getOne(tariffId);
+            contract.setTariff(t);
+        } else {
+            logger.info("Updating options");
+            contract.setOptions(new HashSet<>());
+            if (!contractDto.getOptions().isEmpty()) {
+                for (OptionDto o : contractDto.getOptions()
+                ) {
+                    Option tmp2 = optionDao.getOne(o.getId());
+                    contract.addOption(tmp2);
+                }
+            }
+        }
+        contract.setPrice(0.0);
+        contract.setPrice(contractDto.getPrice());
+    }
+
+
+    @Override
+    public boolean sendPdf(Boolean newClient, ContractDto contract) {
         try {
-            mailSender.sendMessageWithAttachment(newClient,  contract);
+            mailSender.sendMessageWithAttachment(newClient, contract);
         } catch (MessagingException e) {
             logger.info("Exception", e);
             return false;
