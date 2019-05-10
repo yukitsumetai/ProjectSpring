@@ -6,9 +6,9 @@ public interface ClientService {
 
     void add(ClientDto client);
     Boolean checkExisting(String email, Integer passport);
-    ClientDto getOne(String number);//get by phone number
-    ClientDto getOne(Integer number);//get by ClientId
-    ClientDto getOne(Long id);
+    ClientDto getClient(String number);//get by phone number
+    ClientDto getClient(Integer number);//get by ClientId
+    ClientDto getClient(Long id);
     Page<ClientDto> getPage(Integer size, Integer page);
     ClientDto performOcr(String image, String id);
 }

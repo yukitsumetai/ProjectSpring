@@ -2,7 +2,7 @@ package com.telekom.dao.impl;
 
 
 
-import com.telekom.dao.api.ClientDAO;
+import com.telekom.dao.api.ClientDao;
 import com.telekom.model.entity.Client;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -14,7 +14,7 @@ import java.util.List;
 
 @Component
 @Repository
-public final class ClientDaoImpl extends PaginationDaoImpl implements ClientDAO {
+public final class ClientDaoImpl extends PaginationDaoImpl implements ClientDao {
 
     @PersistenceContext(unitName = "entityManagerFactory")
     private EntityManager entityManager;

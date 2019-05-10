@@ -1,6 +1,6 @@
 package com.telekom.service.impl;
 
-import com.telekom.dao.api.ClientDAO;
+import com.telekom.dao.api.ClientDao;
 import com.telekom.model.entity.Client;
 
 import com.telekom.model.dto.ClientDto;
@@ -19,8 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -31,7 +29,7 @@ import java.util.Properties;
 public class ClientServiceImpl extends PaginationImpl<ClientDto> implements ClientService {
 
     @Autowired
-    private ClientDAO clientDao;
+    private ClientDao clientDao;
     @Autowired
     private ClientMapper clientMapper;
     @Autowired
@@ -44,9 +42,12 @@ public class ClientServiceImpl extends PaginationImpl<ClientDto> implements Clie
     public Page<ClientDto> getPage(Integer size, Integer page) {
         logger.info("Getting clients, page " + page);
         List<ClientDto> pageGroups = new ArrayList<>();
-        for (Client c : clientDao.getPages(size, page)
-        ) {
-            pageGroups.add(clientMapper.entityToDto(c));
+        List<Client> clients=clientDao.getPages(size, page);
+        if(clients!=null) {
+            for (Client c : clientDao.getPages(size, page)
+            ) {
+                pageGroups.add(clientMapper.entityToDto(c));
+            }
         }
         Long total = clientDao.getPagesCount();
         return getPageDraft(pageGroups, total, page, size);
@@ -69,27 +70,22 @@ public class ClientServiceImpl extends PaginationImpl<ClientDto> implements Clie
     }
 
     @Transactional
-    public ClientDto getOne(String number) {
+    public ClientDto getClient(String number) {
         logger.info("Searching for client by phone number " + number);
         BigInteger number2 = new BigInteger(number);
-        ClientDto tmp;
-        try {
-            tmp = clientMapper.entityToDto(clientDao.getOne(number2));
-        } catch (NullPointerException e) {
-            tmp = null;
-        }
+        ClientDto tmp = clientMapper.entityToDto(clientDao.getOne(number2));
         return tmp;
     }
 
 
     @Transactional
-    public ClientDto getOne(Long id) {
+    public ClientDto getClient(Long id) {
         logger.info("Searching for client by user id" + id);
         return clientMapper.entityToDto(clientDao.getOne(id));
     }
 
 
-    public ClientDto getOne(Integer id) {
+    public ClientDto getClient(Integer id) {
         logger.info("Searching for client by id " + id);
         Client tmp = clientDao.getOne(id);
         return clientMapper.entityToDtoWithoutContract(tmp);

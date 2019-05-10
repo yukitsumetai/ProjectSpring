@@ -39,7 +39,7 @@ public class AuthController {
             logger.info("Admin" +id+" is logged");
             return "redirect:/tariffs";
         }
-        request.getSession().setAttribute("client", clientService.getOne(id));
+        request.getSession().setAttribute("client", clientService.getClient(id));
         logger.info("Client" +id+" is logged");
         return "welcome";
     }

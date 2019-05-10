@@ -18,9 +18,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
-import java.io.OutputStream;
-import java.nio.charset.Charset;
-import java.util.Map;
 import java.util.Properties;
 
 @Configuration
@@ -43,8 +40,6 @@ public class PersistenceConfig {
     @Bean(initMethod = "migrate")
     Flyway flyway(DataSource dataSource) {
         Flyway flyway = new Flyway();
-        //flyway.setBaselineOnMigrate(true);
-        //flyway.setLocations("filesystem:/path/to/migrations/");
         flyway.setDataSource(dataSource);
         return flyway;
     }
@@ -69,7 +64,7 @@ public class PersistenceConfig {
     @DependsOn({"flyway"})
     public EntityManagerFactory entityManagerFactory(DataSource dataSource) {
         HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
-        jpaVendorAdapter.setGenerateDdl(true);
+        jpaVendorAdapter.setGenerateDdl(false);
         jpaVendorAdapter.setShowSql(true);
 
         LocalContainerEntityManagerFactoryBean entityManagerFactory =

@@ -23,6 +23,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/java/com/telekom/config/PersistenceConfig.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/SpringLineMain/src/main/java/com/telekom/controller/ContractController.java">
           <value>
             <set />
@@ -128,6 +133,21 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/resources/db/migration/V 1.3_Init_contract_data.sql">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/resources/db/migration/V1.1__Init_schema.sql">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/resources/db/migration/V1.2__Init_data.sql">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/SpringLineMain/src/main/resources/persistence.properties">
           <value>
             <set />
@@ -158,6 +178,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/test/java/com/telekom/config/ClientServiceConfig.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/SpringLineMain/src/test/java/com/telekom/config/OptionGroupServiceConfig.java">
           <value>
             <set />
@@ -174,6 +199,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/SpringLineMain/src/test/java/com/telekom/config/TariffServiceConfig.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/test/java/com/telekom/service/ClientServiceTest.java">
           <value>
             <set />
           </value>

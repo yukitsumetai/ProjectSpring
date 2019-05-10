@@ -3,7 +3,6 @@ package com.telekom.controller;
 import com.telekom.model.dto.*;
 import com.telekom.service.api.ClientService;
 import com.telekom.service.api.ContractService;
-import com.telekom.service.api.TariffService;
 import com.telekom.service.impl.ImageRecognitionImpl;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,7 +80,7 @@ public class ContractController {
     public String newContractOptionAdd(Model model, ContractDto contract, @RequestParam(name = "clientID2") Integer id, @RequestParam String phoneNumber) {
         logger.info("Existing client, adding phone number" + phoneNumber);
         model.addAttribute("table", "add");
-        contract.setClient(clientService.getOne(id));
+        contract.setClient(clientService.getClient(id));
         contract.setPhoneNumber(phoneNumber);
         return "contract";
     }

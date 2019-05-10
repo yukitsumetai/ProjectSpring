@@ -85,7 +85,7 @@ public class SharedRestController {
 
     @GetMapping(value = "/clients/search")
     public ClientDto pageClient(@RequestParam String phoneNumber) {
-        return clientService.getOne(phoneNumber);
+        return clientService.getClient(phoneNumber);
     }
 
 

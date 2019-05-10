@@ -5,7 +5,7 @@ import com.telekom.model.entity.Client;
 import java.math.BigInteger;
 import java.util.List;
 
-public interface ClientDAO  extends PaginationDao {
+public interface ClientDao extends PaginationDao {
     //List<Client> getAll();
     void add(Client client);
     Client getOne(BigInteger n);

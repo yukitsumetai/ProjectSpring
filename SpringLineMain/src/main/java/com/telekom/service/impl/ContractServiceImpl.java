@@ -43,7 +43,7 @@ public class ContractServiceImpl implements ContractService {
     @Autowired
     private PhoneNumberDao phoneNumberDao;
     @Autowired
-    private ClientDAO clientDao;
+    private ClientDao clientDao;
     @Autowired
     PdfCreatorImpl pdfCreator;
     @Autowired
