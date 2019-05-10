@@ -40,8 +40,8 @@ public class PdfCreatorImpl implements PdfCreator {
         String pdfName = null;
         try {
             logger.info("Creating pdf");
-            Properties props = System.getProperties();
-            pdfName = props.getProperty("jboss.server.deploy.dir")+"\\invoices\\"+ contract.getPhoneNumber() + ".pdf";
+            //Properties props = System.getProperties();
+            pdfName = ".\\..\\standalone\\tmp\\invoices\\"+ contract.getPhoneNumber() + ".pdf";
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(pdfName));
             initializeFonts();
 
