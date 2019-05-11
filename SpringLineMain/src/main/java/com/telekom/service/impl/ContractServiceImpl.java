@@ -224,6 +224,7 @@ public class ContractServiceImpl implements ContractService {
         logger.info("Getting parents for existing contracts " + contract.getPhoneNumberInt());
        Set<OptionDto> existing = contract.getOptions();
         Set<OptionDto> parents = getOptionsParents(contract);
+        if (parents==null) parents = new HashSet<>();
         for (OptionDto o : existing) {
             if (o.getParent() == null) {
                 setExisting(parents, o);
@@ -237,7 +238,9 @@ public class ContractServiceImpl implements ContractService {
     public Set<OptionDto> getChildrenForExistingContract(ContractDto contract) {
         logger.info("Getting children for existing contracts " + contract.getPhoneNumberInt());
         Set<OptionDto> existing = contract.getOptions();
-        Set<OptionDto> children = getOptionsChildren(contract);
+        Set<OptionDto> children = new HashSet<>();
+        if (children==null) children = new HashSet<>();
+        children.addAll(getOptionsChildren(contract));
         for (OptionDto o : existing) {
             if (o.getParent() != null) {
                 setExisting(children, o);
@@ -295,7 +298,7 @@ public class ContractServiceImpl implements ContractService {
         Integer tariffId = contractDto.getTariff().getId();
         if (contract.getTariff().getId() != tariffId) {
             logger.info("Updating tariff to " + tariffId);
-            contract.setOptions(null);
+            contract.setOptions(new HashSet<>());
             Tariff t = tariffDao.getOne(tariffId);
             contract.setTariff(t);
         } else {
@@ -319,7 +322,7 @@ public class ContractServiceImpl implements ContractService {
         try {
             mailSender.sendMessageWithAttachment(newClient, contract);
         } catch (MessagingException e) {
-            logger.info("Exception", e);
+            logger.error("Error ", e);
             return false;
         }
         return true;

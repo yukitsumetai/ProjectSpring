@@ -1,3 +1,4 @@
+package com.telekom.service;
 
 import com.telekom.config.ContractServiceConfig;
 import com.telekom.dao.api.*;
@@ -19,16 +20,16 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
+import javax.mail.MessagingException;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertIterableEquals;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static com.telekom.model.entity.Role.ROLE_USER;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 
 @ExtendWith(SpringExtension.class)
@@ -108,7 +109,6 @@ public class ContractServiceTest {
         option.setPriceMonthly(2);
         option.setPriceOneTime(5);
         option.setCompatibleTariffs(new HashSet<>());
-        Set children = new HashSet();
 
 
         option5 = new Option();
@@ -116,8 +116,7 @@ public class ContractServiceTest {
         option5.setValid(false);
         option5.setParent(option);
         option5.setCompatibleTariffs(new HashSet<>());
-        children.add(option5);
-        option.setChildren(children);
+
 
         optionDto = new OptionDto();
         optionDto.setId(0);
@@ -125,7 +124,6 @@ public class ContractServiceTest {
         optionDto.setPriceOneTime(5);
         optionDto.setIsValid(true);
         optionDto.setCompatibleTariffs(new HashSet<>());
-        Set childrenDto = new HashSet();
 
 
         option5Dto = new OptionDto();
@@ -133,9 +131,6 @@ public class ContractServiceTest {
         option5Dto.setIsValid(false);
         option5Dto.setParent(optionDto);
         option5Dto.setCompatibleTariffs(new HashSet<>());
-
-        childrenDto.add(option5Dto);
-
 
         options = new ArrayList<>();
         options.add(option);
@@ -146,7 +141,6 @@ public class ContractServiceTest {
         optionsDto.add(optionDto);
         options5Dto = new ArrayList<>();
         options5Dto.add(option5Dto);
-        optionDto.setChildren(childrenDto);
 
         og = new OptionGroup();
         og.setId(1);
@@ -158,7 +152,6 @@ public class ContractServiceTest {
         ogs.add(og);
         ogsDto = new ArrayList<>();
         ogsDto.add(ogDto);
-
 
         contract = new Contract();
         contractDto = new ContractDto();
@@ -198,10 +191,7 @@ public class ContractServiceTest {
     public void setTariffReturnsFalse() {
         tariffDto.setIsValid(false);
         tariffDto.setPrice(3.33);
-
         assertEquals(false, contractService.setTariff(contractDto, 0));
-        assertEquals(null, contractDto.getTariff());
-        assertEquals(0.00, contractDto.getPrice());
     }
 
     @Test
@@ -322,6 +312,8 @@ public class ContractServiceTest {
     public void unblockUnblocksByUser() {
         contractDto.setBlocked(true);
         contractDto.setAgentBlock(false);
+        contract.setBlocked(true);
+        contract.setAgentBlock(false);
         contractService.unblock(contractDto, false);
         assertEquals(false, contract.isBlocked());
         assertEquals(false, contract.isAgentBlock());
@@ -331,6 +323,8 @@ public class ContractServiceTest {
     public void unblockNoUnblocksByUser() {
         contractDto.setBlocked(true);
         contractDto.setAgentBlock(true);
+        contract.setBlocked(true);
+        contract.setAgentBlock(true);
         contractService.unblock(contractDto, false);
         assertEquals(true, contract.isBlocked());
         assertEquals(true, contract.isAgentBlock());
@@ -340,6 +334,8 @@ public class ContractServiceTest {
     public void unblockUnblocksByAdmin() {
         contractDto.setBlocked(true);
         contractDto.setAgentBlock(false);
+        contract.setBlocked(true);
+        contract.setAgentBlock(false);
         contractService.unblock(contractDto, true);
         assertEquals(false, contract.isBlocked());
         assertEquals(false, contract.isAgentBlock());
@@ -349,6 +345,8 @@ public class ContractServiceTest {
     public void unblockUnblocksByAdminLockedByAdmin() {
         contractDto.setBlocked(true);
         contractDto.setAgentBlock(true);
+        contract.setBlocked(true);
+        contract.setAgentBlock(true);
         contractService.unblock(contractDto, true);
         assertEquals(false, contract.isBlocked());
         assertEquals(false, contract.isAgentBlock());
@@ -375,7 +373,9 @@ public class ContractServiceTest {
     public void getParentsForExistingContractReturnsParentsExistingNotInList() {
         contractDto.addOption(option5Dto);
         option5Dto.setPriceOneTime(7);
-        when(contractService.getOptionsParents(contractDto)).thenReturn(null);
+        Set oSet = new HashSet();
+        oSet.add(optionDto);
+      when(contractService.getOptionsParents(contractDto)).thenReturn(null);
 
         Set<OptionDto> tmp = contractService.getParentsForExistingContract(contractDto);
         for (OptionDto o : tmp
@@ -466,8 +466,8 @@ public class ContractServiceTest {
         contracts.add(contract);
 
         contractService.add(contractDto);
-        verify(phoneNumberDao).deleteNumber(new BigInteger("0"));
-        verify(contractDao).add(contract);
+        verify(phoneNumberDao, atLeastOnce()).deleteNumber(new BigInteger("0"));
+        verify(contractDao, atLeastOnce()).add(contract);
         assertEquals(client, contract.getClient());
         assertIterableEquals(contracts, user.getContract());
     }
@@ -478,17 +478,20 @@ public class ContractServiceTest {
         ClientDto clientDto = new ClientDto();
         clientDto.setPassword("test");
         Client client = new Client();
+        contractDto.setClient(clientDto);
         when(clientDao.getOne(0)).thenReturn(null);
         when(clientMapper.dtoToEntity(clientDto)).thenReturn(client);
         List contracts = new ArrayList();
         contracts.add(contract);
 
         contractService.add(contractDto);
-        when(passwordEncoder.encode("test")).thenReturn("test2");
+        when(passwordEncoder.encode(contractDto.getClient().getPassword())).thenReturn("test2");
         verify(phoneNumberDao).deleteNumber(new BigInteger("0"));
         verify(clientDao).add(client);
         verify(contractDao).add(contract);
         assertEquals(client, contract.getClient());
+        assertIterableEquals(contracts, client.getUser().getContract());
+        assertEquals(ROLE_USER, client.getUser().getRole());
         assertEquals("test2", client.getUser().getPassword());
     }
 
@@ -546,8 +549,18 @@ public class ContractServiceTest {
     }
 
     @Test
-    public void pdf() {
-        assertEquals(true, false);
+    public void pdfReturnsTrue() throws MessagingException {
+        assertEquals(true,  contractService.sendPdf(true, contractDto));
+        //doThrow().when();
+        verify(mailSender).sendMessageWithAttachment(true, contractDto);
+
+    }
+
+    @Test
+    public void pdfReturnsFalse() throws MessagingException {
+        doThrow(new MessagingException()).when(mailSender).sendMessageWithAttachment(true, contractDto);
+        assertEquals(false,  contractService.sendPdf(true, contractDto));
+        verify(mailSender).sendMessageWithAttachment(true, contractDto);
 
     }
 /*
