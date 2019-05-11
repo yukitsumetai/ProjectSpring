@@ -2,7 +2,6 @@ package com.telekom;
 
 import javax.inject.Named;
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 @Named
 public class TariffPromoted implements Serializable {

@@ -52,7 +52,6 @@ public class OptionGroupServiceImpl extends SharedFunctions<OptionGroupDto> impl
         return listEntityToDto(optionGroups);
     }
 
-    @Override
     @Transactional
     public List<OptionGroupDto> getAllValid() {
         List<OptionGroup> optionGroups = optionGroupDao.getAllValid();
@@ -111,7 +110,6 @@ public class OptionGroupServiceImpl extends SharedFunctions<OptionGroupDto> impl
         }
     }
 
-    @Override
     public List<OptionGroupDto> getByName(String name) {
 
         List<OptionGroup> op = optionGroupDao.findByName(name);

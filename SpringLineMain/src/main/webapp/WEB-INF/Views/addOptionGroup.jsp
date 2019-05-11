@@ -95,9 +95,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('#options').change(function () {
-            if ($(this).is(":checked")) {
-                this.value = true;
-            } else this.value = false;
+            this.value = !!$(this).is(":checked");
         });
     });
 </script>

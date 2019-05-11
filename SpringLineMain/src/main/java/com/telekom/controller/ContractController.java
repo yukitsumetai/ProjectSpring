@@ -26,10 +26,10 @@ public class ContractController {
     private ContractService contractService;
 
     @Autowired
-    Logger logger;
+    private Logger logger;
 
     @Autowired
-    ImageRecognitionImpl imageRecognition;
+    private ImageRecognitionImpl imageRecognition;
 
     @GetMapping("/tariffs")
     public String start(Model model) {

@@ -1,14 +1,11 @@
 package com.telekom.service;
 
 
-import com.telekom.config.OptionServiceConfig;
 import com.telekom.config.PhoneNumberServiceConfig;
 import com.telekom.dao.api.PhoneNumberDao;
 import com.telekom.model.dto.Page;
 import com.telekom.model.entity.PhoneNumber;
-import com.telekom.service.impl.OptionGroupServiceImpl;
 import com.telekom.service.impl.PhoneNumberServiceImpl;
-import org.apache.log4j.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,13 +18,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = PhoneNumberServiceConfig.class, loader = AnnotationConfigContextLoader.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-
-public class PhoneNumberServiceTest {
+class PhoneNumberServiceTest {
 
     @Autowired
     private PhoneNumberServiceImpl phoneNumberService;
@@ -41,7 +38,7 @@ public class PhoneNumberServiceTest {
     private static PhoneNumber phoneNumber;
 
     @Test
-    public void getPageReturnsPhoneNumbersPaged() {
+    void getPageReturnsPhoneNumbersPaged() {
         List<PhoneNumber> numbers=new ArrayList<>();
         phoneNumber = new PhoneNumber();
         numbers.add(phoneNumber);
@@ -58,10 +55,10 @@ public class PhoneNumberServiceTest {
     }
 
     @Test
-    public void getPageReturnsEmptyWhenNotFound() {
+    void getPageReturnsEmptyWhenNotFound() {
         when(phoneNumberDao.getPages(1, 7)).thenReturn(null);
         page = phoneNumberService.getPage(1, 7);
-        assertEquals(null, page.getData());
+        assertNull(page.getData());
         assertEquals(7, page.getCurrentPage());
     }
 

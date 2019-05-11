@@ -1,7 +1,7 @@
 function CheckClient() {
     var email = document.getElementById('email').value;
     var passport = document.getElementById('passport').value;
-    if(email!="" && passport.length==8) {
+    if(email!="" && passport.length==9) {
         $.ajax({
             url: "/springLine/newContract/client/check",
             data: {
@@ -47,7 +47,7 @@ function addRowClient(val, table) {
             c2 = (typeof (c) !== 'undefined' ? c : '');
             icon = "<a href='/existingContract/"+c2+"' class='edit' title='Edit'><i class='material-icons'>&#xE254;</i></a>";
             contracts.push(c2+icon + "<br>");
-        })
+        });
         var icon;
         if (table != 1) {
             icon = "<input type='checkbox' class='chk myChk' value='" + val.id + "' name='clientID'>"
@@ -104,6 +104,7 @@ function closeCamera(){
     document.getElementById('cameraButtons').innerHTML =
         '<button class="btn btn-success" onclick="configure()">Use Camera</button>';
     Webcam.reset();
+    Webcam
     document.getElementById('my_camera').style.display = "none";
 }
 
@@ -125,11 +126,11 @@ function saveSnap(){
             alert("Something went wrong. Please try again")
         },
         success :function (data) {
-            if (data!=""){
-               if(data.name!="") document.getElementById("name").value = data.name;
-                if(data.surname!="") document.getElementById("surname").value = data.surname;
-                if(data.passport!="") document.getElementById("passport").value = data.passport;
-                if(data.birthday!="") document.getElementById("birthday").value = data.birthday;
+            if (data!=null){
+               if(data.name!=null) {var nameField=document.getElementById("name"); nameField.value = data.name; requiredField(nameField);}
+                if(data.surname!=null) {var surnameField=document.getElementById("surname");surnameField.value = data.surname; requiredField(surnameField);}
+                if(data.passport!=null) {var passportField=document.getElementById("passport");passportField.value = data.passport; requiredField(passportField);}
+                if(data.birthday!=null) {var birthdayField=document.getElementById("birthday");birthdayField.value = data.birthday; requiredField(birthdayField);}
             }
             else  alert("Something went wrong. Please try again");
         }

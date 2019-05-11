@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="elements/TopNavBar.jsp" %>
-<%@ include file="elements/SideBar.jsp" %>
+
 <c:set var="urlPath" value="${requestScope['javax.servlet.forward.request_uri']}"/>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
@@ -23,8 +23,11 @@
     <script src="${contextPath}/resource/js/pagination.js"></script>
     <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
     <title>Client details</title>
+    <link href="${contextPath}/resource/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body>
+<%@ include file="elements/SideBar.jsp" %>
 <div class="container-fluid">
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
 
@@ -45,19 +48,19 @@
             <c:choose>
                 <c:when test="${table=='add'}">
                     <label class="control-label">Send bills by email: </label>
-                    <input type="checkbox" class="chk" name="email" id="email"/>
+                    <row>
+            <form class="form-group" action="${urlPath}/true" method="post">
+                <input type="checkbox" class="chk" name="email" id="email"/>
                     <br>
-                    <div class="btn-group">
                         <button class="btn btn-success" onclick="window.print()">Print <i class="fas fa-print"></i>
                         </button>
-                        <form class="form-group" action="${urlPath}/true" method="post">
+
                             <button type="submit" class="btn btn-success">Confirm <i class="far fa-save"></i></button>
                         </form>
                         <form class="form-group" action="${contextPath}/welcome">
                             <button type="submit" class="btn btn-danger">Cancel <i class="fas fa-times"></i></button>
                         </form>
-
-                    </div>
+                    </row>
                 </c:when>
                 <c:otherwise>
                     <div class="row">

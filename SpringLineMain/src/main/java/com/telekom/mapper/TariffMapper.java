@@ -57,16 +57,4 @@ public class TariffMapper {
     }
 
 
-
-    public List<TariffDto> listEntityToDto(List<Tariff> tariffs) {
-        List<TariffDto> tariffsDTO = new ArrayList<>();
-        for (Tariff t : tariffs) {
-
-            tariffsDTO.add(entityToDto(t));
-        }
-        return tariffsDTO;
-    }
-
-
-
 }

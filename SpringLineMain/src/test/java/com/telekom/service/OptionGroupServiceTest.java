@@ -59,7 +59,7 @@ class OptionGroupServiceTest {
     private static List<OptionGroupDto> ogsDto;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         option = new Option();
         option.setId(0);
         option.setValid(true);
@@ -124,21 +124,21 @@ class OptionGroupServiceTest {
     }
 
     @Test
-    public void getAllReturnsAllOptionGroups() {
+    void getAllReturnsAllOptionGroups() {
         when(optionGroupDao.getAll()).thenReturn(ogs);
         assertEquals(ogsDto, optionGroupService.getAll());
     }
 
     @Test
-    public void getAllValidReturnsAllValidOptionGroups() {
+    void getAllValidReturnsAllValidOptionGroups() {
         when(optionGroupDao.getAllValid()).thenReturn(ogs);
         assertEquals(ogsDto, optionGroupService.getAllValid());
-        assertEquals(true, optionGroupService.getAllValid().get(0).isIsValid());
+        assertTrue(optionGroupService.getAllValid().get(0).isIsValid());
 
         }
 
     @Test
-    public void getPageReturnsOptionGroupsPaged() {
+    void getPageReturnsOptionGroupsPaged() {
         when(optionGroupDao.getPages(1, 1)).thenReturn(ogs);
         when(optionGroupDao.getPages(1, 7)).thenReturn(null);
         when(optionGroupDao.getPagesCount()).thenReturn((long)6);
@@ -151,82 +151,82 @@ class OptionGroupServiceTest {
 
 
         page = optionGroupService.getPage(1, 7);
-        assertEquals(true, page.getData().isEmpty());
+        assertTrue(page.getData().isEmpty());
         assertEquals(7, page.getCurrentPage());
     }
 
     @Test
-    public void getOptionGroupReturnsOptionGroup() {
+    void getOptionGroupReturnsOptionGroup() {
         when(optionGroupDao.getOne(5)).thenReturn(og);
         when(optionGroupDao.getOne(7)).thenReturn(null);
 
         assertEquals(ogDto, optionGroupService.getOptionGroup(1));
-        assertEquals(null, optionGroupService.getOptionGroup(7));
+        assertNull(optionGroupService.getOptionGroup(7));
     }
 
 
     @Test
-    public void addOptionsAddsOptionsIfExist() {
+    void addOptionsAddsOptionsIfExist() {
         ogDto.addOption(optionDto);
         optionGroupService.addOptions(ogDto, og);
         assertEquals(og, option.getGroup());
     }
 
     @Test
-    public void findByTariffFindsByTariff() {
+    void findByTariffFindsByTariff() {
         when(optionGroupDao.findByTariff(0)).thenReturn(ogs);
         optionGroupService.findByTariff(0);
         assertIterableEquals(ogsDto,   optionGroupService.findByTariff(0));
     }
 
     @Test
-    public void deleteOptionsRemovesOptionsFromOG() {
+    void deleteOptionsRemovesOptionsFromOG() {
         og.addOption(option);
         option.setGroup(og);
         optionGroupService.deleteOptions(og);
-        assertEquals(null, option.getGroup());
+        assertNull(option.getGroup());
     }
 
 
     @Test
-    public void getByNameReturnsOptionGroup() {
+    void getByNameReturnsOptionGroup() {
         when(optionGroupDao.findByName("test")).thenReturn(ogs);
         assertIterableEquals(ogsDto, optionGroupService.getByName("test"));
     }
 
     @Test
-    public void getByNameReturnsEmptyWhenFoundNothing() {
+    void getByNameReturnsEmptyWhenFoundNothing() {
         when(optionGroupDao.findByName("test2")).thenReturn(null);
-        assertEquals(true, optionGroupService.getByName("test2").isEmpty());
+        assertTrue(optionGroupService.getByName("test2").isEmpty());
     }
 
     @Test
-    public void addAddsOG() {
+    void addAddsOG() {
         optionGroupService.add(ogDto);
       verify(optionGroupDao).add(og);
     }
 
     @Test
-    public void editOptionGroupEditsOg() {
+    void editOptionGroupEditsOg() {
         ogDto.setIsValid(true);
         ogDto.setDescription("test");
         option5.setGroup(og);
         og.addOption(option5);
         ogDto.addOption(optionDto);
         optionGroupService.editOptionGroup(ogDto);
-        assertEquals(true, og.isValid());
+        assertTrue(og.isValid());
         assertEquals(og, option.getGroup());
         assertEquals("test", og.getDescription());
         assertNotEquals(og, option5.getGroup());
     }
 
     @Test
-    public void deleteOptionGroupRemovesOptions() {
+    void deleteOptionGroupRemovesOptions() {
         option5.setGroup(og);
         og.addOption(option5);
         og.setValid(true);
         optionGroupService.deleteOptionGroup(1);
-        assertEquals(false, og.isValid());
-        assertEquals(null, option5.getGroup());
+        assertFalse(og.isValid());
+        assertNull(option5.getGroup());
     }
 }

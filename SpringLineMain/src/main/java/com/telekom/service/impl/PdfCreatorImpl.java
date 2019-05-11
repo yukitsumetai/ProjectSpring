@@ -8,13 +8,11 @@ import com.telekom.model.dto.ContractDto;
 import com.telekom.model.dto.OptionDto;
 import com.telekom.model.dto.TariffDto;
 import com.telekom.service.api.PdfCreator;
-import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.davidmoten.text.utils.WordWrap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -22,7 +20,6 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Properties;
 import java.util.Set;
 
 @Service
@@ -37,11 +34,12 @@ public class PdfCreatorImpl implements PdfCreator {
     @Override
     public String createPdf(ContractDto contract) {
         Document document = new Document();
-        String pdfName = null;
+        String pdfName = ".\\..\\standalone\\tmp\\"+ contract.getPhoneNumber() + ".pdf";
+        logger.info("Creating pdf " +pdfName);
         try {
-            logger.info("Creating pdf");
+
             //Properties props = System.getProperties();
-            pdfName = ".\\..\\standalone\\tmp\\invoices\\"+ contract.getPhoneNumber() + ".pdf";
+
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(pdfName));
             initializeFonts();
 
@@ -63,9 +61,9 @@ public class PdfCreatorImpl implements PdfCreator {
             int i = 1;
             boolean beginPage = false;
             generateLayout(document, cb);
-            generateHeader(document, cb, name, phoneNumber);
+            generateHeader(cb, name, phoneNumber);
             int y = 615;
-            generateSubheader(document, cb, y, "TARIFF");
+            generateSubheader(cb, y, "TARIFF");
             y = y - 15;
 
             String tariffName = WordWrap.from(tariff.getName())
@@ -79,7 +77,7 @@ public class PdfCreatorImpl implements PdfCreator {
                     .wrap();
 
 
-            generateDetail(document, cb, i, y, tariffName, tariffDescription, tariff.getPrice(), 0);
+            generateDetail(cb, i, y, tariffName, tariffDescription, tariff.getPrice(), 0);
             y = cellLength(tariffName, tariffDescription, y);
             if (y < 50) {
                 printPageNumber(cb);
@@ -88,7 +86,7 @@ public class PdfCreatorImpl implements PdfCreator {
             }
 
             if (options.size() > 0) {
-                generateSubheader(document, cb, y, "OPTIONS");
+                generateSubheader(cb, y, "OPTIONS");
                 y = y - 15;
             }
             for (OptionDto o : options) {
@@ -96,7 +94,7 @@ public class PdfCreatorImpl implements PdfCreator {
                 if (beginPage) {
                     beginPage = false;
                     generateLayout(document, cb);
-                    generateHeader(document, cb, name, phoneNumber);
+                    generateHeader(cb, name, phoneNumber);
                     y = 615;
                 }
                 String optionName = WordWrap.from(o.getName())
@@ -109,7 +107,7 @@ public class PdfCreatorImpl implements PdfCreator {
                         .insertHyphens(false) // true is the default
                         .wrap();
 
-                generateDetail(document, cb, i, y, optionName, optionDescription, o.getPriceMonthly(), o.getPriceOneTime());
+                generateDetail(cb, i, y, optionName, optionDescription, o.getPriceMonthly(), o.getPriceOneTime());
                 y = cellLength(optionName, optionDescription, y);
                 if (y < 50) {
                     printPageNumber(cb);
@@ -118,14 +116,14 @@ public class PdfCreatorImpl implements PdfCreator {
                 }
             }
 
-            generateTotal(document, cb, y, "TOTAL", contract.getPrice(), contract.getPriceOneTime());
+            generateTotal(cb, y, contract.getPrice(), contract.getPriceOneTime());
 
             document.close();
             writer.close();
         } catch (FileNotFoundException e) {
-            logger.info("File not found");
+            logger.error("File not found "+e.getMessage(),e);
         } catch (DocumentException e) {
-            logger.info("Document exception");
+            logger.error("Document exception "+e.getMessage(),e);
         }
         return pdfName;
     }
@@ -134,9 +132,7 @@ public class PdfCreatorImpl implements PdfCreator {
         try {
             bfBold = BaseFont.createFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
             bf = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
-        } catch (DocumentException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (DocumentException | IOException e) {
             e.printStackTrace();
         }
     }
@@ -172,14 +168,12 @@ public class PdfCreatorImpl implements PdfCreator {
             companyLogo.scalePercent(25);
             doc.add(companyLogo);
 
-        } catch (DocumentException dex) {
+        } catch (Exception dex) {
             logger.info("Exception", dex);
-        } catch (Exception ex) {
-            logger.info("Exception", ex);
         }
     }
 
-    private void generateHeader(Document doc, PdfContentByte cb, String name, String phoneNumber) {
+    private void generateHeader(PdfContentByte cb, String name, String phoneNumber) {
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         Date today = new Date();
         String date = formatter.format(today);
@@ -197,18 +191,18 @@ public class PdfCreatorImpl implements PdfCreator {
         }
     }
 
-    private void generateDetail(Document doc, PdfContentByte cb, int index, int y, String name, String description, double priceMonthly, double priceOneTime) {
+    private void generateDetail(PdfContentByte cb, int index, int y, String name, String description, double priceMonthly, double priceOneTime) {
         DecimalFormat df = new DecimalFormat("0.00");
         try {
             createContent(cb, 22, y, String.valueOf(index), PdfContentByte.ALIGN_LEFT);
-            String nameArray[] = name.split("\n");
+            String[] nameArray = name.split("\n");
             int z = y;
             for (String s : nameArray) {
                 createContent(cb, 52, z, s, PdfContentByte.ALIGN_LEFT);
                 z -= 15;
             }
 
-            String descriptionArray[] = description.split("\n");
+            String[] descriptionArray = description.split("\n");
             z = y;
             for (String s : descriptionArray) {
                 createContent(cb, 152, z, s, PdfContentByte.ALIGN_LEFT);
@@ -221,7 +215,7 @@ public class PdfCreatorImpl implements PdfCreator {
         }
     }
 
-    private void generateSubheader(Document doc, PdfContentByte cb, int y, String name) {
+    private void generateSubheader(PdfContentByte cb, int y, String name) {
         try {
             createContent(cb, 52, y, name, PdfContentByte.ALIGN_LEFT);
         } catch (Exception ex) {
@@ -229,10 +223,10 @@ public class PdfCreatorImpl implements PdfCreator {
         }
     }
 
-    private void generateTotal(Document doc, PdfContentByte cb, int y, String name, double priceMonthly, double priceOneTime) {
+    private void generateTotal(PdfContentByte cb, int y, double priceMonthly, double priceOneTime) {
         DecimalFormat df = new DecimalFormat("0.00");
         try {
-            createContent(cb, 52, y, name, PdfContentByte.ALIGN_LEFT);
+            createContent(cb, 52, y, "TOTAL", PdfContentByte.ALIGN_LEFT);
             createContent(cb, 498, y, df.format(priceMonthly), PdfContentByte.ALIGN_RIGHT);
             createContent(cb, 568, y, df.format(priceOneTime), PdfContentByte.ALIGN_RIGHT);
         } catch (Exception ex) {

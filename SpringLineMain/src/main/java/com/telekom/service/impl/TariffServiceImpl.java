@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.*;
-import java.util.List;
 
 
 @Service
@@ -36,7 +35,7 @@ public class TariffServiceImpl extends SharedFunctions<TariffDto> implements Tar
     private Logger logger;
 
 
-   public List<TariffDto> listEntityToDto(List<Tariff> tariffs) {
+   private List<TariffDto> listEntityToDto(List<Tariff> tariffs) {
         List<TariffDto> tariffsDTO = new ArrayList<>();
        if(tariffs==null) return tariffsDTO;
         for (Tariff t : tariffs) {

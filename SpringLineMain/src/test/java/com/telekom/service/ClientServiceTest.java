@@ -2,22 +2,13 @@ package com.telekom.service;
 
 
 import com.telekom.config.ClientServiceConfig;
-import com.telekom.config.OptionGroupServiceConfig;
 import com.telekom.dao.api.ClientDao;
-import com.telekom.dao.api.OptionDao;
-import com.telekom.dao.api.OptionGroupDao;
 import com.telekom.mapper.ClientMapper;
-import com.telekom.mapper.OptionGroupMapper;
 import com.telekom.model.dto.ClientDto;
-import com.telekom.model.dto.OptionDto;
-import com.telekom.model.dto.OptionGroupDto;
 import com.telekom.model.dto.Page;
 import com.telekom.model.entity.Client;
-import com.telekom.model.entity.Option;
-import com.telekom.model.entity.OptionGroup;
 import com.telekom.service.impl.ClientServiceImpl;
 import com.telekom.service.impl.ImageRecognitionImpl;
-import com.telekom.service.impl.OptionGroupServiceImpl;
 import org.apache.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,12 +21,9 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
@@ -68,7 +56,7 @@ class ClientServiceTest {
 
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         client = new Client();
         client.setId(0);
 
@@ -102,7 +90,7 @@ class ClientServiceTest {
     }
 
     @Test
-    public void getPageReturnsClientsPaged() {
+    void getPageReturnsClientsPaged() {
         when(clientDao.getPages(1, 1)).thenReturn(clients);
         when(clientDao.getPages(1, 5)).thenReturn(clients5);
         when(clientDao.getPagesCount()).thenReturn((long)6);
@@ -121,19 +109,19 @@ class ClientServiceTest {
     }
 
     @Test
-    public void getPageReturnsEmptyList() {
+    void getPageReturnsEmptyList() {
 
         when(clientDao.getPages(1, 7)).thenReturn(null);
         when(clientDao.getPagesCount()).thenReturn((long)6);
 
         page = clientService.getPage(1, 7);
         assertEquals(7, page.getCurrentPage());
-        assertEquals(true, page.getData().isEmpty());
+        assertTrue(page.getData().isEmpty());
     }
 
 
     @Test
-    public void checkExistingReturnsTrue() {
+    void checkExistingReturnsTrue() {
         when(clientDao.getOneByEmail("test")).thenReturn(true);
         when(clientDao.getOneByPassport(987654321)).thenReturn(true);
         when(clientDao.getOneByPassport(123456789)).thenReturn(false);
@@ -146,40 +134,40 @@ class ClientServiceTest {
     }
 
     @Test
-    public void checkExistingReturnsFalse() {
+    void checkExistingReturnsFalse() {
         when(clientDao.getOneByPassport(123456789)).thenReturn(false);
         when(clientDao.getOneByEmail("test2")).thenReturn(false);
         assertEquals(false, clientService.checkExisting("test2", 123456789));
     }
 
     @Test
-    public void getClientByUserIdReturnsClient() {
+    void getClientByUserIdReturnsClient() {
         when(clientDao.getOne((long)0)).thenReturn(client);
         when(clientDao.getOne((long)7)).thenReturn(null);
         assertEquals(clientDto, clientService.getClient((long)0));
-        assertEquals(null, clientService.getClient((long)7));
+        assertNull(clientService.getClient((long) 7));
     }
 
     @Test
-    public void getClientByPhoneNumberReturnsClient() {
+    void getClientByPhoneNumberReturnsClient() {
         BigInteger number = new BigInteger("123456789");
         BigInteger number2 = new BigInteger("987654321");
         when(clientDao.getOne(number)).thenReturn(client);
         when(clientDao.getOne(number2)).thenReturn(null);
         assertEquals(clientDto, clientService.getClient("123456789"));
-        assertEquals(null, clientService.getClient("987654321"));
+        assertNull(clientService.getClient("987654321"));
     }
 
     @Test
-    public void getClientByIdReturnsClient() {
+    void getClientByIdReturnsClient() {
         when(clientMapper.entityToDtoWithoutContract(client)).thenReturn(clientDto);
         assertEquals(clientDto, clientService.getClient(0));
-        assertEquals(null, clientService.getClient(7));
+        assertNull(clientService.getClient(7));
     }
 
     @Test
-    public void performOcrPerformsOcr() {
-        assertEquals(null, true);
+    void performOcrPerformsOcr() {
+        assertNull(true);
     }
 
 }

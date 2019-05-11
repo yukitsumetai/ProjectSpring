@@ -35,7 +35,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = ContractServiceConfig.class, loader = AnnotationConfigContextLoader.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ContractServiceTest {
+class ContractServiceTest {
     @Autowired
     private ContractServiceImpl contractService;
     @Autowired
@@ -94,7 +94,7 @@ public class ContractServiceTest {
 
 
     @BeforeEach
-    public void setup() {
+    void setup() {
 
         tariff = new Tariff();
         tariff.setId(0);
@@ -178,24 +178,24 @@ public class ContractServiceTest {
     }
 
     @Test
-    public void setTariffSetsTariff() {
+    void setTariffSetsTariff() {
         tariffDto.setIsValid(true);
 
 
-        assertEquals(true, contractService.setTariff(contractDto, 0));
+        assertTrue(contractService.setTariff(contractDto, 0));
         assertEquals(tariffDto, contractDto.getTariff());
         assertEquals(3.33, contractDto.getPrice());
     }
 
     @Test
-    public void setTariffReturnsFalse() {
+    void setTariffReturnsFalse() {
         tariffDto.setIsValid(false);
         tariffDto.setPrice(3.33);
-        assertEquals(false, contractService.setTariff(contractDto, 0));
+        assertFalse(contractService.setTariff(contractDto, 0));
     }
 
     @Test
-    public void getGroupsReturnsGtoups() {
+    void getGroupsReturnsGtoups() {
         contractDto.setTariff(tariffDto);
         Set ogSet = new HashSet();
         ogSet.add(ogDto);
@@ -204,7 +204,7 @@ public class ContractServiceTest {
     }
 
     @Test
-    public void getOptionParentsReturnsOptionParents() {
+    void getOptionParentsReturnsOptionParents() {
         contractDto.setTariff(tariffDto);
         Set oSet = new HashSet();
         oSet.add(optionDto);
@@ -213,7 +213,7 @@ public class ContractServiceTest {
     }
 
     @Test
-    public void getOptionChildrenReturnsOptionChildren() {
+    void getOptionChildrenReturnsOptionChildren() {
         contractDto.setTariff(tariffDto);
         Set oSet = new HashSet();
         oSet.add(option5Dto);
@@ -222,25 +222,25 @@ public class ContractServiceTest {
     }
 
     @Test
-    public void setOptionsSetsOption() {
+    void setOptionsSetsOption() {
         contractDto.setTariff(tariffDto);
         List<Integer> id = new ArrayList<>();
         id.add(0);
 
-        assertEquals(true, contractService.setOptions(contractDto, id, true));
+        assertTrue(contractService.setOptions(contractDto, id, true));
         assertEquals(5, contractDto.getPriceOneTime());
         assertEquals(5.33, contractDto.getPrice());
         assertIterableEquals(optionsDto, contractDto.getOptions());
     }
 
     @Test
-    public void setOptionsSetsOptionExisting() {
+    void setOptionsSetsOptionExisting() {
         contractDto.setTariff(tariffDto);
         List<Integer> id = new ArrayList<>();
         id.add(0);
         contractDto.addOption(optionDto);
 
-        assertEquals(true, contractService.setOptions(contractDto, id, true));
+        assertTrue(contractService.setOptions(contractDto, id, true));
         assertEquals(0, contractDto.getPriceOneTime());
         assertEquals(5.33, contractDto.getPrice());
         assertIterableEquals(optionsDto, contractDto.getOptions());
@@ -248,32 +248,32 @@ public class ContractServiceTest {
 
 
     @Test
-    public void setOptionsSetsNothing() {
+    void setOptionsSetsNothing() {
         contractDto.setTariff(tariffDto);
         List<Integer> id = new ArrayList<>();
         id.add(7);
 
-        assertEquals(true, contractService.setOptions(contractDto, id, true));
+        assertTrue(contractService.setOptions(contractDto, id, true));
         assertEquals(0, contractDto.getPriceOneTime());
         assertEquals(3.33, contractDto.getPrice());
-        assertEquals(true, contractDto.getOptions().isEmpty());
+        assertTrue(contractDto.getOptions().isEmpty());
     }
 
     @Test
-    public void existingOptionsRemovesOneTimePriceForExisting() {
+    void existingOptionsRemovesOneTimePriceForExisting() {
         contractDto.addOption(optionDto);
         contractService.existingOptionsRemoveOneTimePrice(contractDto, optionDto);
         assertEquals(0, optionDto.getPriceOneTime());
     }
 
     @Test
-    public void existingOptionsNotRemovesOneTimePriceForNew() {
+    void existingOptionsNotRemovesOneTimePriceForNew() {
         contractService.existingOptionsRemoveOneTimePrice(contractDto, optionDto);
         assertEquals(5, optionDto.getPriceOneTime());
     }
 
     @Test
-    public void getTariffsForAddReturnsTariffs() {
+    void getTariffsForAddReturnsTariffs() {
         TariffDto tariff2 = new TariffDto();
         tariff2.setId(2);
         contractDto.setTariff(tariff2);
@@ -289,71 +289,71 @@ public class ContractServiceTest {
     }
 
     @Test
-    public void getOneReturnsContract() {
+    void getOneReturnsContract() {
         assertEquals(contractDto, contractService.getOne("0"));
-        assertEquals(null, contractService.getOne("7"));
+        assertNull(contractService.getOne("7"));
     }
 
     @Test
-    public void blockBlocksByUser() {
+    void blockBlocksByUser() {
         contractService.block(contractDto, false);
-        assertEquals(true, contract.isBlocked());
-        assertEquals(false, contract.isAgentBlock());
+        assertTrue(contract.isBlocked());
+        assertFalse(contract.isAgentBlock());
     }
 
     @Test
-    public void blockBlocksByAdmin() {
+    void blockBlocksByAdmin() {
         contractService.block(contractDto, true);
-        assertEquals(true, contract.isBlocked());
-        assertEquals(true, contract.isAgentBlock());
+        assertTrue(contract.isBlocked());
+        assertTrue(contract.isAgentBlock());
     }
 
     @Test
-    public void unblockUnblocksByUser() {
+    void unblockUnblocksByUser() {
         contractDto.setBlocked(true);
         contractDto.setAgentBlock(false);
         contract.setBlocked(true);
         contract.setAgentBlock(false);
         contractService.unblock(contractDto, false);
-        assertEquals(false, contract.isBlocked());
-        assertEquals(false, contract.isAgentBlock());
+        assertFalse(contract.isBlocked());
+        assertFalse(contract.isAgentBlock());
     }
 
     @Test
-    public void unblockNoUnblocksByUser() {
+    void unblockNoUnblocksByUser() {
         contractDto.setBlocked(true);
         contractDto.setAgentBlock(true);
         contract.setBlocked(true);
         contract.setAgentBlock(true);
         contractService.unblock(contractDto, false);
-        assertEquals(true, contract.isBlocked());
-        assertEquals(true, contract.isAgentBlock());
+        assertTrue(contract.isBlocked());
+        assertTrue(contract.isAgentBlock());
     }
 
     @Test
-    public void unblockUnblocksByAdmin() {
+    void unblockUnblocksByAdmin() {
         contractDto.setBlocked(true);
         contractDto.setAgentBlock(false);
         contract.setBlocked(true);
         contract.setAgentBlock(false);
         contractService.unblock(contractDto, true);
-        assertEquals(false, contract.isBlocked());
-        assertEquals(false, contract.isAgentBlock());
+        assertFalse(contract.isBlocked());
+        assertFalse(contract.isAgentBlock());
     }
 
     @Test
-    public void unblockUnblocksByAdminLockedByAdmin() {
+    void unblockUnblocksByAdminLockedByAdmin() {
         contractDto.setBlocked(true);
         contractDto.setAgentBlock(true);
         contract.setBlocked(true);
         contract.setAgentBlock(true);
         contractService.unblock(contractDto, true);
-        assertEquals(false, contract.isBlocked());
-        assertEquals(false, contract.isAgentBlock());
+        assertFalse(contract.isBlocked());
+        assertFalse(contract.isAgentBlock());
     }
 
     @Test
-    public void getParentsForExistingContractReturnsParentsExistingInList() {
+    void getParentsForExistingContractReturnsParentsExistingInList() {
         contractDto.addOption(optionDto);
         contractDto.addOption(option5Dto);
         option5Dto.setParent(optionDto);
@@ -364,13 +364,13 @@ public class ContractServiceTest {
         Set<OptionDto> tmp = contractService.getParentsForExistingContract(contractDto);
         for (OptionDto o : tmp
         ) {
-            assertEquals(true, o.isExisting());
+            assertTrue(o.isExisting());
             assertEquals(0, o.getPriceOneTime());
         }
     }
 
     @Test
-    public void getParentsForExistingContractReturnsParentsExistingNotInList() {
+    void getParentsForExistingContractReturnsParentsExistingNotInList() {
         contractDto.addOption(option5Dto);
         option5Dto.setPriceOneTime(7);
         Set oSet = new HashSet();
@@ -380,13 +380,13 @@ public class ContractServiceTest {
         Set<OptionDto> tmp = contractService.getParentsForExistingContract(contractDto);
         for (OptionDto o : tmp
         ) {
-            assertEquals(true, o.isExisting());
+            assertTrue(o.isExisting());
             assertEquals(0, o.getPriceOneTime());
         }
     }
 
     @Test
-    public void getParentsForExistingContractReturnsParents() {
+    void getParentsForExistingContractReturnsParents() {
         Set oSet = new HashSet();
         oSet.add(optionDto);
         when(optionService.findByTariff(0)).thenReturn(oSet);
@@ -394,13 +394,13 @@ public class ContractServiceTest {
         Set<OptionDto> tmp = contractService.getParentsForExistingContract(contractDto);
         for (OptionDto o : tmp
         ) {
-            assertEquals(false, o.isExisting());
+            assertFalse(o.isExisting());
             assertEquals(5, o.getPriceOneTime());
         }
     }
 
     @Test
-    public void geChildrenForExistingContractReturnsChildrenExistingInList() {
+    void geChildrenForExistingContractReturnsChildrenExistingInList() {
         contractDto.addOption(optionDto);
         contractDto.addOption(option5Dto);
         option5Dto.setParent(optionDto);
@@ -411,13 +411,13 @@ public class ContractServiceTest {
         Set<OptionDto> tmp = contractService.getChildrenForExistingContract(contractDto);
         for (OptionDto o : tmp
         ) {
-            assertEquals(true, o.isExisting());
+            assertTrue(o.isExisting());
             assertEquals(0, o.getPriceOneTime());
         }
     }
 
     @Test
-    public void getChildrenForExistingContractReturnsChildrenExistingNotInList() {
+    void getChildrenForExistingContractReturnsChildrenExistingNotInList() {
         contractDto.addOption(option5Dto);
         option5Dto.setParent(optionDto);
         option5Dto.setPriceOneTime(7);
@@ -426,13 +426,13 @@ public class ContractServiceTest {
         Set<OptionDto> tmp = contractService.getParentsForExistingContract(contractDto);
         for (OptionDto o : tmp
         ) {
-            assertEquals(true, o.isExisting());
+            assertTrue(o.isExisting());
             assertEquals(0, o.getPriceOneTime());
         }
     }
 
     @Test
-    public void getChildrenReturnsOptionChildren() {
+    void getChildrenReturnsOptionChildren() {
         contractDto.setTariff(tariffDto);
         tariffDto.setId(0);
 
@@ -443,13 +443,13 @@ public class ContractServiceTest {
         Set<OptionDto> tmp = contractService.getChildrenForExistingContract(contractDto);
         for (OptionDto o : tmp
         ) {
-            assertEquals(false, o.isExisting());
+            assertFalse(o.isExisting());
             assertEquals(5, o.getPriceOneTime());
         }
     }
 
     @Test
-    public void addContractAddsContractExitingClient() {
+    void addContractAddsContractExitingClient() {
         contract.setPhoneNumber(new BigInteger("0"));
         ClientDto clientDto = new ClientDto();
         clientDto.setId(0);
@@ -473,7 +473,7 @@ public class ContractServiceTest {
     }
 
     @Test
-    public void addContractAddsContractNewClient() {
+    void addContractAddsContractNewClient() {
         contract.setPhoneNumber(new BigInteger("0"));
         ClientDto clientDto = new ClientDto();
         clientDto.setPassword("test");
@@ -496,7 +496,7 @@ public class ContractServiceTest {
     }
 
     @Test
-    public void updateUpdatesTariff() {
+    void updateUpdatesTariff() {
         Tariff t2 = new Tariff();
         t2.setId(2);
         contract.setTariff(t2);
@@ -511,13 +511,13 @@ public class ContractServiceTest {
         contractService.update(contractDto);
         assertEquals(tariff, contract.getTariff());
         assertEquals(0.0, contract.getPrice());
-        assertEquals(true, contract.getOptions().isEmpty());
+        assertTrue(contract.getOptions().isEmpty());
     }
 
 
 
     @Test
-    public void updateUpdatesOptionsEmpty() {
+    void updateUpdatesOptionsEmpty() {
         contract.setTariff(tariff);
         contract.setPrice(2.0);
         contractDto.setTariff(tariffDto);
@@ -525,12 +525,12 @@ public class ContractServiceTest {
 
         contractService.update(contractDto);
         assertEquals(tariff, contract.getTariff());
-        assertEquals(true, contract.getOptions().isEmpty());
+        assertTrue(contract.getOptions().isEmpty());
         assertEquals(0.0, contract.getPrice());
     }
 
     @Test
-    public void updateUpdatesOptions() {
+    void updateUpdatesOptions() {
         contract.setTariff(tariff);
         contract.setPrice(2.0);
         contractDto.setTariff(tariffDto);
@@ -549,47 +549,18 @@ public class ContractServiceTest {
     }
 
     @Test
-    public void pdfReturnsTrue() throws MessagingException {
-        assertEquals(true,  contractService.sendPdf(true, contractDto));
+    void pdfReturnsTrue() throws MessagingException {
+        assertTrue(contractService.sendPdf(true, contractDto));
         //doThrow().when();
         verify(mailSender).sendMessageWithAttachment(true, contractDto);
 
     }
 
     @Test
-    public void pdfReturnsFalse() throws MessagingException {
+    void pdfReturnsFalse() throws MessagingException {
         doThrow(new MessagingException()).when(mailSender).sendMessageWithAttachment(true, contractDto);
-        assertEquals(false,  contractService.sendPdf(true, contractDto));
+        assertFalse(contractService.sendPdf(true, contractDto));
         verify(mailSender).sendMessageWithAttachment(true, contractDto);
 
     }
-/*
-
-
-    @Test
-    public void getAllValidReturnsAllValidOptionGroups() {
-        when(optionGroupDao.getAllValid()).thenReturn(ogs);
-        assertEquals(ogsDto, optionGroupService.getAllValid());
-        assertEquals(true, optionGroupService.getAllValid().get(0).isIsValid());
-
-    }
-
-    @Test
-    public void getPageReturnsOptionGroupsPaged() {
-        when(optionGroupDao.getPages(1, 1)).thenReturn(ogs);
-        when(optionGroupDao.getPages(1, 7)).thenReturn(null);
-        when(optionGroupDao.getPagesCount()).thenReturn((long)6);
-
-        page = optionGroupService.getPage(1, 1);
-        assertEquals(ogsDto, page.getData());
-        assertEquals(1, page.getCurrentPage());
-        assertEquals(6, page.getTotalPages());
-        assertEquals(1, page.getLastPage());
-
-
-        page = optionGroupService.getPage(1, 7);
-        assertEquals(true, page.getData().isEmpty());
-        assertEquals(7, page.getCurrentPage());
-    }
-*/
 }

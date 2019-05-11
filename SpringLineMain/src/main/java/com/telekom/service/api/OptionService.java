@@ -2,7 +2,6 @@ package com.telekom.service.api;
 
 import com.telekom.model.dto.OptionDto;
 import com.telekom.model.dto.Page;
-import com.telekom.model.dto.TariffDto;
 
 import java.util.List;
 import java.util.Set;

@@ -77,7 +77,7 @@
                 </div>
                 <div class="form-group">
                     <label>Passport</label>
-                    <form:input path="passport" type="text" name="passport" id="passport" class="form-control required"
+                    <form:input path="passport"  placeholder="Enter passport number.." type="text" name="passport" id="passport" class="form-control required"
                                 pattern="[0-9]{9}" title="Passport should consist of 8 digits" required="true" onblur="requiredField(this)"/>
                 </div>
                 <div class="form-group">
@@ -141,7 +141,7 @@
                     </div>
                     <div class="form-group col-sm-6">
                         <form:label path="password">Password</form:label>
-                        <form:input path="password" type="text" name="password" class="form-control required "
+                        <form:input path="password" type="text" name="password" class="form-control required " placeholder="Enter password.."
                                     maxlength="200" required="true" onblur="requiredField(this)"/>
                     </div>
                 </div>

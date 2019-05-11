@@ -8,7 +8,6 @@ import java.util.List;
 
 
 public interface PhoneNumberDao extends PaginationDao {
-     List<PhoneNumber> getAll();
      void deleteNumber(BigInteger number);
 }
 

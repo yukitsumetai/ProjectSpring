@@ -7,6 +7,7 @@ import com.telekom.model.dto.ClientDto;
 import com.telekom.model.dto.Page;
 import com.telekom.mapper.ClientMapper;
 import com.telekom.service.api.ClientService;
+import com.telekom.service.api.ImageRecognitionService;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class ClientServiceImpl extends PaginationImpl<ClientDto> implements Clie
     @Autowired
     private ClientMapper clientMapper;
     @Autowired
-    ImageRecognitionImpl imageRecognition;
+    ImageRecognitionService imageRecognition;
     @Autowired
     Logger logger;
 
@@ -42,8 +43,8 @@ public class ClientServiceImpl extends PaginationImpl<ClientDto> implements Clie
     public Page<ClientDto> getPage(Integer size, Integer page) {
         logger.info("Getting clients, page " + page);
         List<ClientDto> pageGroups = new ArrayList<>();
-        List<Client> clients=clientDao.getPages(size, page);
-        if(clients!=null) {
+        List<Client> clients = clientDao.getPages(size, page);
+        if (clients != null) {
             for (Client c : clientDao.getPages(size, page)
             ) {
                 pageGroups.add(clientMapper.entityToDto(c));
@@ -94,32 +95,21 @@ public class ClientServiceImpl extends PaginationImpl<ClientDto> implements Clie
     @Override
     public ClientDto performOcr(String image, String id) {
         logger.info("Saving Image");
+        ClientDto client = new ClientDto();
         image = image.substring(image.lastIndexOf(",") + 1);
         byte[] decodedBytes = Base64.getDecoder().decode(image);
 
         Properties props = System.getProperties();
-        String pathName = props.getProperty("jboss.server.deploy.dir")+"\\photos\\"+id+".jpeg";
-        File file=new File(pathName);
+        String pathName = ".\\..\\standalone\\tmp\\" + id + ".jpeg";
+        File file = new File(pathName);
         try {
             FileUtils.writeByteArrayToFile(file, decodedBytes);
-        }
-        catch (IOException ex) {
-            logger.error(ex.getMessage(), ex);
-        }
-
-        logger.info("Performing OCR");
-        ClientDto client = new ClientDto();
-        try {
+            logger.info("Performing OCR");
             imageRecognition.doOCR(client, pathName);
-        }
-        catch (Exception ex) {
+        } catch (IOException ex) {
             logger.error(ex.getMessage(), ex);
         }
-       finally{
-            file.delete();
-        }
+        file.delete();
         return client;
     }
-
-
 }

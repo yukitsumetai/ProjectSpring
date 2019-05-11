@@ -11,15 +11,11 @@ import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.mail.MailException;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.MimeMessage;
 import java.io.*;
 
@@ -31,12 +27,11 @@ public class MailSenderImpl implements MailService {
     @Autowired
     private Logger logger;
     @Autowired
-    PdfCreator pdfCreator;
+    private PdfCreator pdfCreator;
     @Autowired
-    ContractService contractService;
+    private ContractService contractService;
     @Autowired
-    VelocityEngine velocityEngine;
-
+    private VelocityEngine velocityEngine;
 
     @Override
     public void sendMessageWithAttachment(Boolean newClient, ContractDto contract) throws MessagingException {

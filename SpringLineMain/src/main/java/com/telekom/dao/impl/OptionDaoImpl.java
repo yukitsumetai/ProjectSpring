@@ -19,10 +19,6 @@ public class OptionDaoImpl extends PaginationDaoImpl implements OptionDao {
     private EntityManager entityManager;
 
     @Override
-    public List<Option> getAll() {
-        return entityManager.createQuery("select t from Option t").getResultList();
-    }
-    @Override
     public List<Option> getAllValid() {
         return entityManager.createQuery("select t from Option t where t.isValid=true ").getResultList();
     }

@@ -1,9 +1,6 @@
 package com.telekom;
 
 
-import org.slf4j.Logger;
-
-
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
 import javax.faces.push.Push;
@@ -19,7 +16,7 @@ import javax.jms.TextMessage;
         @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Topic"),
         @ActivationConfigProperty(propertyName = "acknowledgeMode", propertyValue = "Auto-acknowledge")
 })
-public class Subscriber implements MessageListener {
+class Subscriber implements MessageListener {
 
     @Inject
     @Push
@@ -33,8 +30,6 @@ public class Subscriber implements MessageListener {
 
     @Override
     public void onMessage(Message message) {
-        TextMessage textMessage = (TextMessage) message;
-           // logger.debug("JMS messaje recieved");
             tariffsConsumer.getTariffs();
             push.send("update");
     }

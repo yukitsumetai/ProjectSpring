@@ -6,9 +6,7 @@ import com.telekom.model.dto.Page;
 import com.telekom.model.entity.Tariff;
 import com.telekom.mapper.TariffMapper;
 import com.telekom.service.api.JmsService;
-import com.telekom.service.impl.OptionServiceImpl;
 import com.telekom.service.impl.TariffServiceImpl;
-import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

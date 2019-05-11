@@ -287,15 +287,15 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
     }
 
     public void updateOptionParent(OptionDto option, Option o) {
-        /*
+
         OptionDto p = option.getParent();
         if (p != null) {
             logger.info("Setting parent");
-            Option tmp = optionDao.getOptionGroup(p.getId());
+            Option tmp = optionDao.getOne(p.getId());
             if (o != tmp && tmp.getParent() == null) {
                 o.setParent(tmp);
             }
-        } else o.setParent(null);*/
+        } else o.setParent(null);
     }
 
     public void updateOptionGroup(OptionDto option, Option o) {

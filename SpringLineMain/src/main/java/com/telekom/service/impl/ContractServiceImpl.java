@@ -15,7 +15,6 @@ import javax.mail.MessagingException;
 import javax.transaction.Transactional;
 import java.math.BigInteger;
 import java.util.*;
-import java.util.List;
 
 @Service
 public class ContractServiceImpl implements ContractService {
@@ -115,7 +114,7 @@ public class ContractServiceImpl implements ContractService {
     @Override
     public List<TariffDto> getTariffsForAdd(ContractDto contract) {
         List<TariffDto> tariffs = new ArrayList<>(tariffService.getAllValid());
-        Integer id = contract.getTariff().getId();
+        int id = contract.getTariff().getId();
         tariffs.removeIf(st -> st.getId() == id);
         return tariffs;
     }
@@ -238,7 +237,7 @@ public class ContractServiceImpl implements ContractService {
     public Set<OptionDto> getChildrenForExistingContract(ContractDto contract) {
         logger.info("Getting children for existing contracts " + contract.getPhoneNumberInt());
         Set<OptionDto> existing = contract.getOptions();
-        Set<OptionDto> children = new HashSet<>();
+        Set<OptionDto> children = getOptionsChildren(contract);
         if (children==null) children = new HashSet<>();
         children.addAll(getOptionsChildren(contract));
         for (OptionDto o : existing) {

@@ -1,6 +1,7 @@
 package com.telekom.service.impl;
 
 import com.telekom.model.dto.ClientDto;
+import com.telekom.service.api.ImageRecognitionService;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
 import org.apache.log4j.Logger;
@@ -8,28 +9,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ImageRecognitionImpl {
+public class ImageRecognitionImpl implements ImageRecognitionService {
 
     @Autowired
     Logger logger;
 
+    @Override
     public void doOCR(ClientDto client, String path) {
         Tesseract tesseract = new Tesseract();
         String text = "";
+        logger.info("PerformingOCR");
+        String path2 = this.getClass().getClassLoader().getResource("tessTrainData").toString().substring(5);
+        String path3="C:\\Users\\ekochuro\\IdeaProjects\\ProjectSpring\\SpringLineMain\\src\\main\\resources\\tessTrainData\\";
+       String path4=Thread.currentThread().getContextClassLoader().getResource("tessTrainData").getPath();
+
+
         try {
-            logger.info("PerformingOCR");
-            String path2 = this.getClass().getClassLoader().getResource("tessTrainData").toString().substring(5);
-            tesseract.setDatapath("C:\\Users\\ekochuro\\IdeaProjects\\ProjectSpring\\SpringLineMain\\src\\main\\resources\\tessTrainData\\");
+            tesseract.setDatapath(path4);
             tesseract.setLanguage("eng");
             text = tesseract.doOCR(new File(path));
             logger.info("Parsed Text "+text);
-        } catch (TesseractException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
         }
         parseData(client, text);
     }
@@ -39,38 +44,42 @@ public class ImageRecognitionImpl {
         String[] parts = text.split("\n");
         List<String> result = new ArrayList();
         for (int i = (parts.length - 1); i >= 0; i--) {
-            if (parts[i].length() > 3) result.add(parts[i]);
+            if (parts[i].length() > 3) result.add(parts[i].trim());
         }
-
         if (result.size() < 2) return;
 
         setName(client, result);
-        String text2 = result.get(0);
-        try {
-            client.setPassport(Integer.parseInt(text2.substring(0, 9)));
-        } catch (NumberFormatException e) {
-            logger.info("Passport format wrong" + text2.substring(0, 9));
-        } catch (IndexOutOfBoundsException e) {
-            logger.info("Passport format wrong" + text2);
-        }
-        String birthday = "";
-        try {
-            birthday = text2.substring(13, 19);
-            Integer year = Integer.parseInt(birthday.substring(0, 2));
-            if (year < 20) year = 2000 + year;
-            else year = 1900 + year;
-            Integer month = Integer.parseInt(birthday.substring(2, 4));
-            Integer day = Integer.parseInt(birthday.substring(4, 5));
-            client.setBirthday(year + "-" + birthday.substring(2, 4) + "-" + birthday.substring(4, 6));
-        } catch (NumberFormatException e) {
-            logger.info("Birthday format wrong: " + birthday);
-        } catch (IndexOutOfBoundsException e) {
-            logger.info("Passport format wrong: " + text2);
-        }
+        String text2= result.get(0).trim();
+        text2 = text2.replaceAll("[^A-Za-z0-9]+", "");;
+        setPassportBirthday(client, text2);
 
     }
 
+private void setPassportBirthday(ClientDto client, String text2){
+    try {
+        client.setPassport(Integer.parseInt(text2.substring(0, 9)));
+    } catch (NumberFormatException e) {
+        logger.info("Passport format wrong" + text2.substring(0, 9));
+    } catch (IndexOutOfBoundsException e) {
+        logger.info("Passport format wrong" + text2);
+    }
+    String birthday = "";
 
+
+    try {
+        birthday = text2.substring(13, 19);
+        int year = Integer.parseInt(birthday.substring(0, 2));
+        if (year < 20) year = 2000 + year;
+        else year = 1900 + year;
+        Integer month = Integer.parseInt(birthday.substring(2, 4));
+        Integer day = Integer.parseInt(birthday.substring(4, 5));
+        client.setBirthday(year + "-" + birthday.substring(2, 4) + "-" + birthday.substring(4, 6));
+    } catch (NumberFormatException e) {
+        logger.info("Birthday format wrong: " + birthday);
+    } catch (IndexOutOfBoundsException e) {
+        logger.info("Passport format wrong: " + text2);
+    }
+}
     private void setName(ClientDto client, List<String> result) {
         String text1 = result.get(1).substring(5);
         for (String s : result) {

@@ -27,7 +27,7 @@ public class ClientDto implements Serializable {
     private String password;
 
     @NotNull
-    @Digits(integer=8, fraction=0)
+    @Digits(integer=9, fraction=0)
     private Integer passport;
 
     @NotNull

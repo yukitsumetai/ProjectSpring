@@ -3,8 +3,6 @@ package com.telekom;
 
 import org.slf4j.Logger;
 
-import javax.annotation.ManagedBean;
-
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -21,7 +19,7 @@ import java.util.ArrayList;
 
 @ApplicationScoped @Named
 public class TariffsConsumer {
-    private ArrayList<TariffPromoted> tariffsList = new ArrayList<TariffPromoted>();
+    private final ArrayList<TariffPromoted> tariffsList = new ArrayList<>();
 
     @Inject
     private Logger logger;

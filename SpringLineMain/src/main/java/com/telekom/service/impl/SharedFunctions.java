@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 public abstract class SharedFunctions<T> extends PaginationImpl {
-    public void setOptions(SharedDto sharedDto, List<Integer> id) {
+    void setOptions(SharedDto sharedDto, List<Integer> id) {
         Set<OptionDto> options = new HashSet<>();
         if (id != null) {
             for (Integer i : id) {

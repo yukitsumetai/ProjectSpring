@@ -73,19 +73,19 @@ function addRowsOption(data, table) {
             var c = (children || {}).name;
             c2 = (typeof (c) !== 'undefined' ? c : '');
             childrenTable.push(c2 + "<br>");
-        })
+        });
 
         var tariffsTable = [];
         $.each(val.compatibleTariffs, function (key, tariff) {
             var c = (tariff || {}).name;
             c2 = (typeof (c) !== 'undefined' ? c : '');
             tariffsTable.push(c2 + "<br>");
-        })
+        });
         var icon;
-        var icon2 = ""
+        var icon2 = "";
         var check = table;
         if (check == 1) {
-            icon = "<a href='/springLine/options/edit/" + val.id + "/' class='edit' title='Edit'><i class='material-icons'>&#xE254</i></a>"
+            icon = "<a href='/springLine/options/edit/" + val.id + "/' class='edit' title='Edit'><i class='material-icons'>&#xE254</i></a>";
             if (val.isValid == true) {
                 icon2 = "<a href='#deleteModal' class='delete' title='Delete' data-toggle='modal' data-target='#deleteModal' data-id=" + val.id + "><i class='material-icons'>&#xE872;</i></a>"
             }
@@ -119,12 +119,12 @@ function addRowsTariff(data, table) {
             var c = (option || {}).name;
             c2 = (typeof (c) !== 'undefined' ? c : '');
             tariffsTable.push(c2);
-        })
+        });
         var icon;
-        var icon2 = ""
+        var icon2 = "";
         var check = table;
         if (check == 1) {
-            icon = "<a href='/springLine/tariffs/edit/" + val.id + "/' class='edit' title='Edit'><i class='material-icons'>&#xE254</i></a>"
+            icon = "<a href='/springLine/tariffs/edit/" + val.id + "/' class='edit' title='Edit'><i class='material-icons'>&#xE254</i></a>";
             if (val.isValid == true) {
                 icon2 = "<a href='#deleteModal' class='delete' title='Delete' data-toggle='modal' data-target='#deleteModal' data-id=" + val.id + "><i class='material-icons'>&#xE872;</i></a>"
             }
@@ -157,7 +157,7 @@ function addRowsClient(data, table) {
             c2 = (typeof (c) !== 'undefined' ? c : '');
             icon = "<a href='/springLine/existingContract/"+c2+"' class='edit' title='Edit'><i class='material-icons'>&#xE254;</i></a>";
             contracts.push(c2+icon + "<br>");
-        })
+        });
         var icon;
         if (table != 1) {
             icon = "<input type='checkbox' class='chk myChk' value='" + val.id + "' name='clientID'>"

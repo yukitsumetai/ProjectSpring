@@ -6,8 +6,6 @@ import java.util.List;
 
 public interface OptionDao extends PaginationDao {
 
-    List getAll();
-
     List<Option> findByTariffParents(Integer tariffId);
 
     void add(Option option);

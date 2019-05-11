@@ -1,8 +1,6 @@
 package com.telekom.model.dto;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 
 public class OptionGroupDto extends SharedDto implements Serializable {

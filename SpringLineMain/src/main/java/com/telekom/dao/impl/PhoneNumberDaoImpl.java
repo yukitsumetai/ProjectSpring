@@ -28,11 +28,6 @@ public class PhoneNumberDaoImpl extends PaginationDaoImpl implements PhoneNumber
     }
 
     @Override
-    public List<PhoneNumber> getAll() {
-        return entityManager.createQuery("select t from PhoneNumber t").getResultList();
-    }
-
-    @Override
     public List<PhoneNumber> getPages(Integer size, Integer page) {
         TypedQuery<PhoneNumber> q = entityManager.createQuery("select t from PhoneNumber t", PhoneNumber.class);
         pageCount(page, size, q);

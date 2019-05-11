@@ -67,7 +67,7 @@ class OptionServiceTest {
     private static OptionGroupDto ogDto;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         option = new Option();
         option.setId(0);
         option.setValid(true);
@@ -154,7 +154,7 @@ class OptionServiceTest {
     }
 
     @Test
-    public void getAllPaginatedReturnsAllOptionsPaginated() {
+    void getAllPaginatedReturnsAllOptionsPaginated() {
         when(optionDao.getPages(1, 1)).thenReturn(options);
         when(optionDao.getPages(1, 5)).thenReturn(options5);
         when(optionDao.getPages(1, 7)).thenReturn(null);
@@ -170,12 +170,12 @@ class OptionServiceTest {
         assertEquals(5, page.getCurrentPage());
 
         page = optionService.getPage(1, 7);
-        assertEquals(true, page.getData().isEmpty());
+        assertTrue(page.getData().isEmpty());
         assertEquals(7, page.getCurrentPage());
     }
 
     @Test
-    public void getOptionsForTariffReturnsOptionsByPageAndTariff() {
+    void getOptionsForTariffReturnsOptionsByPageAndTariff() {
         Set<Option> optionsSet = new HashSet<>();
         optionsSet.add(option);
         tariff.setOptions(optionsSet);
@@ -188,21 +188,21 @@ class OptionServiceTest {
         assertEquals(1, page.getCurrentPage());
         assertEquals(6, page.getTotalPages());
         assertEquals(1, page.getLastPage());
-        assertEquals(true, tmp.isExisting());
+        assertTrue(tmp.isExisting());
     }
 
     @Test
-    public void getOptionsForTariffReturnsOptionsByPageAndTariffNotExisting() {
+    void getOptionsForTariffReturnsOptionsByPageAndTariffNotExisting() {
         option.setCompatibleTariffs(new HashSet<>());
         when(optionDao.getPages(1, 5)).thenReturn(options5);
         page = optionService.getOptionsForTariff(1, 5, 0);
         assertEquals(options5Dto, page.getData());
         OptionDto tmp = (OptionDto) page.getData().get(0);
-        assertEquals(false, tmp.isExisting());
+        assertFalse(tmp.isExisting());
     }
 
     @Test
-    public void getOptionsForNewOptionParentReturnsOptionsByPageAndOption() {
+    void getOptionsForNewOptionParentReturnsOptionsByPageAndOption() {
         when(optionDao.getAllNoParent(1, 1)).thenReturn(options);
         when(optionDao.getPagesCountNoParent()).thenReturn((long) 5);
 
@@ -210,11 +210,11 @@ class OptionServiceTest {
         OptionDto tmp = (OptionDto) page.getData().get(0);
         assertEquals(optionsDto, page.getData());
         assertEquals(5, page.getTotalPages());
-        assertEquals(null, tmp.getParent());
+        assertNull(tmp.getParent());
     }
 
     @Test
-    public void getOptionsForNewOptionChildrenReturnsOptionsByPageAndOption() {
+    void getOptionsForNewOptionChildrenReturnsOptionsByPageAndOption() {
         when(optionMapper.entityToDto(option7)).thenReturn(option7Dto);
 
         when(optionDao.getAllNoChildrenAndParent(1, 7)).thenReturn(options7);
@@ -224,12 +224,12 @@ class OptionServiceTest {
         OptionDto tmp = (OptionDto) page.getData().get(0);
         assertEquals(options7Dto, page.getData());
         assertEquals(3, page.getTotalPages());
-        assertEquals(null, tmp.getParent());
-        assertEquals(true, tmp.getChildren().isEmpty());
+        assertNull(tmp.getParent());
+        assertTrue(tmp.getChildren().isEmpty());
     }
 
     @Test
-    public void getOptionsForExistingOptionParentReturnsOptionsByPageAndOption() {
+    void getOptionsForExistingOptionParentReturnsOptionsByPageAndOption() {
 
         when(optionDao.getAllNoParent(1, 1)).thenReturn(options);
         when(optionDao.getPagesCountNoParent()).thenReturn((long) 5);
@@ -238,11 +238,11 @@ class OptionServiceTest {
 
         assertEquals(optionsDto, page.getData());
         assertEquals(5, page.getTotalPages());
-        assertEquals(true, tmp.isExisting());
+        assertTrue(tmp.isExisting());
     }
 
     @Test
-    public void getOptionsForExistingOptionParentReturnsOptionsByPageAndOptionNoExisting() {
+    void getOptionsForExistingOptionParentReturnsOptionsByPageAndOptionNoExisting() {
 
         when(optionDao.getAllNoParent(1, 7)).thenReturn(options7);
         when(optionDao.getPagesCountNoParent()).thenReturn((long) 5);
@@ -251,12 +251,12 @@ class OptionServiceTest {
 
         assertEquals(options7Dto, page.getData());
         assertEquals(5, page.getTotalPages());
-        assertEquals(false, tmp.isExisting());
+        assertFalse(tmp.isExisting());
     }
 
 
     @Test
-    public void getOptionsForExistingOptionChildrenReturnsOptionsByPageAndOption() {
+    void getOptionsForExistingOptionChildrenReturnsOptionsByPageAndOption() {
 
         when(optionDao.getAllNoChildrenAndParentExisting(1, 5, 0)).thenReturn(options5);
         when(optionDao.getPagesNoChildrenAndParentExisting(5)).thenReturn((long) 3);
@@ -266,11 +266,11 @@ class OptionServiceTest {
 
         assertEquals(options5Dto, page.getData());
         assertEquals(3, page.getTotalPages());
-        assertEquals(true, tmp.isExisting());
+        assertTrue(tmp.isExisting());
     }
 
     @Test
-    public void getOptionsForExistingOptionChildrenReturnsOptionsByPageAndOptionNoExisting() {
+    void getOptionsForExistingOptionChildrenReturnsOptionsByPageAndOptionNoExisting() {
 
         when(optionDao.getAllNoChildrenAndParentExisting(1, 1, 5)).thenReturn(options7);
         when(optionDao.getPagesNoChildrenAndParentExisting(5)).thenReturn((long) 3);
@@ -279,11 +279,11 @@ class OptionServiceTest {
 
         assertEquals(options7Dto, page.getData());
         assertEquals(3, page.getTotalPages());
-        assertEquals(false, tmp.isExisting());
+        assertFalse(tmp.isExisting());
     }
 
     @Test
-    public void getOptionsForOptionGroupsReturnsOptionsByOG() {
+    void getOptionsForOptionGroupsReturnsOptionsByOG() {
         when(optionDao.getAllNoParentNoGroup(1, 1)).thenReturn(options);
         when(optionDao.getPagesCountNoParentNoGroup()).thenReturn((long) 2);
 
@@ -291,12 +291,12 @@ class OptionServiceTest {
         OptionDto tmp = (OptionDto) page.getData().get(0);
         assertEquals(optionsDto, page.getData());
         assertEquals(2, page.getTotalPages());
-        assertEquals(null, tmp.getParent());
-        assertEquals(null, tmp.getOptionGroup());
+        assertNull(tmp.getParent());
+        assertNull(tmp.getOptionGroup());
     }
 
     @Test
-    public void getOptionsForExistingOptionGroupsReturnsOptionsByOG() {
+    void getOptionsForExistingOptionGroupsReturnsOptionsByOG() {
 
         option7.setGroup(og);
         option7Dto.setOptionGroup(ogDto);
@@ -314,7 +314,7 @@ class OptionServiceTest {
     }
 
     @Test
-    public void getOptionsForExistingOptionGroupsReturnsOptionsByOGNoExisting() {
+    void getOptionsForExistingOptionGroupsReturnsOptionsByOGNoExisting() {
         OptionGroup og = new OptionGroup();
         og.setId(0);
         OptionGroupDto ogDto = new OptionGroupDto();
@@ -328,13 +328,13 @@ class OptionServiceTest {
         OptionDto tmp = (OptionDto) page.getData().get(0);
         assertEquals(options5Dto, page.getData());
         assertEquals(8, page.getTotalPages());
-        assertEquals(null, tmp.getOptionGroup());
+        assertNull(tmp.getOptionGroup());
         assertNotEquals(ogDto, tmp.getOptionGroup());
     }
 
 
     @Test
-    public void setCompatibleTariffsSetsTariffs() {
+    void setCompatibleTariffsSetsTariffs() {
         List<Integer> id = new ArrayList<>();
         id.add(0);
         optionService.setCompatibleTariffs(optionDto, id);
@@ -348,14 +348,14 @@ class OptionServiceTest {
 
 
     @Test
-    public void setCompatibleTariffsNoTariffsWithNull() {
+    void setCompatibleTariffsNoTariffsWithNull() {
         optionService.setCompatibleTariffs(optionDto, null);
-        assertEquals(true, optionDto.getCompatibleTariffs().isEmpty());
+        assertTrue(optionDto.getCompatibleTariffs().isEmpty());
     }
 
 
     @Test
-    public void setChildrenSetsChildren() {
+    void setChildrenSetsChildren() {
         List<Integer> id = new ArrayList<>();
         id.add(7);
         optionService.setChildren(optionDto, id);
@@ -368,16 +368,16 @@ class OptionServiceTest {
 
 
     @Test
-    public void setChildrenNoChildrenWithNull() {
+    void setChildrenNoChildrenWithNull() {
         optionService.setChildren(optionDto, null);
-        assertEquals(false, optionDto.getChildren().isEmpty());
+        assertFalse(optionDto.getChildren().isEmpty());
         optionService.setChildren(option7Dto, null);
-        assertEquals(true, option7Dto.getChildren().isEmpty());
+        assertTrue(option7Dto.getChildren().isEmpty());
     }
 
 
     @Test
-    public void setOptionGroupSetsOptionGroup() {
+    void setOptionGroupSetsOptionGroup() {
         optionService.setOptionGroup(optionDto, 1);
         assertEquals(1, optionDto.getOptionGroup().getId());
         assertNotEquals(5, optionDto.getOptionGroup().getId());
@@ -385,15 +385,15 @@ class OptionServiceTest {
 
 
     @Test
-    public void setOptionGroupNoOptionGroupWithNull() {
+    void setOptionGroupNoOptionGroupWithNull() {
         optionService.setOptionGroup(optionDto, null);
-        assertEquals(null, optionDto.getOptionGroup());
+        assertNull(optionDto.getOptionGroup());
         optionService.setOptionGroup(optionDto, 0);
-        assertEquals(null, optionDto.getOptionGroup());
+        assertNull(optionDto.getOptionGroup());
     }
 
     @Test
-    public void setParentSetsParent() {
+    void setParentSetsParent() {
         optionService.setParent(option7Dto, 0);
         assertEquals(0, option7Dto.getParent().getId());
         assertNotEquals(5, option7Dto.getParent().getId());
@@ -401,33 +401,33 @@ class OptionServiceTest {
 
 
     @Test
-    public void setParentNoParentWithNull() {
+    void setParentNoParentWithNull() {
         optionService.setParent(option7Dto, null);
-        assertEquals(null, option7Dto.getParent());
+        assertNull(option7Dto.getParent());
     }
 
     @Test
-    public void findByTariffReturnsParentOptionsByTariff() {
+    void findByTariffReturnsParentOptionsByTariff() {
         when(optionDao.findByTariffParents(0)).thenReturn(options7);
         assertIterableEquals(options7Dto, optionService.findByTariff(0));
         assertNotEquals(null, optionService.findByTariff(0));
     }
 
     @Test
-    public void findByTariffChildrenReturnsChildrenOptionsByTariff() {
+    void findByTariffChildrenReturnsChildrenOptionsByTariff() {
         when(optionDao.findByTariffChildren(0)).thenReturn(options5);
         assertIterableEquals(options5Dto, optionService.findByTariffChildren(0));
         assertNotEquals(null, optionService.findByTariff(0));
     }
 
     @Test
-    public void updateChildrenUpdatesChildrenWhenExistCurrentEmpty() {
+    void updateChildrenUpdatesChildrenWhenExistCurrentEmpty() {
 
         option.setChildren(new HashSet<>());
         option5.setParent(null);
         optionService.updateChildren(optionDto, option);
         assertEquals(0, option7.getParent().getId());
-        assertEquals(null, option5.getParent());
+        assertNull(option5.getParent());
         Set<Option> tmp = option.getChildren();
         for (Option o : tmp) {
             assertEquals(7, o.getId());
@@ -435,7 +435,7 @@ class OptionServiceTest {
     }
 
     @Test
-    public void updateChildrenUpdatesChildrenWhenExistCurrent() {
+    void updateChildrenUpdatesChildrenWhenExistCurrent() {
         OptionGroup og7 = new OptionGroup();
         option7.setGroup(og7);
 
@@ -446,41 +446,41 @@ class OptionServiceTest {
 
         optionService.updateChildren(optionDto, option);
         assertEquals(0, option7.getParent().getId());
-        assertEquals(null, option7.getGroup());
-        assertEquals(null, option5.getParent());
+        assertNull(option7.getGroup());
+        assertNull(option5.getParent());
 
 
     }
 
     @Test
-    public void updateChildrenNoUpdatesCurrentEmpty() {
+    void updateChildrenNoUpdatesCurrentEmpty() {
         OptionDto od = new OptionDto();
         od.setChildren(new HashSet<>());
         optionService.updateChildren(od, option7);
-        assertEquals(true, option7.getChildren().isEmpty());
+        assertTrue(option7.getChildren().isEmpty());
     }
 
     @Test
-    public void updateChildrenNoUpdatesCurrentNotEmpty() {
+    void updateChildrenNoUpdatesCurrentNotEmpty() {
         OptionDto od = new OptionDto();
         od.setChildren(new HashSet<>());
         assertEquals(option, option5.getParent());
         optionService.updateChildren(od, option);
-        assertEquals(null, option5.getParent());
+        assertNull(option5.getParent());
     }
 
     @Test
-    public void updateChildrenNoUpdatesForChildren() {
+    void updateChildrenNoUpdatesForChildren() {
         OptionDto od = new OptionDto();
         Set ods = new HashSet();
         ods.add(option7Dto);
         od.setChildren(ods);
         optionService.updateChildren(od, option5);
-        assertEquals(true, option5.getChildren().isEmpty());
+        assertTrue(option5.getChildren().isEmpty());
     }
 
     @Test
-    public void updateTariffsUpdatesTariffWhenExistCurrentNotEmpty() {
+    void updateTariffsUpdatesTariffWhenExistCurrentNotEmpty() {
         TariffDto tariffDto1 = new TariffDto();
         tariffDto1.setId(1);
         tariffDto1.setOptions(new HashSet<>());
@@ -507,11 +507,11 @@ class OptionServiceTest {
         for (Option o : tmp2) {
             assertEquals(0, o.getId());
         }
-        assertEquals(true, tariff.getOptions().isEmpty());
+        assertTrue(tariff.getOptions().isEmpty());
     }
 
     @Test
-    public void updateTariffsUpdatesTariffWhenExistCurrentEmpty() {
+    void updateTariffsUpdatesTariffWhenExistCurrentEmpty() {
 
         Set<TariffDto> tds = new HashSet<>();
         tds.add(tariffDto);
@@ -524,7 +524,7 @@ class OptionServiceTest {
     }
 
     @Test
-    public void updateTariffsNoUpdatesCurrentNotEmpty() {
+    void updateTariffsNoUpdatesCurrentNotEmpty() {
         Set<Tariff> tds2 = new HashSet<>();
         tds2.add(tariff);
         option.setCompatibleTariffs(tds2);
@@ -533,27 +533,27 @@ class OptionServiceTest {
         tariff.setOptions(ods2);
         optionService.updateTariff(optionDto, option);
         Set<Option> tmp = tariff.getOptions();
-        assertEquals(true, tmp.isEmpty());
+        assertTrue(tmp.isEmpty());
     }
 
     @Test
-    public void updateTariffsNoUpdatesCurrentEmpty() {
+    void updateTariffsNoUpdatesCurrentEmpty() {
         optionService.updateTariff(optionDto, option);
-        assertEquals(true, option.getCompatibleTariffs().isEmpty());
+        assertTrue(option.getCompatibleTariffs().isEmpty());
     }
 
     @Test
-    public void updateOptionGroupUpdatesGroup() {
+    void updateOptionGroupUpdatesGroup() {
         optionDto.setOptionGroup(ogDto);
         optionService.updateOptionGroup(optionDto, option);
         assertEquals(og, option.getGroup());
     }
 
     @Test
-    public void updateOptionGroupNoUpdates() {
+    void updateOptionGroupNoUpdates() {
 
         optionService.updateOptionGroup(optionDto, option);
-        assertEquals(null, option.getGroup());
+        assertNull(option.getGroup());
 //dummy group
         OptionGroup og0 = new OptionGroup();
         og0.setId(0);
@@ -561,15 +561,15 @@ class OptionServiceTest {
         og0Dto.setId(0);
         optionDto.setOptionGroup(og0Dto);
         when(optionGroupDao.getOne(0)).thenReturn(og0);
-        assertEquals(null, option.getGroup());
+        assertNull(option.getGroup());
 //child option
         option5Dto.setOptionGroup(ogDto);
         optionService.updateOptionGroup(option5Dto, option5);
-        assertEquals(null, option5.getGroup());
+        assertNull(option5.getGroup());
     }
 
     @Test
-    public void updateOptionParentUpdatesParent() {
+    void updateOptionParentUpdatesParent() {
         assertEquals(option, option5.getParent());
         option5Dto.setParent(option7Dto);
         optionService.updateOptionParent(option5Dto, option5);
@@ -578,45 +578,45 @@ class OptionServiceTest {
     }
 
     @Test
-    public void updateOptionParentNoUpdates() {
+    void updateOptionParentNoUpdates() {
 //no update
         optionService.updateOptionParent(option5Dto, option5);
         assertEquals(option, option5.getParent());
 
         //no group
         optionService.updateOptionParent(option7Dto, option7);
-        assertEquals(null, option.getParent());
+        assertNull(option.getParent());
 
         //parent itself
         optionDto.setParent(optionDto);
-        assertEquals(null, option.getParent());
+        assertNull(option.getParent());
         //parent is child
         option7Dto.setParent(option5Dto);
-        assertEquals(null, option7.getParent());
+        assertNull(option7.getParent());
     }
 
     @Test
-    public void addAddsOption() {
+    void addAddsOption() {
         when(optionMapper.dtoToEntity(optionDto)).thenReturn(option);
         optionService.add(optionDto);
         verify(optionDao).add(option);
     }
 
     @Test
-    public void getOneReturnsOption() {
+    void getOneReturnsOption() {
         assertEquals(optionDto, optionService.getOne(0));
         assertEquals(option5Dto, optionService.getOne(5));
     }
 
     @Test
-    public void getOneReturnsNullForNotFound() {
+    void getOneReturnsNullForNotFound() {
         when(optionDao.getOne(12)).thenReturn(null);
-        assertEquals(null, optionService.getOne(12));
+        assertNull(optionService.getOne(12));
     }
 
 
     @Test
-    public void editOptionEditsOption() {
+    void editOptionEditsOption() {
         when(optionMapper.dtoToEntity(optionDto)).thenReturn(option);
         optionDto.setIsValid(false);
         optionDto.setOptionGroup(ogDto);
@@ -628,14 +628,14 @@ class OptionServiceTest {
         optionDto.setCompatibleTariffs(tds);
 
         optionService.editOption(optionDto);
-        assertEquals(false, option.isValid());
+        assertFalse(option.isValid());
         assertEquals("test", option.getDescription());
         assertEquals(og, option.getGroup());
         Set<Option> tmp = option5.getChildren();
         for (Option o : tmp) {
             assertEquals(0, o.getId());
         }
-        assertEquals(null, option5.getParent());
+        assertNull(option5.getParent());
         Set<Tariff> tmp2 = option.getCompatibleTariffs();
         for (Tariff o : tmp2) {
             assertEquals(0, o.getId());
@@ -644,29 +644,29 @@ class OptionServiceTest {
     }
 
     @Test
-    public void removeRelationsRemovesChildren() {
+    void removeRelationsRemovesChildren() {
         assertNotEquals(true, optionDto.getChildren().isEmpty());
         optionService.removeRelations(optionDto);
-        assertEquals(true, optionDto.getChildren().isEmpty());
+        assertTrue(optionDto.getChildren().isEmpty());
     }
 
     @Test
-    public void removeRelationsRemovesParent() {
+    void removeRelationsRemovesParent() {
         assertNotEquals(null, option5Dto.getParent());
         optionService.removeRelations(optionDto);
-        assertEquals(true, optionDto.getChildren().isEmpty());
+        assertTrue(optionDto.getChildren().isEmpty());
     }
 
     @Test
-    public void deleteOptionDeletesOption() {
+    void deleteOptionDeletesOption() {
         assertNotEquals(false, optionDto.isIsValid());
         optionService.deleteOption(0);
-        assertEquals(false, option.isValid());
+        assertFalse(option.isValid());
     }
 
 
     @Test
-    public void deleteOptionNull() {
+    void deleteOptionNull() {
         when(optionDao.getOne(12)).thenReturn(null);
         optionService.deleteOption(12);
     }

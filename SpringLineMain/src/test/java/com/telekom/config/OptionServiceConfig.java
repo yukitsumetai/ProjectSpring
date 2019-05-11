@@ -5,7 +5,6 @@ import com.telekom.dao.api.OptionDao;
 import com.telekom.dao.api.OptionGroupDao;
 import com.telekom.dao.api.TariffDao;
 import com.telekom.mapper.OptionMapper;
-import com.telekom.mapper.TariffMapper;
 import com.telekom.model.dto.Page;
 import com.telekom.model.entity.Tariff;
 import com.telekom.service.impl.OptionServiceImpl;

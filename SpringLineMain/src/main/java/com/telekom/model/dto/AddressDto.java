@@ -29,7 +29,7 @@ public class AddressDto implements Serializable {
 
         @NotNull
         @Digits(integer=5, fraction=0)
-        private int zip;
+        private Integer zip;
 
 
         private ClientDto client;
@@ -75,11 +75,11 @@ public class AddressDto implements Serializable {
                 this.city = city;
         }
 
-        public int getZip() {
+        public Integer getZip() {
                 return zip;
         }
 
-        public void setZip(int zip) {
+        public void setZip(Integer zip) {
                 this.zip = zip;
         }
 
