@@ -163,7 +163,7 @@ public class PdfCreatorImpl implements PdfCreator {
             createHeadings(cb, 502, 633, "One time Price, $");
 
             //add the images
-            Image companyLogo = Image.getInstance("C:\\Users\\ekochuro\\IdeaProjects\\ProjectSpring\\SpringLineMain\\src\\main\\resources\\email\\logo.png");
+            Image companyLogo = Image.getInstance("C:\\Users\\ekochuro\\IdeaProjects\\ProjectSpring\\SpringLineMain\\src\\main\\resources\\email\\springLineLogo.png");
             companyLogo.setAbsolutePosition(25, 700);
             companyLogo.scalePercent(25);
             doc.add(companyLogo);

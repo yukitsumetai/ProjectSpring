@@ -38,7 +38,10 @@ function pagination(entity, page, table1, id, parent, optionId, group) {
             var curr = 0;
             $("#pagination").empty();
             while (data.totalPages > curr) {
-                $("<li ><a type='button' class='btn btn-outline-success pg' onclick='pagination("+entity+"," + (curr + 1) + "," + table1 + ",\"" + id + "\"," + parent + ",\"" + optionId + "\","+group+")'class='page_link'>" + (curr + 1) + "</a></li>").appendTo("#pagination");
+                if(data.currentPage-1==curr){
+                    $("<li ><a type='button' class='btn btn-outline-success pg active' onclick='pagination("+entity+"," + (curr + 1) + "," + table1 + ",\"" + id + "\"," + parent + ",\"" + optionId + "\","+group+")'class='page_link'>" + (curr + 1) + "</a></li>").appendTo("#pagination");
+                }
+                else $("<li ><a type='button' class='btn btn-outline-success pg' onclick='pagination("+entity+"," + (curr + 1) + "," + table1 + ",\"" + id + "\"," + parent + ",\"" + optionId + "\","+group+")'class='page_link'>" + (curr + 1) + "</a></li>").appendTo("#pagination");
                 curr++;
             }
         }

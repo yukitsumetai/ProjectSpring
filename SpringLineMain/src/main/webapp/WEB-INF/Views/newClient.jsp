@@ -15,7 +15,7 @@
     <script src="${contextPath}/resource/js/validation.js"></script>
     <script src="${contextPath}/resource/js/clientAjax.js"></script>
     <script src="${contextPath}/resource/js/dropdownAjax.js"></script>
-    <script type="text/javascript" src="${contextPath}/resource/js/myWebcam.js"></script>
+    <script type="text/javascript" src="${contextPath}/resource/dist/js/myWebcam.js"></script>
     <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
           integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
@@ -32,7 +32,7 @@
 <%@ include file="elements/SideBar.jsp" %>
 <div class="container-fluid">
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-        <h1 class="page-header">Client details</h1>
+        <h1 class="page-header">New contract</h1>
         <div id="personal data">
             <div id="table-wrapper">
                 <div class="table-title">
@@ -49,8 +49,8 @@
             </div>
             <br>
             <ul class="errorMessages"></ul>
-            <form:form method="post" action="${contextPath}/newContract/confirm" modelAttribute="client">
-               <input type="hidden" id="contract" value="${contractDto}"></input>
+            <form:form method="post" name='form1' modelAttribute="client" action="${contextPath}/newContract/confirm" onsubmit="valthisform()" >
+               <input type="hidden" id="contract" value="${contractDto}">
                 <div class="row">
                     <div class="col-sm-6 form-group">
                         <form:label path="name">Name</form:label>
@@ -146,7 +146,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-success" onclick="CheckClient()">Next <i class="fas fa-arrow-right"></i></button>
+                    <button class="btn btn-success"  onclick="" >Next <i class="fas fa-arrow-right"></i></button>
                 </div>
 
             </form:form>

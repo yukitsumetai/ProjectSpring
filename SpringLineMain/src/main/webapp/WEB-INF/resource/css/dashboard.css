@@ -58,6 +58,10 @@
     background-color: #8d9f98;
 }
 
+.active{
+    background-color: #147b1e;
+}
+
 .radio{
     outline: #0f6514;
     border: #0f0f0f;
