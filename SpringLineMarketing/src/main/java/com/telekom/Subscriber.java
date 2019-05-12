@@ -1,6 +1,8 @@
 package com.telekom;
 
 
+import org.apache.log4j.Logger;
+
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
 import javax.faces.push.Push;
@@ -8,7 +10,6 @@ import javax.faces.push.PushContext;
 import javax.inject.Inject;
 import javax.jms.Message;
 import javax.jms.MessageListener;
-import javax.jms.TextMessage;
 
 
 @MessageDriven(name = "Listener1", activationConfig = {
@@ -24,18 +25,16 @@ class Subscriber implements MessageListener {
 
     @Inject
     TariffsConsumer tariffsConsumer;
-
-
+    @Inject
+    Logger logger;
 
 
     @Override
     public void onMessage(Message message) {
-            tariffsConsumer.getTariffs();
-            push.send("update");
+        logger.info("Message recieved");
+        tariffsConsumer.getTariffs();
+        push.send("update");
     }
-
-
-
 
 
 }

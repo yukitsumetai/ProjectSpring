@@ -68,7 +68,6 @@ mailSender.setProtocol("smtp");
         Properties props = new Properties();
         props.put("resource.loader", "class");
         props.put("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
-        //props.put("resource.loader.path", "/WEB-INF/resource/email/");
         return velocityEngine;
     }
 

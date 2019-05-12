@@ -22,12 +22,14 @@ public class AdminMenuController {
         logger.info("/tariffs");
         return "tariffs";
     }
+
     @GetMapping("/optionGroups")
     public String getOptionGroups(Model model){
         model.addAttribute("optionGroups", optionGroupService.getAll());
         logger.info("/optionGroups");
         return "optionGroups";
     }
+
     @GetMapping("/options")
     public String getOptions(Model model)  {
         model.addAttribute("table", "edit");

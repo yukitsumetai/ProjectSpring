@@ -1,7 +1,8 @@
 package com.telekom;
 
 
-import org.slf4j.Logger;
+import org.apache.log4j.Logger;
+
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;

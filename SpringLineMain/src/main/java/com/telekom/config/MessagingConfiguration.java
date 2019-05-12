@@ -16,7 +16,7 @@ public class MessagingConfiguration {
 
     private static final String ORDER_TOPIC = "testTopic";
     @Bean
-    public JndiObjectFactoryBean solicitudesConnectionFactory() {
+    public JndiObjectFactoryBean jndiObjectFactoryBean() {
         JndiObjectFactoryBean jndi = new JndiObjectFactoryBean();
         jndi.setJndiName("java:jboss/exported/jms/RemoteConnectionFactory");
         jndi.setLookupOnStartup(true);
@@ -29,8 +29,8 @@ public class MessagingConfiguration {
     @Bean
     public UserCredentialsConnectionFactoryAdapter ConnectionFactory(JndiObjectFactoryBean jndi) {
         UserCredentialsConnectionFactoryAdapter  adapter= new UserCredentialsConnectionFactoryAdapter();
-        adapter.setPassword("ekakoc");
-        adapter.setUsername("ekakoc2");
+        adapter.setUsername("ekakoc");
+        adapter.setPassword("ekakoc2");
         adapter.setTargetConnectionFactory( (ConnectionFactory) Objects.requireNonNull(jndi.getObject()));
         return adapter;
     }
@@ -44,15 +44,6 @@ public class MessagingConfiguration {
         return cachingConnectionFactory;
     }
 
-
-    /*
-    @Bean
-    public ActiveMQConnectionFactory connectionFactory() {
-
-        ConnectionFactory connectionFactory = InitialContext.doLookup("java:/ConnectionFactory");
-        return connectionFactory;
-    }
-*/
     @Bean
     public JmsTemplate jmsTemplate(CachingConnectionFactory cf) {
         JmsTemplate template = new JmsTemplate();

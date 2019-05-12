@@ -37,7 +37,7 @@ public class TariffServiceImpl extends SharedFunctions<TariffDto> implements Tar
 
    private List<TariffDto> listEntityToDto(List<Tariff> tariffs) {
         List<TariffDto> tariffsDTO = new ArrayList<>();
-       if(tariffs==null) return tariffsDTO;
+        if (tariffs == null) return tariffsDTO;
         for (Tariff t : tariffs) {
 
             tariffsDTO.add(tariffMapper.entityToDto(t));
@@ -70,7 +70,7 @@ public class TariffServiceImpl extends SharedFunctions<TariffDto> implements Tar
         logger.info("Getting tariffs for option");
         List<TariffDto> pageGroups = listEntityToDto(tariffDao.getPages(size, page));
         Set<Tariff> existing = optionDao.getOne(optionId).getCompatibleTariffs();
-       for (Tariff i : existing) {
+        for (Tariff i : existing) {
             for (TariffDto o : pageGroups
             ) {
                 if (o.getId() == i.getId()) o.setExisting(true);
@@ -83,9 +83,18 @@ public class TariffServiceImpl extends SharedFunctions<TariffDto> implements Tar
     @Override
     @Transactional
     public List<TariffDto> getAllPromoted() {
+        List<Tariff> tariffs = tariffDao.getAllPromoted();
+        List<TariffDto> tariffsDTO = new ArrayList<>();
+        if (tariffs == null) return tariffsDTO;
+        for (Tariff t : tariffs) {
 
-        return listEntityToDto(tariffDao.getAllPromoted());
+            tariffsDTO.add(tariffMapper.entityToDtoWithoutOptions(t));
+        }
+        return tariffsDTO;
     }
+
+
+
 
 
     @Override

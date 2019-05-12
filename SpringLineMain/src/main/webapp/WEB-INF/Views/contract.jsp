@@ -47,20 +47,18 @@
 
             <c:choose>
                 <c:when test="${table=='add'}">
-                    <label class="control-label">Send bills by email: </label>
-                    <row>
-            <form class="form-group" action="${urlPath}/true" method="post">
-                <input type="checkbox" class="chk" name="email" id="email"/>
-                    <br>
-                        <button class="btn btn-success" onclick="window.print()">Print <i class="fas fa-print"></i>
-                        </button>
-
+                    <form class="form-group" action="${urlPath}/true" method="post">
+                        <label class="control-label">Send bills by email: </label>
+                        <input type="checkbox" class="chk" name="email" id="email"/>
+                        <row>
+                            <br>
+                            <button class="btn btn-success" onclick="window.print()">Print <i class="fas fa-print"></i>
+                            </button>
                             <button type="submit" class="btn btn-success">Confirm <i class="far fa-save"></i></button>
-                        </form>
-                        <form class="form-group" action="${contextPath}/welcome">
-                            <button type="submit" class="btn btn-danger">Cancel <i class="fas fa-times"></i></button>
-                        </form>
-                    </row>
+                            <a type="button" href="${contextPath}/welcome"
+                               class="btn btn-danger">Cancel <i class="fas fa-times"></i></a>
+                        </row>
+                    </form>
                 </c:when>
                 <c:otherwise>
                     <div class="row">

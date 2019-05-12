@@ -9,7 +9,7 @@
 
 </h:head>
 <h:body>
-    <h1> Best deals are now available for you! </h1>
+    <h1> Spring Line best deals! </h1>
     <br></br>
     <h:dataTable id="tariffsList" value="#{tariffsConsumer.tariffsList}" var="t"
                  styleClass="order-table"
@@ -24,17 +24,13 @@
         </h:column>
 
         <h:column>
-            <f:facet name="header">Price</f:facet>
-            #{t.price}
-        </h:column>
-
-        <h:column>
             <f:facet name="header">Description</f:facet>
             #{t.description}
         </h:column>
 
         <h:column>
-            <f:facet name="header">Compatible Options</f:facet>
+            <f:facet name="header">Price, $</f:facet>
+            #{t.price}
         </h:column>
 
     </h:dataTable>
@@ -43,7 +39,6 @@
             <f:ajax event="update" render=":tariffsList" />
         </f:websocket>
 
-    <br></br>
 
     <h:form>
         <h:commandButton id="input1" value="Update" >
