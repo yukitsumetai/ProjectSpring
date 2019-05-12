@@ -75,8 +75,7 @@ function configure() {
     Webcam.set({
         width: 640,
         height: 360,
-        image_format: 'jpeg',
-        jpeg_quality: 100,
+        image_format: 'jpeg'
 
     });
     Webcam.attach('#my_camera');

@@ -25,13 +25,13 @@ class Subscriber implements MessageListener {
 
     @Inject
     TariffsConsumer tariffsConsumer;
-    @Inject
-    Logger logger;
+//    @Inject
+//    Logger logger;
 
 
     @Override
     public void onMessage(Message message) {
-        logger.info("Message recieved");
+     //   logger.info("Message recieved");
         tariffsConsumer.getTariffs();
         push.send("update");
     }

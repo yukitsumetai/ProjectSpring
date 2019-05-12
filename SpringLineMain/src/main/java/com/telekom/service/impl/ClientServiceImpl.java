@@ -100,7 +100,7 @@ public class ClientServiceImpl extends PaginationImpl<ClientDto> implements Clie
         byte[] decodedBytes = Base64.getDecoder().decode(image);
 
         Properties props = System.getProperties();
-        String pathName = ".\\..\\standalone\\tmp\\" + id + ".jpeg";
+        String pathName = ".\\standalone\\tmp\\" + id + ".jpeg";
         File file = new File(pathName);
         try {
             FileUtils.writeByteArrayToFile(file, decodedBytes);
