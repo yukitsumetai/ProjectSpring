@@ -54,7 +54,7 @@ function addRowClient(val, table) {
     var contracts = [];
     $.each(val.contracts, function (key, option) {
         var c = (option || {}).phoneNumber;
-        c2 = (typeof (c) !== 'undefined' ? c : '');
+        var c2 = (typeof (c) !== 'undefined' ? c : '');
         icon = "<a href='/existingContract/" + c2 + "' class='edit' title='Edit'><i class='material-icons'>&#xE254;</i></a>";
         contracts.push(c2 + icon + "<br>");
     });
@@ -81,8 +81,7 @@ function configure() {
     Webcam.set({
         width: 640,
         height: 360,
-        image_format: 'jpeg',
-        jpeg_quality: 100,
+        image_format: 'jpeg'
 
     });
     Webcam.attach('#my_camera');
@@ -114,7 +113,6 @@ function closeCamera() {
     document.getElementById('cameraButtons').innerHTML =
         '<button class="btn btn-success" onclick="configure()">Use Camera</button>';
     Webcam.reset();
-    Webcam
     document.getElementById('my_camera').style.display = "none";
 }
 
@@ -122,7 +120,6 @@ function saveSnap() {
 
     var file = document.getElementById("imageprev").src;
     var id = document.getElementById('contract').value;
-    var passdata = {"imageprev": file}
     $.ajax({
         type: "POST",
         url: "/springLine/captureImage",

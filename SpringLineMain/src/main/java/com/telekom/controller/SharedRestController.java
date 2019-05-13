@@ -1,7 +1,7 @@
 package com.telekom.controller;
 
 
-import com.telekom.model.entity.PhoneNumber;
+import com.telekom.model.entity.FreePhoneNumber;
 import com.telekom.model.dto.*;
 import com.telekom.service.api.*;
 import org.apache.log4j.Logger;
@@ -35,9 +35,9 @@ public class SharedRestController {
     private Logger logger;
 
     @GetMapping(value = "/phoneNumbers")
-    public List<PhoneNumber> pagePhoneNumber(@RequestParam Integer page) {
+    public List<FreePhoneNumber> pagePhoneNumber(@RequestParam Integer page) {
 
-        Page<PhoneNumber> resultPage = phoneNumberService.getPage(GROUPS_PER_PAGE, 1);
+        Page<FreePhoneNumber> resultPage = phoneNumberService.getPage(GROUPS_PER_PAGE, 1);
         if (page > resultPage.getTotalPages()) {
             throw new NullPointerException();
         }
@@ -107,7 +107,7 @@ public class SharedRestController {
 
     @PostMapping("/captureImage")
     public ClientDto performOCR(@RequestParam(name = "imageprev") String image, @RequestParam(name = "contract") String id) {
-        id = id.substring(id.lastIndexOf("@") + 1);
+        id = id.substring(id.lastIndexOf('@') + 1);
         ClientDto client = clientService.performOcr(image, id);
         return client;
     }

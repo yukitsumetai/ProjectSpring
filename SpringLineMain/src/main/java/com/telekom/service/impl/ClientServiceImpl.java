@@ -132,10 +132,10 @@ public class ClientServiceImpl extends PaginationImpl<ClientDto> implements Clie
     public ClientDto performOcr(String image, String id) {
         logger.info("Saving Image");
         ClientDto client = new ClientDto();
-        image = image.substring(image.lastIndexOf(",") + 1);
+        image = image.substring(image.lastIndexOf(',') + 1);
         byte[] decodedBytes = Base64.getDecoder().decode(image);
 
-        String pathName = ".\\..\\standalone\\tmp\\" + id + ".jpeg";
+        String pathName = ".\\standalone\\tmp\\" + id + ".jpeg";
         File file = new File(pathName);
         try {
             FileUtils.writeByteArrayToFile(file, decodedBytes);
@@ -147,4 +147,5 @@ public class ClientServiceImpl extends PaginationImpl<ClientDto> implements Clie
         file.delete();
         return client;
     }
+
 }

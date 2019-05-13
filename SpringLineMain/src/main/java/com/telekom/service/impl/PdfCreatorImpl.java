@@ -39,7 +39,7 @@ public class PdfCreatorImpl implements PdfCreator {
     @Override
     public String createPdf(ContractDto contract) {
         Document document = new Document();
-        String pdfName = ".\\..\\standalone\\tmp\\"+ contract.getPhoneNumber() + ".pdf";
+        String pdfName = ".\\standalone\\tmp\\"+ contract.getPhoneNumber() + ".pdf";
         logger.info("Creating pdf " +pdfName);
         try {
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(pdfName));

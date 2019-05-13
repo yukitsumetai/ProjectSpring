@@ -31,10 +31,10 @@
         params: {
             width: 0,
             height: 0,
-            dest_width: 3200,
-            dest_height: 1800,
+            dest_width: 1920,
+            dest_height: 1080,
             image_format: "jpeg",
-            jpeg_quality: 90,
+            jpeg_quality: 100,
             enable_flash: true,
             force_flash: false,
             flip_horiz: false,

@@ -8,30 +8,27 @@ import org.springframework.jms.connection.UserCredentialsConnectionFactoryAdapte
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jndi.JndiObjectFactoryBean;
 import javax.jms.ConnectionFactory;
-import java.util.Objects;
-
 
 @Configuration
 public class MessagingConfiguration {
 
-    private static final String ORDER_TOPIC = "testTopic";
+    private static final String QUEUE = "testTopic";
+
     @Bean
     public JndiObjectFactoryBean jndiObjectFactoryBean() {
         JndiObjectFactoryBean jndi = new JndiObjectFactoryBean();
         jndi.setJndiName("java:jboss/exported/jms/RemoteConnectionFactory");
         jndi.setLookupOnStartup(true);
         jndi.setProxyInterface(ConnectionFactory.class);
-
         return jndi;
     }
 
-
     @Bean
     public UserCredentialsConnectionFactoryAdapter ConnectionFactory(JndiObjectFactoryBean jndi) {
-        UserCredentialsConnectionFactoryAdapter  adapter= new UserCredentialsConnectionFactoryAdapter();
-        adapter.setUsername("ekakoc");
-        adapter.setPassword("ekakoc2");
-        adapter.setTargetConnectionFactory( (ConnectionFactory) Objects.requireNonNull(jndi.getObject()));
+        UserCredentialsConnectionFactoryAdapter adapter= new UserCredentialsConnectionFactoryAdapter();
+        adapter.setUsername("ekakoc2");
+        adapter.setPassword("ekakoc");
+        adapter.setTargetConnectionFactory( (ConnectionFactory)jndi.getObject());
         return adapter;
     }
 
@@ -48,7 +45,7 @@ public class MessagingConfiguration {
     public JmsTemplate jmsTemplate(CachingConnectionFactory cf) {
         JmsTemplate template = new JmsTemplate();
         template.setConnectionFactory(cf);
-        template.setDefaultDestinationName(ORDER_TOPIC);
+        template.setDefaultDestinationName(QUEUE);
        template.setPubSubDomain(true); //creates topic
         return template;
     }

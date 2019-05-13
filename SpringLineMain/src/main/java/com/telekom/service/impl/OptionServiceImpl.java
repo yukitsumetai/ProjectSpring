@@ -348,7 +348,7 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
             for (TariffDto t : tariffs
             ) {
                 Tariff tmp = tariffDao.getOne(t.getId());
-               tmp.addOption(option);
+                tmp.addOption(option);
             }
         }
     }
@@ -371,17 +371,16 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
             }
         }
         //Add children if exist
-        if (option.getParent() == null) {
-            if (!optionDto.getChildren().isEmpty()) {
-                logger.info("Adding children");
-                Set<OptionDto> children = optionDto.getChildren();
-                for (OptionDto child : children
-                ) {
-                    Option tmp = optionDao.getOne(child.getId());
-                    if (option != tmp && tmp.getParent() == null && tmp.getChildren().isEmpty()) {
-                        tmp.setParent(option);
-                        tmp.setGroup(null);
-                    }
+        if (option.getParent() == null && !optionDto.getChildren().isEmpty()) {
+
+            logger.info("Adding children");
+            Set<OptionDto> children = optionDto.getChildren();
+            for (OptionDto child : children
+            ) {
+                Option tmp = optionDao.getOne(child.getId());
+                if (option != tmp && tmp.getParent() == null && tmp.getChildren().isEmpty()) {
+                    tmp.setParent(option);
+                    tmp.setGroup(null);
                 }
             }
         }
@@ -462,7 +461,7 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
         o.setValid(option.isIsValid());
         updateOptionParent(option, o);
         updateOptionGroup(option, o);
-       o.setDescription(option.getDescription());
+        o.setDescription(option.getDescription());
         updateTariff(option, o);
         updateChildren(option, o);
     }
@@ -487,7 +486,7 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
     public void deleteOption(Integer id) {
         logger.info("Deleting options " + id);
         Option option = optionDao.getOne(id);
-        if(option!=null) {
+        if (option != null) {
             option.setValid(false);
         }
     }

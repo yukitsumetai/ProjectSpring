@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public abstract class SharedFunctions<T> extends PaginationImpl {
+public abstract class SharedFunctions extends PaginationImpl {
     /**
      * Template for functions in Tariff and Option Group services to set compatible options
      * @param sharedDto

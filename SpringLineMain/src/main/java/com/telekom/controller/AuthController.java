@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class AuthController {
+    String login="login";
     @Autowired
     ClientService clientService;
 
@@ -23,13 +24,13 @@ public class AuthController {
 
     @GetMapping("/login/{phone}")
     public String login(Model model, @PathVariable(value = "phone", required=false) String phone) {
-        model.addAttribute("login", phone);
-        return "login";
+        model.addAttribute(login, phone);
+        return login;
     }
 
     @GetMapping("/login")
     public String login() {
-        return "login";
+        return login;
     }
 
     @GetMapping("/welcome")

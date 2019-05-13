@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -18,7 +19,9 @@ import java.util.List;
 @SessionAttributes(types = ContractDto.class)
 @RequestMapping(value = "/newContract")
 public class ContractController {
-
+    public static final String table = "table";
+    public static final String message = "message";
+    public static final String error = "error";
     @Autowired
     private ClientService clientService;
 
@@ -31,13 +34,12 @@ public class ContractController {
     @Autowired
     private ImageRecognitionImpl imageRecognition;
 
-    @GetMapping("/tariffs")
+    @GetMapping("tariffs")
     public String start(Model model) {
         logger.info("Starting new contract");
         ContractDto contract = new ContractDto();
         model.addAttribute(contract);
-        model.addAttribute("table", "add");
-        //contractService.sendEmail(false, contractService.getTariff("4917620093100"));
+        model.addAttribute(table, "add");
         return "tariffs";
     }
 
@@ -46,13 +48,13 @@ public class ContractController {
     public String newContractTariffAdd(Model model, ContractDto contract, @RequestParam(name = "tariffID2") Integer id) {
         logger.info("Setting tariff in new contract, tariff id " + id);
         if (!contractService.setTariff(contract, id)) {
-            model.addAttribute("message", "Tariff is not valid");
-            return "error";
+            model.addAttribute(message, "Tariff is not valid");
+            return error;
         }
         model.addAttribute("options", contractService.getOptionsParents(contract));
         model.addAttribute("optionGroups", contractService.getGroups(contract));
         model.addAttribute("children", contractService.getOptionsChildren(contract));
-        model.addAttribute("table", "add");
+        model.addAttribute(table, "add");
         model.addAttribute("NEB", "yes");
         return "contractOptions";
     }
@@ -61,10 +63,10 @@ public class ContractController {
     public String newContractOptionAdd(Model model, ContractDto contract, @RequestParam(name = "action") String action, @RequestParam(name = "optionID", required = false) List<Integer> id) {
         logger.info("Setting options and getting client for new contract, client " + action);
         if (!contractService.setOptions(contract, id, false)) {
-            model.addAttribute("message", "Options are not compatible");
-            return "error";
+            model.addAttribute(message, "Options are not compatible");
+            return error;
         }
-        model.addAttribute("table", "add");
+        model.addAttribute(table, "add");
         if (action.equals("new")) {
             ClientDto client = new ClientDto();
             AddressDto a = new AddressDto();
@@ -79,7 +81,7 @@ public class ContractController {
     @PostMapping("/confirmExisting")
     public String newContractOptionAdd(Model model, ContractDto contract, @RequestParam(name = "clientID2") Integer id, @RequestParam String phoneNumber) {
         logger.info("Existing client, adding phone number" + phoneNumber);
-        model.addAttribute("table", "add");
+        model.addAttribute(table, "add");
         contract.setClient(clientService.getClient(id));
         contract.setPhoneNumber(phoneNumber);
         return "contract";
@@ -89,38 +91,40 @@ public class ContractController {
     public String newContractOptionAdd(Model model, ContractDto contract, @ModelAttribute @Valid ClientDto client, BindingResult bindingResult) {
         logger.info("New client, adding phone number" + client.getPhoneNumber());
         if (bindingResult.hasErrors()) {
-            model.addAttribute("message", "Operation cannot be proceeded further because received data contains some errors");
-            return "error";
+            model.addAttribute(message, "Operation cannot be proceeded further because received data contains some errors");
+            return error;
         }
-        model.addAttribute("table", "add");
+        model.addAttribute(table, "add");
         contract.setClient(client);
         contract.setPhoneNumber(client.getPhoneNumber());
         return "contract";
     }
 
     @PostMapping("/confirm/true")
-    public String confirmation(Model model, ContractDto contract, @RequestParam(required = false) Boolean email) {
+    public String confirmation(Model model, ContractDto contract, @RequestParam(required = false) Boolean email, SessionStatus status) {
         contractService.add(contract);
         if (email) {
-            boolean correct = contractService.sendEmail(true, contract);
+            boolean correct = contractService.sendPdf(true, contract);
             if (!correct) {
-                model.addAttribute("message", "Email was not sent");
-                return "error";
+                model.addAttribute(message, "Email was not sent");
+                return error;
             }
         }
+        status.setComplete();
         return "redirect:/existingContract/" + contract.getPhoneNumber();
     }
 
     @PostMapping("/confirmExisting/true")
-    public String confirmationExisting(Model model, ContractDto contract, @RequestParam(required = false) Boolean email) {
+    public String confirmationExisting(Model model, ContractDto contract, @RequestParam(required = false) Boolean email, SessionStatus status) {
         contractService.add(contract);
         if (email) {
-            boolean correct = contractService.sendEmail(false, contract);
+            boolean correct = contractService.sendPdf(false, contract);
             if (!correct) {
-                model.addAttribute("message", "Email was not sent");
-                return "error";
+                model.addAttribute(message, "Email was not sent");
+                return error ;
             }
         }
+        status.setComplete();
         return "redirect:/existingContract/" + contract.getPhoneNumber();
     }
 }

@@ -49,7 +49,6 @@
     <c:if test="${table=='add'}">
         <%@ include file="shoppingCart.jsp" %>
     </c:if>
-    <!--end navbar-right -->
 
 </nav>
 

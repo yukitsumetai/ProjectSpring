@@ -20,7 +20,7 @@ import java.util.*;
 
 
 @Service
-public class TariffServiceImpl extends SharedFunctions<TariffDto> implements TariffService {
+public class TariffServiceImpl extends SharedFunctions implements TariffService {
 
 
     @Autowired
@@ -44,7 +44,6 @@ public class TariffServiceImpl extends SharedFunctions<TariffDto> implements Tar
         List<TariffDto> tariffsDTO = new ArrayList<>();
         if (tariffs == null) return tariffsDTO;
         for (Tariff t : tariffs) {
-
             tariffsDTO.add(tariffMapper.entityToDto(t));
         }
         return tariffsDTO;
@@ -125,9 +124,6 @@ public class TariffServiceImpl extends SharedFunctions<TariffDto> implements Tar
         }
         return tariffsDTO;
     }
-
-
-
 
     /**
      * Returns all valid tariffs

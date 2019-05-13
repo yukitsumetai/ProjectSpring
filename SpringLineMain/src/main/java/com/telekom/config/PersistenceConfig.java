@@ -1,7 +1,9 @@
 package com.telekom.config;
 
+import org.apache.log4j.Logger;
 import org.flywaydb.core.Flyway;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,11 +26,15 @@ import java.util.Properties;
 @PropertySource("classpath:persistence.properties")
 @EnableTransactionManagement
 public class PersistenceConfig {
+    @Autowired
+    private Logger logger;
+
     @Bean
     public DataSource dataSource(@Value("${driver}") String driver,
                                  @Value("${url}") String url,
                                  @Value("${user}") String user,
                                  @Value("${password}") String password) {
+        logger.info("Connecting to db: " +url);
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(driver);
         dataSource.setUrl(url);
@@ -39,6 +45,7 @@ public class PersistenceConfig {
 
     @Bean(initMethod = "migrate")
     Flyway flyway(DataSource dataSource) {
+        logger.info("Setting FlyWay");
         Flyway flyway = new Flyway();
         flyway.setDataSource(dataSource);
         return flyway;
@@ -54,9 +61,9 @@ public class PersistenceConfig {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource);
         sessionFactory.setPackagesToScan("com.telekom.model.entity");
-        sessionFactory.setHibernateProperties(new Properties() {{
-            put("hibernate.show_sql", true);
-        }});
+        Properties properties = new Properties();
+        properties.put("hibernate.show_sql", true);
+        sessionFactory.setHibernateProperties(properties);
         return sessionFactory;
     }
 

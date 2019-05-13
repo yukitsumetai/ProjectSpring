@@ -26,10 +26,12 @@ public class JmsServiceImpl implements JmsService {
      */
     @Override
     public void sendMessage() {
-        jmsTemplate.send(session -> {
-            logger.info("SpringLine sends message about promoted tariff update");
-            TextMessage textMessage = session.createTextMessage("update");
-            return textMessage;
+        jmsTemplate.send( new MessageCreator() {
+            @Override
+            public Message createMessage(Session session) throws JMSException {
+                logger.info("SpringLine sends message about promoted tariff update");
+                return session.createTextMessage("update");
+            }
         });
     }
 

@@ -24,7 +24,6 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resource/**").addResourceLocations("/WEB-INF/resource/");
-       // registry.addResourceHandler("/springLine/resource/**").addResourceLocations("/WEB-INF/resource/");
     }
 
 

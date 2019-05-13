@@ -117,18 +117,18 @@ function radioBasket(tariffPrice){
     }
 
     $('.generated').remove();
-    var checkboxes = document.getElementsByClassName('myClass1');
-    for (var i = 0; i < checkboxes.length; i++) {
-        if (checkboxes[i].checked) {
-            var name = checkboxes[i].getAttribute('optionName');
-            var price = '$' + checkboxes[i].getAttribute('price');
-            priceTotal+=parseFloat(checkboxes[i].getAttribute('price'));
-            priceTotalOneTime+=parseFloat(checkboxes[i].getAttribute('priceOneTime'));
-            var priceOneTime = '$' + checkboxes[i].getAttribute('priceOneTime');
-            var newInput = '<li class="generated">' + name +
-                '<div class="cd-price">Monthly price<span class="right">' + price + '</span></div> ' +
-                '<span class="cd-price">One time price<span  class="right">' + priceOneTime + '</span></span>';
-            document.getElementById('optionsCart').insertAdjacentHTML('beforeend', newInput);
+    var checkboxes2 = document.getElementsByClassName('myClass1');
+    for (var j = 0; j < checkboxes2.length; j++) {
+        if (checkboxes2[j].checked) {
+            var name2 = checkboxes2[j].getAttribute('optionName');
+            var price2 = '$' + checkboxes2[j].getAttribute('price');
+            priceTotal+=parseFloat(checkboxes2[j].getAttribute('price'));
+            priceTotalOneTime+=parseFloat(checkboxes2[j].getAttribute('priceOneTime'));
+            var priceOneTime2 = '$' + checkboxes2[j].getAttribute('priceOneTime');
+            var newInput2 = '<li class="generated">' + name2 +
+                '<div class="cd-price">Monthly price<span class="right">' + price2 + '</span></div> ' +
+                '<span class="cd-price">One time price<span  class="right">' + priceOneTime2 + '</span></span>';
+            document.getElementById('optionsCart').insertAdjacentHTML('beforeend', newInput2);
         }
     }
     document.getElementById("totalMonthlyPrice").innerHTML = "$" + Number(priceTotal.toFixed(2));
@@ -153,11 +153,11 @@ function checksBasket(tariffPrice){
             document.getElementById('optionsCart').insertAdjacentHTML('beforeend', newInput);
         }
     }
-    var checkboxes = document.getElementsByClassName('myClass');
-    for (var i = 0; i < checkboxes.length; i++) {
-        if (checkboxes[i].checked) {
-            priceTotal+=parseFloat(checkboxes[i].getAttribute('price'));
-            priceTotalOneTime+=parseFloat(checkboxes[i].getAttribute('priceOneTime'));
+    var checkboxes2 = document.getElementsByClassName('myClass');
+    for (var j = 0; i < checkboxes.length; j++) {
+        if (checkboxes2[j].checked) {
+            priceTotal+=parseFloat(checkboxes2[j].getAttribute('price'));
+            priceTotalOneTime+=parseFloat(checkboxes2[j].getAttribute('priceOneTime'));
         }
     }
     document.getElementById("totalMonthlyPrice").innerHTML = "$" + Number(priceTotal.toFixed(2));

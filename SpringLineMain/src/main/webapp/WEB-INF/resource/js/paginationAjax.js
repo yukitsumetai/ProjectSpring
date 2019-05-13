@@ -74,14 +74,14 @@ function addRowsOption(data, table) {
         var childrenTable = [];
         $.each(val.children, function (key, children) {
             var c = (children || {}).name;
-            c2 = (typeof (c) !== 'undefined' ? c : '');
+            var c2 = (typeof (c) !== 'undefined' ? c : '');
             childrenTable.push(c2 + "<br>");
         });
 
         var tariffsTable = [];
         $.each(val.compatibleTariffs, function (key, tariff) {
             var c = (tariff || {}).name;
-            c2 = (typeof (c) !== 'undefined' ? c : '');
+            var c2 = (typeof (c) !== 'undefined' ? c : '');
             tariffsTable.push(c2 + "<br>");
         });
         var icon;
