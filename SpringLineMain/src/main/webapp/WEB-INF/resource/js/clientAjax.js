@@ -107,7 +107,6 @@ function closeCamera() {
     document.getElementById('cameraButtons').innerHTML =
         '<button class="btn btn-success" onclick="configure()">Use Camera</button>';
     Webcam.reset();
-    Webcam
     document.getElementById('my_camera').style.display = "none";
 }
 
