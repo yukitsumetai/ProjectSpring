@@ -4,7 +4,7 @@ package com.telekom.service;
 import com.telekom.config.PhoneNumberServiceConfig;
 import com.telekom.dao.api.PhoneNumberDao;
 import com.telekom.model.dto.Page;
-import com.telekom.model.entity.PhoneNumber;
+import com.telekom.model.entity.FreePhoneNumber;
 import com.telekom.service.impl.PhoneNumberServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = PhoneNumberServiceConfig.class, loader = AnnotationConfigContextLoader.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class PhoneNumberServiceTest {
+class FreePhoneNumberServiceTest {
 
     @Autowired
     private PhoneNumberServiceImpl phoneNumberService;
@@ -35,12 +35,12 @@ class PhoneNumberServiceTest {
 
     private Page page;
 
-    private static PhoneNumber phoneNumber;
+    private static FreePhoneNumber phoneNumber;
 
     @Test
     void getPageReturnsPhoneNumbersPaged() {
-        List<PhoneNumber> numbers=new ArrayList<>();
-        phoneNumber = new PhoneNumber();
+        List<FreePhoneNumber> numbers=new ArrayList<>();
+        phoneNumber = new FreePhoneNumber();
         numbers.add(phoneNumber);
 
         when(phoneNumberDao.getPages(1, 1)).thenReturn(numbers);

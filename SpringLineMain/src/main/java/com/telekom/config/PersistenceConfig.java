@@ -34,7 +34,7 @@ public class PersistenceConfig {
                                  @Value("${url}") String url,
                                  @Value("${user}") String user,
                                  @Value("${password}") String password) {
-        logger.info(url);
+        logger.info("Connecting to db: " +url);
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(driver);
         dataSource.setUrl(url);
@@ -45,6 +45,7 @@ public class PersistenceConfig {
 
     @Bean(initMethod = "migrate")
     Flyway flyway(DataSource dataSource) {
+        logger.info("Setting FlyWay");
         Flyway flyway = new Flyway();
         flyway.setDataSource(dataSource);
         return flyway;

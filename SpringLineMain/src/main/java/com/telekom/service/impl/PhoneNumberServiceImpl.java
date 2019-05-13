@@ -2,7 +2,7 @@ package com.telekom.service.impl;
 
 
 import com.telekom.dao.api.PhoneNumberDao;
-import com.telekom.model.entity.PhoneNumber;
+import com.telekom.model.entity.FreePhoneNumber;
 import com.telekom.model.dto.Page;
 import com.telekom.service.api.PhoneNumberService;
 import org.apache.log4j.Logger;
@@ -15,7 +15,7 @@ import java.util.List;
 
 @Service
 
-public class PhoneNumberServiceImpl extends PaginationImpl<PhoneNumber> implements PhoneNumberService {
+public class PhoneNumberServiceImpl extends PaginationImpl<FreePhoneNumber> implements PhoneNumberService {
 
 
     @Autowired
@@ -26,9 +26,9 @@ public class PhoneNumberServiceImpl extends PaginationImpl<PhoneNumber> implemen
 
     @Override
     @Transactional
-    public Page<PhoneNumber> getPage(Integer size, Integer page) {
+    public Page<FreePhoneNumber> getPage(Integer size, Integer page) {
         logger.info("Getting phone number, page "+page);
-        List<PhoneNumber> pageGroups =phoneNumberDao.getPages(size, page);
+        List<FreePhoneNumber> pageGroups =phoneNumberDao.getPages(size, page);
         Long total=phoneNumberDao.getPagesCount();
         return getPageDraft(pageGroups, total, page, size);
     }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -15,41 +16,43 @@ import java.util.List;
 @RequestMapping(value = "/tariffs")
 @Controller
 public class TariffController {
-    private final static String tariffPage="redirect:/tariffs";
+    private final static String tariffPage = "redirect:/tariffs";
     @Autowired
     private TariffService tariffService;
 
     @GetMapping("/new")
     public String newTariff(Model model) {
         TariffDto tariff = new TariffDto();
-        model.addAttribute( tariff);
+        model.addAttribute(tariff);
         return "addTariff";
     }
 
     @PostMapping("/new")
     public String newTariffAdd(Model model, @Valid TariffDto tariff, BindingResult bindingResult, @RequestParam(name = "isValid", required = false) boolean validity,
                                @RequestParam(name = "isPromoted", required = false) boolean promotion,
-                               @RequestParam(name = "compatibleOptions", required = false) boolean options) {
+                               @RequestParam(name = "compatibleOptions", required = false) boolean options, SessionStatus status) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("error", "Tariff cannot be added because received data contains some errors");
             return "addTariff";
         } else {
             if (!validity) tariff.setIsValid(false);
-             tariff.setPromoted(promotion);
+            tariff.setPromoted(promotion);
             if (options) {
                 return "options";
             }
             tariffService.add(tariff);
             tariffService.notify(tariff);
+            status.setComplete();
             return tariffPage;
         }
     }
 
     @PostMapping("/new/options")
-    public String newTariffOptions(TariffDto tariff, @RequestParam(name = "optionID2", required = false) List<Integer> id) {
+    public String newTariffOptions(TariffDto tariff, @RequestParam(name = "optionID2", required = false) List<Integer> id, SessionStatus status) {
         tariffService.setOptionsDto(tariff, id);
         tariffService.add(tariff);
         tariffService.notify(tariff);
+        status.setComplete();
         return tariffPage;
     }
 
@@ -63,30 +66,34 @@ public class TariffController {
 
     @PostMapping("/edit")
     public String editProduct(Model model, @ModelAttribute(value = "tariff") TariffDto tariff, @RequestParam(name = "compatibleOptions", required = false) boolean options,
-                              @RequestParam(name = "isPromoted", required = false) boolean promotion,  @RequestParam(name = "initialState") boolean initialState) {
+                              @RequestParam(name = "isPromoted", required = false) boolean promotion,
+                              @RequestParam(name = "initialState") boolean initialState, SessionStatus status) {
         tariff.setPromoted(promotion);
         if (options) {
             model.addAttribute("existing", tariff.getOptions());
             model.addAttribute("id", tariff.getId());
-            model.addAttribute("promoted",  initialState);
+            model.addAttribute("promoted", initialState);
             return "options";
         }
         tariffService.editTariff(tariff);
-        tariffService.notify(tariff,  initialState);
+        tariffService.notify(tariff, initialState);
+        status.setComplete();
         return tariffPage;
     }
 
     @PostMapping("/edit/options")
     public String editTariffOptions(@ModelAttribute(value = "tariff") TariffDto tariff, @RequestParam(name = "optionID2", required = false) List<Integer> id,
-             @RequestParam(name = "initialState") boolean initialState) {
+                                    @RequestParam(name = "initialState") boolean initialState, SessionStatus status) {
         tariffService.setOptionsDto(tariff, id);
         tariffService.editTariff(tariff);
-        tariffService.notify(tariff,  initialState);
+        tariffService.notify(tariff, initialState);
+        status.setComplete();
         return tariffPage;
     }
 
     /**
      * gfujcgjgv
+     *
      * @param id
      * @return
      */

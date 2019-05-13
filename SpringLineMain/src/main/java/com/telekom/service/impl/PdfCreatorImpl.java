@@ -37,9 +37,6 @@ public class PdfCreatorImpl implements PdfCreator {
         String pdfName = ".\\standalone\\tmp\\"+ contract.getPhoneNumber() + ".pdf";
         logger.info("Creating pdf " +pdfName);
         try {
-
-            //Properties props = System.getProperties();
-
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(pdfName));
             initializeFonts();
 

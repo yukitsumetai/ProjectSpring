@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,9 @@ import java.util.Set;
 @RequestMapping(value = "/existingContract")
 
 public class ExistingContractController {
+public static final String TABLE = "table";
+public static final String MESSAGE = "table";
+public static final String EXISTING_CONTRACT = "redirect:/existingContract/";
 
     @Autowired
     ContractService contractService;
@@ -44,7 +48,7 @@ public class ExistingContractController {
         logger.info("Changing tariff, contract is blocked - "+ contract.isBlocked());
         if (!contract.isBlocked()) {
             model.addAttribute("tariffs", contractService.getTariffsForAdd(contract));
-            model.addAttribute("table", "add");
+            model.addAttribute(TABLE, "add");
             model.addAttribute("NEB", "no");
             contract.setTariff(null);
             contract.setOptions(null);
@@ -54,24 +58,26 @@ public class ExistingContractController {
     }
 
     @PostMapping("/tariffs")
-    public String tariffAdd(Model model, ContractDto contract, @RequestParam(name = "tariffID2") Integer id) {
+    public String tariffAdd(Model model, ContractDto contract, @RequestParam(name = "tariffID2")Integer id) {
         if(!contractService.setTariff(contract, id)){
-            model.addAttribute("message", "Tariff is not valid");
+            model.addAttribute(MESSAGE, "Tariff is not valid");
             return "error";
         }
+
         return "redirect:/existingContract/confirm";
     }
 
     @GetMapping("/confirm")
     public String confirm(Model model) {
-        model.addAttribute("table", "add");
+        model.addAttribute(TABLE, "add");
         return "contract";
     }
 
     @PostMapping("/confirm/true")
-    public String confirmation(ContractDto contract) {
+    public String confirmation(ContractDto contract, SessionStatus status) {
         contractService.update(contract);
-        return "redirect:/existingContract/" + contract.getPhoneNumber();
+        status.setComplete();
+        return EXISTING_CONTRACT + contract.getPhoneNumber();
     }
 
     @GetMapping("/options")
@@ -80,12 +86,12 @@ public class ExistingContractController {
         if (!contract.isBlocked()) {
             Set<OptionDto> options = contractService.getOptionsParents(contract);
             if (options.isEmpty()) {
-                model.addAttribute("message", "No options are available"); //add message
+                model.addAttribute(MESSAGE , "No options are available"); //add message
             } else {
                 model.addAttribute("options", contractService.getParentsForExistingContract(contract));
                 model.addAttribute("optionGroups", contractService.getGroups(contract));
                 model.addAttribute("children", contractService.getChildrenForExistingContract(contract));
-                model.addAttribute("table", "add");
+                model.addAttribute(TABLE, "add");
             }
             return "contractOptions";
         } else return null;
@@ -94,30 +100,32 @@ public class ExistingContractController {
     @PostMapping("/options")
     public String addOptions(Model model, ContractDto contract, @RequestParam(name = "optionID", required = false) List<Integer> id) {
         if (!contractService.setOptions(contract, id, true)){
-            model.addAttribute("message", "Options are not compatible");
+            model.addAttribute(MESSAGE , "Options are not compatible");
             return "error";
         }
         return "redirect:/existingContract/confirm";
     }
 
     @GetMapping("/block")
-    public String block(ContractDto contract, HttpServletRequest request) {
+    public String block(ContractDto contract, HttpServletRequest request, SessionStatus status) {
         boolean admin = false;
         if (request.isUserInRole("ADMIN")) {
             admin = true;
         }
         contractService.block(contract, admin);
-        return "redirect:/existingContract/" + contract.getPhoneNumber();
+        status.setComplete();
+        return EXISTING_CONTRACT + contract.getPhoneNumber();
     }
 
     @GetMapping("/unblock")
-    public String unblock(ContractDto contract, HttpServletRequest request) {
+    public String unblock(ContractDto contract, HttpServletRequest request, SessionStatus status) {
         boolean admin = false;
         if (request.isUserInRole("ADMIN")) {
             admin = true;
         }
         contractService.unblock(contract, admin);
-        return "redirect:/existingContract/" + contract.getPhoneNumber();
+        status.setComplete();
+        return EXISTING_CONTRACT + contract.getPhoneNumber();
     }
 
 

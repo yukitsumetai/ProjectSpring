@@ -6,7 +6,6 @@ import java.math.BigInteger;
 import java.util.List;
 
 public interface ClientDao extends PaginationDao {
-    //List<Client> getAll();
     void add(Client client);
     Client getOne(BigInteger n);
     Client getOne(Integer n);

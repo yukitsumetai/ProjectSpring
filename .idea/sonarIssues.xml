@@ -18,6 +18,16 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/Dockerfile">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/SpringLineMain/pom.xml">
           <value>
             <set />
@@ -28,7 +38,42 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/java/com/telekom/config/SecurityConfig.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/java/com/telekom/config/WebConfig.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/java/com/telekom/controller/AdminMenuController.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/java/com/telekom/controller/AuthController.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/SpringLineMain/src/main/java/com/telekom/controller/ContractController.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/java/com/telekom/controller/ExistingContractController.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/java/com/telekom/controller/OptionController.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/java/com/telekom/controller/OptionGroupController.java">
           <value>
             <set />
           </value>
@@ -38,7 +83,32 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/java/com/telekom/controller/TariffController.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/java/com/telekom/dao/api/ClientDao.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/java/com/telekom/dao/impl/PhoneNumberDaoImpl.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/SpringLineMain/src/main/java/com/telekom/mapper/TariffMapper.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/java/com/telekom/model/entity/FreePhoneNumber.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/java/com/telekom/model/entity/PhoneNumber.java">
           <value>
             <set />
           </value>
@@ -178,6 +248,21 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/webapp/WEB-INF/resource/js/options.js">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/webapp/WEB-INF/resource/js/paginationAjax.js">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/webapp/WEB-INF/resource/js/validation.js">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/SpringLineMain/src/test/java/com/telekom/TariffService.java">
           <value>
             <set />
@@ -234,6 +319,16 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/SpringLineMarketing/src/main/java/com/telekom/TariffsConsumer.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/docker-compose.yml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/mvnw">
           <value>
             <set />
           </value>

@@ -71,8 +71,6 @@ private void setPassportBirthday(ClientDto client, String text2){
         int year = Integer.parseInt(birthday.substring(0, 2));
         if (year < 20) year = 2000 + year;
         else year = 1900 + year;
-        Integer month = Integer.parseInt(birthday.substring(2, 4));
-        Integer day = Integer.parseInt(birthday.substring(4, 5));
         client.setBirthday(year + "-" + birthday.substring(2, 4) + "-" + birthday.substring(4, 6));
     } catch (NumberFormatException e) {
         logger.info("Birthday format wrong: " + birthday);

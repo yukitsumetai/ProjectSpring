@@ -6,7 +6,7 @@ import java.math.BigInteger;
 
 @Entity
 @Table(name = "free_phone_numbers")
-public class PhoneNumber implements Serializable {
+public class FreePhoneNumber implements Serializable {
 
     @Id
     private BigInteger phoneNumber ;

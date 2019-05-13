@@ -48,7 +48,7 @@ function addRowClient(val, table) {
     var contracts = [];
     $.each(val.contracts, function (key, option) {
         var c = (option || {}).phoneNumber;
-        c2 = (typeof (c) !== 'undefined' ? c : '');
+        var c2 = (typeof (c) !== 'undefined' ? c : '');
         icon = "<a href='/existingContract/" + c2 + "' class='edit' title='Edit'><i class='material-icons'>&#xE254;</i></a>";
         contracts.push(c2 + icon + "<br>");
     });

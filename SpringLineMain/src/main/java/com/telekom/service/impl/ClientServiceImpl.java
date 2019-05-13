@@ -20,6 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.nio.file.DirectoryNotEmptyException;
+import java.nio.file.NoSuchFileException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -96,10 +98,9 @@ public class ClientServiceImpl extends PaginationImpl<ClientDto> implements Clie
     public ClientDto performOcr(String image, String id) {
         logger.info("Saving Image");
         ClientDto client = new ClientDto();
-        image = image.substring(image.lastIndexOf(",") + 1);
+        image = image.substring(image.lastIndexOf(',') + 1);
         byte[] decodedBytes = Base64.getDecoder().decode(image);
 
-        Properties props = System.getProperties();
         String pathName = ".\\standalone\\tmp\\" + id + ".jpeg";
         File file = new File(pathName);
         try {
@@ -112,4 +113,6 @@ public class ClientServiceImpl extends PaginationImpl<ClientDto> implements Clie
         file.delete();
         return client;
     }
+
+
 }

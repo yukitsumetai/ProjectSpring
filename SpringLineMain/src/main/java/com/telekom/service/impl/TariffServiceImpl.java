@@ -20,7 +20,7 @@ import java.util.*;
 
 
 @Service
-public class TariffServiceImpl extends SharedFunctions<TariffDto> implements TariffService {
+public class TariffServiceImpl extends SharedFunctions implements TariffService {
 
 
     @Autowired

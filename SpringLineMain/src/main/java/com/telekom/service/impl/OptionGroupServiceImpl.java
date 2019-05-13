@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class OptionGroupServiceImpl extends SharedFunctions<OptionGroupDto> implements OptionGroupService {
+public class OptionGroupServiceImpl extends SharedFunctions implements OptionGroupService {
 
     @Autowired
     private OptionGroupDao optionGroupDao;

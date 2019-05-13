@@ -13,8 +13,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 @EnableWebSecurity
 @ComponentScan("com.telekom.model.entity")
-@EnableGlobalMethodSecurity(prePostEnabled=true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    private static final String WELCOME = "/welcome";
 
     @Autowired
     private AuthProvider authProvider;
@@ -23,18 +24,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/login").anonymous()
-                .antMatchers("/tariffs/**", "/options/**", "/users/**", "/optionGroups/**","/newContract/**" ).hasRole("ADMIN")
-                .antMatchers( "/welcome" ).hasRole("USER")
-                .antMatchers( "/existingContract/**", "/tariffPages" ).hasAnyRole("USER", "ADMIN")
+                .antMatchers("/tariffs/**", "/options/**", "/users/**", "/optionGroups/**", "/newContract/**").hasRole("ADMIN")
+                .antMatchers(WELCOME).hasRole("USER")
+                .antMatchers("/existingContract/**", "/tariffPages").hasAnyRole("USER", "ADMIN")
                 .and().csrf().disable()
                 .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/login/process")
-                .defaultSuccessUrl("/welcome")
+                .defaultSuccessUrl(WELCOME)
                 .failureUrl("/login?error=true")
                 .usernameParameter("login").passwordParameter("password").permitAll()
                 .and().exceptionHandling()
-               .accessDeniedPage("/welcome")
+                .accessDeniedPage(WELCOME)
                 .and().logout();
     }
 
