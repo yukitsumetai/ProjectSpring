@@ -27,7 +27,6 @@ public class ImageRecognitionImpl implements ImageRecognitionService {
         String path3="C:\\Users\\ekochuro\\IdeaProjects\\ProjectSpring\\SpringLineMain\\src\\main\\resources\\tessTrainData\\";
        String path4=Thread.currentThread().getContextClassLoader().getResource("tessTrainData").getPath();
 
-
         try {
             tesseract.setDatapath(path4);
             tesseract.setLanguage("eng");

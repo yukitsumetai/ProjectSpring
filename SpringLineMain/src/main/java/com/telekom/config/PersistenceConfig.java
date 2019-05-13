@@ -61,9 +61,9 @@ public class PersistenceConfig {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource);
         sessionFactory.setPackagesToScan("com.telekom.model.entity");
-        sessionFactory.setHibernateProperties(new Properties() {{
-            put("hibernate.show_sql", true);
-        }});
+        Properties properties = new Properties();
+        properties.put("hibernate.show_sql", true);
+        sessionFactory.setHibernateProperties(properties);
         return sessionFactory;
     }
 

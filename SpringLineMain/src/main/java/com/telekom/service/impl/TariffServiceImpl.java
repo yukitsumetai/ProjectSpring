@@ -35,15 +35,15 @@ public class TariffServiceImpl extends SharedFunctions implements TariffService 
     private Logger logger;
 
 
-   private List<TariffDto> listEntityToDto(List<Tariff> tariffs) {
+    private List<TariffDto> listEntityToDto(List<Tariff> tariffs) {
         List<TariffDto> tariffsDTO = new ArrayList<>();
         if (tariffs == null) return tariffsDTO;
         for (Tariff t : tariffs) {
-
             tariffsDTO.add(tariffMapper.entityToDto(t));
         }
         return tariffsDTO;
     }
+
 
     @Override
     @Transactional
@@ -92,9 +92,6 @@ public class TariffServiceImpl extends SharedFunctions implements TariffService 
         }
         return tariffsDTO;
     }
-
-
-
 
 
     @Override

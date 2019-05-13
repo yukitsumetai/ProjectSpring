@@ -33,6 +33,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/java/com/telekom/config/MessagingConfiguration.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/SpringLineMain/src/main/java/com/telekom/config/PersistenceConfig.java">
           <value>
             <set />
@@ -163,6 +168,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/java/com/telekom/service/impl/JmsServiceImpl.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/SpringLineMain/src/main/java/com/telekom/service/impl/MailSenderImpl.java">
           <value>
             <set />
@@ -224,6 +234,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/SpringLineMain/src/main/resources/persistence.properties">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/webapp/WEB-INF/Views/elements/TopNavBar.jsp">
           <value>
             <set />
           </value>
@@ -318,7 +333,22 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMarketing/pom.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMarketing/src/main/java/com/telekom/Subscriber.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/SpringLineMarketing/src/main/java/com/telekom/TariffsConsumer.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMarketing/src/main/java/com/telekom/logs/LoggerProducer.java">
           <value>
             <set />
           </value>

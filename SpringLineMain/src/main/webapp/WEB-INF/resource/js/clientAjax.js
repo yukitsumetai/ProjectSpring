@@ -114,7 +114,6 @@ function saveSnap() {
 
     var file = document.getElementById("imageprev").src;
     var id = document.getElementById('contract').value;
-    var passdata = {"imageprev": file}
     $.ajax({
         type: "POST",
         url: "/springLine/captureImage",
