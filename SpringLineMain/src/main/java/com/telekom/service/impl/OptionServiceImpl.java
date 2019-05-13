@@ -39,6 +39,11 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
     @Autowired
     private Logger logger;
 
+    /**
+     * This function maps list of options to list of options Dto
+     * @param options
+     * @return list of options Dto mapped from options
+     */
     private List<OptionDto> listEntityToDto(List<Option> options) {
 
         List<OptionDto> optionsDto = new ArrayList<>();
@@ -50,6 +55,12 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
 
     }
 
+    /**
+     * Returns a page of option Dto for table
+     * @param size page size
+     * @param page number of page
+     * @return page of option Dto with list of option Dto and page parameters
+     */
     @Override
     @Transactional
     public Page<OptionDto> getPage(Integer size, Integer page) {
@@ -59,6 +70,14 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
         return getPageDraft(pageGroups, total, page, size);
     }
 
+    /**
+     * Returns a page of option Dto for a tariff, marking which options
+     * are already compatible with tariff
+     * @param size
+     * @param page
+     * @param tariffId id of a tariff
+     * @return page of option Dto with list of option Dto and page parameters
+     */
     @Override
     @Transactional
     public Page<OptionDto> getOptionsForTariff(Integer size, Integer page, Integer tariffId) {
@@ -76,6 +95,13 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
         return getPageDraft(pageGroups, total, page, size);
     }
 
+    /**
+     * Returns a page of compatible options Dto for a new option
+     * @param size
+     * @param page
+     * @param parent if new option is a parent (looking for children) or child (looking for parent)
+     * @return page of option Dto with list of option Dto and page parameters
+     */
     @Override
     public Page<OptionDto> getOptionsForNewOption(Integer size, Integer page, boolean parent) {
         logger.info("Getting options for new option, page " + page + ", look for parent: " + parent);
@@ -91,6 +117,14 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
         return getPageDraft(pageGroups, total, page, size);
     }
 
+    /**
+     * Returns a page of compatible options Dto for existing option
+     * @param size
+     * @param page
+     * @param parent if new option is a parent (looking for children) or child (looking for parenta)
+     * @param optionId id of existing option
+     * @return
+     */
     @Override
     public Page<OptionDto> getPageForExisting(Integer size, Integer page, boolean parent, Integer optionId) {
         logger.info("Getting options for existing option, page " + page + ", option id" + optionId + ", look for parent: " + parent);
@@ -108,6 +142,13 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
         return getPageDraft(optionPage, total, page, size);
     }
 
+    /**
+     * Getting options that can be parents for an existing options, marking already existing parent
+     * @param size
+     * @param page
+     * @param o existing option
+     * @return list of options that can be parents
+     */
     private List<OptionDto> getParentForExisting(Integer size, Integer page, Option o) {
         logger.info("Looking for parent");
         List<OptionDto> optionPage = listEntityToDto(optionDao.getAllNoParent(size, page));
@@ -122,7 +163,13 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
         return optionPage;
     }
 
-
+    /**
+     * Getting options that can be children for an existing options, marking already existing children
+     * @param size
+     * @param page
+     * @param o existing option
+     * @return list of options that can be children
+     */
     private List<OptionDto> getChildrenForExisting(Integer size, Integer page, Option o) {
         logger.info("Looking for children");
         List<OptionDto> optionPage = listEntityToDto(optionDao.getAllNoChildrenAndParentExisting(size, page, o.getId()));
@@ -136,6 +183,12 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
         return optionPage;
     }
 
+    /**
+     * Getting options for an option group, that do not have any group yet
+     * @param size
+     * @param page
+     * @return page of option Dto with list of option Dto and page parameters
+     */
     @Override
     @Transactional
     public Page<OptionDto> getOpionsForOptionGroup(Integer size, Integer page) {
@@ -145,6 +198,14 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
         return getPageDraft(pageGroups, total, page, size);
     }
 
+    /**
+     * Getting options for an existing option group, that do not have any group yet
+     * and marking existing compatible options
+     * @param size
+     * @param page
+     * @param optionGroupId id of an option group
+     * @return page of option Dto with list of option Dto and page parameters
+     */
     @Override
     @Transactional
     public Page<OptionDto> getOptionsForExistingOptionGroup(Integer size, Integer page, Integer optionGroupId) {
@@ -162,6 +223,11 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
         return getPageDraft(pageGroups, total, page, size);
     }
 
+    /**
+     * Serring compatible tariffs for an option Dto
+     * @param option option Dto
+     * @param id list of tariff's ids
+     */
     @Override
     public void setCompatibleTariffs(OptionDto option, List<Integer> id) {
         logger.info("Setting compatible tariffs for option " + option);
@@ -176,6 +242,11 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
         option.setCompatibleTariffs(tariffs);
     }
 
+    /**
+     * Seting children for an option Dto
+     * @param option option Dto
+     * @param id list of children's id
+     */
     @Override
     public void setChildren(OptionDto option, List<Integer> id) {
         logger.info("Setting children for option " + option);
@@ -190,6 +261,11 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
         }
     }
 
+    /**
+     * Setting option group for an option Dto
+     * @param option option Dto
+     * @param groupId id of a group
+     */
     @Override
     public void setOptionGroup(OptionDto option, Integer groupId) {
         logger.info("Setting option group for option " + option);
@@ -202,6 +278,11 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
         } else option.setOptionGroup(null);
     }
 
+    /**
+     * Setting parent for an option Dto
+     * @param option option Dto
+     * @param id id of a parent option
+     */
     @Override
     public void setParent(OptionDto option, Integer id) {
         logger.info("Setting parent for option " + option);
@@ -212,6 +293,11 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
         } else option.setParent(null);
     }
 
+    /**
+     * Returning set of options compatible with a given tariff and that are not children
+     * @param id tariff id
+     * @return set of options Dto
+     */
     @Override
     public Set<OptionDto> findByTariff(Integer id) {
         logger.info("Searching for options by tariff id " + id);
@@ -223,6 +309,11 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
         return optionsDto;
     }
 
+    /**
+     * Returning set of options compatible with a given tariff  that are  children
+     * @param id tariff id
+     * @return set of options Dto
+     */
     @Override
     public Set<OptionDto> findByTariffChildren(Integer id) {
         logger.info("Searching for children options by tariff id " + id);
@@ -234,6 +325,11 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
         return optionsDto;
     }
 
+    /**
+     * Updates compatible tariff of an option in DB
+     * @param optionDto
+     * @param option
+     */
     public void updateTariff(OptionDto optionDto, Option option) {
         if (!option.getCompatibleTariffs().isEmpty()) {
             logger.info("Removing current tariffs");
@@ -257,6 +353,11 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
         }
     }
 
+    /**
+     * Updates children of an option in DB
+     * @param optionDto
+     * @param option
+     */
     public void updateChildren(OptionDto optionDto, Option option) {
 
         if (!option.getChildren().isEmpty()) {
@@ -286,31 +387,45 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
         }
     }
 
-    public void updateOptionParent(OptionDto option, Option o) {
+    /**
+     * Updates paren of an option in DB
+     * @param option
+     * @param optionDto
+     */
+    public void updateOptionParent(OptionDto option, Option optionDto) {
 
         OptionDto p = option.getParent();
         if (p != null) {
             logger.info("Setting parent");
             Option tmp = optionDao.getOne(p.getId());
-            if (o != tmp && tmp.getParent() == null) {
-                o.setParent(tmp);
+            if (optionDto != tmp && tmp.getParent() == null) {
+                optionDto.setParent(tmp);
             }
-        } else o.setParent(null);
+        } else optionDto.setParent(null);
     }
 
-    public void updateOptionGroup(OptionDto option, Option o) {
-        if (o.getParent() == null) {
+    /**
+     * Updates option group of an option in DB
+     * @param option
+     * @param optionDto
+     */
+    public void updateOptionGroup(OptionDto option, Option optionDto) {
+        if (optionDto.getParent() == null) {
             logger.info("Updating option group");
             OptionGroupDto p = option.getOptionGroup();
             if (p != null) {
                 OptionGroup tmp = optionGroupDao.getOne(p.getId());
                 if (tmp != null) { //dummy group - 0
-                    o.setGroup(tmp);
+                    optionDto.setGroup(tmp);
                 }
-            } else o.setGroup(null);
-        } else o.setGroup(null);
+            } else optionDto.setGroup(null);
+        } else optionDto.setGroup(null);
     }
 
+    /**
+     * Adds an option to DB
+     * @param option
+     */
     @Override
     @Transactional
     public void add(OptionDto option) {
@@ -323,7 +438,11 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
         updateChildren(option, o);
     }
 
-
+    /**
+     * Returns option by id
+     * @param id
+     * @return option Dto
+     */
     @Override
     public OptionDto getOne(int id) {
         Option t = optionDao.getOne(id);
@@ -331,7 +450,10 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
         else return null;
     }
 
-
+    /**
+     * Updating existing option in DB
+     * @param option
+     */
     @Override
     @Transactional
     public void editOption(OptionDto option) {
@@ -345,6 +467,10 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
         updateChildren(option, o);
     }
 
+    /**
+     * Removing parents and/or children of an option Dto
+     * @param option option Dto
+     */
     @Override
     public void removeRelations(OptionDto option) {
         logger.info("Removing relations " + option.getId());
@@ -352,6 +478,10 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
         option.setChildren(new HashSet<>());
     }
 
+    /**
+     * Sets option invalid in DB
+     * @param id id of an option
+     */
     @Override
     @Transactional
     public void deleteOption(Integer id) {

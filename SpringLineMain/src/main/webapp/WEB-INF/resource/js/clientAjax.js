@@ -1,6 +1,8 @@
-function CheckClient() {
+function valthisform() {
+    event.preventDefault();
     var email = document.getElementById('email').value;
     var passport = document.getElementById('passport').value;
+    var button = document.getElementById('button');
     if(email!="" && passport.length==9) {
         $.ajax({
             url: "/springLine/newContract/client/check",
@@ -12,10 +14,14 @@ function CheckClient() {
             },
             success: function (data) {
                 if(!data){
-                    var urlLink = "/newContract/client/confirm";
-                    search.action = urlLink;
+                    //var urlLink = "/newContract/client/confirm";
+                    // button.action = urlLink;
+                    document.form1.submit();
                 }
-                else alert("There is already a client with the same email and/or passport")
+                else{
+
+                    alert("There is already a client with the same email and/or passport");
+                }
             }
         });
     }

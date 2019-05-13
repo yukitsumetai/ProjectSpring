@@ -28,7 +28,11 @@ public class OptionGroupServiceImpl extends SharedFunctions<OptionGroupDto> impl
     @Autowired
     private OptionGroupMapper optionGroupMapper;
 
-
+    /**
+     * This function maps list of option groupss to list of optiongroups Dto
+     * @param optionGroups
+     * @return list of option groups Dto mapped from option groups
+     */
     private List<OptionGroupDto> listEntityToDto(List<OptionGroup> optionGroups) {
         List<OptionGroupDto> optionGroupsDTO = new ArrayList<>();
         if(optionGroups!=null) {
@@ -40,11 +44,20 @@ public class OptionGroupServiceImpl extends SharedFunctions<OptionGroupDto> impl
         return optionGroupsDTO;
     }
 
+    /**
+     * Sets compatible options to option group Dto
+     * @param optionGroup
+     * @param id ids of compatible options
+     */
     @Override
     public void setOptionsDto(OptionGroupDto optionGroup, List<Integer> id) {
         setOptions(optionGroup,  id);
     }
 
+    /**
+     * Returns list of all option groups Dto
+     * @return list option group Dto
+     */
     @Override
     @Transactional
     public List<OptionGroupDto> getAll() {
@@ -52,12 +65,22 @@ public class OptionGroupServiceImpl extends SharedFunctions<OptionGroupDto> impl
         return listEntityToDto(optionGroups);
     }
 
+    /**
+     * Returns list of all valid option groups
+     * @return list option group Dto
+     */
     @Transactional
     public List<OptionGroupDto> getAllValid() {
         List<OptionGroup> optionGroups = optionGroupDao.getAllValid();
         return listEntityToDto(optionGroups);
     }
 
+    /**
+     * Returns a page of option group Dto (eg for dropdown)
+     * @param size page size
+     * @param page number of page
+     * @return page of option group Dto with list of option Dto and page parameters
+     */
     @Override
     @Transactional
     public Page<OptionGroupDto> getPage(Integer size, Integer page) {
@@ -66,6 +89,11 @@ public class OptionGroupServiceImpl extends SharedFunctions<OptionGroupDto> impl
         return getPageDraft(pageGroups, total, page, size);
     }
 
+    /**
+     * Returns option group Dto by id
+     * @param id
+     * @return  option group Dto
+     */
     @Override
     @Transactional
     public OptionGroupDto getOptionGroup(int id) {
@@ -75,17 +103,27 @@ public class OptionGroupServiceImpl extends SharedFunctions<OptionGroupDto> impl
 
     }
 
-   public void addOptions(OptionGroupDto optionGroup, OptionGroup t) {
-        if (!optionGroup.getOptions().isEmpty()) {
-            Set<OptionDto> options = optionGroup.getOptions();
+    /**
+     * Adds compatible options to option group in DB
+     * @param optionGroupDto
+     * @param optionGroup
+     */
+   public void addOptions(OptionGroupDto optionGroupDto, OptionGroup optionGroup) {
+        if (!optionGroupDto.getOptions().isEmpty()) {
+            Set<OptionDto> options = optionGroupDto.getOptions();
             for (OptionDto o : options
             ) {
                 Option tmp = optionDao.getOne(o.getId());
-                if (tmp != null) { tmp.setGroup(t); }
+                if (tmp != null) { tmp.setGroup(optionGroup); }
             }
         }
     }
 
+    /**
+     * Returns option groups that belongs to options which are compatible with a given tariff
+     * @param id id of a tariff
+     * @return set of option groups Dto
+     */
     @Override
     @Transactional
     public Set<OptionGroupDto> findByTariff(Integer id) {
@@ -98,10 +136,13 @@ public class OptionGroupServiceImpl extends SharedFunctions<OptionGroupDto> impl
         return optionGroupDto;
     }
 
-
-   public void deleteOptions(OptionGroup t) {
-        if (!t.getOptions().isEmpty()) {
-            Set<Option> options = t.getOptions();
+    /**
+     * Removes compatible options from an option group
+     * @param optionGroup
+     */
+   public void deleteOptions(OptionGroup optionGroup) {
+        if (!optionGroup.getOptions().isEmpty()) {
+            Set<Option> options = optionGroup.getOptions();
             for (Option o : options
             ) {
                 Option tmp = optionDao.getOne(o.getId());
@@ -110,6 +151,11 @@ public class OptionGroupServiceImpl extends SharedFunctions<OptionGroupDto> impl
         }
     }
 
+    /**
+     * Returns list of option groups by its name
+     * @param name
+     * @return list of optin group Dto or null if not found
+     */
     public List<OptionGroupDto> getByName(String name) {
 
         List<OptionGroup> op = optionGroupDao.findByName(name);
@@ -117,6 +163,10 @@ public class OptionGroupServiceImpl extends SharedFunctions<OptionGroupDto> impl
 
     }
 
+    /**
+     * Adds option Group to DB
+     * @param optionGroup
+     */
     @Override
     @Transactional
     public void add(OptionGroupDto optionGroup) {
@@ -125,18 +175,24 @@ public class OptionGroupServiceImpl extends SharedFunctions<OptionGroupDto> impl
         addOptions(optionGroup, t);
     }
 
-
+    /**
+     * Updates existiong option group in DB
+     * @param optionGroupDto
+     */
     @Override
     @Transactional
-    public void editOptionGroup(OptionGroupDto t) {
-        OptionGroup optionGroup = optionGroupDao.getOne(t.getId());
-        optionGroup.setValid(t.isIsValid());
-        optionGroup.setDescription(t.getDescription());
+    public void editOptionGroup(OptionGroupDto optionGroupDto) {
+        OptionGroup optionGroup = optionGroupDao.getOne(optionGroupDto.getId());
+        optionGroup.setValid(optionGroupDto.isIsValid());
+        optionGroup.setDescription(optionGroupDto.getDescription());
         deleteOptions(optionGroup);
-        addOptions(t, optionGroup);
+        addOptions(optionGroupDto, optionGroup);
     }
 
-
+    /**
+     * Sets option group as invalid and removes all compatible options
+     * @param id id of an option group
+     */
     @Override
     @Transactional
     public void deleteOptionGroup(Integer id) {

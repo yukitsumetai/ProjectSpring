@@ -33,6 +33,12 @@ public class MailSenderImpl implements MailService {
     @Autowired
     private VelocityEngine velocityEngine;
 
+    /**
+     * Sends an email with PDF wit contract information
+     * @param newClient if client is new or not. Welcome messages are sent to new clients and updates for existing
+     * @param contract
+     * @throws MessagingException
+     */
     @Override
     public void sendMessageWithAttachment(Boolean newClient, ContractDto contract) throws MessagingException {
         logger.info("Sending email with invoice");

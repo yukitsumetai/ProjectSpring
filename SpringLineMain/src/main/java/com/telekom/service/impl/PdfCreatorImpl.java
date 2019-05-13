@@ -31,15 +31,17 @@ public class PdfCreatorImpl implements PdfCreator {
     private BaseFont bf;
     private int pageNumber = 0;
 
+    /**
+     * Creating file and filling it with details from contract
+     * @param contract
+     * @return
+     */
     @Override
     public String createPdf(ContractDto contract) {
         Document document = new Document();
         String pdfName = ".\\..\\standalone\\tmp\\"+ contract.getPhoneNumber() + ".pdf";
         logger.info("Creating pdf " +pdfName);
         try {
-
-            //Properties props = System.getProperties();
-
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(pdfName));
             initializeFonts();
 
@@ -78,7 +80,7 @@ public class PdfCreatorImpl implements PdfCreator {
 
 
             generateDetail(cb, i, y, tariffName, tariffDescription, tariff.getPrice(), 0);
-            y = cellLength(tariffName, tariffDescription, y);
+            y = rowWidth(tariffName, tariffDescription, y);
             if (y < 50) {
                 printPageNumber(cb);
                 document.newPage();
@@ -108,7 +110,7 @@ public class PdfCreatorImpl implements PdfCreator {
                         .wrap();
 
                 generateDetail(cb, i, y, optionName, optionDescription, o.getPriceMonthly(), o.getPriceOneTime());
-                y = cellLength(optionName, optionDescription, y);
+                y = rowWidth(optionName, optionDescription, y);
                 if (y < 50) {
                     printPageNumber(cb);
                     document.newPage();
@@ -128,6 +130,9 @@ public class PdfCreatorImpl implements PdfCreator {
         return pdfName;
     }
 
+    /**
+     * Initializing fonts
+     */
     private void initializeFonts() {
         try {
             bfBold = BaseFont.createFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
@@ -137,6 +142,11 @@ public class PdfCreatorImpl implements PdfCreator {
         }
     }
 
+    /**
+     * Generating PDF's layout
+     * @param doc
+     * @param cb
+     */
     private void generateLayout(Document doc, PdfContentByte cb) {
 
         try {
@@ -173,6 +183,12 @@ public class PdfCreatorImpl implements PdfCreator {
         }
     }
 
+    /**
+     * Generating header of PDF
+     * @param cb
+     * @param name
+     * @param phoneNumber
+     */
     private void generateHeader(PdfContentByte cb, String name, String phoneNumber) {
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         Date today = new Date();
@@ -191,6 +207,16 @@ public class PdfCreatorImpl implements PdfCreator {
         }
     }
 
+    /**
+     * Generating row of a table
+     * @param cb
+     * @param index
+     * @param y
+     * @param name
+     * @param description
+     * @param priceMonthly
+     * @param priceOneTime
+     */
     private void generateDetail(PdfContentByte cb, int index, int y, String name, String description, double priceMonthly, double priceOneTime) {
         DecimalFormat df = new DecimalFormat("0.00");
         try {
@@ -215,6 +241,12 @@ public class PdfCreatorImpl implements PdfCreator {
         }
     }
 
+    /**
+     * Generating subheaders in table (Tariff, Options)
+     * @param cb
+     * @param y
+     * @param name
+     */
     private void generateSubheader(PdfContentByte cb, int y, String name) {
         try {
             createContent(cb, 52, y, name, PdfContentByte.ALIGN_LEFT);
@@ -223,8 +255,16 @@ public class PdfCreatorImpl implements PdfCreator {
         }
     }
 
+    /**
+     * Generating total row
+     * @param cb
+     * @param y
+     * @param priceMonthly
+     * @param priceOneTime
+     */
     private void generateTotal(PdfContentByte cb, int y, double priceMonthly, double priceOneTime) {
         DecimalFormat df = new DecimalFormat("0.00");
+        cb.setFontAndSize(bfBold, 8);
         try {
             createContent(cb, 52, y, "TOTAL", PdfContentByte.ALIGN_LEFT);
             createContent(cb, 498, y, df.format(priceMonthly), PdfContentByte.ALIGN_RIGHT);
@@ -234,6 +274,13 @@ public class PdfCreatorImpl implements PdfCreator {
         }
     }
 
+    /**
+     * Generate table headings
+     * @param cb
+     * @param x
+     * @param y
+     * @param text
+     */
     private void createHeadings(PdfContentByte cb, float x, float y, String text) {
         cb.beginText();
         cb.setFontAndSize(bfBold, 8);
@@ -242,6 +289,10 @@ public class PdfCreatorImpl implements PdfCreator {
         cb.endText();
     }
 
+    /**
+     * Generate page number
+     * @param cb
+     */
     private void printPageNumber(PdfContentByte cb) {
         cb.beginText();
         cb.setFontAndSize(bfBold, 8);
@@ -250,6 +301,14 @@ public class PdfCreatorImpl implements PdfCreator {
         pageNumber++;
     }
 
+    /**
+     * Create cell content
+     * @param cb
+     * @param x
+     * @param y
+     * @param text
+     * @param align
+     */
     private void createContent(PdfContentByte cb, float x, float y, String text, int align) {
         cb.beginText();
         cb.setFontAndSize(bf, 8);
@@ -257,7 +316,14 @@ public class PdfCreatorImpl implements PdfCreator {
         cb.endText();
     }
 
-    private int cellLength(String name, String description, int y) {
+    /**
+     * Counting width of the row for given content
+     * @param name
+     * @param description
+     * @param y
+     * @return
+     */
+    private int rowWidth(String name, String description, int y) {
         if (name.length() > 40 || description.length() > 120) y = y - 45;
         else if (name.length() > 20 || description.length() > 60) y = y - 30;
         else y = y - 15;

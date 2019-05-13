@@ -24,6 +24,12 @@ public class PhoneNumberServiceImpl extends PaginationImpl<PhoneNumber> implemen
     @Autowired
     private Logger logger;
 
+    /**
+     * Returns page of phone numbers
+     * @param size of the page
+     * @param page number of the page
+     * @return group of phone numbers
+     */
     @Override
     @Transactional
     public Page<PhoneNumber> getPage(Integer size, Integer page) {

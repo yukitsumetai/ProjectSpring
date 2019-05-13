@@ -10,6 +10,11 @@ import java.util.List;
 import java.util.Set;
 
 public abstract class SharedFunctions<T> extends PaginationImpl {
+    /**
+     * Template for functions in Tariff and Option Group services to set compatible options
+     * @param sharedDto
+     * @param id of compatible options
+     */
     void setOptions(SharedDto sharedDto, List<Integer> id) {
         Set<OptionDto> options = new HashSet<>();
         if (id != null) {

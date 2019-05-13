@@ -37,7 +37,7 @@ public class ContractController {
         ContractDto contract = new ContractDto();
         model.addAttribute(contract);
         model.addAttribute("table", "add");
-        //contractService.sendPdf(false, contractService.getTariff("4917620093100"));
+        //contractService.sendEmail(false, contractService.getTariff("4917620093100"));
         return "tariffs";
     }
 
@@ -102,7 +102,7 @@ public class ContractController {
     public String confirmation(Model model, ContractDto contract, @RequestParam(required = false) Boolean email) {
         contractService.add(contract);
         if (email) {
-            boolean correct = contractService.sendPdf(true, contract);
+            boolean correct = contractService.sendEmail(true, contract);
             if (!correct) {
                 model.addAttribute("message", "Email was not sent");
                 return "error";
@@ -115,7 +115,7 @@ public class ContractController {
     public String confirmationExisting(Model model, ContractDto contract, @RequestParam(required = false) Boolean email) {
         contractService.add(contract);
         if (email) {
-            boolean correct = contractService.sendPdf(false, contract);
+            boolean correct = contractService.sendEmail(false, contract);
             if (!correct) {
                 model.addAttribute("message", "Email was not sent");
                 return "error";

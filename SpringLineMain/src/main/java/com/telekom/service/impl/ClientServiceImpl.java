@@ -38,6 +38,12 @@ public class ClientServiceImpl extends PaginationImpl<ClientDto> implements Clie
     @Autowired
     Logger logger;
 
+    /**
+     * Returns a page of clients Dto (eg for table)
+     * @param size page size
+     * @param page number of page
+     * @return page of clients Dto with list of option Dto and page parameters
+     */
     @Override
     @Transactional
     public Page<ClientDto> getPage(Integer size, Integer page) {
@@ -54,6 +60,12 @@ public class ClientServiceImpl extends PaginationImpl<ClientDto> implements Clie
         return getPageDraft(pageGroups, total, page, size);
     }
 
+    /**
+     * Checking if there is a client with same email and/or passport
+     * @param email
+     * @param passport
+     * @return true if exists, false otherwise
+     */
     @Override
     public Boolean checkExisting(String email, Integer passport) {
         logger.info("Searching for client, email " + email + ", passport " + passport);
@@ -62,6 +74,10 @@ public class ClientServiceImpl extends PaginationImpl<ClientDto> implements Clie
         return isEmail || isPassport;
     }
 
+    /**
+     * Adds new client to DB
+     * @param client
+     */
     @Override
     @Transactional
     public void add(ClientDto client) {
@@ -70,6 +86,11 @@ public class ClientServiceImpl extends PaginationImpl<ClientDto> implements Clie
         clientDao.add(tmp);
     }
 
+    /**
+     * Returns client by phone number
+     * @param number phone number
+     * @return client Dto
+     */
     @Transactional
     public ClientDto getClient(String number) {
         logger.info("Searching for client by phone number " + number);
@@ -78,20 +99,35 @@ public class ClientServiceImpl extends PaginationImpl<ClientDto> implements Clie
         return tmp;
     }
 
-
+    /**
+     * Returns client by user id
+     * @param id user id
+     * @return client Dto
+     */
     @Transactional
     public ClientDto getClient(Long id) {
         logger.info("Searching for client by user id" + id);
         return clientMapper.entityToDto(clientDao.getOne(id));
     }
 
-
+    /**
+     * Returns client by client id
+     * @param id id of a client
+     * @return client Dto
+     */
     public ClientDto getClient(Integer id) {
         logger.info("Searching for client by id " + id);
         Client tmp = clientDao.getOne(id);
         return clientMapper.entityToDtoWithoutContract(tmp);
     }
 
+    /**
+     * Saves image if id, performs OCR and then deletes it
+     * to recognize some customer data instead of writng it manually
+     * @param image path to base64 image
+     * @param id contract id
+     * @return Client dto with recognized fields ()
+     */
     @Override
     public ClientDto performOcr(String image, String id) {
         logger.info("Saving Image");
@@ -99,7 +135,6 @@ public class ClientServiceImpl extends PaginationImpl<ClientDto> implements Clie
         image = image.substring(image.lastIndexOf(",") + 1);
         byte[] decodedBytes = Base64.getDecoder().decode(image);
 
-        Properties props = System.getProperties();
         String pathName = ".\\..\\standalone\\tmp\\" + id + ".jpeg";
         File file = new File(pathName);
         try {

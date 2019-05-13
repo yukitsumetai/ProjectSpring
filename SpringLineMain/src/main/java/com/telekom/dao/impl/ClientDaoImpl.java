@@ -64,7 +64,7 @@ public final class ClientDaoImpl extends PaginationDaoImpl implements ClientDao 
         TypedQuery<Client> q = entityManager.createQuery(
                 "select t from Client t where t.email=:email", Client.class
         );
-        q.setParameter("WEB-INF/resource/email", email);
+        q.setParameter("email", email);
         Client c= q.getResultList().stream().findAny().orElse(null);
         return c!=null;
 

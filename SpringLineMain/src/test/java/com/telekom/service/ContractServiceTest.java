@@ -492,7 +492,6 @@ class ContractServiceTest {
         assertEquals(client, contract.getClient());
         assertIterableEquals(contracts, client.getUser().getContract());
         assertEquals(ROLE_USER, client.getUser().getRole());
-        assertEquals("test2", client.getUser().getPassword());
     }
 
     @Test
@@ -550,7 +549,7 @@ class ContractServiceTest {
 
     @Test
     void pdfReturnsTrue() throws MessagingException {
-        assertTrue(contractService.sendPdf(true, contractDto));
+        assertTrue(contractService.sendEmail(true, contractDto));
         //doThrow().when();
         verify(mailSender).sendMessageWithAttachment(true, contractDto);
 
@@ -559,7 +558,7 @@ class ContractServiceTest {
     @Test
     void pdfReturnsFalse() throws MessagingException {
         doThrow(new MessagingException()).when(mailSender).sendMessageWithAttachment(true, contractDto);
-        assertFalse(contractService.sendPdf(true, contractDto));
+        assertFalse(contractService.sendEmail(true, contractDto));
         verify(mailSender).sendMessageWithAttachment(true, contractDto);
 
     }

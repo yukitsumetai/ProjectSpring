@@ -21,6 +21,9 @@ public class JmsServiceImpl implements JmsService {
     @Autowired
     Logger logger;
 
+    /**
+     * Sends message to a topic if promoted state of tariffs was updated
+     */
     @Override
     public void sendMessage() {
         jmsTemplate.send(session -> {

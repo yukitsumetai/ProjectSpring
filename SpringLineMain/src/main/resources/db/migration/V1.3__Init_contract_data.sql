@@ -49,21 +49,21 @@ LOCK TABLES `clients` WRITE;
 /*!40000 ALTER TABLE `clients`
     DISABLE KEYS */;
 INSERT INTO `clients`
-VALUES (1, '1958-03-12', 'ajubb0@hatena.ne.jp', 'Jakob', 95367454, 'Jubb', 2, 3),
-       (4, '1936-02-13', 'kblincow1@cafepress.com', 'Elena', 89675695, 'Stoff', 5, 6),
-       (7, '1931-02-01', 'rcoggins2@cdc.gov', 'Selene', 57678696, 'Coggins', 8, 9),
-       (10, '1959-07-21', 'lclaw3@nba.com', 'Cloe', 42160157, 'Kurz', 11, 12),
-       (13, '1990-02-02', 'clark@tfr.com', 'Clark', 78945612, 'Kent', 14, 15),
-       (16, '1945-05-17', 'csieghard5@ucoz.ru', 'Yenora', 92292797, 'Sieghard', 17, 18),
-       (19, '1984-04-30', 'agrane6@unicef.org', 'Kevina', 63737076, 'Grane', 20, 21),
-       (22, '2004-07-03', 'pdumingo7@feedburner.com', 'Esteve', 93435682, 'Dumingo', 23, 24),
-       (25, '1954-10-27', 'bchauvey9@vk.com', 'Regine', 31472027, 'Becker', 26, 27),
-       (28, '1981-10-11', 'bdranfielda@who.int', 'Josee', 81463350, 'Dranfield', 29, 30),
-       (31, '1993-08-13', 'ldecourtneyk@myspace.com', 'Francoise', 63269855, 'Falash', 32, 33),
-       (34, '1982-06-30', 'brueg@com.com', 'Asa', 14809594, 'Rue', 35, 36),
-       (37, '1956-09-27', 'ftetther4@fc2.com', 'Esbjorn', 75901087, 'Tutt', 38, 39),
-       (40, '1973-12-31', 'pmcbean8@opensource.org', 'Ines', 57121897, 'Stimm', 41, 42),
-       (43, '1956-08-09', 'mlackies@uol.com.br', 'Goran', 21885134, 'Pflieger', 44, 45);
+VALUES (1, '1958-03-12', 'ajubb0@hatena.ne.jp', 'Jakob', 953674541, 'Jubb', 2, 3),
+       (4, '1936-02-13', 'kblincow1@cafepress.com', 'Elena', 896756952, 'Stoff', 5, 6),
+       (7, '1931-02-01', 'rcoggins2@cdc.gov', 'Selene', 576786963, 'Coggins', 8, 9),
+       (10, '1959-07-21', 'lclaw3@nba.com', 'Cloe', 421601574, 'Kurz', 11, 12),
+       (13, '1990-02-02', 'clark@tfr.com', 'Clark', 789456125, 'Kent', 14, 15),
+       (16, '1945-05-17', 'csieghard5@ucoz.ru', 'Yenora', 922927976, 'Sieghard', 17, 18),
+       (19, '1984-04-30', 'agrane6@unicef.org', 'Kevina', 637370767, 'Grane', 20, 21),
+       (22, '2004-07-03', 'pdumingo7@feedburner.com', 'Esteve', 934356828, 'Dumingo', 23, 24),
+       (25, '1954-10-27', 'bchauvey9@vk.com', 'Regine', 314720279, 'Becker', 26, 27),
+       (28, '1981-10-11', 'bdranfielda@who.int', 'Josee', 814633500, 'Dranfield', 29, 30),
+       (31, '1993-08-13', 'ldecourtneyk@myspace.com', 'Francoise', 632698551, 'Falash', 32, 33),
+       (34, '1982-06-30', 'brueg@com.com', 'Asa', 148095942, 'Rue', 35, 36),
+       (37, '1956-09-27', 'ftetther4@fc2.com', 'Esbjorn', 759010873, 'Tutt', 38, 39),
+       (40, '1973-12-31', 'pmcbean8@opensource.org', 'Ines', 571218974, 'Stimm', 41, 42),
+       (43, '1956-08-09', 'mlackies@uol.com.br', 'Goran', 218851345, 'Pflieger', 44, 45);
 /*!40000 ALTER TABLE `clients`
     ENABLE KEYS */;
 UNLOCK TABLES;

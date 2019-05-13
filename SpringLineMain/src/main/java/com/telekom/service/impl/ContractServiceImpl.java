@@ -51,7 +51,12 @@ public class ContractServiceImpl implements ContractService {
     @Autowired
     Logger logger;
 
-
+    /**
+     * Sets tariff to a contract Dto
+     * @param contract
+     * @param id id of a tariff
+     * @return true if tariff was successfuly set. Else false
+     */
     @Override
     public boolean setTariff(ContractDto contract, Integer id) {
         logger.info("Setting tariff " + id + " to contractDto ");
@@ -63,21 +68,43 @@ public class ContractServiceImpl implements ContractService {
         return true;
     }
 
+    /**
+     * Returns option groups that have options compatible with contract's tariff
+     * @param contract
+     * @return set of option groups Dto
+     */
     @Override
     public Set<OptionGroupDto> getGroups(ContractDto contract) {
         return optionGroupService.findByTariff(contract.getTariff().getId());
     }
 
+    /**
+     * Returns parent options that are compatible with contract's tariff
+     * @param contract
+     * @return set of options Dto
+     */
     @Override
     public Set<OptionDto> getOptionsParents(ContractDto contract) {
         return optionService.findByTariff(contract.getTariff().getId());
     }
 
+    /**
+     * Returns children options that are compatible with contract's tariff
+     * @param contract
+     * @return set of options Dto
+     */
     @Override
     public Set<OptionDto> getOptionsChildren(ContractDto contract) {
         return optionService.findByTariffChildren(contract.getTariff().getId());
     }
 
+    /**
+     * Sets option to contract Dto and contract price accordingly
+     * @param contract
+     * @param id list of options' ids
+     * @param existing contract existing or not. If existing contract has options their one time price equals zero
+     * @return true if options were set successfully else otherwise
+     */
     @Override
     public boolean setOptions(ContractDto contract, List<Integer> id, boolean existing) {
         logger.info("Setting options");
@@ -102,6 +129,11 @@ public class ContractServiceImpl implements ContractService {
         return true;
     }
 
+    /**
+     * Removes one time price of already exiting options in contract
+     * @param contract
+     * @param tmp
+     */
     public void existingOptionsRemoveOneTimePrice(ContractDto contract, OptionDto tmp) {
         if (contract.getOptions() != null) {
             for (OptionDto op : contract.getOptions()
@@ -111,6 +143,11 @@ public class ContractServiceImpl implements ContractService {
         }
     }
 
+    /**
+     * Returns list of valid tariffs without current one
+     * @param contract
+     * @return list tariff Dto
+     */
     @Override
     public List<TariffDto> getTariffsForAdd(ContractDto contract) {
         List<TariffDto> tariffs = new ArrayList<>(tariffService.getAllValid());
@@ -119,6 +156,11 @@ public class ContractServiceImpl implements ContractService {
         return tariffs;
     }
 
+    /**
+     * validates if contract options are compatible
+     * @param contract
+     * @return
+     */
     private boolean optionValidation(ContractDto contract) {
         if (basicOptionValidation(contract)) {
             if (childrenOptionValidation(contract)) return incompatibleOptionValidation(contract);
@@ -126,9 +168,14 @@ public class ContractServiceImpl implements ContractService {
         return false;
     }
 
+    /**
+     * Validates if options are valid and compatible with tariff
+     * @param contract
+     * @return
+     */
     private boolean basicOptionValidation(ContractDto contract) {
         for (OptionDto o : contract.getOptions()) {
-            //if (o.isIsValid() == false) return false;
+            if (o.isIsValid() == false) return false;
 
             boolean flag = false;
 
@@ -140,6 +187,11 @@ public class ContractServiceImpl implements ContractService {
         return true;
     }
 
+    /**
+     * Validates if option relations are valid
+     * @param contract
+     * @return
+     */
     private boolean childrenOptionValidation(ContractDto contract) {
         for (OptionDto o : contract.getOptions()) {
             if (o.getParent() != null) {
@@ -153,6 +205,11 @@ public class ContractServiceImpl implements ContractService {
         return true;
     }
 
+    /**
+     * Validates that there are no incompatible options
+     * @param contract
+     * @return
+     */
     private boolean incompatibleOptionValidation(ContractDto contract) {
         if (!contract.getOptions().isEmpty()) {
             Set<OptionGroupDto> og = new HashSet<>();
@@ -176,7 +233,11 @@ public class ContractServiceImpl implements ContractService {
         return true;
     }
 
-
+    /**
+     * Returns contract by phone number
+     * @param number phone number
+     * @return contract Dto
+     */
     @Override
     @Transactional
     public ContractDto getOne(String number) {
@@ -190,7 +251,11 @@ public class ContractServiceImpl implements ContractService {
         return null;
     }
 
-
+    /**
+     * Blocks contract that other operations are not valid
+     * @param contract
+     * @param admin contract was blocked by admin or not
+     */
     @Override
     @Transactional
     public void block(ContractDto contract, boolean admin) {
@@ -202,6 +267,11 @@ public class ContractServiceImpl implements ContractService {
         }
     }
 
+    /**
+     * Unblocks blocked contract
+     * @param contract
+     * @param admin contract whants to unblock admin or not
+     */
     @Override
     @Transactional
     public void unblock(ContractDto contract, boolean admin) {
@@ -218,6 +288,11 @@ public class ContractServiceImpl implements ContractService {
         }
     }
 
+    /**
+     * Returns parent options for existing cotract marking already existing options
+     * @param contract
+     * @return
+     */
     @Override
     public Set<OptionDto> getParentsForExistingContract(ContractDto contract) {
         logger.info("Getting parents for existing contracts " + contract.getPhoneNumberInt());
@@ -232,7 +307,11 @@ public class ContractServiceImpl implements ContractService {
         return parents;
     }
 
-
+    /**
+     * Returns children options for existing cotract marking already existing options
+     * @param contract
+     * @return
+     */
     @Override
     public Set<OptionDto> getChildrenForExistingContract(ContractDto contract) {
         logger.info("Getting children for existing contracts " + contract.getPhoneNumberInt());
@@ -248,9 +327,14 @@ public class ContractServiceImpl implements ContractService {
         return children;
     }
 
-
+    /**
+     * Attaching/marking existing option to/in target list of options. Setting its one time price as 0
+     * @param target target list of options
+     * @param existing existing option
+     */
     private void setExisting(Set<OptionDto> target, OptionDto existing) {
         boolean notInList = true;
+        //marking option if its in the list
         for (OptionDto c : target) {
             if (c.getId() == existing.getId()) {
                 notInList = false;
@@ -258,6 +342,7 @@ public class ContractServiceImpl implements ContractService {
                 c.setPriceOneTime(0.00);
             }
         }
+        //addin option if its not in the list
         if (notInList) {
             existing.setExisting(true);
             existing.setPriceOneTime(0.00);
@@ -266,6 +351,10 @@ public class ContractServiceImpl implements ContractService {
 
     }
 
+    /**
+     * Adds contract to DB
+     * @param contract
+     */
     @Override
     @Transactional
     public void add(ContractDto contract) {
@@ -289,6 +378,10 @@ public class ContractServiceImpl implements ContractService {
         tmp.setClient(c);
     }
 
+    /**
+     * Updates existing contract in DB
+     * @param contractDto
+     */
     @Override
     @Transactional
     public void update(ContractDto contractDto) {
@@ -315,9 +408,14 @@ public class ContractServiceImpl implements ContractService {
         contract.setPrice(contractDto.getPrice());
     }
 
-
+    /**
+     * Sends email with invoice to customer
+     * @param newClient boolean if client new -Welcome email, if Existing - update email
+     * @param contract
+     * @return
+     */
     @Override
-    public boolean sendPdf(Boolean newClient, ContractDto contract) {
+    public boolean sendEmail(Boolean newClient, ContractDto contract) {
         try {
             mailSender.sendMessageWithAttachment(newClient, contract);
         } catch (MessagingException e) {
