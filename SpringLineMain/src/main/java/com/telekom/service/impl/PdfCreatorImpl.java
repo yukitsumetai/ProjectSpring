@@ -179,7 +179,7 @@ public class PdfCreatorImpl implements PdfCreator {
             doc.add(companyLogo);
 
         } catch (Exception dex) {
-            logger.info("Exception", dex);
+            logger.info(dex.getMessage(), dex);
         }
     }
 
@@ -203,7 +203,7 @@ public class PdfCreatorImpl implements PdfCreator {
             createHeadings(cb, 482, 723, phoneNumber);
             createHeadings(cb, 482, 703, date);
         } catch (Exception ex) {
-            logger.info("Exception ", ex);
+            logger.info(ex.getMessage(), ex);
         }
     }
 
@@ -237,7 +237,7 @@ public class PdfCreatorImpl implements PdfCreator {
             createContent(cb, 498, y, df.format(priceMonthly), PdfContentByte.ALIGN_RIGHT);
             createContent(cb, 568, y, df.format(priceOneTime), PdfContentByte.ALIGN_RIGHT);
         } catch (Exception ex) {
-            logger.info("Exception ", ex);
+            logger.info(ex.getMessage(), ex);
         }
     }
 
@@ -251,7 +251,7 @@ public class PdfCreatorImpl implements PdfCreator {
         try {
             createContent(cb, 52, y, name, PdfContentByte.ALIGN_LEFT);
         } catch (Exception ex) {
-            logger.info("Exception ", ex);
+            logger.info(ex.getMessage(), ex);
         }
     }
 
@@ -270,7 +270,7 @@ public class PdfCreatorImpl implements PdfCreator {
             createContent(cb, 498, y, df.format(priceMonthly), PdfContentByte.ALIGN_RIGHT);
             createContent(cb, 568, y, df.format(priceOneTime), PdfContentByte.ALIGN_RIGHT);
         } catch (Exception ex) {
-            logger.info("Exception ", ex);
+            logger.info(ex.getMessage(), ex);
         }
     }
 

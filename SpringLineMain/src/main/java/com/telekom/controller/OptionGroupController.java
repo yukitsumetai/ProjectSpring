@@ -31,7 +31,6 @@ public class OptionGroupController {
     }
 
     @PostMapping("/new")
-
     public String newTariffAdd(Model model, @Valid OptionGroupDto optionGroup, BindingResult bindingResult, @RequestParam(name = "isValid", required=false) boolean validity,
                                @RequestParam(name="compatibleOptions", required=false) boolean options, SessionStatus status) {
         if (bindingResult.hasErrors()) {

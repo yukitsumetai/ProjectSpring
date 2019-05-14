@@ -43,12 +43,6 @@ public class ContractController {
         return "tariffs";
     }
 
-    @GetMapping("options")
-    public String tariffsBack(SessionStatus status) {
-        status.setComplete();
-        return TARIFFS;
-    }
-
     @PostMapping("options")
     public String newContractTariffAdd(Model model, ContractDto contract, @RequestParam(name = "tariffID2") Integer id) {
         logger.info("Setting tariff in new contract, tariff id " + id);
@@ -62,12 +56,6 @@ public class ContractController {
         model.addAttribute(TABLE, "add");
         model.addAttribute("NEB", "yes");
         return "contractOptions";
-    }
-
-
-    public String clientBack(SessionStatus status) {
-        status.setComplete();
-        return TARIFFS;
     }
 
     @PostMapping("client")
@@ -89,12 +77,6 @@ public class ContractController {
         }
     }
 
-    @GetMapping("confirmExisting")
-    public String confirmExistingBack(SessionStatus status) {
-        status.setComplete();
-        return TARIFFS;
-    }
-
     @PostMapping("/confirmExisting")
     public String newContractOptionAdd(Model model, ContractDto contract, @RequestParam(name = "clientID2") Integer id, @RequestParam String phoneNumber) {
         logger.info("Existing client, adding phone number" + phoneNumber);
@@ -102,12 +84,6 @@ public class ContractController {
         contract.setClient(clientService.getClient(id));
         contract.setPhoneNumber(phoneNumber);
         return "contract";
-    }
-
-    @GetMapping("confirm")
-    public String confirmBack(SessionStatus status) {
-        status.setComplete();
-        return TARIFFS;
     }
 
     @PostMapping("/confirm")
@@ -121,12 +97,6 @@ public class ContractController {
         contract.setClient(client);
         contract.setPhoneNumber(client.getPhoneNumber());
         return "contract";
-    }
-
-    @GetMapping("/confirm/true")
-    public String confirmTrueBack(SessionStatus status) {
-        status.setComplete();
-        return TARIFFS;
     }
 
     @PostMapping("/confirm/true")
@@ -143,12 +113,6 @@ public class ContractController {
         return "redirect:/existingContract/" + contract.getPhoneNumber();
     }
 
-    @GetMapping("/confirmExisting/true")
-    public String confirmExistingTrueBack(SessionStatus status) {
-        status.setComplete();
-        return TARIFFS;
-    }
-
     @PostMapping("/confirmExisting/true")
     public String confirmationExisting(Model model, ContractDto contract, @RequestParam(required = false) Boolean email, SessionStatus status) {
         contractService.add(contract);
@@ -161,5 +125,12 @@ public class ContractController {
         }
         status.setComplete();
         return "redirect:/existingContract/" + contract.getPhoneNumber();
+    }
+
+    @GetMapping(value={"options", "client", "confirm", "confirmExisting",
+            "confirm/true", "confirmExisting/true"})
+    public String tariffsBack(SessionStatus status) {
+        status.setComplete();
+        return TARIFFS;
     }
 }
