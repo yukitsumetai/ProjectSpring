@@ -263,7 +263,17 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/webapp/WEB-INF/Views/contractData.jsp">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/SpringLineMain/src/main/webapp/WEB-INF/Views/contractOptions.jsp">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/webapp/WEB-INF/Views/customerData.jsp">
           <value>
             <set />
           </value>
@@ -303,6 +313,16 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/webapp/WEB-INF/Views/elements/shoppingCart.jsp">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/webapp/WEB-INF/Views/error.jsp">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/SpringLineMain/src/main/webapp/WEB-INF/Views/newClient.jsp">
           <value>
             <set />
@@ -323,7 +343,17 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/webapp/WEB-INF/Views/tables/tableClients.jsp">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/SpringLineMain/src/main/webapp/WEB-INF/Views/tariffs.jsp">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/webapp/WEB-INF/Views/welcome.jsp">
           <value>
             <set />
           </value>

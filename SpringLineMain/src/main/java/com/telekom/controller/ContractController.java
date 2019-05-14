@@ -6,6 +6,7 @@ import com.telekom.service.api.ContractService;
 import com.telekom.service.impl.ImageRecognitionImpl;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +19,7 @@ import java.util.List;
 @Controller
 @SessionAttributes(types = ContractDto.class)
 @RequestMapping(value = "/newContract")
+@PreAuthorize("is.Authenticated()")
 public class ContractController {
     public static final String table = "table";
     public static final String message = "message";
@@ -62,7 +64,7 @@ public class ContractController {
         return "contractOptions";
     }
 
-    @GetMapping("client")
+
     public String clientBack(SessionStatus status) {
         status.setComplete();
         return TARIFFS;

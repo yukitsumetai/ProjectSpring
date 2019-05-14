@@ -14,29 +14,29 @@
 <body>
 
 <div class="table-title">
-    <h2>Details of contract: <b> +${contractDto.phoneNumber}</b></h2>
+    <h2>Details of contract: <strong> +${contractDto.phoneNumber}</strong></h2>
 </div>
 <div class="row">
     <div class="col-sm-4 form-group">
     </div>
     <div class="col-sm-4 form-group">
-        <b>Monthly Price</b>
+        <strong>Monthly Price</strong>
     </div>
 
     <div class="col-sm-4 form-group">
         <c:choose>
             <c:when test="${table=='add'}">
-                <b>One Time Price</b>
+                <strong>One Time Price</strong>
             </c:when>
             <c:otherwise>
-                <b>Actions</b>
+                <strong>Actions</strong>
             </c:otherwise>
         </c:choose>
     </div>
 </div>
 <div class="row">
     <div class="col-sm-8 form-group">
-        <label><b>TARRIFF</b> </label>
+        <label><strong>TARRIFF</strong> </label>
     </div>
 <c:if test="${contractDto.blocked==false}">
     <div class="col-sm-4 form-group price" color=" #a5aebc">
@@ -64,7 +64,7 @@
 </div>
 <div class="row">
     <div class="col-sm-8 form-group">
-        <label><b>OPTIONS</b> </label>
+        <label><strong>OPTIONS</strong> </label>
     </div>
     <c:if test="${contractDto.blocked==false}">
     <div class="col-sm-4 form-group price" color=" #a5aebc">
@@ -99,16 +99,16 @@
 </c:forEach>
 <div class="row">
     <div class="col-sm-4 form-group">
-        <label><b>Total Price: </b></label>
+        <label><strong>Total Price: </strong></label>
     </div>
     <div class="col-sm-4 form-group price">
-        <b>$${contractDto.price}</b>
+        <strong>$${contractDto.price}</strong>
     </div>
 
     <div class="col-sm-4 form-group price">
         <c:choose>
             <c:when test="${table=='add'}">
-                <b>$${contractDto.priceOneTime}</b>
+                <strong>$${contractDto.priceOneTime}</strong>
             </c:when>
         </c:choose>
     </div>

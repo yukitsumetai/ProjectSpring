@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="elements/TopNavBar.jsp" %>
-
+<!DOCTYPE html>
 <html>
 <head>
     <script src="${contextPath}/resource/js/validation.js"></script>

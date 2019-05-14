@@ -88,9 +88,9 @@ function addRowsOption(data, table) {
         var icon2 = "";
         var check = table;
         if (check == 1) {
-            icon = "<a href='/springLine/options/edit/" + val.id + "/' class='edit' title='Edit'><i class='material-icons'>&#xE254</i></a>";
+            icon = "<a href='/springLine/options/edit/" + val.id + "/' class='edit' title='Edit'><em class='material-icons'>&#xE254</em></a>";
             if (val.isValid == true) {
-                icon2 = "<a href='#deleteModal' class='delete' title='Delete' data-toggle='modal' data-target='#deleteModal' data-id=" + val.id + "><i class='material-icons'>&#xE872;</i></a>"
+                icon2 = "<a href='#deleteModal' class='delete' title='Delete' data-toggle='modal' data-target='#deleteModal' data-id=" + val.id + "><em class='material-icons'>&#xE872;</em></a>"
             }
         } else if (val.existing == true) {
             icon = "<input type='checkbox' class='chk' value='" + val.id + "' name='optionID' checked/>"
@@ -127,9 +127,9 @@ function addRowsTariff(data, table) {
         var icon2 = "";
         var check = table;
         if (check == 1) {
-            icon = "<a href='/springLine/tariffs/edit/" + val.id + "/' class='edit' title='Edit'><i class='material-icons'>&#xE254</i></a>";
+            icon = "<a href='/springLine/tariffs/edit/" + val.id + "/' class='edit' title='Edit'><em class='material-icons'>&#xE254</em></a>";
             if (val.isValid == true) {
-                icon2 = "<a href='#deleteModal' class='delete' title='Delete' data-toggle='modal' data-target='#deleteModal' data-id=" + val.id + "><i class='material-icons'>&#xE872;</i></a>"
+                icon2 = "<a href='#deleteModal' class='delete' title='Delete' data-toggle='modal' data-target='#deleteModal' data-id=" + val.id + "><em class='material-icons'>&#xE872;</em></a>"
             }
         } else if (val.existing == true) {
             icon = "<input type='checkbox' tariffName='"+val.name+"' price='"+val.price+"' id='"+val.id+"' class='chk myChk' value='" + val.id + "' name='tariffID' checked>"
@@ -158,7 +158,7 @@ function addRowsClient(data, table) {
         $.each(val.contracts, function (key, option) {
             var c = (option || {}).phoneNumber;
             c2 = (typeof (c) !== 'undefined' ? c : '');
-            icon = "<a href='/springLine/existingContract/"+c2+"' class='edit' title='Edit'><i class='material-icons'>&#xE254;</i></a>";
+            icon = "<a href='/springLine/existingContract/"+c2+"' class='edit' title='Edit'><em class='material-icons'>&#xE254;</em></a>";
             contracts.push(c2+icon + "<br>");
         });
         var icon;

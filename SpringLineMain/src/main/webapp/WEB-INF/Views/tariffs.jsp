@@ -12,7 +12,7 @@
 <c:set var="urlPath" value="${requestScope['javax.servlet.forward.request_uri']}"/>
 
 <%@ include file="elements/TopNavBar.jsp" %>
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">

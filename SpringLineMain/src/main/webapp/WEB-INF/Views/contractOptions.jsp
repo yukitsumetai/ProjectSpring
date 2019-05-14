@@ -13,7 +13,7 @@
 <%@ include file="elements/SideBar.jsp" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <c:set var="urlPath" value="${requestScope['javax.servlet.forward.request_uri']}"/>
-
+<!DOCTYPE html>
 <html>
 <head>
 

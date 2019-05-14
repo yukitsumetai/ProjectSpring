@@ -1,20 +1,20 @@
 version: "3.7"
 services:
-#  webapp:
-#    container_name: webapp
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#    ports:
-#      - "8080:8080"
-#      - "9990:9990"
-#    depends_on:
-#      - db
-#    environment:
-#      DB_USER: ekochuro
-#      DB_PASSWORD: moon2207
-#      DB_LINK: jdbc:mysql://db:3306/projectspring
-#      MAIL_P: 2207!sun
+  webapp:
+    container_name: webapp
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+      - "9990:9990"
+    depends_on:
+      - db
+    environment:
+      DB_USER: ekochuro
+      DB_PASSWORD: moon2207
+      DB_LINK: jdbc:mysql://db:3306/projectspring
+      MAIL_P: 2207!sun
 
   db:
     container_name: db

@@ -3,6 +3,7 @@ package com.telekom.controller;
 import com.telekom.model.dto.OptionGroupDto;
 import com.telekom.service.api.OptionGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @SessionAttributes(types = OptionGroupDto.class)
 @RequestMapping(value = "/optionGroups")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 @Controller
 public class OptionGroupController {
     private static final String OPTION_GROUP_PAGE ="redirect:/optionGroups";

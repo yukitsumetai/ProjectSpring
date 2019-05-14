@@ -8,7 +8,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <c:set var="urlPath" value="${requestScope['javax.servlet.forward.request_uri']}"/>
-<!doctype html>
 <html lang="en" class="no-js">
 <head>
     <meta charset="UTF-8">

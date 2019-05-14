@@ -3,6 +3,7 @@ package com.telekom.controller;
 import com.telekom.model.dto.TariffDto;
 import com.telekom.service.api.TariffService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +16,7 @@ import java.util.List;
 @SessionAttributes(types = TariffDto.class)
 @RequestMapping(value = "/tariffs")
 @Controller
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class TariffController {
     private final static String tariffPage = "redirect:/tariffs";
     @Autowired

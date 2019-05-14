@@ -13,7 +13,7 @@
 <c:set var="urlPath" value="${requestScope['javax.servlet.forward.request_uri']}"/>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-
+<!DOCTYPE html>
 <html>
 <head>
 

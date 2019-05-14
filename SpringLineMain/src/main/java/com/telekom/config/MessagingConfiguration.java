@@ -26,8 +26,8 @@ public class MessagingConfiguration {
     @Bean
     public UserCredentialsConnectionFactoryAdapter ConnectionFactory(JndiObjectFactoryBean jndi) {
         UserCredentialsConnectionFactoryAdapter adapter= new UserCredentialsConnectionFactoryAdapter();
-        adapter.setUsername("ekakoc2");
-        adapter.setPassword("ekakoc");
+        adapter.setUsername("ekakoc");
+        adapter.setPassword("ekakoc2");
         adapter.setTargetConnectionFactory( (ConnectionFactory)jndi.getObject());
         return adapter;
     }

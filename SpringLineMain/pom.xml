@@ -242,11 +242,11 @@
 <!--Sonar-->
 
         <dependency>
-            <groupId>org.codehaus.sonar</groupId>
+            <groupId>org.sonarsource.sonarqube</groupId>
             <artifactId>sonar-plugin-api</artifactId>
-            <version>5.1</version>
-            <scope>provided</scope>
+            <version>7.7</version>
         </dependency>
+
 
 
 

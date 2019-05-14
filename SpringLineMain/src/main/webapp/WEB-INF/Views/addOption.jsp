@@ -12,6 +12,7 @@
 <%@ include file="elements/SideBar.jsp" %>
 <c:set var="urlPath" value="${requestScope['javax.servlet.forward.request_uri']}"/>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<!DOCTYPE html>
 <html>
 <head>
     <script src="${contextPath}/resource/js/validation.js"></script>

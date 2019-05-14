@@ -12,6 +12,7 @@
 <%@ include file="elements/TopNavBar.jsp" %>
 <%@ include file="elements/SideBar.jsp" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<!DOCTYPE html>
 <html>
 <head>
 

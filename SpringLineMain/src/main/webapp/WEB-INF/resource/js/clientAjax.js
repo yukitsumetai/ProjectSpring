@@ -55,7 +55,7 @@ function addRowClient(val, table) {
     $.each(val.contracts, function (key, option) {
         var c = (option || {}).phoneNumber;
         var c2 = (typeof (c) !== 'undefined' ? c : '');
-        icon = "<a href='/existingContract/" + c2 + "' class='edit' title='Edit'><i class='material-icons'>&#xE254;</i></a>";
+        icon = "<a href='/existingContract/" + c2 + "' class='edit' title='Edit'><em class='material-icons'>&#xE254;</em></a>";
         contracts.push(c2 + icon + "<br>");
     });
     var icon;
@@ -89,9 +89,9 @@ function configure() {
     document.getElementById('cameraButtons').innerHTML =
         ' <div class="row">\n' +
         '                    <div class="col-sm-2 form-group">' +
-        '<button class="btn btn-success" onClick="take_snapshot()">Take Picture <i class="fas fa-camera"></i></button>' +
+        '<button class="btn btn-success" onClick="take_snapshot()">Take Picture <em class="fas fa-camera"></em></button>' +
         '</div>' + '<div class="col-sm-2 form-group">' +
-        '<button class="btn btn-success left" onClick="closeCamera()">Close Camera <i class="fas fa-times"></i></button>' +
+        '<button class="btn btn-success left" onClick="closeCamera()">Close Camera <em class="fas fa-times"></em></button>' +
         '</div>' + '</div>';
 }
 

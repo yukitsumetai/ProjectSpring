@@ -4,6 +4,7 @@ import com.telekom.model.dto.OptionDto;
 import com.telekom.service.api.OptionService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +18,7 @@ import java.util.Set;
 
 @SessionAttributes(types = OptionDto.class)
 @RequestMapping(value = "/options")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 @Controller
 public class OptionController {
     private static final String OPTIONS = "redirect:/options";
