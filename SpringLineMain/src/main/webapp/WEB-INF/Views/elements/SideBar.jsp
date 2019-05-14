@@ -12,6 +12,7 @@
 
 <head>
     <link href="${contextPath}/resource/css/dashboard.css" rel="stylesheet">
+    <title>SideNavBAr</title>>
 </head>
 
 <nav class="col-sm-3 col-md-2 sidebar">

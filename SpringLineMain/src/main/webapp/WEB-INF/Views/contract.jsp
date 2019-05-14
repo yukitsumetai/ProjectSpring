@@ -52,11 +52,11 @@
                         <input type="checkbox" class="chk" name="email" id="email"/>
                         <row>
                             <br>
-                            <button class="btn btn-success" onclick="window.print()">Print <i class="fas fa-print"></i>
+                            <button class="btn btn-success" onclick="window.print()">Print <em class="fas fa-print"></em>
                             </button>
-                            <button type="submit" class="btn btn-success">Confirm <i class="far fa-save"></i></button>
+                            <button type="submit" class="btn btn-success">Confirm <em class="far fa-save"></em></button>
                             <a type="button" href="${contextPath}/welcome"
-                               class="btn btn-danger">Cancel <i class="fas fa-times"></i></a>
+                               class="btn btn-danger">Cancel <em class="fas fa-times"></em></a>
                         </row>
                     </form>
                 </c:when>
@@ -74,7 +74,7 @@
                                                         disabled
                                                     </security:authorize>
                                                 </c:if>
-                                        >Unblock Sim card
+                                        >Unblock Sim card <em class="fas fa-unlock"></em>
                                         </button>
                                         <c:if test="${contractDto.agentBlock==true}">
                                             <security:authorize access="hasRole('ROLE_USER')">
@@ -86,7 +86,7 @@
                                 </c:when>
                                 <c:otherwise>
                                     <a type="button" href="${contextPath}/existingContract/block"
-                                       class="btn btn-danger">Block Sim card</a>
+                                       class="btn btn-danger">Block Sim card <em class="fas fa-lock"></em></a>
                                 </c:otherwise>
                             </c:choose>
                         </div>

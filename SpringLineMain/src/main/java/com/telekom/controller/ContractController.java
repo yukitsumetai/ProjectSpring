@@ -22,6 +22,7 @@ public class ContractController {
     public static final String table = "table";
     public static final String message = "message";
     public static final String error = "error";
+    public static final String TARIFFS = "redirect:/tariffs/";
     @Autowired
     private ClientService clientService;
 
@@ -30,9 +31,6 @@ public class ContractController {
 
     @Autowired
     private Logger logger;
-
-    @Autowired
-    private ImageRecognitionImpl imageRecognition;
 
     @GetMapping("tariffs")
     public String start(Model model) {
@@ -43,6 +41,11 @@ public class ContractController {
         return "tariffs";
     }
 
+    @GetMapping("options")
+    public String tariffsBack(SessionStatus status) {
+        status.setComplete();
+        return TARIFFS;
+    }
 
     @PostMapping("options")
     public String newContractTariffAdd(Model model, ContractDto contract, @RequestParam(name = "tariffID2") Integer id) {
@@ -57,6 +60,12 @@ public class ContractController {
         model.addAttribute(table, "add");
         model.addAttribute("NEB", "yes");
         return "contractOptions";
+    }
+
+    @GetMapping("client")
+    public String clientBack(SessionStatus status) {
+        status.setComplete();
+        return TARIFFS;
     }
 
     @PostMapping("client")
@@ -78,6 +87,12 @@ public class ContractController {
         }
     }
 
+    @GetMapping("confirmExisting")
+    public String confirmExistingBack(SessionStatus status) {
+        status.setComplete();
+        return TARIFFS;
+    }
+
     @PostMapping("/confirmExisting")
     public String newContractOptionAdd(Model model, ContractDto contract, @RequestParam(name = "clientID2") Integer id, @RequestParam String phoneNumber) {
         logger.info("Existing client, adding phone number" + phoneNumber);
@@ -85,6 +100,12 @@ public class ContractController {
         contract.setClient(clientService.getClient(id));
         contract.setPhoneNumber(phoneNumber);
         return "contract";
+    }
+
+    @GetMapping("confirm")
+    public String confirmBack(SessionStatus status) {
+        status.setComplete();
+        return TARIFFS;
     }
 
     @PostMapping("/confirm")
@@ -100,11 +121,17 @@ public class ContractController {
         return "contract";
     }
 
+    @GetMapping("/confirm/true")
+    public String confirmTrueBack(SessionStatus status) {
+        status.setComplete();
+        return TARIFFS;
+    }
+
     @PostMapping("/confirm/true")
     public String confirmation(Model model, ContractDto contract, @RequestParam(required = false) Boolean email, SessionStatus status) {
         contractService.add(contract);
-        if (email) {
-            boolean correct = contractService.sendPdf(true, contract);
+        if (email!=null) {
+            boolean correct = contractService.sendEmail(true, contract);
             if (!correct) {
                 model.addAttribute(message, "Email was not sent");
                 return error;
@@ -114,11 +141,17 @@ public class ContractController {
         return "redirect:/existingContract/" + contract.getPhoneNumber();
     }
 
+    @GetMapping("/confirmExisting/true")
+    public String confirmExistingTrueBack(SessionStatus status) {
+        status.setComplete();
+        return TARIFFS;
+    }
+
     @PostMapping("/confirmExisting/true")
     public String confirmationExisting(Model model, ContractDto contract, @RequestParam(required = false) Boolean email, SessionStatus status) {
         contractService.add(contract);
-        if (email) {
-            boolean correct = contractService.sendPdf(false, contract);
+        if (email!=null) {
+            boolean correct = contractService.sendEmail(false, contract);
             if (!correct) {
                 model.addAttribute(message, "Email was not sent");
                 return error ;

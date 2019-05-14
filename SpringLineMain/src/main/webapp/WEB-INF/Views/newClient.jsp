@@ -43,7 +43,7 @@
                 <div id="my_camera"></div>
                 <br>
                 <div id="cameraButtons">
-                    <button class="btn btn-success" onclick="configure()">Use Camera <i class="fas fa-camera"></i></button>
+                    <button class="btn btn-success" onclick="configure()">Use Camera <em class="fas fa-camera"></em></button>
                 </div>
                 <div id="results"></div>
             </div>
@@ -69,7 +69,7 @@
                     <form:label path="birthday">Birthday</form:label>
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                            <span class="input-group-text"><em class="far fa-calendar-alt"></em></span>
                         </div>
                         <form:input path="birthday" type='date' class="form-control" min="${now}-100"    title="Date should be valid. Customer should be older than 18 years old"
                                     max="${now}-18" id="birthday" required="true" onblur="requiredField(this)"/>
@@ -146,7 +146,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-success"  onclick="" >Next <i class="fas fa-arrow-right"></i></button>
+                    <button class="btn btn-success"  onclick="" >Next <em class="fas fa-arrow-right"></em></button>
                 </div>
 
             </form:form>

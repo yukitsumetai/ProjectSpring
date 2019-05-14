@@ -75,7 +75,7 @@
                                             <c:choose>
                                                 <c:when test="${tariff==true}">value=true</c:when>
                                                 <c:otherwise>value=false</c:otherwise>
-                                            </c:choose> name="action">Next
+                                            </c:choose> name="action">Next  <em class="fas fa-arrow-right"></em>
                                     </button>
                                 </div>
                             </div>
@@ -90,7 +90,7 @@
                             <button type="submit" class="btn btn-success" <c:choose>
                                 <c:when test="${tariff==true}">value=true</c:when>
                                 <c:otherwise>value=false</c:otherwise>
-                            </c:choose> name="action">Next
+                            </c:choose> name="action">Next  <em class="fas fa-arrow-right"></em>
                             </button>
                         </div>
                     </form>

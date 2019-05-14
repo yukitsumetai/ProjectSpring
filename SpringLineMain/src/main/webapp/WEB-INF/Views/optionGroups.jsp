@@ -61,9 +61,9 @@
                                 <i class="material-icons">&#xE8B6;</i>
                                 <input type="text" class="form-control" id="myInput" placeholder="Search&hellip;">
                             </div>
-                            <div class="newtariff ">
+                            <div class="newtariff">
                                 <form action="${contextPath}/optionGroups/new">
-                                    <button type="submit" class="btn btn-success">Add Option Group</button>
+                                    <button type="submit" class="btn btn-success">Add Option Group <em class="fas fa-plus"></em></button>
                                 </form>
                             </div>
                         </div>

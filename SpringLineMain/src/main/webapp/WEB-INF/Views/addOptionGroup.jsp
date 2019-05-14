@@ -62,8 +62,7 @@
 
 
                 <div class="form-group">
-                    <button type="submit" class="btn btn-success">Add <i
-                            class="glyphicon glyphicon-plus"></i>
+                    <button type="submit" class="btn btn-success">Add <em class="fas fa-plus"></em>
                     </button>
                 </div>
 

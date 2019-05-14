@@ -92,8 +92,7 @@
 
                 <div class="form-group">
                     <br>
-                    <button type="submit" class="btn btn-success">Change <i
-                            class="glyphicon glyphicon-edit"></i>
+                    <button type="submit" class="btn btn-success">Change <em class="far fa-edit"></em>
                     </button>
                 </div>
 

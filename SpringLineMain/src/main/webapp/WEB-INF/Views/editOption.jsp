@@ -137,7 +137,7 @@
                     </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-success"
-                            onclick="return Validate()">Next
+                            onclick="return Validate()">Change <em class="far fa-edit"></em>
                     </button>
                 </div>
 

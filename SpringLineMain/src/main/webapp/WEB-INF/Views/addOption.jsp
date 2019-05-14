@@ -115,7 +115,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-success">Add
+                    <button type="submit" class="btn btn-success">Add <em class="fas fa-plus"></em>
                     </button>
                 </div>
 

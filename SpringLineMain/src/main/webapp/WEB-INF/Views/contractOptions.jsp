@@ -96,18 +96,12 @@
                             <br>
                         </c:if>
                     </c:forEach>
-                    <div class="row">
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-success" name="action" value="new">New Client <i
-                                    class="glyphicon glyphicon-plus"></i>
+                    <row>
+                            <button type="submit" class="btn btn-success" name="action" value="new">New Client <em class="fas fa-user-plus"></em>
                             </button>
-                        </div>
-                        <div class="form-group newtariff">
-                            <button type="submit" class="btn btn-success" name="action" value="existing">Existing
-                                client <i class="glyphicon glyphicon-user"></i>
+                            <button type="submit" class="btn btn-success" name="action" value="existing">Existing client <em class="fas fa-user-edit"></em>
                             </button>
-                        </div>
-                    </div>
+                    </row>
                 </form>
             </c:when>
             <c:otherwise>
@@ -132,8 +126,7 @@
                         </c:if>
                     </c:forEach>
                     <div class="row">
-                        <button type="submit" class="btn btn-success" name="action" value="new">Next <i
-                                class="glyphicon glyphicon-chevron-right"></i></button>
+                        <button type="submit" class="btn btn-success" name="action" value="new">Next  <em class="fas fa-arrow-right"></em></button>
                     </div>
                 </form>
             </c:otherwise>

@@ -93,7 +93,7 @@
                     <div class="col-sm-6 ">
                         <c:if test="${table=='edit'}">
                             <form action="${contextPath}/tariffs/new">
-                                <button type="submit" class="btn btn-success right">Add Tariff</button>
+                                <button type="submit" class="btn btn-success right">Add Tariff <em class="fas fa-plus"></em></button>
                             </form>
                         </c:if>
                     </div>
@@ -106,8 +106,7 @@
                         <%@ include file="tables/tableTariffs.jsp" %>
                         <div>
                             <br><br>
-                            <button type="submit" class="btn btn-success" id="options" disabled>Next <i
-                                    class="glyphicon glyphicon-chevron-right"></i></button>
+                            <button type="submit" class="btn btn-success" id="options" disabled>Next  <em class="fas fa-arrow-right"></em></button>
                         </div>
                     </form>
                 </c:when>
@@ -116,8 +115,7 @@
                         <%@ include file="tables/tableTariffs.jsp" %>
                         <div>
                             <br><br>
-                            <button type="submit" class="btn btn-success" id="options" disabled>Next <i
-                                    class="glyphicon glyphicon-chevron-right"></i></button>
+                            <button type="submit" class="btn btn-success" id="options" disabled>Next <em class="fas fa-arrow-right"></em></button>
                         </div>
                     </form>
                 </c:when>
@@ -126,8 +124,7 @@
                         <%@ include file="tables/tableTariffs.jsp" %>
                         <div>
                             <br><br>
-                            <button type="submit" class="btn btn-success">Save <i
-                                    class="glyphicon glyphicon-floppy-disk"></i></button>
+                            <button type="submit" class="btn btn-success">Save <em class="far fa-save"></em></button>
                         </div>
                     </form>
                 </c:when>
@@ -136,8 +133,7 @@
                         <%@ include file="tables/tableTariffs.jsp" %>
                         <div>
                             <br><br>
-                            <button type="submit" class="btn btn-success">Save <i
-                                    class="glyphicon glyphicon-floppy-disk"></i></button>
+                            <button type="submit" class="btn btn-success">Save <em class="far fa-save"></em></button>
                         </div>
                     </form>
                 </c:when>

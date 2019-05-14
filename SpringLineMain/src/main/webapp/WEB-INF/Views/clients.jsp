@@ -44,7 +44,7 @@
                                 <input type="text" class="form-control" id="phoneNumber" placeholder="Search&hellip;">
                             </div>
                             <div class="newtariff ">
-                                    <button type="submit" onclick="searchClient(<c:if test="${table=='edit'}">1</c:if>)" class="btn btn-success">Find</button>
+                                    <button type="submit" onclick="searchClient(<c:if test="${table=='edit'}">1</c:if>)" class="btn btn-success">Find <em class="fas fa-search"></em></button>
                             </div>
                         </div>
                     </div>
@@ -69,7 +69,7 @@
                 </div>
 
                 <div>
-                    <button type="submit" id="client" class="btn btn-success" disabled>Next</button>
+                    <button type="submit" id="client" class="btn btn-success" disabled>Next <em class="fas fa-arrow-right"></em></button>
                 </div>
                 </c:if>
 

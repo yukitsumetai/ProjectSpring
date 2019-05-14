@@ -71,7 +71,7 @@
                             <c:if test="${table=='edit'}">
                                 <div class="newtariff">
                                     <form action="${contextPath}/options/new">
-                                        <button type="submit" class="btn btn-success ">Add Option</button>
+                                        <button type="submit" class="btn btn-success ">Add Option <em class="fas fa-plus"></em></button>
                                     </form>
                                 </div>
                             </c:if>
@@ -91,8 +91,7 @@
 
                         <%@ include file="tables/tableOptions.jsp" %>
                         <div class="row">
-                            <button type="submit" class="btn btn-success" name="action" value="new">Next <i
-                                    class="glyphicon glyphicon-chevron-right"></i></button>
+                            <button type="submit" class="btn btn-success" name="action" value="new">Next <em class="fas fa-arrow-right"></em></button>
                         </div>
                     </form>
                 </c:otherwise>
