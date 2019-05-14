@@ -2,7 +2,6 @@ function valthisform() {
     event.preventDefault();
     var email = document.getElementById('email').value;
     var passport = document.getElementById('passport').value;
-    var button = document.getElementById('button');
     if(email!="" && passport.length==9) {
         $.ajax({
             url: "/springLine/newContract/client/check",

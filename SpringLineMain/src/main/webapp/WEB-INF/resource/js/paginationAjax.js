@@ -120,7 +120,7 @@ function addRowsTariff(data, table) {
         var tariffsTable = [];
         $.each(val.options, function (key, option) {
             var c = (option || {}).name;
-            c2 = (typeof (c) !== 'undefined' ? c : '');
+            var c2 = (typeof (c) !== 'undefined' ? c : '');
             tariffsTable.push(c2);
         });
         var icon;

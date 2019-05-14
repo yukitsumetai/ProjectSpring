@@ -162,9 +162,8 @@ public class ContractServiceImpl implements ContractService {
      * @return
      */
     private boolean optionValidation(ContractDto contract) {
-        if (basicOptionValidation(contract)) {
-            if (childrenOptionValidation(contract)) return incompatibleOptionValidation(contract);
-        }
+        if (basicOptionValidation(contract) && childrenOptionValidation(contract))
+             return incompatibleOptionValidation(contract);
         return false;
     }
 
@@ -213,24 +212,26 @@ public class ContractServiceImpl implements ContractService {
     private boolean incompatibleOptionValidation(ContractDto contract) {
         if (!contract.getOptions().isEmpty()) {
             Set<OptionGroupDto> og = new HashSet<>();
-            for (OptionDto o : contract.getOptions()
-            ) {
-                if (o.getOptionGroup() != null) {
-                    og.add(o.getOptionGroup());
-                }
-            }
+            gettingOptionGroups(contract, og);
             for (OptionGroupDto og2 : og
             ) {
                 int count = 0;
                 for (OptionDto o : contract.getOptions()) {
-                    if (o.getOptionGroup() != null) {
-                        if (o.getOptionGroup().getId() == og2.getId()) count++;
-                    }
+                    if (o.getOptionGroup() != null && o.getOptionGroup().getId() == og2.getId()) count++;
                 }
                 if (count >= 2) return false;
             }
         }
         return true;
+    }
+
+    private void gettingOptionGroups(ContractDto contract, Set<OptionGroupDto> og){
+        for (OptionDto o : contract.getOptions()
+        ) {
+            if (o.getOptionGroup() != null) {
+                og.add(o.getOptionGroup());
+            }
+        }
     }
 
     /**

@@ -21,9 +21,9 @@ import java.util.List;
 @RequestMapping(value = "/newContract")
 @PreAuthorize("is.Authenticated()")
 public class ContractController {
-    public static final String table = "table";
-    public static final String message = "message";
-    public static final String error = "error";
+    public static final String TABLE = "table";
+    public static final String MESSAGE = "message";
+    public static final String ERROR = "error";
     public static final String TARIFFS = "redirect:/tariffs/";
     @Autowired
     private ClientService clientService;
@@ -39,7 +39,7 @@ public class ContractController {
         logger.info("Starting new contract");
         ContractDto contract = new ContractDto();
         model.addAttribute(contract);
-        model.addAttribute(table, "add");
+        model.addAttribute(TABLE, "add");
         return "tariffs";
     }
 
@@ -53,13 +53,13 @@ public class ContractController {
     public String newContractTariffAdd(Model model, ContractDto contract, @RequestParam(name = "tariffID2") Integer id) {
         logger.info("Setting tariff in new contract, tariff id " + id);
         if (!contractService.setTariff(contract, id)) {
-            model.addAttribute(message, "Tariff is not valid");
-            return error;
+            model.addAttribute(MESSAGE, "Tariff is not valid");
+            return ERROR;
         }
         model.addAttribute("options", contractService.getOptionsParents(contract));
         model.addAttribute("optionGroups", contractService.getGroups(contract));
         model.addAttribute("children", contractService.getOptionsChildren(contract));
-        model.addAttribute(table, "add");
+        model.addAttribute(TABLE, "add");
         model.addAttribute("NEB", "yes");
         return "contractOptions";
     }
@@ -74,10 +74,10 @@ public class ContractController {
     public String newContractOptionAdd(Model model, ContractDto contract, @RequestParam(name = "action") String action, @RequestParam(name = "optionID", required = false) List<Integer> id) {
         logger.info("Setting options and getting client for new contract, client " + action);
         if (!contractService.setOptions(contract, id, false)) {
-            model.addAttribute(message, "Options are not compatible");
-            return error;
+            model.addAttribute(MESSAGE, "Options are not compatible");
+            return ERROR;
         }
-        model.addAttribute(table, "add");
+        model.addAttribute(TABLE, "add");
         if (action.equals("new")) {
             ClientDto client = new ClientDto();
             AddressDto a = new AddressDto();
@@ -98,7 +98,7 @@ public class ContractController {
     @PostMapping("/confirmExisting")
     public String newContractOptionAdd(Model model, ContractDto contract, @RequestParam(name = "clientID2") Integer id, @RequestParam String phoneNumber) {
         logger.info("Existing client, adding phone number" + phoneNumber);
-        model.addAttribute(table, "add");
+        model.addAttribute(TABLE, "add");
         contract.setClient(clientService.getClient(id));
         contract.setPhoneNumber(phoneNumber);
         return "contract";
@@ -114,10 +114,10 @@ public class ContractController {
     public String newContractOptionAdd(Model model, ContractDto contract, @ModelAttribute @Valid ClientDto client, BindingResult bindingResult) {
         logger.info("New client, adding phone number" + client.getPhoneNumber());
         if (bindingResult.hasErrors()) {
-            model.addAttribute(message, "Operation cannot be proceeded further because received data contains some errors");
-            return error;
+            model.addAttribute(MESSAGE, "Operation cannot be proceeded further because received data contains some errors");
+            return ERROR;
         }
-        model.addAttribute(table, "add");
+        model.addAttribute(TABLE, "add");
         contract.setClient(client);
         contract.setPhoneNumber(client.getPhoneNumber());
         return "contract";
@@ -135,8 +135,8 @@ public class ContractController {
         if (email!=null) {
             boolean correct = contractService.sendEmail(true, contract);
             if (!correct) {
-                model.addAttribute(message, "Email was not sent");
-                return error;
+                model.addAttribute(MESSAGE, "Email was not sent");
+                return ERROR;
             }
         }
         status.setComplete();
@@ -155,8 +155,8 @@ public class ContractController {
         if (email!=null) {
             boolean correct = contractService.sendEmail(false, contract);
             if (!correct) {
-                model.addAttribute(message, "Email was not sent");
-                return error ;
+                model.addAttribute(MESSAGE, "Email was not sent");
+                return ERROR ;
             }
         }
         status.setComplete();

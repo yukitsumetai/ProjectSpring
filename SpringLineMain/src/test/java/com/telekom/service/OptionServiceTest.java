@@ -664,12 +664,6 @@ class OptionServiceTest {
         assertFalse(option.isValid());
     }
 
-
-    @Test
-    void deleteOptionNull() {
-        when(optionDao.getOne(12)).thenReturn(null);
-        optionService.deleteOption(12);
-    }
 }
 
 

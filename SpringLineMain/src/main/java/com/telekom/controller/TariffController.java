@@ -18,7 +18,7 @@ import java.util.List;
 @Controller
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 public class TariffController {
-    private final static String tariffPage = "redirect:/tariffs";
+    private final static String TARIFF_PAGE = "redirect:/tariffs";
     @Autowired
     private TariffService tariffService;
 
@@ -45,7 +45,7 @@ public class TariffController {
             tariffService.add(tariff);
             tariffService.notify(tariff);
             status.setComplete();
-            return tariffPage;
+            return TARIFF_PAGE;
         }
     }
 
@@ -55,7 +55,7 @@ public class TariffController {
         tariffService.add(tariff);
         tariffService.notify(tariff);
         status.setComplete();
-        return tariffPage;
+        return TARIFF_PAGE;
     }
 
     @GetMapping("/edit/{id}")
@@ -80,7 +80,7 @@ public class TariffController {
         tariffService.editTariff(tariff);
         tariffService.notify(tariff, initialState);
         status.setComplete();
-        return tariffPage;
+        return TARIFF_PAGE;
     }
 
     @PostMapping("/edit/options")
@@ -90,7 +90,7 @@ public class TariffController {
         tariffService.editTariff(tariff);
         tariffService.notify(tariff, initialState);
         status.setComplete();
-        return tariffPage;
+        return TARIFF_PAGE;
     }
 
     /**
@@ -103,7 +103,7 @@ public class TariffController {
     public String deleteTariff(@PathVariable(value = "id") Integer id) {
         tariffService.deleteTariff(id);
         tariffService.notifyDeleted();
-        return tariffPage;
+        return TARIFF_PAGE;
     }
 
 
