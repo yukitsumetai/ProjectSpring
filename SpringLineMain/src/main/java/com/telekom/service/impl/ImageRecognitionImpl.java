@@ -4,6 +4,7 @@ import com.telekom.model.dto.ClientDto;
 import com.telekom.service.api.ImageRecognitionService;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
+import net.sourceforge.tess4j.util.LoadLibs;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,19 +30,22 @@ public class ImageRecognitionImpl implements ImageRecognitionService {
         Tesseract tesseract = new Tesseract();
         String text = "";
         logger.info("PerformingOCR");
-        String path2 = this.getClass().getClassLoader().getResource("tessTrainData").toString().substring(5);
-        String path3 = "C:\\Users\\ekochuro\\IdeaProjects\\ProjectSpring\\SpringLineMain\\src\\main\\resources\\tessTrainData\\";
-        String path4 = Thread.currentThread().getContextClassLoader().getResource("tessTrainData").getPath();
-
+        File tessDataFolder = LoadLibs.extractTessResources("tessdata");
         try {
-            tesseract.setDatapath(path4);
+            tesseract.setDatapath(tessDataFolder.getAbsolutePath());
+            logger.info("Set path done");
             tesseract.setLanguage("eng");
-            text = tesseract.doOCR(new File(path));
+            logger.info("Set language");
+            logger.info(path);
+            File file = new File(path);
+            logger.info("Set file");
+            text = tesseract.doOCR(file);
             logger.info("Parsed Text " + text);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
         parseData(client, text);
+        logger.info("Parsed data ");
     }
 
     /**
@@ -53,6 +57,7 @@ public class ImageRecognitionImpl implements ImageRecognitionService {
     private void parseData(ClientDto client, String text) {
         logger.info("Parsing data");
         String[] parts = text.split("\n");
+        if (parts.length < 2) return;
         List<String> result = new ArrayList();
         for (int i = (parts.length - 1); i >= 0; i--) {
             if (parts[i].length() > 3) result.add(parts[i].trim());
@@ -69,6 +74,7 @@ public class ImageRecognitionImpl implements ImageRecognitionService {
 
     /**
      * Parses Passport and Birthday data
+     *
      * @param client
      * @param text2
      */
@@ -98,6 +104,7 @@ public class ImageRecognitionImpl implements ImageRecognitionService {
 
     /**
      * Parses Name and Surname data
+     *
      * @param client
      * @param result
      */

@@ -6,5 +6,5 @@ import javax.mail.MessagingException;
 
 public interface MailService {
 
-    void sendMessageWithAttachment(Boolean existing, ContractDto contract) throws MessagingException;
+    boolean sendMessageWithAttachment(Boolean existing, ContractDto contract);
 }

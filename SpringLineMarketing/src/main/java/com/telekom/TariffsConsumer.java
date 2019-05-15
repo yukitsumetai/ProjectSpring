@@ -16,6 +16,7 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
+import java.util.List;
 
 
 @ApplicationScoped @Named
@@ -38,6 +39,7 @@ public class TariffsConsumer {
         tariffsList.clear();
         for (JsonValue t : response) {
             JsonObject tmp = t.asJsonObject();
+            List tmp2 = tmp.getJsonArray("options");
             tariffsList.add(new TariffPromoted(tmp.getString("name"), tmp.getJsonNumber("price").doubleValue(), tmp.getString("description")));
         }
     }

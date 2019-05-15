@@ -34,6 +34,11 @@ public class SharedRestController {
     @Autowired
     private Logger logger;
 
+    /**
+     * Groups of phones for dropdown. Ajax request
+     * @param page
+     * @return
+     */
     @GetMapping(value = "/phoneNumbers")
     public List<FreePhoneNumber> pagePhoneNumber(@RequestParam Integer page) {
 
@@ -44,6 +49,15 @@ public class SharedRestController {
         return resultPage.getData();
     }
 
+    /**
+     * Groups of options for paginated table. Ajax request
+     * @param page
+     * @param id
+     * @param parent
+     * @param optionId
+     * @param group
+     * @return
+     */
     @GetMapping(value = "/options/optionPages")
     public Page<OptionDto> pageOption(@RequestParam Integer page, @RequestParam(required = false) Integer id,
                                       @RequestParam(required = false) Boolean parent, @RequestParam(required = false) Integer optionId,
@@ -64,6 +78,13 @@ public class SharedRestController {
         return resultPage;
     }
 
+    /**
+     * Groups of tariffs for paginated table. Ajax request
+     * @param page
+     * @param id
+     * @param parent if true returns only valid  tariffs for contracts
+     * @return
+     */
     @GetMapping(value = "/tariffs/tariffPages")
     public Page<TariffDto> pageTariff(@RequestParam Integer page, @RequestParam(required = false) Integer id, @RequestParam(required = false) Boolean parent) {
         logger.info("Get Tariffs Controller id: "+id+", parent: "+parent+", optionId: ");
@@ -73,22 +94,43 @@ public class SharedRestController {
         else resultPage = tariffService.getPage(GROUPS_PER_PAGE, page);
         return resultPage;
     }
+
+    /**
+     * List of promoted tariffs for advertisment stand
+     * @return
+     */
     @GetMapping(value = "/promotedTariffs")
     public List<TariffDto> tariffsPromoted() {
         List<TariffDto> resultPage = tariffService.getAllPromoted();
         return resultPage;
     }
+
+    /**
+     * Groups of clients for paginated table
+     * @param page
+     * @return
+     */
     @GetMapping(value = "/clients/clientPages")
     public Page<ClientDto> pageClient(@RequestParam Integer page) {
         return clientService.getPage(GROUPS_PER_PAGE, page);
     }
 
+    /**
+     * Returns clients by phone number
+     * @param phoneNumber
+     * @return
+     */
     @GetMapping(value = "/clients/search")
     public ClientDto pageClient(@RequestParam String phoneNumber) {
         return clientService.getClient(phoneNumber);
     }
 
-
+    /**
+     * Returns true if client with same mail and/or passport exists
+     * @param passport
+     * @param email
+     * @return
+     */
     @GetMapping(value = "/newContract/client/check")
     public Boolean pageTariff(@RequestParam Integer passport, @RequestParam String email) {
         return clientService.checkExisting(email, passport);
@@ -105,9 +147,17 @@ public class SharedRestController {
         return resultPage.getData();
     }
 
+    /**
+     * Performs OCR from id
+     * @param image path to image
+     * @param id
+     * @return
+     */
     @PostMapping("/captureImage")
     public ClientDto performOCR(@RequestParam(name = "imageprev") String image, @RequestParam(name = "contract") String id) {
+       logger.info("/captureImage");
         id = id.substring(id.lastIndexOf('@') + 1);
+        logger.info("/captureImage2");
         ClientDto client = clientService.performOcr(image, id);
         return client;
     }

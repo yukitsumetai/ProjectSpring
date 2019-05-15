@@ -15,19 +15,24 @@ import java.util.Set;
 @Component
 public class TariffMapper {
 
-    public TariffDto entityToDto(Tariff t) {
+    public TariffDto entityToDto(Tariff t, boolean valid) {
         TariffDto tmp = entityToDtoWithoutOptions(t);
         if (!t.getOptions().isEmpty()) {
             Set<OptionDto> tmpOptions = new HashSet<>();
             for (Option o : t.getOptions()) {
-                OptionDto tmp2 = new OptionDto();
-                tmp2.setName(o.getName());
-                tmp2.setId(o.getId());
-                tmp2.setPriceMonthly(o.getPriceMonthly());
-                tmp2.setPriceOneTime(o.getPriceOneTime());
-                tmp2.setDescription(o.getDescription());
-                tmpOptions.add(tmp2);
-
+                boolean flag = true;
+                if (valid && !o.isValid()) {
+                    flag = false;
+                }
+                if (flag) {
+                    OptionDto tmp2 = new OptionDto();
+                    tmp2.setName(o.getName());
+                    tmp2.setId(o.getId());
+                    tmp2.setPriceMonthly(o.getPriceMonthly());
+                    tmp2.setPriceOneTime(o.getPriceOneTime());
+                    tmp2.setDescription(o.getDescription());
+                    tmpOptions.add(tmp2);
+                }
             }
             tmp.setOptions(tmpOptions);
         }

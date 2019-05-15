@@ -35,48 +35,63 @@ public class MailSenderImpl implements MailService {
 
     /**
      * Sends an email with PDF wit contract information
+     *
      * @param newClient if client is new or not. Welcome messages are sent to new clients and updates for existing
      * @param contract
      * @throws MessagingException
      */
     @Override
-    public void sendMessageWithAttachment(Boolean newClient, ContractDto contract) throws MessagingException {
+    public boolean sendMessageWithAttachment(Boolean newClient, ContractDto contract) {
         logger.info("Sending email with invoice");
         MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message, true);
-
-        String email = contract.getClient().getEmail();
-        helper.setTo("yukitsumetai@yandex.ru");
-
-        String subject;
-        if(newClient) subject = "Welcome to Spring Line";
-        else  subject = "Update from Spring Line";
-        helper.setSubject(subject);
-
-        VelocityEngine ve = new VelocityEngine();
-        ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
-        ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
-        ve.init();
-
-        Template template;
-        if(newClient) template = ve.getTemplate("/email/Welcome.vm");
-        else template = ve.getTemplate("/email/Update.vm");
-
-        VelocityContext velocityContext = new VelocityContext();
-        velocityContext.put("name", contract.getClient().getName() + " " + contract.getClient().getSurname());
-        velocityContext.put("phone", contract.getPhoneNumber());
-
-        StringWriter stringWriter = new StringWriter();
-        template.merge(velocityContext, stringWriter);
-        helper.setText(stringWriter.toString(), true);
-
-
         String path = pdfCreator.createPdf(contract);
+        logger.info(path);
         File file = new File(path);
-        helper.addAttachment("Invoice.pdf", file);
+        try{
+            String absolute = file.getCanonicalPath();
+            logger.info("Canonical " +absolute);}
+        catch (IOException e){}
+        String absolute2 = file.getAbsolutePath();
+        logger.info("Absolute " +absolute2);
+        try {
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
-        mailSender.send(message);
-        file.delete();
+            String email = contract.getClient().getEmail();
+            helper.setTo(email);
+
+            String subject;
+            if (newClient) subject = "Welcome to Spring Line";
+            else subject = "Update from Spring Line";
+            helper.setSubject(subject);
+
+            VelocityEngine ve = new VelocityEngine();
+            ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
+            ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+            ve.init();
+
+            Template template;
+            if (newClient) template = ve.getTemplate("/email/Welcome.vm");
+            else template = ve.getTemplate("/email/Update.vm");
+
+            VelocityContext velocityContext = new VelocityContext();
+            velocityContext.put("name", contract.getClient().getName() + " " + contract.getClient().getSurname());
+            velocityContext.put("phone", contract.getPhoneNumber());
+
+            StringWriter stringWriter = new StringWriter();
+            template.merge(velocityContext, stringWriter);
+            helper.setText(stringWriter.toString(), true);
+
+
+            helper.addAttachment("Invoice.pdf", file);
+
+            mailSender.send(message);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            return false;
+        } finally {
+            //file.delete();
+        }
+        return true;
     }
 
 

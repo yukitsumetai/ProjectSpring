@@ -18,6 +18,11 @@ public class AdminMenuController {
     @Autowired
     private Logger logger;
 
+    /**
+     * Returns table of tariffs
+     * @param model edit parameter means that tariff cannot be choosen, but edited
+     * @return
+     */
     @GetMapping("/tariffs")
     public String getTariffs(Model model) {
         model.addAttribute(table, "edit");
@@ -25,6 +30,11 @@ public class AdminMenuController {
         return "tariffs";
     }
 
+    /**
+     * Returns table of  option groups
+     * @param model edit parameter means that option group cannot be choosen, but edited
+     * @return
+     */
     @GetMapping("/optionGroups")
     public String getOptionGroups(Model model) {
         model.addAttribute("optionGroups", optionGroupService.getAll());
@@ -32,6 +42,11 @@ public class AdminMenuController {
         return "optionGroups";
     }
 
+    /**
+     * Returns table of options
+     * @param model edit parameter means that option cannot be choosen, but edited
+     * @return
+     */
     @GetMapping("/options")
     public String getOptions(Model model) {
         model.addAttribute(table, "edit");

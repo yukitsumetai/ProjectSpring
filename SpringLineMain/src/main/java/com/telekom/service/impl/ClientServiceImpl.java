@@ -135,16 +135,23 @@ public class ClientServiceImpl extends PaginationImpl<ClientDto> implements Clie
         image = image.substring(image.lastIndexOf(',') + 1);
         byte[] decodedBytes = Base64.getDecoder().decode(image);
 
-        String pathName = ".\\standalone\\tmp\\" + id + ".jpeg";
+        String pathName = id + ".jpeg";
         File file = new File(pathName);
+        try{
+        String absolute = file.getCanonicalPath();
+        logger.info("Canonical " +absolute);}
+        catch (IOException e){}
+        String absolute2 = file.getAbsolutePath();
+        logger.info("Absolute " +absolute2);
+        logger.info("Image was created at "+pathName);
         try {
             FileUtils.writeByteArrayToFile(file, decodedBytes);
             logger.info("Performing OCR");
-            imageRecognition.doOCR(client, pathName);
+            imageRecognition.doOCR(client, absolute2);
         } catch (IOException ex) {
             logger.error(ex.getMessage(), ex);
         }
-        file.delete();
+       // file.delete();
         return client;
     }
 

@@ -19,7 +19,6 @@ import java.util.List;
 @Controller
 @SessionAttributes(types = ContractDto.class)
 @RequestMapping(value = "/newContract")
-@PreAuthorize("is.Authenticated()")
 public class ContractController {
     public static final String TABLE = "table";
     public static final String MESSAGE = "message";
@@ -34,6 +33,11 @@ public class ContractController {
     @Autowired
     private Logger logger;
 
+    /**
+     * Setting tariffs for new contract
+     * @param model table add - to choose tariff
+     * @return
+     */
     @GetMapping("tariffs")
     public String start(Model model) {
         logger.info("Starting new contract");
@@ -43,6 +47,14 @@ public class ContractController {
         return "tariffs";
     }
 
+    /**
+     * Setting options for contract
+     * @param model NEB for client buttons. Options (parents), option groups
+     *              and children to group them in cards
+     * @param contract
+     * @param id
+     * @return
+     */
     @PostMapping("options")
     public String newContractTariffAdd(Model model, ContractDto contract, @RequestParam(name = "tariffID2") Integer id) {
         logger.info("Setting tariff in new contract, tariff id " + id);
@@ -58,6 +70,14 @@ public class ContractController {
         return "contractOptions";
     }
 
+    /**
+     * Form to set a client
+     * @param model
+     * @param contract
+     * @param action existing or new for existing or new client accordingly
+     * @param id
+     * @return
+     */
     @PostMapping("client")
     public String newContractOptionAdd(Model model, ContractDto contract, @RequestParam(name = "action") String action, @RequestParam(name = "optionID", required = false) List<Integer> id) {
         logger.info("Setting options and getting client for new contract, client " + action);
@@ -77,6 +97,14 @@ public class ContractController {
         }
     }
 
+    /**
+     * Setting existing client and redirecting to confirm page
+     * @param model
+     * @param contract
+     * @param id
+     * @param phoneNumber
+     * @return
+     */
     @PostMapping("/confirmExisting")
     public String newContractOptionAdd(Model model, ContractDto contract, @RequestParam(name = "clientID2") Integer id, @RequestParam String phoneNumber) {
         logger.info("Existing client, adding phone number" + phoneNumber);
@@ -86,6 +114,14 @@ public class ContractController {
         return "contract";
     }
 
+    /**
+     * Setting new client and redirecting to confirm page
+     * @param model
+     * @param contract
+     * @param client
+     * @param bindingResult
+     * @return
+     */
     @PostMapping("/confirm")
     public String newContractOptionAdd(Model model, ContractDto contract, @ModelAttribute @Valid ClientDto client, BindingResult bindingResult) {
         logger.info("New client, adding phone number" + client.getPhoneNumber());
@@ -99,6 +135,14 @@ public class ContractController {
         return "contract";
     }
 
+    /**
+     * Sending mail and adding contract
+     * @param model
+     * @param contract
+     * @param email email with invoices sent to client if true
+     * @param status
+     * @return redirect to error page if email was not sent
+     */
     @PostMapping("/confirm/true")
     public String confirmation(Model model, ContractDto contract, @RequestParam(required = false) Boolean email, SessionStatus status) {
         contractService.add(contract);
@@ -113,6 +157,14 @@ public class ContractController {
         return "redirect:/existingContract/" + contract.getPhoneNumber();
     }
 
+    /**
+     * Sending mail and adding contract
+     * @param model
+     * @param contract
+     * @param email email with invoices sent to client if true
+     * @param status
+     * @return redirect to error page if email was not sent
+     */
     @PostMapping("/confirmExisting/true")
     public String confirmationExisting(Model model, ContractDto contract, @RequestParam(required = false) Boolean email, SessionStatus status) {
         contractService.add(contract);
@@ -127,6 +179,11 @@ public class ContractController {
         return "redirect:/existingContract/" + contract.getPhoneNumber();
     }
 
+    /**
+     * Forbids backward movment in process
+     * @param status
+     * @return
+     */
     @GetMapping(value={"options", "client", "confirm", "confirmExisting",
             "confirm/true", "confirmExisting/true"})
     public String tariffsBack(SessionStatus status) {

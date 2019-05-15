@@ -27,7 +27,7 @@ function radiobutton() {
     }
 }
 
-function checkChange() {
+function checkChange(className) {
     {
         function loopThroughItems(items, func) {
             var i;
@@ -35,7 +35,7 @@ function checkChange() {
                 func(items[i]);
             }
         }
-        var checkboxes = document.getElementsByClassName('chk');
+        var checkboxes = document.getElementsByClassName(className);
         for (var i = 0; i < checkboxes.length; i++) {
             var value = checkboxes[i].value;
             var children = document.getElementById(value);
@@ -60,39 +60,6 @@ function checkChange() {
     }
 }
 
-function radioChange() {
-    {
-        function loopThroughItems(items, func) {
-            var i;
-            for (i = 0; i <= items.length; i++) {
-                func(items[i]);
-            }
-        }
-
-        var checkboxes = document.getElementsByClassName('radio');
-        for (var i = 0; i < checkboxes.length; i++) {
-            var value = checkboxes[i].value;
-            var children = document.getElementById(value);
-            if (children != null) {
-                if (checkboxes[i].checked) {
-                    children.style.display = "block";
-                    loopThroughItems(children.getElementsByTagName("input"), function (input) {
-                        if (!input || input.type.toLowerCase() == "submit") return;
-                        input.disabled = false;
-                    });
-
-                } else {
-                    children.style.display = "none";
-                    loopThroughItems(children.getElementsByTagName("input"), function (input) {
-                        if (!input || input.type.toLowerCase() == "submit") return;
-                        input.disabled = true;
-                        input.checked = false;
-                    });
-                }
-            }
-        }
-    }
-}
 function radioBasket(tariffPrice){
     $('.generated2').remove();
     $('.generated3').remove();

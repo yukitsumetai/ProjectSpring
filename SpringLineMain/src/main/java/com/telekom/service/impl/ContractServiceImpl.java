@@ -417,13 +417,7 @@ public class ContractServiceImpl implements ContractService {
      */
     @Override
     public boolean sendEmail(Boolean newClient, ContractDto contract) {
-        try {
-            mailSender.sendMessageWithAttachment(newClient, contract);
-        } catch (MessagingException e) {
-            logger.error("Error ", e);
-            return false;
-        }
-        return true;
+        return  mailSender.sendMessageWithAttachment(newClient, contract);
     }
 
 

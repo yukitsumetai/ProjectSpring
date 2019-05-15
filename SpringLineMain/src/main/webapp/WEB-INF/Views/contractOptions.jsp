@@ -139,14 +139,14 @@
 
 <script>
     $('input.chk').on('change', function () {
-        checkChange();
+        checkChange('chk');
         checksBasket(${contractDTO.tariff.price});
     });
 </script>
 
 <script>
     $('.radio').on('change', function () {
-        radioChange();
+        checkChange('radio');
        radioBasket(${contractDTO.tariff.price});
     });
 </script>

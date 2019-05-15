@@ -128,6 +128,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/java/com/telekom/service/api/MailService.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/SpringLineMain/src/main/java/com/telekom/service/api/OptionGroupService.java">
           <value>
             <set />
@@ -229,6 +234,16 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/SpringLineMain/src/main/resources/db/migration/V1.2__Init_data.sql">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/resources/email/Update.vm">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/resources/email/Welcome.vm">
           <value>
             <set />
           </value>

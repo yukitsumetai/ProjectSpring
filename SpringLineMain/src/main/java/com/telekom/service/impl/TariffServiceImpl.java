@@ -40,11 +40,11 @@ public class TariffServiceImpl extends SharedFunctions implements TariffService 
      * @param tariffs
      * @return list of tariffs Dto mapped from tariffs
      */
-    private List<TariffDto> listEntityToDto(List<Tariff> tariffs) {
+    private List<TariffDto> listEntityToDto(List<Tariff> tariffs, boolean valid) {
         List<TariffDto> tariffsDTO = new ArrayList<>();
         if (tariffs == null) return tariffsDTO;
         for (Tariff t : tariffs) {
-            tariffsDTO.add(tariffMapper.entityToDto(t));
+            tariffsDTO.add(tariffMapper.entityToDto(t, valid));
         }
         return tariffsDTO;
     }
@@ -61,13 +61,13 @@ public class TariffServiceImpl extends SharedFunctions implements TariffService 
     public Page<TariffDto> getPage(Integer size, Integer page) {
         logger.info("Getting tariffs");
 
-        List<TariffDto> pageGroups = listEntityToDto(tariffDao.getPages(size, page));
+        List<TariffDto> pageGroups = listEntityToDto(tariffDao.getPages(size, page), false);
         Long total = tariffDao.getPagesCount();
         return getPageDraft(pageGroups, total, page, size);
     }
 
     /**
-     * Returns a page of only valid tariff Dto for table
+     * Returns a page of only valid tariff Dto for table. COmpatible tariffs are also only valid
      *
      * @param size
      * @param page
@@ -77,7 +77,7 @@ public class TariffServiceImpl extends SharedFunctions implements TariffService 
     @Transactional
     public Page<TariffDto> getValidPaginated(Integer size, Integer page) {
         logger.info("Getting valid tariffs");
-        List<TariffDto> pageGroups = listEntityToDto(tariffDao.getPagesValid(size, page));
+        List<TariffDto> pageGroups = listEntityToDto(tariffDao.getPagesValid(size, page), true);
         Long total = tariffDao.getPagesValidCount();
         return getPageDraft(pageGroups, total, page, size);
     }
@@ -95,7 +95,7 @@ public class TariffServiceImpl extends SharedFunctions implements TariffService 
     @Transactional
     public Page<TariffDto> getPage(Integer size, Integer page, Integer optionId) {
         logger.info("Getting tariffs for option");
-        List<TariffDto> pageGroups = listEntityToDto(tariffDao.getPages(size, page));
+        List<TariffDto> pageGroups = listEntityToDto(tariffDao.getPages(size, page),false);
         Set<Tariff> existing = optionDao.getOne(optionId).getCompatibleTariffs();
         for (Tariff i : existing) {
             for (TariffDto o : pageGroups
@@ -120,7 +120,7 @@ public class TariffServiceImpl extends SharedFunctions implements TariffService 
         if (tariffs == null) return tariffsDTO;
         for (Tariff t : tariffs) {
 
-            tariffsDTO.add(tariffMapper.entityToDtoWithoutOptions(t));
+            tariffsDTO.add(tariffMapper.entityToDto(t, true));
         }
         return tariffsDTO;
     }
@@ -134,7 +134,7 @@ public class TariffServiceImpl extends SharedFunctions implements TariffService 
     @Transactional
     public List<TariffDto> getAllValid() {
         List<Tariff> tariffs = tariffDao.getAllValid();
-        return listEntityToDto(tariffs);
+        return listEntityToDto(tariffs, true);
     }
 
     /**
@@ -159,7 +159,7 @@ public class TariffServiceImpl extends SharedFunctions implements TariffService 
     public TariffDto getTariff(int id) {
         logger.info("Searching tariff " + id);
         Tariff t = tariffDao.getOne(id);
-        return tariffMapper.entityToDto(t);
+        return tariffMapper.entityToDto(t, false);
     }
 
     /**

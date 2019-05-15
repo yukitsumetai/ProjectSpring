@@ -15,7 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
-    <script src="${contextPath}/resource/js/modern.js"></script>
+    <script src="${contextPath}/resource/dist/js/modern.js"></script>
     <link href="${contextPath}/resource/css/shoppingCart.css" rel="stylesheet">
     <link href="${contextPath}/resource/css/res.css" rel="stylesheet">
     <script src="${contextPath}/resource/js/shoppingCart.js"></script> <!-- Gem jQuery -->
@@ -48,7 +48,7 @@
     <h2>Options</h2>
     <ul class="cd-cart-items" id="optionsCart">
         <c:choose>
-            <c:when test="${urlPath=='/existingContract/options'}">
+            <c:when test="${urlPath=='/springLine/existingContract/options'}">
                 <li class='generated2'></li>
                 <li class='generated'></li>
             </c:when>

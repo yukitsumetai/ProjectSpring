@@ -93,8 +93,8 @@ class TariffServiceTest {
 
         when(tariffDao.getAllPromoted()).thenReturn(tariffs);
         when(tariffDao.getAllValid()).thenReturn(tariffs);
-        when(tariffMapper.entityToDto(tariff)).thenReturn(tariffDto);
-        when(tariffMapper.entityToDto(tariff5)).thenReturn(tariff5Dto);
+        when(tariffMapper.entityToDto(tariff, false)).thenReturn(tariffDto);
+        when(tariffMapper.entityToDto(tariff5, false)).thenReturn(tariff5Dto);
         when(tariffDao.getPagesCount()).thenReturn((long) 6);
         when(tariffDao.getPagesValidCount()).thenReturn((long) 6);
 
@@ -196,7 +196,7 @@ class TariffServiceTest {
 
     @Test
     void getAllPaginatedByOptionCheckNotExisting() {
-        when(tariffMapper.entityToDto(tariff5)).thenReturn(tariff5Dto);
+        when(tariffMapper.entityToDto(tariff5, false)).thenReturn(tariff5Dto);
         option.setCompatibleTariffs(new HashSet<>());
 
         when(tariffDao.getPages(1, 5)).thenReturn(tariffs5);

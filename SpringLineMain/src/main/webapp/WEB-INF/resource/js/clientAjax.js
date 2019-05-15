@@ -120,7 +120,6 @@ function saveSnap() {
     var file = document.getElementById("imageprev").src;
     var id = document.getElementById('contract').value;
     $.ajax({
-        type: "POST",
         url: "/springLine/captureImage",
         data: {
             imageprev: file,
@@ -128,7 +127,7 @@ function saveSnap() {
         },
         dataType: 'json',
         error: function (result) {
-            alert("Something went wrong. Please try again")
+            alert("Something went wrong. Please try again" + result)
         },
         success: function (data) {
             if (data != null) {

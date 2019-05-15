@@ -20,7 +20,6 @@ import java.util.Set;
 @Controller
 @SessionAttributes(types = ContractDto.class)
 @RequestMapping(value = "/existingContract")
-@PreAuthorize("is.Authenticated()")
 public class ExistingContractController {
 public static final String TABLE = "table";
 public static final String MESSAGE = "table";
@@ -75,8 +74,14 @@ public static final String EXISTING_CONTRACT = "redirect:/existingContract/";
     }
 
     @PostMapping("/confirm/true")
-    public String confirmation(ContractDto contract, SessionStatus status) {
+    public String confirmation(Model model, ContractDto contract, SessionStatus status,
+                               @RequestParam(required = false) Boolean email) {
         contractService.update(contract);
+        boolean correct = contractService.sendEmail(false, contract);
+        if (!correct) {
+            model.addAttribute(MESSAGE, "Email was not sent");
+            return "error";
+        }
         status.setComplete();
         return EXISTING_CONTRACT + contract.getPhoneNumber();
     }
