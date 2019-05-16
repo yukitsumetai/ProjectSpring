@@ -35,13 +35,6 @@ public class MailSenderImpl implements MailService {
     @Autowired
     private VelocityEngine velocityEngine;
 
-    public static final int NO_OF_QUICK_SERVICE_THREADS = 20;
-    /**
-     * this statement create a thread pool of twenty threads
-     * here we are assigning send mail task using ScheduledExecutorService.submit();
-     */
-    private ScheduledExecutorService quickService = Executors.newScheduledThreadPool(NO_OF_QUICK_SERVICE_THREADS); // Creates a thread pool that reuses fixed number of threads(as specified by noOfThreads in this case).
-
     /**
      * Sends an email with PDF wit contract information
      *
@@ -55,6 +48,7 @@ public class MailSenderImpl implements MailService {
         MimeMessage message = mailSender.createMimeMessage();
         String path = pdfCreator.createPdf(contract);
         logger.info(path);
+        if(path==null) return false;
         File file = new File(path);
         try {
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -83,29 +77,16 @@ public class MailSenderImpl implements MailService {
             StringWriter stringWriter = new StringWriter();
             template.merge(velocityContext, stringWriter);
             helper.setText(stringWriter.toString(), true);
-
-
             helper.addAttachment("Invoice.pdf", file);
-
-
-            quickService.submit(new Runnable() {
-                @Override
-                public void run() {
-                    try{
-                        mailSender.send(message);
-                    }catch(Exception e){
-                        logger.error("Exception occur while send a mail : ",e);
-                    }
-                }
-            });
+            mailSender.send(message);
 
 
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             return false;
         } finally {
-           boolean fileDeleted= file.delete();
-           logger.info("File was deleted: "+ fileDeleted);
+            boolean fileDeleted = file.delete();
+            logger.info("File was deleted: " + fileDeleted);
         }
         return true;
     }

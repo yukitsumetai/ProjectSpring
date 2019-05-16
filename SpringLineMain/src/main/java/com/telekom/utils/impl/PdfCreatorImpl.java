@@ -87,7 +87,7 @@ public class PdfCreatorImpl implements PdfCreator {
                 beginPage = true;
             }
 
-            if (options.size() > 0) {
+            if (options!=null && options.size() > 0) {
                 generateSubheader(cb, y, "OPTIONS");
                 y = y - 15;
             }
@@ -122,10 +122,9 @@ public class PdfCreatorImpl implements PdfCreator {
 
             document.close();
             writer.close();
-        } catch (FileNotFoundException e) {
-            logger.error("File not found "+e.getMessage(),e);
-        } catch (DocumentException e) {
-            logger.error("Document exception "+e.getMessage(),e);
+        } catch (Exception e) {
+            logger.error(e.getMessage(),e);
+            return null;
         }
         return pdfName;
     }
@@ -172,7 +171,6 @@ public class PdfCreatorImpl implements PdfCreator {
             createHeadings(cb, 432, 633, "Monthly Price, $");
             createHeadings(cb, 502, 633, "One time Price, $");
 
-            add the images
             Image companyLogo = Image.getInstance("C:\\Users\\ekochuro\\IdeaProjects\\ProjectSpring\\SpringLineMain\\src\\main\\resources\\email\\springLineLogo.png");
             companyLogo.setAbsolutePosition(25, 700);
             companyLogo.scalePercent(25);

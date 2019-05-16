@@ -26,7 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login").anonymous()
                 .antMatchers("/tariffs/**", "/options/**", "/users/**", "/optionGroups/**", "/newContract/**").hasRole("ADMIN")
                 .antMatchers(WELCOME).hasRole("USER")
-                .antMatchers("/existingContract/**", "/tariffPages").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/existingContract/**", "/tariffs/tariffPages").hasAnyRole("USER", "ADMIN")
                 .and().csrf().disable()
                 .formLogin()
                 .loginPage("/login")

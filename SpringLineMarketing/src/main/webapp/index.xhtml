@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
-<html xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
+<html xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://xmlns.jcp.org/jsf/core">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xsi:schemaLocation="http://xmlns.jcp.org/jsf/core       ">
 <h:head>
     <h:outputStylesheet library="css" name="dashboard.css"/>
     <title>Spring Line Marketing</title>
@@ -32,18 +33,19 @@
             #{t.price}
         </h:column>
 
-<!--        <h:column>-->
-<!--            <f:facet name="header">Compatible options</f:facet>-->
-<!--            <ui:repeat value="#{t.options}" var="option">-->
-<!--                #{option},-->
-<!--            </ui:repeat>-->
-<!--        </h:column>-->
+        <h:column>
+            <f:facet name="header">Compatible options</f:facet>
+            <ui:repeat value="#{t.options}" var="option">
+                #{option},
+            </ui:repeat>
+        </h:column>
 
     </h:dataTable>
 
         <f:websocket channel="push">
             <f:ajax event="update" render=":tariffsList" />
         </f:websocket>
+
 
 </h:body>
 </html>
