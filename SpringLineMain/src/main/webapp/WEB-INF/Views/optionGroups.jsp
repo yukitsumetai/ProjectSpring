@@ -39,7 +39,7 @@
             //populate the textbox
             $(e.currentTarget).find('form[id="action"]').val(id);
             var $form = $('#action');
-            $form.attr('action', '${contextPath}/optionGroups/delete/' + id);
+            $form.attr('action', '/springLine/optionGroups/delete/' + id);
         });
     </script>
 </head>

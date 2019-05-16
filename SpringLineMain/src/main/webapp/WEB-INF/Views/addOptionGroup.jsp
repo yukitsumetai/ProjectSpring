@@ -10,7 +10,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ include file="elements/TopNavBar.jsp" %>
-<%@ include file="elements/SideBar.jsp" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
@@ -23,6 +22,7 @@
     <title>Client details</title>
 </head>
 <body>
+<%@ include file="elements/SideBar.jsp" %>
 <div class="container-fluid">
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
         <h1 class="page-header">Option Groups administration</h1>

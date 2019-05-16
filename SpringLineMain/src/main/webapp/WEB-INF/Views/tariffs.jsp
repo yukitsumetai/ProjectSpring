@@ -42,7 +42,17 @@
             document.getElementById('page').value = 1;
         });
     </script>
+    <!--Modal-->
+    <script>
+        $(document).on('shown.bs.modal', '#deleteModal', function (e) {
+            //get data-id attribute of the clicked element
+            var id = $(e.relatedTarget).data('id');
 
+            $(e.currentTarget).find('form[id="action"]').val(id);
+            var $form = $('#action');
+            $form.attr('action', '/springLine/tariffs/delete/' + id);
+        });
+    </script>
 </head>
 
 <body>
