@@ -4,7 +4,7 @@ import com.telekom.dao.api.ClientDao;
 import com.telekom.mapper.ClientMapper;
 import com.telekom.model.dto.Page;
 import com.telekom.service.impl.ClientServiceImpl;
-import com.telekom.service.impl.ImageRecognitionImpl;
+import com.telekom.utils.impl.ImageRecognitionImpl;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Bean;
 

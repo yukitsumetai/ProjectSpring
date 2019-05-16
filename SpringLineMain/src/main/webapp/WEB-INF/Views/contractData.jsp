@@ -43,8 +43,8 @@
     <div class="col-sm-4 form-group price" color=" #a5aebc">
         <c:if test="${table!='add'}">
             <a href="#changeTariff" class="edit" data-toggle="modal"
-               data-target="#changeTariff" id="editIcon" title="Change Tariff"><i
-                    class="material-icons">&#xE254;</i></a>
+               data-target="#changeTariff" id="editIcon" title="Change Tariff"><em
+                    class="material-icons">&#xE254;</em></a>
         </c:if>
     </div>
 </c:if>
@@ -71,7 +71,7 @@
     <div class="col-sm-4 form-group price" color=" #a5aebc">
         <c:if test="${table!='add'}">
             <a href="${contextPath}/existingContract/options" class="add" id="editIcon" title="Edit Options" >
-                <i class="material-icons">&#xE254;</i>
+                <em class="material-icons">&#xE254;</em>
             </a>
         </c:if>
     </div>

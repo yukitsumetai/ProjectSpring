@@ -8,7 +8,7 @@ import com.telekom.model.dto.OptionDto;
 import com.telekom.model.dto.Page;
 import com.telekom.model.dto.TariffDto;
 import com.telekom.mapper.TariffMapper;
-import com.telekom.service.api.JmsService;
+import com.telekom.utils.api.JmsService;
 import com.telekom.service.api.TariffService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

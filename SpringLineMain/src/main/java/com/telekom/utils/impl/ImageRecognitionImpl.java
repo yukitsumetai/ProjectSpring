@@ -1,9 +1,8 @@
-package com.telekom.service.impl;
+package com.telekom.utils.impl;
 
 import com.telekom.model.dto.ClientDto;
-import com.telekom.service.api.ImageRecognitionService;
+import com.telekom.utils.api.ImageRecognitionService;
 import net.sourceforge.tess4j.Tesseract;
-import net.sourceforge.tess4j.TesseractException;
 import net.sourceforge.tess4j.util.LoadLibs;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

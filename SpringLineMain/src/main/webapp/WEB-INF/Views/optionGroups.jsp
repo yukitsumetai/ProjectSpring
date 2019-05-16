@@ -16,6 +16,7 @@
 <html lang="en">
 <head>
     <title>Option Groups</title>
+
     <link href="${contextPath}/resource/dist/css/bootstrap.min.css" rel="stylesheet">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -59,7 +60,7 @@
                     <div class="col-sm-6">
                         <div class="row float-right">
                             <div class="search-box">
-                                <i class="material-icons">&#xE8B6;</i>
+                                <em class="material-icons">&#xE8B6</em>
                                 <input type="text" class="form-control" id="myInput" placeholder="Search&hellip;">
                             </div>
                             <div class="newtariff">
@@ -76,7 +77,7 @@
             <table class="table table-striped table-hover table-bordered" id="Table">
                 <thead>
                 <tr>
-                    <th onclick="sortTable(0)">Name<i class="fa fa-sort"></i></th>
+                    <th onclick="sortTable(0)">Name<em class="fa fa-sort"></em></th>
                     <th>Description</th>
                     <th>Compatible Options</th>
                     <th>Validity</th>
@@ -90,28 +91,26 @@
                         <td>${optionGroup.description}</td>
                         <td>
                             <c:forEach items="${optionGroup.options}" var="option">
+                                <ul>
                                 <li>${option.name}</li>
+                                </ul>
                             </c:forEach>
                         </td>
                         <td>${optionGroup.isValid}</td>
 
                         <td>
-                            <a href="${contextPath}/optionGroups/edit/${optionGroup.id}" class="edit" title="Edit"><i
-                                    class="material-icons">&#xE254;</i></a>
+                            <a href="${contextPath}/optionGroups/edit/${optionGroup.id}" class="edit" title="Edit"><em
+                                    class="material-icons">&#xE254;</em></a>
                             <c:if test="${optionGroup.isValid==true}">
                                 <a href="#deleteModal" class="delete" title="Delete" data-toggle="modal"
-                                   data-target="#deleteModal" data-id="${optionGroup.id}"><i
-                                        class="material-icons">&#xE872;</i></a>
+                                   data-target="#deleteModal" data-id="${optionGroup.id}"><em
+                                        class="material-icons">&#xE872;</em></a>
                             </c:if>
                         </td>
                     </tr>
                 </c:forEach>
                 </tbody>
             </table>
-            <div class="col-md-12 text-center">
-                <div class="hint-text">Showing <b>4</b> out of <b>${fn:length(optionGroups)}</b> entries</div>
-                <ul class="pagination pagination-lg pager" id="pagination"></ul>
-            </div>
         </div>
         <!-- Modal -->
         <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"

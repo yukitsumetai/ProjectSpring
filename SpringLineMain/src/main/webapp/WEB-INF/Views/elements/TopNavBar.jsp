@@ -45,7 +45,7 @@
         Spring Line</a>
 
     <div class="navbar-nav mr-auto">
-        <li class="nav-item"><a class="text-secondary" href="${contextPath}/logout">Logout</a></li>
+        <a class="nav-item"><a class="text-secondary" href="${contextPath}/logout">Logout</a></a>
     </div>
     <c:if test="${table=='add'}">
         <ul class=" my-2 my-lg-0">

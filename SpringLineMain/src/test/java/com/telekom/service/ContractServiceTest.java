@@ -8,6 +8,8 @@ import com.telekom.model.dto.*;
 import com.telekom.model.entity.*;
 import com.telekom.service.api.*;
 import com.telekom.service.impl.ContractServiceImpl;
+import com.telekom.utils.api.MailService;
+import com.telekom.utils.api.PdfCreator;
 import org.apache.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
 

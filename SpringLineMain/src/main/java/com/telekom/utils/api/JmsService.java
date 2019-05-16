@@ -1,4 +1,4 @@
-package com.telekom.service.api;
+package com.telekom.utils.api;
 
 public interface JmsService {
     void sendMessage();

@@ -1,4 +1,4 @@
-package com.telekom.service.api;
+package com.telekom.utils.api;
 
 import com.telekom.model.dto.ClientDto;
 import net.sourceforge.tess4j.TesseractException;

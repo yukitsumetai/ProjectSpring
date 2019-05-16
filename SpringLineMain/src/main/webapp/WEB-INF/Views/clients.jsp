@@ -40,7 +40,7 @@
                     <div class="col-sm-6">
                         <div class="row float-right">
                             <div class="search-box">
-                                <i class="material-icons">&#xE8B6;</i>
+                                <em class="material-icons">&#xE8B6;</em>
                                 <input type="text" class="form-control" id="phoneNumber" placeholder="Search&hellip;">
                             </div>
                             <div class="newtariff ">

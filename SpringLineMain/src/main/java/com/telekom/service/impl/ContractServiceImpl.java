@@ -6,12 +6,13 @@ import com.telekom.mapper.ClientMapper;
 import com.telekom.mapper.ContractMapper;
 import com.telekom.model.entity.*;
 import com.telekom.service.api.*;
+import com.telekom.utils.api.MailService;
+import com.telekom.utils.api.PdfCreator;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.mail.MessagingException;
 import javax.transaction.Transactional;
 import java.math.BigInteger;
 import java.util.*;

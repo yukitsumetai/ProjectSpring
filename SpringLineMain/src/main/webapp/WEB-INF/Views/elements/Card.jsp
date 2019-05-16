@@ -18,8 +18,8 @@
         </h5>
         <p class="card-text text-success border-success">
         <em>${o.description}</em>
-        <p>Monthly price:<span class="right"><b>${o.priceMonthly}$</b></span>
-        <c:if test="${o.existing==false}"> <br>One Time price:<span class="right"><b>${o.priceOneTime}$</b></span></c:if></p>
+        <p>Monthly price:<span class="right"><strong>${o.priceMonthly}$</strong></span>
+        <c:if test="${o.existing==false}"> <br>One Time price:<span class="right"><strong>${o.priceOneTime}$</strong></span></c:if></p>
         <div class="children" id="${o.id}" style="display:none">
             <c:forEach items="${children}" var="c">
                 <c:if test="${o.id==c.parent.id}">
@@ -32,8 +32,8 @@
                     </h5>
                     <p class="card-text text-success border-success">
                         <em>${c.description}</em>
-                    <p>Monthly price:<span class="right"><b>${c.priceMonthly}$</b></span>
-                    <c:if test="${c.existing==false}"> <br>One Time price:<span class="right"><b>${c.priceOneTime}$</b></span> </c:if></p>
+                    <p>Monthly price:<span class="right"><strong>${c.priceMonthly}$</strong></span>
+                    <c:if test="${c.existing==false}"> <br>One Time price:<span class="right"><strong>${c.priceOneTime}$</strong></span> </c:if></p>
 
                 </c:if>
             </c:forEach>

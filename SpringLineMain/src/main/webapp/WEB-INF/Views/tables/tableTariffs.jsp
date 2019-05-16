@@ -42,7 +42,7 @@
 </c:forEach>
 </div>
 <div class="col-md-12 text-center">
-    <div class="hint-text">Showing <b id="current"></b> out of <b id="total"></b> entries</div>
+    <div class="hint-text">Showing <strong id="current"></strong> out of <strong id="total"></strong> entries</div>
     <ul class="pagination" id="pagination">
     </ul>
 

@@ -7,7 +7,7 @@ import com.telekom.model.dto.ClientDto;
 import com.telekom.model.dto.Page;
 import com.telekom.mapper.ClientMapper;
 import com.telekom.service.api.ClientService;
-import com.telekom.service.api.ImageRecognitionService;
+import com.telekom.utils.api.ImageRecognitionService;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,6 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
-import java.util.Properties;
 
 
 @Service

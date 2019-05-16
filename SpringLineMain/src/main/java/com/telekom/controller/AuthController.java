@@ -5,6 +5,7 @@ import com.telekom.model.entity.User;
 import com.telekom.service.api.ClientService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 
 
 @Controller
@@ -35,8 +37,10 @@ public class AuthController {
     }
 
     @GetMapping("/welcome")
-    public String defaultAfterLogin(HttpServletRequest request, @AuthenticationPrincipal User activeUser) {
-        Long id = activeUser.getId();
+    public String defaultAfterLogin(HttpServletRequest request, Principal principal) {
+
+        User activeUser = (User)((Authentication) principal).getPrincipal();
+        Long id=activeUser.getId();
         if (request.isUserInRole("ADMIN")) {
             logger.info("Admin" +id+" is logged");
             return "redirect:/tariffs";

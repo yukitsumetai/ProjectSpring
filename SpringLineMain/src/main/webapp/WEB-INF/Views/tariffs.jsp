@@ -19,7 +19,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="${contextPath}/resource/js/paginationAjax.js"></script>
     <title>Tariffs Overview</title>
-z
     <link href="${contextPath}/resource/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <%-- Modal Script --%>

@@ -9,7 +9,7 @@ import com.telekom.model.dto.TariffDto;
 import com.telekom.mapper.TariffMapper;
 import com.telekom.model.entity.Option;
 import com.telekom.model.entity.Tariff;
-import com.telekom.service.api.JmsService;
+import com.telekom.utils.api.JmsService;
 import com.telekom.service.impl.TariffServiceImpl;
 import org.apache.log4j.Logger;
 

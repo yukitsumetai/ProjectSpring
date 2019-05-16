@@ -92,7 +92,7 @@
                     </div>
 
                     <div class="table-title">
-                        <b>Current state:</b><br>
+                        <strong>Current state:</strong><br>
                         Parent: ${option.parent.name}<br>
                         Children:${fn:length(option.children)}
                     </div>

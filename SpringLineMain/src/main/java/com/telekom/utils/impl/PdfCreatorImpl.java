@@ -1,4 +1,4 @@
-package com.telekom.service.impl;
+package com.telekom.utils.impl;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.BaseFont;
@@ -7,7 +7,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.telekom.model.dto.ContractDto;
 import com.telekom.model.dto.OptionDto;
 import com.telekom.model.dto.TariffDto;
-import com.telekom.service.api.PdfCreator;
+import com.telekom.utils.api.PdfCreator;
 import org.apache.log4j.Logger;
 import org.davidmoten.text.utils.WordWrap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -138,7 +138,7 @@ public class PdfCreatorImpl implements PdfCreator {
             bfBold = BaseFont.createFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
             bf = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
         } catch (DocumentException | IOException e) {
-            e.printStackTrace();
+           logger.error(e.getMessage(),e);
         }
     }
 

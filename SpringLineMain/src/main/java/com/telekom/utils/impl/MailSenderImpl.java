@@ -1,9 +1,9 @@
-package com.telekom.service.impl;
+package com.telekom.utils.impl;
 
 import com.telekom.model.dto.ContractDto;
 import com.telekom.service.api.ContractService;
-import com.telekom.service.api.MailService;
-import com.telekom.service.api.PdfCreator;
+import com.telekom.utils.api.MailService;
+import com.telekom.utils.api.PdfCreator;
 import org.apache.log4j.Logger;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;

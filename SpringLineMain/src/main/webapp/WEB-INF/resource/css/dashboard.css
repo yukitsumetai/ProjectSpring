@@ -205,7 +205,7 @@
     border-color: #67b168;
 }
 
-.search-box i {
+.search-box em {
     color: #a0a5b1;
     position: absolute;
     font-size: 19px;
@@ -225,7 +225,7 @@ table.table-striped.table-hover tbody tr:hover {
     background: #f5f5f5;
 }
 
-table.table th i {
+table.table th em {
     font-size: 13px;
     margin: 0 5px;
     cursor: pointer;
@@ -265,7 +265,7 @@ table.table td a.delete {
     color: #02920b;
 }
 
-table.table td i {
+table.table td em {
     font-size: 19px;
 }
 
@@ -306,11 +306,11 @@ table.table td i {
     background: #00CC00;
 }
 
-.pagination li.disabled i {
+.pagination li.disabled em {
     color: #ccc;
 }
 
-.pagination li i {
+.pagination li em {
     font-size: 16px;
     padding-top: 6px
 }

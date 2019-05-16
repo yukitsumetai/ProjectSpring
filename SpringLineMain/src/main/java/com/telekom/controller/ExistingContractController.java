@@ -24,6 +24,7 @@ public class ExistingContractController {
 public static final String TABLE = "table";
 public static final String MESSAGE = "table";
 public static final String EXISTING_CONTRACT = "redirect:/existingContract/";
+public static final String ERROR = "error";
 
     @Autowired
     ContractService contractService;
@@ -61,7 +62,7 @@ public static final String EXISTING_CONTRACT = "redirect:/existingContract/";
     public String tariffAdd(Model model, ContractDto contract, @RequestParam(name = "tariffID2")Integer id) {
         if(!contractService.setTariff(contract, id)){
             model.addAttribute(MESSAGE, "Tariff is not valid");
-            return "error";
+            return ERROR;
         }
 
         return "redirect:/existingContract/confirm";
@@ -80,7 +81,7 @@ public static final String EXISTING_CONTRACT = "redirect:/existingContract/";
         boolean correct = contractService.sendEmail(false, contract);
         if (!correct) {
             model.addAttribute(MESSAGE, "Email was not sent");
-            return "error";
+            return ERROR;
         }
         status.setComplete();
         return EXISTING_CONTRACT + contract.getPhoneNumber();
@@ -107,7 +108,7 @@ public static final String EXISTING_CONTRACT = "redirect:/existingContract/";
     public String addOptions(Model model, ContractDto contract, @RequestParam(name = "optionID", required = false) List<Integer> id) {
         if (!contractService.setOptions(contract, id, true)){
             model.addAttribute(MESSAGE , "Options are not compatible");
-            return "error";
+            return ERROR;
         }
         return "redirect:/existingContract/confirm";
     }

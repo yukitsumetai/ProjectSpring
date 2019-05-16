@@ -19,7 +19,9 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <link rel="icon" href="../resource/images/favicon1.ico">
+    <link rel="icon" href="${contextPath}/resource/images/favicon1.ico">
+    <script src="${contextPath}/resource/js/paginationAjax.js"></script>
+    <link href="${contextPath}/resource/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Bootstrap core CSS -->
 <%--    <link href="<c:url value="${contextPath}/resource/dist/css/bootstrap.min.css" />" rel="stylesheet">--%>

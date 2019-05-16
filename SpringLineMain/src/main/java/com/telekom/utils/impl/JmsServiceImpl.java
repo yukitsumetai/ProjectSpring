@@ -1,7 +1,7 @@
-package com.telekom.service.impl;
+package com.telekom.utils.impl;
 
 
-import com.telekom.service.api.JmsService;
+import com.telekom.utils.api.JmsService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;

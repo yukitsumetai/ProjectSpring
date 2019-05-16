@@ -26,7 +26,6 @@
             <li class="nav-item"><a class="text-success" href="${contextPath}/tariffs/">Tariffs </a></li>
             <li class="nav-item"><a class="text-success" href="${contextPath}/options/">Options</a></li>
             <li class="nav-item"><a class="text-success" href="${contextPath}/optionGroups/">Option Groups</a></li>
-
         </ul>
         <h6 class="sidebar-heading d-flex justify-content-between mt-4 mb-1 text-muted">
             <span>BUSINESS PROCESSES</span>
@@ -41,7 +40,9 @@
                 <span>CONTRACT DETAILS</span>
             </h6>
             <c:forEach items="${client.contracts}" var="c">
+                <ul>
                 <li class="nav-item"><a href="${contextPath}/existingContract/${c.phoneNumber}">${c.phoneNumber}</a></li>
+                </ul>
             </c:forEach>
         </security:authorize>
     </div>

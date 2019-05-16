@@ -73,30 +73,30 @@
         <c:choose>
             <c:when test="${urlPath=='/springLine/newContract/options'}">
                 <p>Total Monthly Price:
-                    <b id="totalMonthlyPrice" class="right"></b></p>
+                    <strong id="totalMonthlyPrice" class="right"></strong></p>
                 <p>Total One Time Price:
-                    <b id="totalOneTimePrice" class="right"></b></p>
+                    <strong id="totalOneTimePrice" class="right"></strong></p>
             </c:when>
             <c:when test="${urlPath=='/springLine/existingContract/options'}">
                 <p>Total Monthly Price:
-                    <b id="totalMonthlyPrice" class="right"></b></p>
+                    <strong id="totalMonthlyPrice" class="right"></strong></p>
                 <p>Total One Time Price:
-                    <b id="totalOneTimePrice" class="right"></b></p>
+                    <strong id="totalOneTimePrice" class="right"></strong></p>
             </c:when>
             <c:when test="${urlPath=='/springLine/newContract/tariffs'}">
                 <p>Total Monthly Price:
-                    <b id="totalMonthlyPrice" class="right"></b></p>
+                    <strong id="totalMonthlyPrice" class="right"></strong></p>
             </c:when>
             <c:when test="${urlPath=='/springLine/existingContract/tariffs'}">
                 <p>Total Monthly Price:
-                    <b id="totalMonthlyPrice" class="right"></b></p>
+                    <strong id="totalMonthlyPrice" class="right"></strong></p>
             </c:when>
 
             <c:otherwise>
                 <p>Total Monthly Price:
-                    <b class="right">$${contractDTO.price}</b></p>
+                    <strong class="right">$${contractDTO.price}</strong></p>
                 <p>Total One Time Price:
-                    <b class="right">$${contractDTO.priceOneTime}</b></p>
+                    <strong class="right">$${contractDTO.priceOneTime}</strong></p>
             </c:otherwise>
         </c:choose>
 

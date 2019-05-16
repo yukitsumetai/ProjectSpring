@@ -43,7 +43,7 @@
     </tbody>
 </table>
 <div class="col-md-12 text-center">
-    <div class="hint-text">Showing <b id="current">4</b> out of <b id="total"></b> entries</div>
+    <div class="hint-text">Showing <strong id="current">4</strong> out of <strong id="total"></strong> entries</div>
     <ul class="pagination" id="pagination">
     </ul>
     <input type="hidden" id="page" value=0>

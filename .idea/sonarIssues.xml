@@ -223,6 +223,26 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/java/com/telekom/utils/impl/ImageRecognitionImpl.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/java/com/telekom/utils/impl/JmsServiceImpl.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/java/com/telekom/utils/impl/MailSenderImpl.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/java/com/telekom/utils/impl/PdfCreatorImpl.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/SpringLineMain/src/main/resources/db/migration/V 1.3_Init_contract_data.sql">
           <value>
             <set />
@@ -368,6 +388,16 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/webapp/WEB-INF/Views/tables/tableOptions.jsp">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/main/webapp/WEB-INF/Views/tables/tableTariffs.jsp">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/SpringLineMain/src/main/webapp/WEB-INF/Views/tariffs.jsp">
           <value>
             <set />
@@ -418,6 +448,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/test/java/com/telekom/config/ContractServiceConfig.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/SpringLineMain/src/test/java/com/telekom/config/OptionGroupServiceConfig.java">
           <value>
             <set />
@@ -439,6 +474,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/SpringLineMain/src/test/java/com/telekom/service/ClientServiceTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMain/src/test/java/com/telekom/service/ContractServiceTest.java">
           <value>
             <set />
           </value>

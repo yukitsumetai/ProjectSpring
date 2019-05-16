@@ -23,6 +23,7 @@ public class AdminMenuController {
      * @param model edit parameter means that tariff cannot be choosen, but edited
      * @return
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/tariffs")
     public String getTariffs(Model model) {
         model.addAttribute(table, "edit");
@@ -35,6 +36,7 @@ public class AdminMenuController {
      * @param model edit parameter means that option group cannot be choosen, but edited
      * @return
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/optionGroups")
     public String getOptionGroups(Model model) {
         model.addAttribute("optionGroups", optionGroupService.getAll());
@@ -47,20 +49,21 @@ public class AdminMenuController {
      * @param model edit parameter means that option cannot be choosen, but edited
      * @return
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/options")
     public String getOptions(Model model) {
         model.addAttribute(table, "edit");
         logger.info("/options");
         return "options";
     }
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/users")
     public String getUsers(Model model) {
         model.addAttribute(table, "edit");
         logger.info("/users");
         return "clients";
     }
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/client")
     public String Test(Model model) {
         return "newClient";
