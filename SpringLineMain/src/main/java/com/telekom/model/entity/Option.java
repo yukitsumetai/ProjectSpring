@@ -17,17 +17,26 @@ public class Option implements Serializable {
     private String description;
     private double priceMonthly;
     private double priceOneTime;
+    /**
+     * Delete flag
+     */
     private boolean isValid;
 
     @ManyToMany(mappedBy = "options")
     private Set<Tariff> compatibleTariffs = new HashSet<>();
 
+    /**
+     * Condition for an option. Can be null
+     */
     @ManyToOne
     @JoinTable(name = "options_options",
             joinColumns = @JoinColumn(name = "child_id"),
             inverseJoinColumns = @JoinColumn(name = "parent_id"))
     private Option parent;
 
+    /**
+     * Options for which this option is a condition
+     */
     @OneToMany(mappedBy = "parent")
     private Set<Option> children = new HashSet<>();
 

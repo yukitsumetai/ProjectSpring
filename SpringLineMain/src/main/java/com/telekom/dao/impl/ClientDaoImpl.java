@@ -70,7 +70,6 @@ public final class ClientDaoImpl extends PaginationDaoImpl implements ClientDao 
 
     }
 
-
     @Override
     public List<Client> getPages(Integer size, Integer page) {
         TypedQuery<Client> q = entityManager.createQuery("select t from Client t", Client.class);

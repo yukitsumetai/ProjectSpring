@@ -9,6 +9,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Entity stores client data
+ */
 @Entity
 @Table(name = "clients")
 public class Client implements Serializable {

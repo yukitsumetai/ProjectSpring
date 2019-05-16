@@ -30,7 +30,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().csrf().disable()
                 .formLogin()
                 .loginPage("/login")
-                .loginPage("/login/**")
                 .loginProcessingUrl("/login/process")
                 .loginProcessingUrl("/login/**/process")
                 .defaultSuccessUrl(WELCOME)

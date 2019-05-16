@@ -18,8 +18,7 @@ function valthisform() {
                     document.form1.submit();
                 }
                 else{
-
-                    alert("There is already a client with the same email and/or passport");
+                    $('#cookiesModal').modal('show');
                 }
             }
         });

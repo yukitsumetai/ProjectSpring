@@ -18,6 +18,8 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 @Service
 public class MailSenderImpl implements MailService {
@@ -33,6 +35,13 @@ public class MailSenderImpl implements MailService {
     @Autowired
     private VelocityEngine velocityEngine;
 
+//    public static int noOfQuickServiceThreads = 20;
+//    /**
+//     * this statement create a thread pool of twenty threads
+//     * here we are assigning send mail task using ScheduledExecutorService.submit();
+//     */
+//    private ScheduledExecutorService quickService = Executors.newScheduledThreadPool(noOfQuickServiceThreads); // Creates a thread pool that reuses fixed number of threads(as specified by noOfThreads in this case).
+
     /**
      * Sends an email with PDF wit contract information
      *
@@ -47,12 +56,6 @@ public class MailSenderImpl implements MailService {
         String path = pdfCreator.createPdf(contract);
         logger.info(path);
         File file = new File(path);
-        try{
-            String absolute = file.getCanonicalPath();
-            logger.info("Canonical " +absolute);}
-        catch (IOException e){}
-        String absolute2 = file.getAbsolutePath();
-        logger.info("Absolute " +absolute2);
         try {
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
@@ -84,12 +87,24 @@ public class MailSenderImpl implements MailService {
 
             helper.addAttachment("Invoice.pdf", file);
 
-            mailSender.send(message);
+
+//            quickService.submit(new Runnable() {
+//                @Override
+//                public void run() {
+//                    try{
+//                        mailSender.send(message);
+//                    }catch(Exception e){
+//                        logger.error("Exception occur while send a mail : ",e);
+//                    }
+//                }
+//            });
+
+
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             return false;
         } finally {
-            //file.delete();
+            file.delete();
         }
         return true;
     }

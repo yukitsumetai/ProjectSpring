@@ -6,18 +6,29 @@ import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Entity stores contract data
+ */
 @Entity
 @Table(name = "contracts")
 public class Contract implements Serializable {
 
-
+    /**
+     * Phone number corresponds to contract id
+     */
     @Id
     private BigInteger phoneNumber;
 
+    /**
+     * Id of the contract's holder
+     */
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "clientId", referencedColumnName = "id")
     private Client client;
 
+    /**
+     * Only one tariff per contratc
+     */
     @ManyToOne
     @JoinColumn(name = "tariffId")
     private Tariff tariff;

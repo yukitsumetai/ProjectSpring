@@ -4,6 +4,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigInteger;
 
+/**
+ * Number that can be used for contracts
+ */
 @Entity
 @Table(name = "free_phone_numbers")
 public class FreePhoneNumber implements Serializable {

@@ -5,6 +5,9 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Entity to combine incompatible options
+ */
 @Entity
 @Table(name = "option_groups")
 public class OptionGroup implements Serializable{

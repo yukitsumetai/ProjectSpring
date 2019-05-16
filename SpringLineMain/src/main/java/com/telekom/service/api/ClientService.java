@@ -2,7 +2,7 @@ package com.telekom.service.api;
 import com.telekom.model.dto.ClientDto;
 import com.telekom.model.dto.Page;
 
-public interface ClientService {
+public interface ClientService extends Pagination {
 
     void add(ClientDto client);
     Boolean checkExisting(String email, Integer passport);

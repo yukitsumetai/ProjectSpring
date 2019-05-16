@@ -3,6 +3,9 @@ package com.telekom.model.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * Entity stores client address
+ */
 @Entity
 @Table(name = "addresses")
 public class Address implements Serializable {

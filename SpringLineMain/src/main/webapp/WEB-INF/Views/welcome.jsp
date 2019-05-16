@@ -29,21 +29,22 @@
     <title>Title</title>
 </head>
 <body>
+<%@ include file="elements/CookiesModal.jsp" %>
 <div class="container-fluid">
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-<h1>Welcome back!</h1>
+<h1>Welcome back, ${client.name} ${client.surname}!</h1>
         <div id="carousel" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img class="d-block w-100" src="../resource/images/SpringNet.jpg" alt="First slide">
+                    <img class="d-block w-100" src="${contextPath}/resource/images/SpringNet.jpg" alt="First slide">
                 </div>
 
                 <div class="carousel-item">
-                    <img class="d-block w-100" src="../resource/images/SpringNet4.jpg" alt="Second slide">
+                    <img class="d-block w-100" src="${contextPath}/resource/images/SpringNet4.jpg" alt="Second slide">
                 </div>
                 <div class="carousel-item">
-                    <img class="d-block w-100" src="../resource/images/SpringNet3.jpg" alt="Second slide">
+                    <img class="d-block w-100" src="${contextPath}/resource/images/SpringNet3.jpg" alt="Second slide">
                 </div>
 
             </div>

@@ -23,10 +23,47 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <!--CSS-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script>
+        $(document).ready(function () {
+            var cookieEnabled = (navigator.cookieEnabled) ? true : false;
+            if (typeof navigator.cookieEnabled == "undefined" && !cookieEnabled)
+            {
+                document.cookie="testcookie";
+                cookieEnabled = (document.cookie.indexOf("testcookie") != -1) ? true : false;
+            }
+            if (!cookieEnabled) {
+                document.getElementById("coockies").innerHTML ="Enable cookies to login";
+            }
+
+        });
+    </script>
 
 </head>
 
 <body>
+<!-- Modal Cookies -->
+<div class="modal fade" id="cookiesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModal"> Coockies are disabled</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Cookies are disabled. <br>
+                Please enable cookies in your browser so that a website can work corretly.
+            </div>
+            <div class="modal-footer">
+                <form>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="site-wrapper">
 
@@ -57,7 +94,9 @@
 
                             <c:if test="${param.error == true}">
                             <p class="underlineHover">Bad credentials</p>
+
                         </c:if>
+                            <p class="underlineHover" id="cookies"></p>
                            <!-- <a class="underlineHover" href="#">Forgot Password?</a> -->
                         </div>
 

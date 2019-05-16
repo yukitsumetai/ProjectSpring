@@ -25,9 +25,6 @@ import java.util.List;
 public class TariffsConsumer {
     private final ArrayList<TariffPromoted> tariffsList = new ArrayList<>();
 
-//    @Inject
-//    private Logger logger;
-
     @PostConstruct
     public void load() {
         getTariffs();

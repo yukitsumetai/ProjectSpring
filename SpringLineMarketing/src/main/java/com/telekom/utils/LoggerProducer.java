@@ -1,4 +1,4 @@
-package com.telekom.logs;
+package com.telekom.utils;
 
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;

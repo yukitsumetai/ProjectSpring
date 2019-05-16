@@ -15,7 +15,13 @@ public class Tariff implements Serializable {
     private String name;
     private double price;
     private String description;
+    /**
+     * Flag for deletion
+     */
     private boolean isValid;
+    /**
+     * Flag to show tariff on advertisment stand
+     */
     private boolean isPromoted;
 
 
