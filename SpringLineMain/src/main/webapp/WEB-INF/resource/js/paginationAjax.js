@@ -180,3 +180,12 @@ function addRowsClient(data, table) {
     $("#Table > tbody").empty();
     $("<tbody/>", {html: items.join("")}).appendTo("#Table")
 }
+
+<!--highlight-->
+function higlight() {
+    var checkboxes = document.getElementsByClassName('chk');
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) checkboxes[i].closest('tr').classList.add("highlight");
+        else checkboxes[i].closest('tr').classList.remove("highlight");
+    }
+}

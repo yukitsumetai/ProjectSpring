@@ -14,3 +14,21 @@ function requiredField(input) {
     }
     input.style.borderWidth = "2px";
 }
+
+<!-- Valid -->
+function isValidCghange() {
+        $('#isValid').change(function () {
+            if ($(this).is(":checked")) {
+                this.value = true;
+            } else this.value = false;
+        });
+    }
+
+
+function addOptionsChange() {
+        $('#options').change(function () {
+            if ($(this).is(":checked")) {
+                this.value = true;
+            } else this.value = false;
+        });
+    }

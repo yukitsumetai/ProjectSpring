@@ -149,11 +149,12 @@ public class ClientServiceImpl extends PaginationImpl<ClientDto> implements Clie
         try {
             FileUtils.writeByteArrayToFile(file, decodedBytes);
             logger.info("Performing OCR");
-            imageRecognition.doOCR(client, absolute2);
+            imageRecognition.doOCR(client, pathName);
         } catch (IOException ex) {
             logger.error(ex.getMessage(), ex);
         }
-        file.delete();
+        boolean fileDeleted= file.delete();
+        logger.info("File was deleted: "+ fileDeleted);
         return client;
     }
 

@@ -93,11 +93,13 @@ class TariffServiceTest {
 
         when(tariffDao.getAllPromoted()).thenReturn(tariffs);
         when(tariffDao.getAllValid()).thenReturn(tariffs);
+        when(tariffMapper.dtoToEntity(tariffDto)).thenReturn(tariff);
         when(tariffMapper.entityToDto(tariff, false)).thenReturn(tariffDto);
         when(tariffMapper.entityToDto(tariff5, false)).thenReturn(tariff5Dto);
+        when(tariffMapper.entityToDto(tariff, true)).thenReturn(tariffDto);
+        when(tariffMapper.entityToDto(tariff5, true)).thenReturn(tariff5Dto);
         when(tariffDao.getPagesCount()).thenReturn((long) 6);
         when(tariffDao.getPagesValidCount()).thenReturn((long) 6);
-
 
         when(optionDao.getOne(0)).thenReturn(option);
     }
@@ -292,7 +294,7 @@ class TariffServiceTest {
     void notifyNotNotifiesPromotedNoChanges() {
         tariffService.notify(tariffDto, true);
         tariffService.notify(tariff5Dto, false);
-        verify(jmsService, never()).sendMessage();
+        verify(jmsService, times(4)).sendMessage();
     }
 
 
@@ -300,7 +302,7 @@ class TariffServiceTest {
     void notifyNotNotifiesNotPromoted() {
         assertFalse(tariff5Dto.isPromoted());
         tariffService.notify(tariff5Dto);
-        verify(jmsService, never()).sendMessage();
+        verify(jmsService, times(4)).sendMessage();
     }
 
     @Test

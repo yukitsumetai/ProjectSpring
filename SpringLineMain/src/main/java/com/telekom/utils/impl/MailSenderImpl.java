@@ -35,12 +35,12 @@ public class MailSenderImpl implements MailService {
     @Autowired
     private VelocityEngine velocityEngine;
 
-    public static int noOfQuickServiceThreads = 20;
+    public static final int NO_OF_QUICK_SERVICE_THREADS = 20;
     /**
      * this statement create a thread pool of twenty threads
      * here we are assigning send mail task using ScheduledExecutorService.submit();
      */
-    private ScheduledExecutorService quickService = Executors.newScheduledThreadPool(noOfQuickServiceThreads); // Creates a thread pool that reuses fixed number of threads(as specified by noOfThreads in this case).
+    private ScheduledExecutorService quickService = Executors.newScheduledThreadPool(NO_OF_QUICK_SERVICE_THREADS); // Creates a thread pool that reuses fixed number of threads(as specified by noOfThreads in this case).
 
     /**
      * Sends an email with PDF wit contract information
@@ -104,7 +104,8 @@ public class MailSenderImpl implements MailService {
             logger.error(e.getMessage(), e);
             return false;
         } finally {
-            file.delete();
+           boolean fileDeleted= file.delete();
+           logger.info("File was deleted: "+ fileDeleted);
         }
         return true;
     }

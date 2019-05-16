@@ -57,13 +57,8 @@
 </div>
 <!--highlight-->
 <script>
-
     $(document).on('click', '.chk', function() {
-        var checkboxes = document.getElementsByClassName('chk');
-        for (var i = 0; i < checkboxes.length; i++) {
-            if (checkboxes[i].checked) checkboxes[i].closest('tr').classList.add("highlight");
-            else checkboxes[i].closest('tr').classList.remove("highlight");
-        }
+        higlight();
     });
 </script>
 

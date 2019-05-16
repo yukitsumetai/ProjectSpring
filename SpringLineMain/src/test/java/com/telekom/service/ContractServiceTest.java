@@ -550,18 +550,17 @@ class ContractServiceTest {
     }
 
     @Test
-    void pdfReturnsTrue() throws MessagingException {
+    void pdfReturnsTrue()  {
+        when( mailSender.sendMessageWithAttachment(true, contractDto)).thenReturn(true);
         assertTrue(contractService.sendEmail(true, contractDto));
-        //doThrow().when();
         verify(mailSender).sendMessageWithAttachment(true, contractDto);
 
     }
 
     @Test
     void pdfReturnsFalse() throws MessagingException {
-        doThrow(new MessagingException()).when(mailSender).sendMessageWithAttachment(true, contractDto);
+        when( mailSender.sendMessageWithAttachment(false, contractDto)).thenReturn(true);
         assertFalse(contractService.sendEmail(true, contractDto));
         verify(mailSender).sendMessageWithAttachment(true, contractDto);
-
     }
 }

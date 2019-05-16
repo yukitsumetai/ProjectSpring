@@ -16,20 +16,11 @@
 <html>
 <head>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <link rel="icon" href="../resource/images/favicon1.ico">
-
-    <!-- Bootstrap core CSS -->
-    <link href="${contextPath}/resource/dist/css/bootstrap.min.css"} rel="stylesheet">
-    <link href="${contextPath}/resource/css/dashboard.css" rel="stylesheet">
+    <link href="${contextPath}/resource/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="${contextPath}/resource/js/validation.js"></script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../resource/assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="${contextPath}/resource/dist/js/bootstrap.min.js"></script>
     <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
-    <title>Client details</title>
+    <title>Add tariff</title>
 </head>
 <body>
 <div class="container-fluid">

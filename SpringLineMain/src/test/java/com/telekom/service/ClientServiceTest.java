@@ -165,9 +165,4 @@ class ClientServiceTest {
         assertNull(clientService.getClient(7));
     }
 
-    @Test
-    void performOcrPerformsOcr() {
-        assertNull(true);
-    }
-
 }

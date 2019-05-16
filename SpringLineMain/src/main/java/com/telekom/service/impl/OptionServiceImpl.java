@@ -138,7 +138,7 @@ public class OptionServiceImpl extends PaginationImpl<OptionDto> implements Opti
             optionPage = getChildrenForExisting(size, page, optionExisting);
             total = optionDao.getPagesNoChildrenAndParentExisting(optionId);
         }
-        optionPage.removeIf(st -> st.getId() == optionExisting.getId());
+        optionPage.removeIf(st -> st.getId() == optionId);
         return getPageDraft(optionPage, total, page, size);
     }
 

@@ -7,6 +7,7 @@ import com.telekom.model.entity.Tariff;
 import com.telekom.mapper.TariffMapper;
 import com.telekom.utils.api.JmsService;
 import com.telekom.service.impl.TariffServiceImpl;
+import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -48,6 +49,11 @@ public class TariffServiceConfig {
     @Bean
     public Tariff Tariff() {
         return mock(Tariff.class);
+    }
+
+    @Bean
+    public Logger logger() {
+        return mock(Logger.class);
     }
 
 
