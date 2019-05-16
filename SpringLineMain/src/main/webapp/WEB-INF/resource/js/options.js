@@ -88,7 +88,7 @@ function radioBasket(tariffPrice){
     for (var j = 0; j < checkboxes2.length; j++) {
         if (checkboxes2[j].checked) {
             var name2 = checkboxes2[j].getAttribute('optionName');
-            var price2 = '$' + checkboxes2[j].getAttribute('price');
+           var price2 = '$' + checkboxes2[j].getAttribute('price');
             priceTotal+=parseFloat(checkboxes2[j].getAttribute('price'));
             priceTotalOneTime+=parseFloat(checkboxes2[j].getAttribute('priceOneTime'));
             var priceOneTime2 = '$' + checkboxes2[j].getAttribute('priceOneTime');
@@ -121,7 +121,7 @@ function checksBasket(tariffPrice){
         }
     }
     var checkboxes2 = document.getElementsByClassName('myClass');
-    for (var j = 0; i < checkboxes.length; j++) {
+    for (var j = 0; j < checkboxes2.length; j++) {
         if (checkboxes2[j].checked) {
             priceTotal+=parseFloat(checkboxes2[j].getAttribute('price'));
             priceTotalOneTime+=parseFloat(checkboxes2[j].getAttribute('priceOneTime'));

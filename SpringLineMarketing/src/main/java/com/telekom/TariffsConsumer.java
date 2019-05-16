@@ -15,11 +15,13 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 
-@ApplicationScoped @Named
+@ApplicationScoped
+@Named
 public class TariffsConsumer {
     private final ArrayList<TariffPromoted> tariffsList = new ArrayList<>();
 
@@ -39,8 +41,14 @@ public class TariffsConsumer {
         tariffsList.clear();
         for (JsonValue t : response) {
             JsonObject tmp = t.asJsonObject();
-            List tmp2 = tmp.getJsonArray("options");
-            tariffsList.add(new TariffPromoted(tmp.getString("name"), tmp.getJsonNumber("price").doubleValue(), tmp.getString("description")));
+            JsonArray tmp2 = tmp.getJsonArray("options");
+            List<String> options = new ArrayList<>();
+            for (JsonValue t2 : tmp2
+            ) {
+                String n = t2.asJsonObject().getString("name");
+                options.add(n);
+            }
+            tariffsList.add(new TariffPromoted(tmp.getString("name"), tmp.getJsonNumber("price").doubleValue(), tmp.getString("description"), options));
         }
     }
 

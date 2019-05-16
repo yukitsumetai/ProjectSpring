@@ -22,12 +22,12 @@
     <link rel="icon" href="../resource/images/favicon1.ico">
 
     <!-- Bootstrap core CSS -->
-    <link href="<c:url value="${contextPath}/resource/dist/css/bootstrap.min.css" />" rel="stylesheet">
-    <link href="<c:url value="${contextPath}/resource/css/dashboard.css"/>" rel="stylesheet">
+<%--    <link href="<c:url value="${contextPath}/resource/dist/css/bootstrap.min.css" />" rel="stylesheet">--%>
+<%--    <link href="<c:url value="${contextPath}/resource/css/dashboard.css"/>" rel="stylesheet">--%>
 
     <script src="../resource/js/options.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../resource/assets/js/vendor/jquery.min.js"><\/script>')</script>
+<%--    <script>window.jQuery || document.write('<script src="../resource/assets/js/vendor/jquery.min.js"><\/script>')</script>--%>
     <script src="${contextPath}/resource/dist/js/bootstrap.min.js"></script>
     <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
     <title>Options</title>
@@ -61,8 +61,8 @@
     </script>
     <script>
         $(document).ready(function () {
-            radioBasket(${contractDTO.tariff.price});
-            checksBasket(${contractDTO.tariff.price});
+            radioBasket(${contractDto.tariff.price});
+            checksBasket(${contractDto.tariff.price});
         });
     </script>
 </head>
@@ -140,14 +140,14 @@
 <script>
     $('input.chk').on('change', function () {
         checkChange('chk');
-        checksBasket(${contractDTO.tariff.price});
+        checksBasket(${contractDto.tariff.price});
     });
 </script>
 
 <script>
     $('.radio').on('change', function () {
         checkChange('radio');
-       radioBasket(${contractDTO.tariff.price});
+       radioBasket(${contractDto.tariff.price});
     });
 </script>
 
