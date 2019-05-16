@@ -35,12 +35,12 @@ public class MailSenderImpl implements MailService {
     @Autowired
     private VelocityEngine velocityEngine;
 
-//    public static int noOfQuickServiceThreads = 20;
-//    /**
-//     * this statement create a thread pool of twenty threads
-//     * here we are assigning send mail task using ScheduledExecutorService.submit();
-//     */
-//    private ScheduledExecutorService quickService = Executors.newScheduledThreadPool(noOfQuickServiceThreads); // Creates a thread pool that reuses fixed number of threads(as specified by noOfThreads in this case).
+    public static int noOfQuickServiceThreads = 20;
+    /**
+     * this statement create a thread pool of twenty threads
+     * here we are assigning send mail task using ScheduledExecutorService.submit();
+     */
+    private ScheduledExecutorService quickService = Executors.newScheduledThreadPool(noOfQuickServiceThreads); // Creates a thread pool that reuses fixed number of threads(as specified by noOfThreads in this case).
 
     /**
      * Sends an email with PDF wit contract information

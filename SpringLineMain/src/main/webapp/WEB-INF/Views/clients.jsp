@@ -80,7 +80,7 @@
     </main>
 </div>
 </div>
-
+<%@ include file="elements/modal.jsp" %>
 <!--Checkbox-->
 <script>
     $(document).on('click', '.chk', function () {
@@ -139,28 +139,7 @@
     });
 </script>
 
-<!-- Modal Client not found -->
-<div class="modal fade" id="existingModal" tabindex="-1" role="dialog"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModal"> Client already exists</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Client with such email/passport already exists.
-            </div>
-            <div class="modal-footer">
-                <form>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+
 </body>
 </html>
 

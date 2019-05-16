@@ -46,7 +46,7 @@
 </head>
 
 <body>
-<%@ include file="elements/CookiesModal.jsp" %>
+
 <div class="container-fluid">
     <%@ include file="elements/SideBar.jsp" %>
 

@@ -2,7 +2,7 @@ function valthisform() {
     event.preventDefault();
     var email = document.getElementById('email').value;
     var passport = document.getElementById('passport').value;
-    if(email!="" && passport.length==9) {
+    if (email != "" && passport.length == 9) {
         $.ajax({
             url: "/springLine/newContract/client/check",
             data: {
@@ -12,13 +12,14 @@ function valthisform() {
             error: function (e) {
             },
             success: function (data) {
-                if(!data){
+                if (!data) {
                     //var urlLink = "/newContract/client/confirm";
                     // button.action = urlLink;
                     document.form1.submit();
-                }
-                else{
-                    $('#cookiesModal').modal('show');
+                } else {
+                    document.getElementById("modalText").innerHTML = "Cannot create new client";
+                    document.getElementById("modalText").innerHTML = "Client with such email/passport already exists";
+                    $('#modal').modal('show');
                 }
             }
         });
@@ -34,11 +35,17 @@ function searchClient(table) {
                 phoneNumber: number
             },
             error: function (e) {
-                alert("Customer not found");
+                document.getElementById("modalText").innerHTML = "Client with enterd phone number do not exist";
+                document.getElementById("modalHeader").innerHTML = "Client not found";
+                $('#modal').modal('show');
             },
             success: function (data) {
                 if (data != "") addRowClient(data, table);//table for add
-                else alert("Customer not found");
+                else {
+                    document.getElementById("modalText").innerHTML = "Client with enterd phone number do not exist";
+                    document.getElementById("modalHeader").innerHTML = "Client not found";
+                    $('#modal').modal('show');
+                }
             }
         });
     } else {
@@ -119,7 +126,7 @@ function saveSnap() {
     var file = document.getElementById("imageprev").src;
     var id = document.getElementById('contract').value;
     $.ajax({
-         type: "POST",
+        type: "POST",
         url: "/springLine/captureImage",
         data: {
             imageprev: file,
@@ -127,7 +134,9 @@ function saveSnap() {
         },
         dataType: 'json',
         error: function (result) {
-            alert("Something went wrong. Please try again" + result)
+            document.getElementById("modalText").innerHTML = "Please try again!";
+            document.getElementById("modalHeader").innerHTML = "Something went wrong";
+            $('#modal').modal('show');
         },
         success: function (data) {
             if (data != null) {
@@ -151,7 +160,11 @@ function saveSnap() {
                     birthdayField.value = data.birthday;
                     requiredField(birthdayField);
                 }
-            } else alert("Something went wrong. Please try again");
+            } else {
+                document.getElementById("modalText").innerHTML = "Please try again!";
+                document.getElementById("modalHeader").innerHTML = "Something went wrong";
+                $('#modal').modal('show');
+            }
         }
     });
 }

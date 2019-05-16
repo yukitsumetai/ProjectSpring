@@ -38,8 +38,8 @@ public static final String ERROR = "error";
     @GetMapping("/{id}")
     public ModelAndView getEditForm(ContractDto contract, @PathVariable(value = "id") String id) {
         logger.info("Getting contract "+ id);
-        contract = contractService.getOne(id);
-        return new ModelAndView("contract", "contractDto", contract);
+        ContractDto contract2 = contractService.getOne(id);
+        return new ModelAndView("contract", "contractDto", contract2);
     }
 
 
@@ -77,10 +77,12 @@ public static final String ERROR = "error";
     public String confirmation(Model model, ContractDto contract, SessionStatus status,
                                @RequestParam(required = false) Boolean email) {
         contractService.update(contract);
-        boolean correct = contractService.sendEmail(false, contract);
-        if (!correct) {
-            model.addAttribute(MESSAGE, "Email was not sent");
-            return ERROR;
+        if (email!=null) {
+            boolean correct = contractService.sendEmail(true, contract);
+            if (!correct) {
+                model.addAttribute(MESSAGE, "Email was not sent");
+                return ERROR;
+            }
         }
         status.setComplete();
         return EXISTING_CONTRACT + contract.getPhoneNumber();

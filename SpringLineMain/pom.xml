@@ -12,6 +12,9 @@
 
     <properties>
         <spring.version>5.1.4.RELEASE</spring.version>
+        <sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
+        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+        <sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
     </properties>
 
     <dependencies>
@@ -234,6 +237,11 @@
             <artifactId>sonar-plugin-api</artifactId>
             <version>7.7</version>
         </dependency>
+        <dependency>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.8.4</version>
+        </dependency>
 
 
 
@@ -244,11 +252,6 @@
     <build>
         <finalName>springLine</finalName>
         <plugins>
-<!--            <plugin>-->
-<!--                <groupId>org.sonarsource.scanner.maven</groupId>-->
-<!--                <artifactId>sonar-maven-plugin</artifactId>-->
-<!--                <version>3.2</version>-->
-<!--            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
@@ -265,6 +268,18 @@
                     <target>8</target>
                 </configuration>
             </plugin>
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>0.8.4</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
         </plugins>
     </build>
 </project>

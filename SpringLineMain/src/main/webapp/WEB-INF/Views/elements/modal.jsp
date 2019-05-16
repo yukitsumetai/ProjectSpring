@@ -7,32 +7,18 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!--Script Modal -->
-<script>
-    $(document).ready(function () {
-        var cookieEnabled = (navigator.cookieEnabled) ? true : false;
-        if (typeof navigator.cookieEnabled == "undefined" && !cookieEnabled)
-        {
-            document.cookie="testcookie";
-            cookieEnabled = (document.cookie.indexOf("testcookie") != -1) ? true : false;
-        }
-        if (!cookieEnabled) $('#cookiesModal').modal('show');
-
-    });
-</script>
-<!-- Modal Cookies -->
-<div class="modal fade" id="cookiesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<!-- Modal Client not found -->
+<div class="modal fade" id="modal" tabindex="-1" role="dialog"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModal"> Coockies are disabled</h5>
+                <h5 class="modal-title" id="modalHeader"></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                Coockies are disabled. <br>
-                Please enable cookies in your browser so that a website can work corretly.
+            <div class="modal-body" id="modalText">
             </div>
             <div class="modal-footer">
                 <form>

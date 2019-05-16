@@ -32,7 +32,7 @@
                 cookieEnabled = (document.cookie.indexOf("testcookie") != -1) ? true : false;
             }
             if (!cookieEnabled) {
-                document.getElementById("coockies").innerHTML ="Enable cookies to login";
+                document.getElementById("cookies").innerHTML ="Enable cookies to login \n and work with application correctly";
             }
 
         });

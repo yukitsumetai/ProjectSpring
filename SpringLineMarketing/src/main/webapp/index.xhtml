@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE htmlSpring>
-<html xmlns:h="http://xmlns.jcp.org/jsf/html"
+<html xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://xmlns.jcp.org/jsf/core       ">
+      xsi:schemaLocation="http://xmlns.jcp.org/jsf/core">
 <h:head>
     <h:outputStylesheet library="css" name="dashboard.css"/>
     <title>Spring Line Marketing</title>
@@ -34,7 +34,9 @@
 
         <h:column>
             <f:facet name="header">Compatible options</f:facet>
-            #{t.options}
+            <ui:repeat value="#{t.options}" var="option">
+                #{option},
+            </ui:repeat>
         </h:column>
 
     </h:dataTable>
@@ -44,7 +46,5 @@
         </f:websocket>
 
 </h:body>
-
-
 </html>
 

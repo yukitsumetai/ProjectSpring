@@ -29,7 +29,7 @@
     <title>Title</title>
 </head>
 <body>
-<%@ include file="elements/CookiesModal.jsp" %>
+<%@ include file="elements/modal.jsp" %>
 <div class="container-fluid">
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
