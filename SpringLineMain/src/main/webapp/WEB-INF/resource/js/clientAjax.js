@@ -35,14 +35,14 @@ function searchClient(table) {
                 phoneNumber: number
             },
             error: function (e) {
-                document.getElementById("modalText").innerHTML = "Client with enterd phone number do not exist";
+                document.getElementById("modalText").innerHTML = "Client with enterd phone number does not exist";
                 document.getElementById("modalHeader").innerHTML = "Client not found";
                 $('#modal').modal('show');
             },
             success: function (data) {
                 if (data != "") addRowClient(data, table);//table for add
                 else {
-                    document.getElementById("modalText").innerHTML = "Client with enterd phone number do not exist";
+                    document.getElementById("modalText").innerHTML = "Client with enterd phone number does not exist";
                     document.getElementById("modalHeader").innerHTML = "Client not found";
                     $('#modal').modal('show');
                 }

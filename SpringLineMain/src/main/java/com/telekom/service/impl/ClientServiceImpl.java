@@ -94,8 +94,10 @@ public class ClientServiceImpl extends PaginationImpl<ClientDto> implements Clie
     public ClientDto getClient(String number) {
         logger.info("Searching for client by phone number " + number);
         BigInteger number2 = new BigInteger(number);
-        ClientDto tmp = clientMapper.entityToDto(clientDao.getOne(number2));
-        return tmp;
+        Client client = clientDao.getOne(number2);
+        if(client!=null){
+        return clientMapper.entityToDto(clientDao.getOne(number2));}
+        else return null;
     }
 
     /**
@@ -106,7 +108,10 @@ public class ClientServiceImpl extends PaginationImpl<ClientDto> implements Clie
     @Transactional
     public ClientDto getClient(Long id) {
         logger.info("Searching for client by user id" + id);
-        return clientMapper.entityToDto(clientDao.getOne(id));
+        Client client = clientDao.getOne(id);
+        if(client!=null){
+            return clientMapper.entityToDto(clientDao.getOne(id));}
+        else return null;
     }
 
     /**
@@ -117,7 +122,9 @@ public class ClientServiceImpl extends PaginationImpl<ClientDto> implements Clie
     public ClientDto getClient(Integer id) {
         logger.info("Searching for client by id " + id);
         Client tmp = clientDao.getOne(id);
-        return clientMapper.entityToDtoWithoutContract(tmp);
+        if(tmp!=null){
+        return clientMapper.entityToDtoWithoutContract(tmp);}
+        else return null;
     }
 
     /**

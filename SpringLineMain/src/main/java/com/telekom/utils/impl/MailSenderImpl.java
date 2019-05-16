@@ -88,16 +88,16 @@ public class MailSenderImpl implements MailService {
             helper.addAttachment("Invoice.pdf", file);
 
 
-//            quickService.submit(new Runnable() {
-//                @Override
-//                public void run() {
-//                    try{
-//                        mailSender.send(message);
-//                    }catch(Exception e){
-//                        logger.error("Exception occur while send a mail : ",e);
-//                    }
-//                }
-//            });
+            quickService.submit(new Runnable() {
+                @Override
+                public void run() {
+                    try{
+                        mailSender.send(message);
+                    }catch(Exception e){
+                        logger.error("Exception occur while send a mail : ",e);
+                    }
+                }
+            });
 
 
         } catch (Exception e) {
