@@ -13,7 +13,7 @@ function radiobutton() {
     if (r.value == "parent") {
         select.setAttribute("disabled", true);
         group.style.display = "block";
-    } else if (state == "children") {
+    } else if (r.value == "children") {
         if (r.value == "nothing") {
             select.setAttribute("disabled", true);
             group.style.display = "block";

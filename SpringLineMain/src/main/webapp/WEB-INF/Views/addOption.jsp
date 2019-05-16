@@ -15,12 +15,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link href="${contextPath}/resource/css/dashboard.css" rel="stylesheet">
     <script src="${contextPath}/resource/js/validation.js"></script>
     <script src="${contextPath}/resource/js/dropdownAjax.js"></script>
     <script src="${contextPath}/resource/js/options.js"></script>
     <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
 
-    <title>Client details</title>
+    <title>Add option</title>
 
     <!--PaginationDao dropdown-->
     <script>
@@ -89,8 +90,7 @@
                         </label>
                         <label class="btn btn-success">
                             <input type="radio" class="radio" name="options" value="parent" id="option2"
-                                   autocomplete="off">
-                            Has parent
+                                   autocomplete="off">Has parent
                         </label>
                         <label class="btn btn-success">
                             <input type="radio" class="radio" name="options" value="children" id="option3"
@@ -131,7 +131,9 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('#tariffs').change(function () {
-            this.value = !!$(this).is(":checked");
+            if ($(this).is(":checked")) {
+                this.value = true;
+            } else this.value = false;
         });
     });
 </script>
@@ -147,7 +149,6 @@
 </script>
 <!-- Parents -->
 <script>
-
     $('input.radio').on('change', function () {
 
         radiobutton();

@@ -27,3 +27,5 @@ services:
     ports:
       - "33060:33060"
       - "3306:3306"
+    volumes:
+      - C:\volume:/var/lib/mysql

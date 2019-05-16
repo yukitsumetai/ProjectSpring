@@ -1,4 +1,4 @@
-package com.telekom.utils;
+package com.telekom;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.annotation.FacesConfig;

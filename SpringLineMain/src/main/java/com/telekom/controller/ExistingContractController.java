@@ -63,7 +63,6 @@ public static final String ERROR = "error";
             model.addAttribute(MESSAGE, "Tariff is not valid");
             return ERROR;
         }
-
         return "redirect:/existingContract/confirm";
     }
 
@@ -78,7 +77,7 @@ public static final String ERROR = "error";
                                @RequestParam(required = false) Boolean email) {
         contractService.update(contract);
         if (email!=null) {
-            boolean correct = contractService.sendEmail(true, contract);
+            boolean correct = contractService.sendEmail(false, contract);
             if (!correct) {
                 model.addAttribute(MESSAGE, "Email was not sent");
                 return ERROR;

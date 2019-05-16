@@ -59,6 +59,17 @@ public class OptionController {
         }
     }
 
+    private String setTariffForOption(Model model, boolean tariff, OptionDto option, SessionStatus status) {
+        if (tariff) {
+            logger.info("Setting tariffs for new optionDto " + option);
+            model.addAttribute("table", "option");
+            return "tariffs";
+        }
+        optionService.add(option);
+        status.setComplete();
+        return OPTIONS;
+    }
+
     @PostMapping("/new/parent")
     public String newOptionParent(Model model, OptionDto option, @RequestParam(name = "optionID2", required = false) Integer id,
                                   @RequestParam(name = "action") boolean tariff, SessionStatus status) {
@@ -150,16 +161,7 @@ public class OptionController {
         return OPTIONS;
     }
 
-    private String setTariffForOption(Model model, boolean tariff, OptionDto option, SessionStatus status) {
-        if (tariff) {
-            logger.info("Setting tariffs for new optionDto " + option);
-            model.addAttribute("table", "option");
-            return "tariffs";
-        }
-        optionService.add(option);
-        status.setComplete();
-        return OPTIONS;
-    }
+
 
 
     private String editTariffOrOption(Boolean tariff, Model model, OptionDto option, SessionStatus status) {

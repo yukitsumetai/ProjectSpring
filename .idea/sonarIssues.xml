@@ -18,6 +18,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/.env">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties">
           <value>
             <set />
@@ -599,6 +604,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/SpringLineMarketing/pom.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/SpringLineMarketing/src/main/java/com/telekom/Jsf23Activator.java">
           <value>
             <set />
           </value>

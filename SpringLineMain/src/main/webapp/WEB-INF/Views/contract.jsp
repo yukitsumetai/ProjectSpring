@@ -52,8 +52,6 @@
                         <input type="checkbox" class="chk" name="email" id="email"/>
                         <row>
                             <br>
-                            <button class="btn btn-success" onclick="window.print()">Print <em class="fas fa-print"></em>
-                            </button>
                             <button type="submit" class="btn btn-success">Confirm <em class="far fa-save"></em></button>
                             <a type="button" href="${contextPath}/welcome"
                                class="btn btn-danger">Cancel <em class="fas fa-times"></em></a>
