@@ -39,6 +39,7 @@
             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                 <span>CONTRACT DETAILS</span>
             </h6>
+            <br>
             <c:forEach items="${client.contracts}" var="c">
                 <ul>
                 <li class="nav-item"><a href="${contextPath}/existingContract/${c.phoneNumber}">${c.phoneNumber}</a></li>

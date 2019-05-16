@@ -21,18 +21,6 @@
     <title>Tariffs Overview</title>
     <link href="${contextPath}/resource/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <%-- Modal Script --%>
-    <script>
-        $(document).on('shown.bs.modal', '#deleteModal', function (e) {
-            //get data-id attribute of the clicked element
-            var id = $(e.relatedTarget).data('id');
-
-            //populate the textbox
-            $(e.currentTarget).find('form[id="action"]').val(id);
-            var $form = $('#action');
-            $form.attr('action', '${contextPath}/tariffs/delete/' + id);
-        });
-    </script>
     <!--initial pagination-->
     <script>
         $(document).ready(function () {
@@ -54,10 +42,11 @@
             document.getElementById('page').value = 1;
         });
     </script>
+
 </head>
 
 <body>
-
+<%@ include file="elements/CookiesModal.jsp" %>
 <div class="container-fluid">
     <%@ include file="elements/SideBar.jsp" %>
 
@@ -147,6 +136,7 @@
 </div>
 
 
+
 <!-- Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
@@ -174,7 +164,6 @@
         </div>
     </div>
 </div>
-
 
 <!--Cart checkboxes-->
 <c:choose>

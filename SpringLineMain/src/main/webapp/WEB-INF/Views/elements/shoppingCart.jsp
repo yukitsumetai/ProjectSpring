@@ -31,10 +31,10 @@
     <ul class="cd-cart-items" id="tariffCart">
         <li>
             <c:choose>
-            <c:when test="${contractDTO.price!=0}">
+            <c:when test="${contractDto.price!=0.00}">
 
-            <span id="tariffName">${contractDTO.tariff.name}</span>
-            <div class="right" id="tariffPrice">$${contractDTO.tariff.price}</div>
+            <span id="tariffName">${contractDto.tariff.name}</span>
+            <div class="right" id="tariffPrice">$${contractDto.tariff.price}</div>
             </c:when>
             <c:otherwise>
         <li class='generated1'></li>
@@ -53,8 +53,8 @@
                 <li class='generated'></li>
             </c:when>
 
-            <c:when test="${contractDTO.options!=null}">
-                <c:forEach items="${contractDTO.options}" var="o">
+            <c:when test="${contractDto.options!=null}">
+                <c:forEach items="${contractDto.options}" var="o">
                     <li>
                             ${o.name}
                         <div class="cd-price"><p>Monthly price<span class="right">$${o.priceMonthly}</span></p></div>
@@ -94,9 +94,9 @@
 
             <c:otherwise>
                 <p>Total Monthly Price:
-                    <strong class="right">$${contractDTO.price}</strong></p>
+                    <strong class="right">$${contractDto.price}</strong></p>
                 <p>Total One Time Price:
-                    <strong class="right">$${contractDTO.priceOneTime}</strong></p>
+                    <strong class="right">$${contractDto.priceOneTime}</strong></p>
             </c:otherwise>
         </c:choose>
 

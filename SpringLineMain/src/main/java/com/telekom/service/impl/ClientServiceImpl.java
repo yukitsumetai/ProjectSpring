@@ -136,10 +136,6 @@ public class ClientServiceImpl extends PaginationImpl<ClientDto> implements Clie
 
         String pathName = id + ".jpeg";
         File file = new File(pathName);
-        try{
-        String absolute = file.getCanonicalPath();
-        logger.info("Canonical " +absolute);}
-        catch (IOException e){}
         String absolute2 = file.getAbsolutePath();
         logger.info("Absolute " +absolute2);
         logger.info("Image was created at "+pathName);
@@ -150,7 +146,7 @@ public class ClientServiceImpl extends PaginationImpl<ClientDto> implements Clie
         } catch (IOException ex) {
             logger.error(ex.getMessage(), ex);
         }
-       // file.delete();
+        file.delete();
         return client;
     }
 
