@@ -70,16 +70,12 @@
                             </c:if>/>&nbsp;
                 </div>
 
-                <div class="form-group">
+                <div class="form-group promotion" id="promotion" style="display:block">
                     <label class="control-label">Promotion: </label>
                     <input type="checkbox" class="chk" name="isPromoted" id="isPromoted"
                             <c:if test="${tariff.promoted==true}">
                                 checked
-                            </c:if>&nbsp;
-                    <c:if test="${tariff.isValid==false}">
-                        disabled
-                    </c:if>
-                    />
+                            </c:if>&nbsp;/>
                 </div>
 
                 <div class="form-group">
@@ -107,6 +103,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         isValidChange();
+        isValidChangePromoted();
         addOptionsChange();
     });
 </script>

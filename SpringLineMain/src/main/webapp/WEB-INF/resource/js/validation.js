@@ -25,6 +25,7 @@ function isValidChange() {
     };
 
 function isValidChangePromoted() {
+    $('#isValid').change(function () {
     var relation = document.getElementById('promotion');
     if ($(this).is(":checked")) {
         this.value = true;
@@ -35,8 +36,8 @@ function isValidChangePromoted() {
         relation.style.display = "none";
         $("#promotion :input").attr("disabled", true);
     }
+});
 };
-
 function addOptionsChange() {
         $('#options').change(function () {
             if ($(this).is(":checked")) {

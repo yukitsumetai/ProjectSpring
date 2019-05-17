@@ -14,7 +14,6 @@ services:
       DB_USER: ekochuro
       DB_PASSWORD: moon2207
       DB_LINK: jdbc:mysql://db:3306/projectspring
-      MAIL_P: 2207!sun
 
   db:
     container_name: db

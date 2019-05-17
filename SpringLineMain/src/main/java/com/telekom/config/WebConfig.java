@@ -43,7 +43,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Bean
     public JavaMailSender getJavaMailSender(@Value("${mail}") String mail,
-                                            @Value("${MAIL_P}") String password) {
+                                            @Value("${passwordMail}") String password) {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);

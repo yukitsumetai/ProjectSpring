@@ -18,14 +18,7 @@
 <head>
 
     <link href="${contextPath}/resource/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Bootstrap core CSS -->
-<%--    <link href="<c:url value="${contextPath}/resource/dist/css/bootstrap.min.css" />" rel="stylesheet">--%>
-<%--    <link href="<c:url value="${contextPath}/resource/css/dashboard.css"/>" rel="stylesheet">--%>
-
-    <script src="../resource/js/options.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<%--    <script>window.jQuery || document.write('<script src="../resource/assets/js/vendor/jquery.min.js"><\/script>')</script>--%>
+    <script src="${contextPath}/resource/js/options.js"></script>
     <script src="${contextPath}/resource/dist/js/bootstrap.min.js"></script>
     <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
     <title>Options</title>
