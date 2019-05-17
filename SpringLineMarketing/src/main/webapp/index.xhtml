@@ -32,10 +32,10 @@
             #{t.price}
         </h:column>
 
-<!--        <h:column>-->
-<!--            <f:facet name="header">Compatible options</f:facet>-->
-<!--            #{t.options}-->
-<!--        </h:column>-->
+        <h:column>
+            <f:facet name="header">Compatible options</f:facet>
+            #{t.options}
+        </h:column>
 
     </h:dataTable>
 
@@ -43,6 +43,12 @@
         <f:ajax event="update" render=":tariffsList"/>
     </f:websocket>
 
+
+    <h:form>
+<!--        <h:commandButton id="input1" value="Update" >-->
+<!--            <f:ajax render=":tariffsList" />-->
+<!--        </h:commandButton>-->
+    </h:form>
 
 </h:body>
 </html>

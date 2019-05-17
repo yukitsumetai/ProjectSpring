@@ -17,9 +17,8 @@
 <html>
 <head>
 
-    <link href="${contextPath}/resource/dist/css/bootstrap.min.css" rel="stylesheet">
+<%--    <link href="${contextPath}/resource/dist/css/bootstrap.min.css" rel="stylesheet">--%>
     <script src="${contextPath}/resource/js/options.js"></script>
-    <script src="${contextPath}/resource/dist/js/bootstrap.min.js"></script>
     <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
     <title>Options</title>
     <script>

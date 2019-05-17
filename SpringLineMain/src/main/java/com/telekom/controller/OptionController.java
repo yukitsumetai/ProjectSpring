@@ -37,6 +37,18 @@ public class OptionController {
         return "addOption";
     }
 
+    /**
+     * Form for a new option
+     * @param model
+     * @param option
+     * @param bindingResult
+     * @param validity option is valid or not
+     * @param relation which kind of relation do we need to set(set parent, childten or nothing)
+     * @param groupId
+     * @param tariff do we need to set tariff or not
+     * @param status
+     * @return
+     */
     @PostMapping("/new")
     public String newOptionAdd(Model model, @Valid OptionDto option, BindingResult bindingResult, @RequestParam(name = "isValid", required = false) boolean validity,
                                @RequestParam(name = "relation") String relation, @RequestParam(name = "group", required = false) Integer groupId,

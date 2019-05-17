@@ -69,7 +69,7 @@
                                 checked disabled
                             </c:if>/>&nbsp;
                 </div>
-
+                <c:if test="${tariff.isValid==true}">
                 <div class="form-group promotion" id="promotion" style="display:block">
                     <label class="control-label">Promotion: </label>
                     <input type="checkbox" class="chk" name="isPromoted" id="isPromoted"
@@ -77,7 +77,7 @@
                                 checked
                             </c:if>&nbsp;/>
                 </div>
-
+                </c:if>
                 <div class="form-group">
                     <input type="hidden" name="initialState"
                            value="${tariff.promoted}">
