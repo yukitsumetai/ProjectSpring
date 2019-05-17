@@ -52,7 +52,7 @@ public class OptionController {
                 boolean flag = false;
                 if (relation.equals(PARENT)) flag = true;
                 model.addAttribute(PARENT, flag);
-                model.addAttribute(PARENT, tariff);
+                model.addAttribute("tariff", tariff);
                 return "optionsRelations";
             }
             return setTariffForOption(model, tariff, option, status);

@@ -151,11 +151,7 @@
 <!-- Valid -->
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#isValid').change(function () {
-            if ($(this).is(":checked")) {
-                this.value = true;
-            } else this.value = false;
-        });
+        isValidChange();
     });
 </script>
 <!-- Checkbox tariffs -->

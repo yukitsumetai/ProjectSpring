@@ -16,14 +16,26 @@ function requiredField(input) {
 }
 
 <!-- Valid -->
-function isValidCghange() {
+function isValidChange() {
         $('#isValid').change(function () {
             if ($(this).is(":checked")) {
                 this.value = true;
             } else this.value = false;
         });
-    }
+    };
 
+function isValidChangePromoted() {
+    var relation = document.getElementById('promotion');
+    if ($(this).is(":checked")) {
+        this.value = true;
+        relation.style.display = "block";
+        $("#promotion :input").attr("disabled", false);
+    } else {
+        this.value = false;
+        relation.style.display = "none";
+        $("#promotion :input").attr("disabled", true);
+    }
+};
 
 function addOptionsChange() {
         $('#options').change(function () {

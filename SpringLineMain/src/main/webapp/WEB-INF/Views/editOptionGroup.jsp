@@ -79,7 +79,7 @@
 <!-- Valid -->
 <script type="text/javascript">
     $(document).ready(function () {
-        isValidCghange();
+        isValidChange();
         addOptionsChange();
     });
 </script>

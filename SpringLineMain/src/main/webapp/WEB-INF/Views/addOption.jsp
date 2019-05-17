@@ -150,7 +150,6 @@
 <!-- Parents -->
 <script>
     $('input.radio').on('change', function () {
-
         radiobutton();
     });
 </script>

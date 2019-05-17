@@ -35,19 +35,19 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    @Scope ("prototype")
-    public Logger logger(InjectionPoint injectionPoint){
+    @Scope("prototype")
+    public Logger logger(InjectionPoint injectionPoint) {
         return Logger.getLogger(injectionPoint.getMember().getDeclaringClass());
     }
 
 
     @Bean
-    public JavaMailSender getJavaMailSender(@Value("${mail}")String mail,
-                                            @Value("${passwordMail}")String password) {
+    public JavaMailSender getJavaMailSender(@Value("${mail}") String mail,
+                                            @Value("${MAIL_P}") String password) {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
-mailSender.setProtocol("smtp");
+        mailSender.setProtocol("smtp");
         mailSender.setUsername(mail);
         mailSender.setPassword(password);
 
@@ -61,7 +61,7 @@ mailSender.setProtocol("smtp");
     }
 
     @Bean
-    public VelocityEngine velocityEngine(){
+    public VelocityEngine velocityEngine() {
         VelocityEngine velocityEngine = new VelocityEngine();
         Properties props = new Properties();
         props.put("resource.loader", "class");

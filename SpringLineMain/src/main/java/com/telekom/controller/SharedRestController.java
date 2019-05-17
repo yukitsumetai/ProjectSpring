@@ -85,7 +85,7 @@ public class SharedRestController {
      * @param parent if true returns only valid  tariffs for contracts
      * @return
      */
-    @GetMapping(value = "/tariffs/tariffPages")
+    @GetMapping(value = "/tariffPages")
     public Page<TariffDto> pageTariff(@RequestParam Integer page, @RequestParam(required = false) Integer id, @RequestParam(required = false) Boolean parent) {
         logger.info("Get Tariffs Controller id: "+id+", parent: "+parent+", optionId: ");
         Page<TariffDto> resultPage;

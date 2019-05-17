@@ -1,12 +1,10 @@
 package com.telekom;
 
 
-import org.apache.log4j.Logger;
 
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
@@ -15,9 +13,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.List;
 
 
 @ApplicationScoped
@@ -39,11 +35,11 @@ public class TariffsConsumer {
         for (JsonValue t : response) {
             JsonObject tmp = t.asJsonObject();
             JsonArray tmp2 = tmp.getJsonArray("options");
-            List<String> options = new ArrayList<>();
+            String options = "";
             for (JsonValue t2 : tmp2
             ) {
                 String n = t2.asJsonObject().getString("name");
-                options.add(n);
+                options+=n+", ";
             }
             tariffsList.add(new TariffPromoted(tmp.getString("name"), tmp.getJsonNumber("price").doubleValue(), tmp.getString("description"), options));
         }

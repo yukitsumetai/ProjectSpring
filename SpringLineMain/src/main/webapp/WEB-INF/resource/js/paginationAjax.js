@@ -3,7 +3,7 @@ function pagination(entity, page, table1, id, parent, optionId, group) {
     if (entity == 0) {
         link = "/springLine/options/optionPages";
     } else if (entity == 1) {
-        link = "/springLine/tariffs/tariffPages";
+        link = "/springLine/tariffPages";
     }
     else if (entity == 2) {
         link = "/springLine/clients/clientPages";

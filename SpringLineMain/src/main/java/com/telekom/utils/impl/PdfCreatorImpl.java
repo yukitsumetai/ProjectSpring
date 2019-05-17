@@ -90,36 +90,35 @@ public class PdfCreatorImpl implements PdfCreator {
             if (options!=null && options.size() > 0) {
                 generateSubheader(cb, y, "OPTIONS");
                 y = y - 15;
-            }
-            for (OptionDto o : options) {
-                i++;
-                if (beginPage) {
-                    beginPage = false;
-                    generateLayout(document, cb);
-                    generateHeader(cb, name, phoneNumber);
-                    y = 615;
+
+                for (OptionDto o : options) {
+                    i++;
+                    if (beginPage) {
+                        beginPage = false;
+                        generateLayout(document, cb);
+                        generateHeader(cb, name, phoneNumber);
+                        y = 615;
+                    }
+                    String optionName = WordWrap.from(o.getName())
+                            .maxWidth(20)
+                            .insertHyphens(false) // true is the default
+                            .wrap();
+
+                    String optionDescription = WordWrap.from(o.getDescription())
+                            .maxWidth(60)
+                            .insertHyphens(false) // true is the default
+                            .wrap();
+
+                    generateDetail(cb, i, y, optionName, optionDescription, o.getPriceMonthly(), o.getPriceOneTime());
+                    y = rowWidth(optionName, optionDescription, y);
+                    if (y < 50) {
+                        printPageNumber(cb);
+                        document.newPage();
+                        beginPage = true;
+                    }
                 }
-                String optionName = WordWrap.from(o.getName())
-                        .maxWidth(20)
-                        .insertHyphens(false) // true is the default
-                        .wrap();
-
-                String optionDescription = WordWrap.from(o.getDescription())
-                        .maxWidth(60)
-                        .insertHyphens(false) // true is the default
-                        .wrap();
-
-                generateDetail(cb, i, y, optionName, optionDescription, o.getPriceMonthly(), o.getPriceOneTime());
-                y = rowWidth(optionName, optionDescription, y);
-                if (y < 50) {
-                    printPageNumber(cb);
-                    document.newPage();
-                    beginPage = true;
-                }
             }
-
             generateTotal(cb, y, contract.getPrice(), contract.getPriceOneTime());
-
             document.close();
             writer.close();
         } catch (Exception e) {

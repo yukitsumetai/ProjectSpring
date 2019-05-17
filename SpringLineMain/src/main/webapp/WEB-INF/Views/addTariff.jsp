@@ -58,7 +58,7 @@
                     <input type="checkbox" class="chk" name="isValid" id="isValid" value=true checked/>&nbsp;
                 </div>
 
-                <div class="form-group">
+                <div class="form-group comOptions" id="promotion" style="display:block">
                     <label class="control-label">Promotion: </label>
                     <input type="checkbox" class="chk" name="isPromoted" id="isPromoted"/>&nbsp;
                 </div>
@@ -81,7 +81,15 @@
 
 </div>
 
-
+<!-- Valid -->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#isValid').change(function () {
+            isValidChange();
+            isValidChangePromoted();
+        });
+    });
+</script>
 <!-- Checkbox options -->
 <script type="text/javascript">
     $(document).ready(function () {

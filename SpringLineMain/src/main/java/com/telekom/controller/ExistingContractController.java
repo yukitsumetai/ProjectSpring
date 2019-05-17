@@ -13,6 +13,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -21,7 +22,7 @@ import java.util.Set;
 @RequestMapping(value = "/existingContract")
 public class ExistingContractController {
 public static final String TABLE = "table";
-public static final String MESSAGE = "table";
+public static final String MESSAGE = "message";
 public static final String EXISTING_CONTRACT = "redirect:/existingContract/";
 public static final String ERROR = "error";
 
@@ -42,7 +43,12 @@ public static final String ERROR = "error";
         return new ModelAndView("contract", "contractDto", contract2);
     }
 
-
+    /**
+     * When NEB no - this is the last step in the process (no choosing options)
+     * @param model
+     * @param contract
+     * @return
+     */
     @GetMapping("/tariffs")
     public String tariffChoose(Model model, ContractDto contract) {
         logger.info("Changing tariff, contract is blocked - "+ contract.isBlocked());
@@ -51,7 +57,7 @@ public static final String ERROR = "error";
             model.addAttribute(TABLE, "add");
             model.addAttribute("NEB", "no");
             contract.setTariff(null);
-            contract.setOptions(null);
+            contract.setOptions(new HashSet<>());
             contract.setPrice(0.00);
             return "tariffs";
         } else return null;
@@ -87,6 +93,12 @@ public static final String ERROR = "error";
         return EXISTING_CONTRACT + contract.getPhoneNumber();
     }
 
+    /**
+     * We need option groups, parent options and children options so they could be groupped correctly on jsp page
+     * @param model
+     * @param contract
+     * @return
+     */
     @GetMapping("/options")
     public String addOptionsChoose(Model model, ContractDto contract) {
         logger.info("Changing options, contract is blocked - "+ contract.isBlocked());

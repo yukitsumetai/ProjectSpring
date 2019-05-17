@@ -10,10 +10,10 @@ public class TariffPromoted implements Serializable {
     private String name;
     private double price;
     private String description;
-    private List<String> options;
+    private String options;
 
 
-    public TariffPromoted(String name, double price, String description, List<String> options) {
+    public TariffPromoted(String name, double price, String description, String options) {
         this.name = name;
         this.price = price;
         this.description = description;
@@ -47,11 +47,11 @@ public class TariffPromoted implements Serializable {
         this.description = description;
     }
 
-    public List<String> getOptions() {
+    public String getOptions() {
         return options;
     }
 
-    public void setOptions(List<String> options) {
+    public void setOptions(String options) {
         this.options = options;
     }
 }
