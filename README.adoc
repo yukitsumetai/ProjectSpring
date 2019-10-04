@@ -1,4 +1,4 @@
-=Spring Telecom
+==Spring Telecom
 
 This project simulates work of a telecom provider:
 administration of tariffs and options, creation of a contract for new or existing customers, web portal for existing clients to make changes in the contract.
