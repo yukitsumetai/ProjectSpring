@@ -1,0 +1,33 @@
+=Spring Telecom
+
+This project simulates work of a telecom provider:
+administration of tariffs and options, creation of a contract for new or existing customers, web portal for existing clients to make changes in the contract.
+Additionaly, optical character recognition is used to scan passports and fill in customer form automatically.
+
+Detailed information can be found in Technical Solution Description.
+
+== Build and deploy project using Docker
+
+. Build:
+
+    ./mvnw clean package
+
+. Deploy:
+
+    docker-compose up
+
+== Analyze project using SonarQube
+
+. Start docker container with SonarQube
+
+    docker-compose -f sonar/docker-compose.yml up
+
+. Create link:http://localhost:9000/account/security/[token]
+  using SonarQube UI (default login/password is admin/admin)
+
+. Perform analyzing
+
+	./mvnw clean verify sonar:sonar \
+      -Dsonar.host.url=http://localhost:9000 \
+      -Dsonar.login={token}
+
