@@ -11,7 +11,7 @@
     <name>springLine</name>
 
     <properties>
-        <spring.version>5.1.4.RELEASE</spring.version>
+        <spring.version>5.2.10.RELEASE</spring.version>
         <sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
         <sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
